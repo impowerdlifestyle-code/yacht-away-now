@@ -178,8 +178,8 @@
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        linear-gradient(180deg, rgba(6,11,20,0.3) 0%, rgba(6,11,20,0.6) 50%, rgba(6,11,20,0.95) 100%),
-        linear-gradient(135deg, #0a1e3d 0%, #0b3d6e 40%, #1a6fc4 100%);
+        linear-gradient(180deg, rgba(6,11,20,0.4) 0%, rgba(6,11,20,0.55) 50%, rgba(6,11,20,0.95) 100%),
+        url('https://yachtawaynow.com/wp-content/uploads/2025/06/princess-1024x505.jpg') center/cover no-repeat;
     }
     .hero-bg::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
@@ -238,6 +238,27 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem; position: relative; overflow: hidden;
     }
+    .vessel-image img, .exp-card-image img, .about-image img, .team-photo img {
+      width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+    }
+    .gallery { background: var(--dark); }
+    .gallery-header { text-align: center; margin-bottom: 64px; }
+    .gallery-header .section-subtitle { margin: 0 auto; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .gallery-item {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 3/2;
+      position: relative; cursor: pointer; transition: var(--transition);
+    }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,11,20,0.4) 0%, transparent 50%);
+      opacity: 0; transition: var(--transition);
+    }
+    .gallery-item:hover::after { opacity: 1; }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
     .vessel-image::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, transparent 50%, rgba(201,168,76,0.08));
@@ -578,7 +599,7 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="#" class="logo" onclick="navigateTo('home')">
-        <div class="logo-icon">YA</div>
+        <img src="https://yachtawaynow.com/wp-content/uploads/2025/06/lockup.png" alt="Yacht Away Now" class="logo-icon" style="border-radius:0;background:none;width:auto;height:40px;object-fit:contain;" />
         Yacht <span>Away</span>
       </a>
       <div class="nav-links" id="navLinks">
@@ -645,7 +666,7 @@
     <section class="vessel section">
       <div class="container">
         <div class="vessel-visual reveal">
-          <div class="vessel-image">&#9973;</div>
+          <div class="vessel-image"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/princess-1024x505.jpg" alt="62ft Princess Flybridge Yacht" loading="lazy" /></div>
           <div class="vessel-float">
             <div class="vessel-float-value">62'</div>
             <div class="vessel-float-label">Princess Flybridge</div>
@@ -707,7 +728,7 @@
         </div>
         <div class="grid-3">
           <div class="exp-card reveal reveal-delay-1">
-            <div class="exp-card-image">&#127749;
+            <div class="exp-card-image"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/2025-01-06.jpg" alt="Sunset Cruise" loading="lazy" />
               <div class="exp-card-number">01</div>
             </div>
             <div class="exp-card-body">
@@ -717,7 +738,7 @@
             </div>
           </div>
           <div class="exp-card reveal reveal-delay-2">
-            <div class="exp-card-image">&#127881;
+            <div class="exp-card-image"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/2025-05-18new.jpg" alt="Bachelorette Party" loading="lazy" />
               <div class="exp-card-number">02</div>
             </div>
             <div class="exp-card-body">
@@ -727,7 +748,7 @@
             </div>
           </div>
           <div class="exp-card reveal reveal-delay-3">
-            <div class="exp-card-image">&#127965;
+            <div class="exp-card-image"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/2025-03-08new.jpg" alt="Bahamas Adventure" loading="lazy" />
               <div class="exp-card-number">03</div>
             </div>
             <div class="exp-card-body">
@@ -857,6 +878,28 @@
       </div>
     </section>
 
+    <!-- GALLERY -->
+    <section class="gallery section">
+      <div class="container">
+        <div class="gallery-header reveal">
+          <div class="section-label">Photo Gallery</div>
+          <h2 class="section-title">Life on the <em>Water</em></h2>
+          <p class="section-subtitle">Captured moments from our charters — sunset cruises, celebrations, and unforgettable days on the Gulf Coast.</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item reveal reveal-delay-1"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02368-1024x683.jpg" alt="Yacht charter experience" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-2"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02330-1024x683.jpg" alt="On the water" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-3"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02328-1-1024x683.jpg" alt="Gulf Coast views" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-1"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02339-1024x683.jpg" alt="Yacht lifestyle" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-2"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02335-1024x683.jpg" alt="Crew and guests" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-3"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02341-1024x683.jpg" alt="Sunset on the yacht" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-1"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02354-1024x683.jpg" alt="Charter celebration" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-2"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02350-1024x683.jpg" alt="Deck views" loading="lazy" /></div>
+          <div class="gallery-item reveal reveal-delay-3"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02345-1024x683.jpg" alt="Luxury yacht experience" loading="lazy" /></div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-banner">
       <div class="container">
@@ -883,7 +926,7 @@
     <section class="about section">
       <div class="container">
         <div class="about-visual reveal">
-          <div class="about-image">&#9973;</div>
+          <div class="about-image"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02368-1024x683.jpg" alt="Yacht Away Now Charter Experience" loading="lazy" /></div>
         </div>
         <div class="reveal">
           <div class="section-label">Who We Are</div>
@@ -940,7 +983,7 @@
     <section class="vessel section">
       <div class="container">
         <div class="vessel-visual reveal">
-          <div class="vessel-image" style="aspect-ratio:16/9;">&#9973;</div>
+          <div class="vessel-image" style="aspect-ratio:16/9;"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/princess-1024x505.jpg" alt="62ft Princess Flybridge" loading="lazy" /></div>
         </div>
         <div class="reveal" style="margin-top:48px;">
           <h2 class="section-title" style="font-size:1.8rem;">Full Specifications</h2>
@@ -1002,7 +1045,7 @@
       <div class="container">
         <div class="grid-3">
           <div class="team-card reveal reveal-delay-1">
-            <div class="team-photo">&#9875;</div>
+            <div class="team-photo"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02330-1024x683.jpg" alt="Josh Wilson" loading="lazy" /></div>
             <div class="team-info">
               <h3>Josh Wilson</h3>
               <div class="team-role">Founder & Owner</div>
@@ -1014,7 +1057,7 @@
             </div>
           </div>
           <div class="team-card reveal reveal-delay-2">
-            <div class="team-photo">&#9875;</div>
+            <div class="team-photo"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02339-1024x683.jpg" alt="Captain Jason" loading="lazy" /></div>
             <div class="team-info">
               <h3>Captain Jason</h3>
               <div class="team-role">Captain</div>
@@ -1025,7 +1068,7 @@
             </div>
           </div>
           <div class="team-card reveal reveal-delay-3">
-            <div class="team-photo">&#9875;</div>
+            <div class="team-photo"><img src="https://yachtawaynow.com/wp-content/uploads/2025/06/DSC02335-1024x683.jpg" alt="Charter Crew" loading="lazy" /></div>
             <div class="team-info">
               <h3>Charter Crew</h3>
               <div class="team-role">Hospitality & Crew</div>
@@ -1146,7 +1189,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#" onclick="navigateTo('home')" class="logo">
-            <div class="logo-icon">YA</div>
+            <img src="https://yachtawaynow.com/wp-content/uploads/2025/06/lockup.png" alt="Yacht Away Now" class="logo-icon" style="border-radius:0;background:none;width:auto;height:40px;object-fit:contain;" />
             Yacht <span>Away</span>
           </a>
           <p>Luxury private yacht charters on Florida's Gulf Coast. Sunset cruises, celebrations, and Bahamas adventures aboard our 62ft Princess Flybridge.</p>
