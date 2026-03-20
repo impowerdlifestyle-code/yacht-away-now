@@ -19,8 +19,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   --ocean-light: #2cb5d6;
   --ocean-dark: #0f6d8e;
   --gold: #d4a853;
-  --gold-light: #e8c474;
+  --gold-light: #f0d48a;
+  --gold-bright: #ffe5a0;
   --gold-dark: #b8912e;
+  --gold-deep: #8b6914;
+  --gold-glow: rgba(212, 168, 83, 0.35);
   --sand: #f5e6c8;
   --sand-light: #faf3e6;
   --sand-dark: #c9b896;
@@ -63,10 +66,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .section-title em {
   font-style: italic; color: var(--gold);
-  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
-  background-size: 200% auto;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: goldShimmer 4s linear infinite;
+  animation: goldShimmer 6s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(212,168,83,0.3));
 }
 .section-subtitle {
   font-size: 1.05rem; color: var(--gray-400); max-width: 600px; line-height: 1.8;
@@ -76,7 +80,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ─── GOLD DIVIDER ────────────────────────────────────────────── */
 .gold-divider {
   width: 80px; height: 2px; margin: 0 auto 32px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-dark), var(--gold-bright), var(--gold-dark), transparent);
+  box-shadow: 0 0 12px rgba(212,168,83,0.3);
 }
 
 /* ─── SCROLL PROGRESS BAR ─────────────────────────────────────── */
@@ -103,19 +108,31 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: 'Montserrat', sans-serif;
 }
 .btn-gold {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--navy); box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold) 30%, var(--gold-light) 50%, var(--gold-bright) 55%, var(--gold-light) 60%, var(--gold) 80%, var(--gold-dark));
+  background-size: 200% auto;
+  color: var(--navy); font-weight: 700;
+  box-shadow: 0 4px 20px var(--gold-glow), inset 0 1px 0 rgba(255,229,160,0.4);
+  overflow: hidden;
+  animation: goldShimmer 5s ease infinite;
+}
+.btn-gold::after {
+  content: ''; position: absolute; top: 0; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: skewX(-20deg);
+  animation: goldShineSweep 4s ease-in-out infinite;
+  pointer-events: none;
 }
 .btn-gold:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(201,168,76,0.4), 0 0 20px rgba(201,168,76,0.15);
+  box-shadow: 0 8px 35px rgba(212,168,83,0.5), 0 0 25px rgba(212,168,83,0.2), inset 0 1px 0 rgba(255,229,160,0.5);
 }
 .btn-outline {
   border: 2px solid var(--gray-700); color: var(--white);
 }
 .btn-outline:hover {
-  border-color: var(--gold); color: var(--gold); transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(201,168,76,0.1);
+  border-color: var(--gold); color: var(--gold-light); transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(212,168,83,0.15), 0 0 40px rgba(212,168,83,0.05);
+  text-shadow: 0 0 12px rgba(212,168,83,0.3);
 }
 .btn-white {
   background: white; color: var(--navy); box-shadow: 0 4px 20px rgba(255,255,255,0.1);
@@ -145,6 +162,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @keyframes goldShimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
+}
+/* Luxury shine sweep for buttons and accents */
+@keyframes goldShineSweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
 }
 
 /* SVG Wave animations - 3 layers at different speeds */
@@ -218,7 +240,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 0; background: none; width: auto; height: 40px;
   object-fit: contain;
 }
-.logo span { color: var(--gold); }
+.logo span {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright), var(--gold-light));
+  background-size: 200% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 6s ease infinite;
+}
 .nav-links { display: flex; align-items: center; gap: 8px; }
 .nav-links a {
   padding: 8px 16px; font-size: 0.8rem; font-weight: 500;
@@ -228,13 +255,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .nav-links a:hover, .nav-links a.active { color: var(--white); background: rgba(255,255,255,0.06); }
 .nav-cta {
   margin-left: 16px; padding: 10px 24px !important;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold) 40%, var(--gold-bright) 55%, var(--gold-light) 65%, var(--gold)) !important;
+  background-size: 200% auto !important;
   color: var(--navy) !important; border-radius: 50px !important;
-  font-weight: 700 !important; box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px var(--gold-glow), inset 0 1px 0 rgba(255,229,160,0.35);
+  animation: goldShimmer 5s ease infinite;
 }
 .nav-cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(201,168,76,0.4), 0 0 15px rgba(201,168,76,0.15);
+  box-shadow: 0 6px 24px rgba(212,168,83,0.5), 0 0 18px rgba(212,168,83,0.2);
 }
 .nav-phone {
   display: flex; align-items: center; gap: 8px;
@@ -310,10 +340,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .hero h1 em {
   font-style: italic;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
-  background-size: 200% auto;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: goldShimmer 4s linear infinite;
+  animation: goldShimmer 6s ease infinite;
+  filter: drop-shadow(0 0 12px rgba(212,168,83,0.4));
 }
 .hero p {
   font-size: 1.15rem; color: var(--gray-400);
@@ -331,7 +362,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.2rem; font-weight: 700; color: var(--white);
 }
-.hero-stat-value span { color: var(--gold); }
+.hero-stat-value span { color: var(--gold-bright); text-shadow: 0 0 8px rgba(212,168,83,0.3); }
 .hero-stat-value.counting {
   animation: countUp 0.4s ease-out;
 }
@@ -363,7 +394,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: var(--shadow-lg); text-align: center;
 }
 .vessel-float-value {
-  font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--gold);
+  font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 6px rgba(212,168,83,0.4));
 }
 .vessel-float-label { font-size: 0.8rem; color: var(--gray-400); }
 .vessel-specs {
@@ -379,7 +413,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 0 20px rgba(201,168,76,0.08);
 }
 .vessel-spec-value { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); }
-.vessel-spec-value span { color: var(--gold); font-size: 0.8rem; }
+.vessel-spec-value span { color: var(--gold-bright); font-size: 0.8rem; text-shadow: 0 0 6px rgba(212,168,83,0.3); }
 .vessel-spec-label { font-size: 0.7rem; color: var(--gray-600); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
 /* ─── EXPERIENCES ─────────────────────────────────────────────── */
@@ -452,9 +486,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .price-card.featured::before {
   content: 'BEST VALUE'; position: absolute; top: 16px; right: -32px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold));
   color: var(--navy); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em;
   padding: 6px 40px; transform: rotate(45deg);
+  box-shadow: 0 2px 10px rgba(212,168,83,0.4);
 }
 .price-card-title { font-size: 0.75rem; font-weight: 700; color: var(--seafoam); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; font-family: 'Montserrat', sans-serif; }
 .price-card-amount {
@@ -466,7 +501,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .price-feature {
   display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--gray-300);
 }
-.price-feature .check { color: var(--gold); font-size: 0.8rem; flex-shrink: 0; }
+.price-feature .check { color: var(--gold-bright); font-size: 0.8rem; flex-shrink: 0; text-shadow: 0 0 6px rgba(212,168,83,0.4); }
 .price-note {
   text-align: center; margin-top: 40px; font-size: 0.85rem; color: var(--gray-600); line-height: 1.6;
 }
@@ -492,9 +527,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .pricing-card.featured::before {
   content: 'BEST VALUE'; position: absolute; top: 16px; right: -32px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold));
   color: var(--navy); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.15em;
   padding: 6px 40px; transform: rotate(45deg);
+  box-shadow: 0 2px 10px rgba(212,168,83,0.4);
 }
 
 /* Pricing card image container */
@@ -584,7 +620,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .reviews-rating {
   text-align: center; margin-bottom: 48px; font-size: 0.95rem; color: var(--gray-400);
 }
-.reviews-rating .stars { color: var(--gold); font-size: 1.2rem; letter-spacing: 4px; }
+.reviews-rating .stars { color: var(--gold-bright); font-size: 1.2rem; letter-spacing: 4px; text-shadow: 0 0 10px rgba(212,168,83,0.5), 0 0 20px rgba(212,168,83,0.2); }
 .review-card {
   background: var(--dark-card); border: 1px solid var(--dark-border);
   border-radius: var(--radius-lg); padding: 32px;
@@ -594,7 +630,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-color: var(--gray-700);
   box-shadow: 0 0 30px rgba(201,168,76,0.05);
 }
-.review-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; }
+.review-stars { color: var(--gold-bright); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; text-shadow: 0 0 8px rgba(212,168,83,0.4); }
 .review-card blockquote {
   font-size: 0.95rem; color: var(--gray-300); line-height: 1.7;
   font-style: italic; margin-bottom: 20px;
@@ -739,7 +775,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 20px;
 }
-.cta-banner h2 em { font-style: italic; color: var(--gold); }
+.cta-banner h2 em {
+  font-style: italic;
+  background: linear-gradient(105deg, var(--gold), var(--gold-bright), var(--gold-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(212,168,83,0.4));
+}
 .cta-banner p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
 .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
@@ -929,9 +970,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: var(--transition); font-size: 0.85rem; font-weight: 700;
 }
 .footer-social:hover {
-  background: var(--gold); border-color: var(--gold); color: var(--navy);
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright)); border-color: var(--gold); color: var(--navy);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+  box-shadow: 0 4px 18px var(--gold-glow), 0 0 12px rgba(212,168,83,0.2);
 }
 .footer h4 {
   font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em;
@@ -951,16 +992,17 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .scroll-top {
   position: fixed; bottom: 32px; right: 32px; z-index: 900;
   width: 48px; height: 48px; border-radius: 50%;
-  background: var(--gold); color: var(--navy);
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-bright));
+  color: var(--navy);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.2rem; font-weight: 700;
-  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+  box-shadow: 0 4px 20px var(--gold-glow), inset 0 1px 0 rgba(255,229,160,0.4);
   opacity: 0; visibility: hidden; transition: var(--transition); cursor: pointer;
 }
 .scroll-top.visible { opacity: 1; visibility: visible; }
 .scroll-top:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(201,168,76,0.5);
+  box-shadow: 0 8px 30px rgba(212,168,83,0.6), 0 0 15px rgba(212,168,83,0.3);
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
