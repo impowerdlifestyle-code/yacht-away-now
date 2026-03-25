@@ -1088,7 +1088,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .nav-cta { margin-left: 0 !important; margin-top: 12px; width: 100%; text-align: center; display: flex !important; justify-content: center; }
   .nav-phone { justify-content: center; margin-top: 8px; }
   .mobile-toggle { display: flex; z-index: 1001; padding: 10px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
-  .hero { min-height: auto; padding: 88px 0 40px; }
+  .hero { min-height: auto; padding: 88px 0 40px; text-align: center; }
+  .hero .container { display: flex; flex-direction: column; align-items: center; }
   .hero-bg {
     background:
       linear-gradient(180deg, rgba(6,11,20,0.3) 0%, rgba(6,11,20,0.6) 40%, rgba(6,11,20,0.95) 65%, var(--dark) 100%),
@@ -1098,47 +1099,64 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .hero h1 { font-size: 2rem; margin-bottom: 16px; }
   .hero p { font-size: 1rem; margin-bottom: 28px; line-height: 1.65; max-width: 100%; }
   .hero-badge { font-size: 0.7rem; padding: 6px 14px; margin-bottom: 20px; }
-  .hero-actions { flex-direction: column; gap: 12px; margin-bottom: 40px; }
+  .hero-actions { flex-direction: column; gap: 12px; margin-bottom: 40px; width: 100%; align-items: center; }
   .hero-actions .btn { width: 100%; justify-content: center; padding: 16px 24px; font-size: 0.95rem; }
   .hero-stats { gap: 12px; flex-wrap: wrap; padding-top: 28px; justify-content: center; }
   .hero-stat-value { font-size: 1.7rem; }
   .hero-stat-label { font-size: 0.7rem; }
   .hero-wave-container { display: none; }
+
+  /* Center all text and buttons on mobile */
+  .section { text-align: center; }
+  .section-subtitle { margin-left: auto; margin-right: auto; }
   .section-title { font-size: clamp(1.5rem, 5vw, 2.2rem); margin-bottom: 14px; }
   .section-subtitle { font-size: 0.95rem; }
   .section-label { font-size: 0.7rem; margin-bottom: 12px; }
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 16px; }
+
+  /* All button containers: center and full-width on mobile */
+  [style*="display:flex"][style*="gap"] { justify-content: center !important; }
+  .btn { width: 100%; justify-content: center; text-align: center; }
+  .price-card .btn, .pricing-card .btn { width: 100%; }
+
+  /* Vessel section centered */
+  .vessel .container > div:last-child { text-align: center; }
   .vessel-specs { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .vessel-spec { padding: 12px; }
   .vessel-spec-value { font-size: 1.2rem; }
-  .vessel-float { position: relative; bottom: auto; right: auto; margin-top: -20px; }
+  .vessel-float { position: relative; bottom: auto; right: auto; margin-top: -20px; margin-left: auto; margin-right: auto; }
   .vessel-image { font-size: 3rem; aspect-ratio: 16/9 !important; }
+
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 16px; }
   .exp-card-image { aspect-ratio: 16/10; }
-  .exp-card-body { padding: 20px; }
+  .exp-card-body { padding: 20px; text-align: center; }
   .exp-card h3 { font-size: 1.1rem; }
   .exp-card p { font-size: 0.85rem; }
-  .price-card, .pricing-card { padding: 28px 20px; }
+  .exp-link { justify-content: center; }
+  .price-card, .pricing-card { padding: 28px 20px; text-align: center; }
   .price-card-amount, .pricing-amount { font-size: 2.2rem; }
   .price-card-title { font-size: 0.75rem; }
+  .price-features { text-align: left; }
   .pricing-card-image {
     width: calc(100% + 40px); margin: -28px -20px 24px;
     height: 160px;
   }
   .booking-grid { gap: 40px; }
-  .review-card { padding: 24px; }
+  .review-card { padding: 24px; text-align: center; }
   .review-card blockquote { font-size: 0.9rem; }
+  .review-author { justify-content: center; }
+  .reviews-rating { justify-content: center; text-align: center; }
   .team-photo { font-size: 3rem; aspect-ratio: 4/3; }
-  .team-info { padding: 20px; }
+  .team-info { padding: 20px; text-align: center; }
   .team-info h3 { font-size: 1.05rem; }
   .team-info p { font-size: 0.8rem; }
   .team-social { width: 40px; height: 40px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .gallery-item { aspect-ratio: 4/3; border-radius: 8px; }
   .gallery-item::before { display: none; }
-  .cta-banner { padding: 56px 0; }
+  .cta-banner { padding: 56px 0; text-align: center; }
   .cta-banner h2 { font-size: clamp(1.4rem, 5vw, 2rem); }
-  .cta-banner p { font-size: 0.95rem; margin-bottom: 28px; }
-  .cta-actions { flex-direction: column; gap: 12px; }
+  .cta-banner p { font-size: 0.95rem; margin-bottom: 28px; margin-left: auto; margin-right: auto; }
+  .cta-actions { flex-direction: column; gap: 12px; align-items: center; }
   .cta-actions .btn { width: 100%; justify-content: center; padding: 16px 24px; }
   .booking .container { gap: 40px; }
   .booking-card { padding: 24px; }
@@ -1152,16 +1170,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .booking-info-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
   .booking-card-full { max-width: 100%; }
   .about-image { font-size: 3rem; aspect-ratio: 16/9; }
-  .page-hero { padding: 112px 0 48px; }
+  .about .container > div:last-child { text-align: center; }
+  .page-hero { padding: 112px 0 48px; text-align: center; }
   .page-hero .section-title { font-size: clamp(1.4rem, 5vw, 2rem); }
   .breadcrumb { font-size: 0.8rem; margin-bottom: 14px; }
-  .footer { padding: 48px 0 24px; }
+
+  /* Footer mobile */
+  .footer { padding: 48px 0 24px; text-align: center; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; margin-bottom: 32px; }
+  .footer-brand { display: flex; flex-direction: column; align-items: center; }
   .footer-brand p { font-size: 0.85rem; margin: 14px 0 18px; }
-  .footer h4 { margin-bottom: 12px; }
+  .footer-socials { justify-content: center; }
+  .footer .footer-heading { margin-bottom: 12px; }
   .footer ul a { font-size: 0.85rem; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; font-size: 0.8rem; }
-  .footer-bottom div { gap: 16px !important; }
+  .footer-bottom div { gap: 16px !important; justify-content: center; }
   .scroll-top { bottom: 20px; right: 20px; width: 44px; height: 44px; font-size: 1.1rem; }
   .lightbox-prev { left: 12px; width: 44px; height: 44px; }
   .lightbox-next { right: 12px; width: 44px; height: 44px; }
@@ -1169,6 +1192,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .lightbox img { max-width: 95vw; max-height: 80vh; border-radius: 8px; }
   .gold-divider { width: 60px; margin-bottom: 24px; }
   .scroll-progress { height: 2px; }
+
+  /* Faq centered */
+  .faq-list { text-align: left; }
 }
 @media (max-width: 380px) {
   .hero h1 { font-size: 1.7rem; }
