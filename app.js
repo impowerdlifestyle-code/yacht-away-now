@@ -16,6 +16,21 @@ function toggleMobile() {
   document.getElementById('mobileToggle').classList.toggle('open');
 }
 
+// Close mobile menu when any nav link is tapped
+document.addEventListener('DOMContentLoaded', function() {
+  var navLinks = document.querySelectorAll('.nav-links a');
+  navLinks.forEach(function(link) {
+    link.addEventListener('click', function() {
+      var menu = document.getElementById('navLinks');
+      var toggle = document.getElementById('mobileToggle');
+      if (menu && menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        toggle.classList.remove('open');
+      }
+    });
+  });
+});
+
 // ─── Scroll reveal with stagger effect ───
 function initReveal() {
   var observer = new IntersectionObserver(function(entries) {
@@ -402,6 +417,99 @@ function initParallax() {
 // ═══════════════════════════════════════════════════════════════
 //  INIT
 // ═══════════════════════════════════════════════════════════════
+// ─── 6. AI Chat Widget ───
+function initChatWidget() {
+  var chatHTML =
+    '<div id="chat-widget" style="position:fixed;bottom:24px;right:24px;z-index:9999;font-family:Montserrat,-apple-system,sans-serif;">' +
+      '<div id="chat-window" style="display:none;width:360px;max-width:calc(100vw - 48px);height:500px;max-height:calc(100vh - 120px);background:#0a1f30;border:1px solid #163248;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 30px rgba(212,168,83,0.1);flex-direction:column;overflow:hidden;">' +
+        '<div style="padding:16px 20px;background:linear-gradient(135deg,#0b1d2e,#122d45);border-bottom:1px solid #163248;display:flex;align-items:center;justify-content:space-between;">' +
+          '<div style="display:flex;align-items:center;gap:10px;">' +
+            '<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">&#9875;</div>' +
+            '<div><div style="font-weight:600;font-size:0.9rem;color:#f0f7fa;">Yacht Away Now</div><div style="font-size:0.7rem;color:#4ecdc4;">Online — Ready to help</div></div>' +
+          '</div>' +
+          '<button onclick="toggleChat()" style="background:none;border:none;color:#8bbad4;font-size:1.4rem;cursor:pointer;padding:4px;">&times;</button>' +
+        '</div>' +
+        '<div id="chat-messages" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">' +
+          '<div style="background:#122d45;border-radius:12px 12px 12px 4px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#b8d8e8;line-height:1.6;">Welcome aboard! I\'m your virtual concierge. Ask me anything about our yacht charters, pricing, destinations, or help booking your experience. &#9973;</div>' +
+        '</div>' +
+        '<div style="padding:12px 16px;border-top:1px solid #163248;display:flex;gap:8px;">' +
+          '<input id="chat-input" type="text" placeholder="Ask about charters, pricing..." style="flex:1;padding:10px 16px;border-radius:50px;border:1px solid #163248;background:#071520;color:#f0f7fa;font-size:0.85rem;font-family:inherit;outline:none;" onkeydown="if(event.key===\'Enter\')sendChat()">' +
+          '<button onclick="sendChat()" style="width:40px;height:40px;border-radius:50%;border:none;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0b1d2e;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">&#10148;</button>' +
+        '</div>' +
+      '</div>' +
+      '<button id="chat-toggle" onclick="toggleChat()" style="width:60px;height:60px;border-radius:50%;border:none;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#f0d48a,#d4a853,#b8912e);background-size:200% auto;color:#0b1d2e;font-size:1.6rem;cursor:pointer;box-shadow:0 4px 20px rgba(212,168,83,0.4),0 0 30px rgba(212,168,83,0.15);animation:goldShimmer 5s ease infinite;transition:all 0.3s ease;">' +
+        '&#9875;' +
+      '</button>' +
+    '</div>';
+
+  document.body.insertAdjacentHTML('beforeend', chatHTML);
+}
+
+var chatHistory = [];
+
+function toggleChat() {
+  var win = document.getElementById('chat-window');
+  var btn = document.getElementById('chat-toggle');
+  if (win.style.display === 'none' || win.style.display === '') {
+    win.style.display = 'flex';
+    btn.style.display = 'none';
+    document.getElementById('chat-input').focus();
+  } else {
+    win.style.display = 'none';
+    btn.style.display = 'block';
+  }
+}
+
+function sendChat() {
+  var input = document.getElementById('chat-input');
+  var msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  var messages = document.getElementById('chat-messages');
+
+  // Add user message
+  var userBubble = document.createElement('div');
+  userBubble.style.cssText = 'background:linear-gradient(135deg,#b8912e,#d4a853);border-radius:12px 12px 4px 12px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#0b1d2e;line-height:1.6;align-self:flex-end;font-weight:500;';
+  userBubble.textContent = msg;
+  messages.appendChild(userBubble);
+
+  // Add typing indicator
+  var typing = document.createElement('div');
+  typing.style.cssText = 'background:#122d45;border-radius:12px 12px 12px 4px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#4ecdc4;line-height:1.6;';
+  typing.innerHTML = '<span style="animation:pulse 1s infinite;">Thinking...</span>';
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  chatHistory.push({ role: 'user', content: msg });
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: msg, history: chatHistory })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    messages.removeChild(typing);
+    var reply = data.reply || 'Sorry, I had trouble with that. Please call us at (727) 609-2248!';
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    var botBubble = document.createElement('div');
+    botBubble.style.cssText = 'background:#122d45;border-radius:12px 12px 12px 4px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#b8d8e8;line-height:1.6;';
+    botBubble.textContent = reply;
+    messages.appendChild(botBubble);
+    messages.scrollTop = messages.scrollHeight;
+  })
+  .catch(function() {
+    messages.removeChild(typing);
+    var errBubble = document.createElement('div');
+    errBubble.style.cssText = 'background:#122d45;border-radius:12px 12px 12px 4px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#b8d8e8;line-height:1.6;';
+    errBubble.textContent = 'Having trouble connecting. Give us a call at (727) 609-2248!';
+    messages.appendChild(errBubble);
+    messages.scrollTop = messages.scrollHeight;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   // Core features
   initReveal();
@@ -413,4 +521,5 @@ document.addEventListener('DOMContentLoaded', function() {
   initLightbox();
   initParticles();
   initParallax();
+  initChatWidget();
 });
