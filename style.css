@@ -24,6 +24,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   --gold-dark: #b8912e;
   --gold-deep: #8b6914;
   --gold-glow: rgba(212, 168, 83, 0.35);
+  --gold-metallic: linear-gradient(105deg, #8b6914, #b8912e, #d4a853, #f0d48a, #ffe5a0, #f0d48a, #d4a853, #b8912e, #8b6914);
   --sand: #f5e6c8;
   --sand-light: #faf3e6;
   --sand-dark: #c9b896;
@@ -80,8 +81,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ─── GOLD DIVIDER ────────────────────────────────────────────── */
 .gold-divider {
   width: 80px; height: 2px; margin: 0 auto 32px;
-  background: linear-gradient(90deg, transparent, var(--gold-dark), var(--gold-bright), var(--gold-dark), transparent);
-  box-shadow: 0 0 12px rgba(212,168,83,0.3);
+  background: linear-gradient(90deg, transparent, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold-bright), var(--gold), var(--gold-dark), transparent);
+  background-size: 200% auto;
+  box-shadow: 0 0 16px rgba(212,168,83,0.5), 0 0 32px rgba(212,168,83,0.2);
+  animation: goldShimmer 3s ease infinite;
 }
 
 /* ─── SCROLL PROGRESS BAR ─────────────────────────────────────── */
@@ -161,11 +164,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Gold shimmer for section titles */
 @keyframes goldShimmer {
   0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  50% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 /* Luxury shine sweep for buttons and accents */
 @keyframes goldShineSweep {
   0% { left: -100%; }
+  40% { left: 200%; }
   100% { left: 200%; }
 }
 
@@ -239,13 +244,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .logo-icon {
   border-radius: 0; background: none; width: auto; height: 48px;
   object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(212,168,83,0.5)) drop-shadow(0 0 2px rgba(212,168,83,0.3));
+  filter: drop-shadow(0 0 12px rgba(212,168,83,0.7)) drop-shadow(0 0 4px rgba(255,229,160,0.5)) drop-shadow(0 0 24px rgba(212,168,83,0.3));
+  animation: logoGlow 3s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  0% { filter: drop-shadow(0 0 8px rgba(212,168,83,0.5)) drop-shadow(0 0 3px rgba(255,229,160,0.4)) drop-shadow(0 0 20px rgba(212,168,83,0.2)); }
+  100% { filter: drop-shadow(0 0 16px rgba(212,168,83,0.8)) drop-shadow(0 0 6px rgba(255,229,160,0.6)) drop-shadow(0 0 32px rgba(212,168,83,0.4)); }
 }
 .logo span {
-  background: linear-gradient(135deg, var(--gold), var(--gold-bright), var(--gold-light));
-  background-size: 200% auto;
+  background: linear-gradient(105deg, var(--gold-deep), var(--gold-dark), var(--gold), var(--gold-light), var(--gold-bright), var(--gold-light), var(--gold), var(--gold-dark), var(--gold-deep));
+  background-size: 300% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: goldShimmer 6s ease infinite;
+  animation: goldShimmer 4s ease infinite;
+  filter: drop-shadow(0 0 6px rgba(212,168,83,0.4));
 }
 .nav-links { display: flex; align-items: center; gap: 8px; }
 .nav-links a {
@@ -363,7 +374,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.2rem; font-weight: 700; color: var(--white);
 }
-.hero-stat-value span { color: var(--gold-bright); text-shadow: 0 0 8px rgba(212,168,83,0.3); }
+.hero-stat-value span {
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 5s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(212,168,83,0.4));
+}
 .hero-stat-value.counting {
   animation: countUp 0.4s ease-out;
 }
@@ -414,7 +431,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: 0 0 20px rgba(201,168,76,0.08);
 }
 .vessel-spec-value { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; color: var(--white); }
-.vessel-spec-value span { color: var(--gold-bright); font-size: 0.8rem; text-shadow: 0 0 6px rgba(212,168,83,0.3); }
+.vessel-spec-value span {
+  font-size: 0.8rem;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 5s ease infinite;
+  filter: drop-shadow(0 0 6px rgba(212,168,83,0.3));
+}
 .vessel-spec-label { font-size: 0.7rem; color: var(--gray-600); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
 
 /* ─── EXPERIENCES ─────────────────────────────────────────────── */
@@ -502,7 +526,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .price-feature {
   display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--gray-300);
 }
-.price-feature .check { color: var(--gold-bright); font-size: 0.8rem; flex-shrink: 0; text-shadow: 0 0 6px rgba(212,168,83,0.4); }
+.price-feature .check {
+  font-size: 0.8rem; flex-shrink: 0;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 5s ease infinite;
+  filter: drop-shadow(0 0 6px rgba(212,168,83,0.5));
+}
 .price-note {
   text-align: center; margin-top: 40px; font-size: 0.85rem; color: var(--gray-600); line-height: 1.6;
 }
@@ -621,7 +652,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .reviews-rating {
   text-align: center; margin-bottom: 48px; font-size: 0.95rem; color: var(--gray-400);
 }
-.reviews-rating .stars { color: var(--gold-bright); font-size: 1.2rem; letter-spacing: 4px; text-shadow: 0 0 10px rgba(212,168,83,0.5), 0 0 20px rgba(212,168,83,0.2); }
+.reviews-rating .stars {
+  font-size: 1.2rem; letter-spacing: 4px;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 4s ease infinite;
+  filter: drop-shadow(0 0 10px rgba(212,168,83,0.6)) drop-shadow(0 0 20px rgba(212,168,83,0.3));
+}
 .review-card {
   background: var(--dark-card); border: 1px solid var(--dark-border);
   border-radius: var(--radius-lg); padding: 32px;
@@ -631,7 +669,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-color: var(--gray-700);
   box-shadow: 0 0 30px rgba(201,168,76,0.05);
 }
-.review-stars { color: var(--gold-bright); font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; text-shadow: 0 0 8px rgba(212,168,83,0.4); }
+.review-stars {
+  font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold-light), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 5s ease infinite;
+  filter: drop-shadow(0 0 8px rgba(212,168,83,0.5));
+}
 .review-card blockquote {
   font-size: 0.95rem; color: var(--gray-300); line-height: 1.7;
   font-style: italic; margin-bottom: 20px;
@@ -949,7 +994,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 1.05rem; font-weight: 600; text-align: left; transition: var(--transition);
 }
 .faq-question:hover { color: var(--gold); }
-.faq-icon { font-size: 1.2rem; color: var(--gold); transition: transform 0.3s; flex-shrink: 0; margin-left: 16px; }
+.faq-icon {
+  font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; margin-left: 16px;
+  background: linear-gradient(105deg, var(--gold-dark), var(--gold), var(--gold-bright), var(--gold), var(--gold-dark));
+  background-size: 300% auto;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: goldShimmer 4s ease infinite;
+  filter: drop-shadow(0 0 4px rgba(212,168,83,0.4));
+}
 .faq-item.open .faq-icon { transform: rotate(45deg); }
 .faq-answer {
   max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;
