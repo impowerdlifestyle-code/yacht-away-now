@@ -492,6 +492,71 @@ function sendChat() {
   .then(function(data) {
     messages.removeChild(typing);
     var reply = data.reply || 'Sorry, I had trouble with that. Please call us at (727) 609-2248!';
+
+    // Check if the AI wants to submit a booking
+    var bookingMatch = reply.match(/BOOKING_SUBMIT:(\{.*\})/);
+    if (bookingMatch) {
+      try {
+        var booking = JSON.parse(bookingMatch[1]);
+        // Remove the JSON line from the displayed reply
+        var displayReply = reply.replace(/BOOKING_SUBMIT:\{.*\}/, '').trim();
+
+        // Show a booking confirmation card
+        var bookingCard = document.createElement('div');
+        bookingCard.style.cssText = 'background:linear-gradient(135deg,#122d45,#1a3550);border:1px solid #d4a853;border-radius:12px;padding:16px;max-width:90%;font-size:0.82rem;color:#b8d8e8;line-height:1.7;';
+        bookingCard.innerHTML =
+          '<div style="color:#d4a853;font-weight:600;margin-bottom:8px;">&#9875; Booking Submitted!</div>' +
+          '<div><strong>Name:</strong> ' + (booking.first_name || '') + ' ' + (booking.last_name || '') + '</div>' +
+          '<div><strong>Phone:</strong> ' + (booking.phone || '') + '</div>' +
+          '<div><strong>Email:</strong> ' + (booking.email || '') + '</div>' +
+          '<div><strong>Charter:</strong> ' + (booking.charter_type || 'TBD') + '</div>' +
+          '<div><strong>Date:</strong> ' + (booking.preferred_date || 'Flexible') + '</div>' +
+          '<div><strong>Guests:</strong> ' + (booking.guests || 'TBD') + '</div>' +
+          '<div><strong>Duration:</strong> ' + (booking.duration || 'TBD') + '</div>' +
+          (booking.message ? '<div><strong>Notes:</strong> ' + booking.message + '</div>' : '') +
+          '<div style="margin-top:10px;font-size:0.75rem;color:#4ecdc4;">Sending to our concierge team...</div>';
+        messages.appendChild(bookingCard);
+        messages.scrollTop = messages.scrollHeight;
+
+        // Submit booking to Formspree via our API
+        fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(booking)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+          var statusEl = bookingCard.querySelector('div:last-child');
+          if (result.success) {
+            statusEl.innerHTML = '&#10003; Sent! Our team will confirm within 24 hours.';
+            statusEl.style.color = '#4ecdc4';
+          } else {
+            statusEl.innerHTML = 'Could not send — please call (727) 609-2248.';
+            statusEl.style.color = '#e63946';
+          }
+
+          // Add follow-up message from bot
+          if (displayReply) {
+            var followUp = document.createElement('div');
+            followUp.style.cssText = 'background:#122d45;border-radius:12px 12px 12px 4px;padding:12px 16px;max-width:85%;font-size:0.85rem;color:#b8d8e8;line-height:1.6;';
+            followUp.textContent = displayReply;
+            messages.appendChild(followUp);
+            messages.scrollTop = messages.scrollHeight;
+          }
+        })
+        .catch(function() {
+          var statusEl = bookingCard.querySelector('div:last-child');
+          statusEl.innerHTML = 'Network error — please call (727) 609-2248.';
+          statusEl.style.color = '#e63946';
+        });
+
+        chatHistory.push({ role: 'assistant', content: displayReply || 'Booking submitted!' });
+        return;
+      } catch (e) {
+        // JSON parse failed, treat as normal reply
+      }
+    }
+
     chatHistory.push({ role: 'assistant', content: reply });
 
     var botBubble = document.createElement('div');
