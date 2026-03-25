@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QTEXZD81XN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-QTEXZD81XN");</script>
+<meta charset="UTF-8">
+<title>Competitive Analysis: Yacht Away Now vs Well Played Charters</title>
+<style>
+  @page { size: letter; margin: 0.6in 0.7in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1a1a2e; font-size: 10.5pt; line-height: 1.55; }
+
+  /* Cover */
+  .cover { page-break-after: always; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(135deg, #0a1628 0%, #122d45 50%, #0b1d2e 100%); color: #f0f7fa; padding: 60px; }
+  .cover h1 { font-size: 32pt; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .cover h1 span { color: #d4a853; }
+  .cover .subtitle { font-size: 14pt; color: #8bbad4; margin-bottom: 40px; font-weight: 300; }
+  .cover .meta { font-size: 10pt; color: #4a7a9a; margin-top: 20px; }
+  .cover .vs { font-size: 48pt; font-weight: 900; color: #d4a853; margin: 30px 0; letter-spacing: 4px; }
+  .cover .company { font-size: 16pt; font-weight: 600; margin: 8px 0; }
+  .cover .company.gold { color: #d4a853; }
+  .cover .divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, #d4a853, transparent); margin: 20px auto; }
+
+  /* Content pages */
+  h2 { font-size: 16pt; font-weight: 700; color: #0b1d2e; margin: 28px 0 14px; padding-bottom: 6px; border-bottom: 2px solid #d4a853; }
+  h3 { font-size: 12pt; font-weight: 700; color: #122d45; margin: 18px 0 8px; }
+  p { margin-bottom: 10px; }
+  .page-break { page-break-before: always; }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 9.5pt; }
+  th { background: #0b1d2e; color: #f0f7fa; padding: 10px 12px; text-align: left; font-weight: 600; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 9px 12px; border-bottom: 1px solid #e8e8e8; }
+  tr:nth-child(even) td { background: #f8f9fb; }
+  .winner { background: #f0faf0 !important; }
+  .winner-strong { background: #e0f5e0 !important; font-weight: 600; }
+  .loser { background: #fef5f0 !important; }
+
+  /* Score boxes */
+  .scores { display: flex; gap: 20px; margin: 16px 0 24px; }
+  .score-box { flex: 1; padding: 20px; border-radius: 10px; text-align: center; }
+  .score-box.ya { background: linear-gradient(135deg, #0b1d2e, #122d45); color: #f0f7fa; }
+  .score-box.wp { background: #f0f0f5; color: #1a1a2e; border: 1px solid #ddd; }
+  .score-number { font-size: 36pt; font-weight: 900; line-height: 1; }
+  .score-number.gold { color: #d4a853; }
+  .score-number.red { color: #e74c3c; }
+  .score-label { font-size: 9pt; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; font-weight: 600; }
+  .score-status { font-size: 8pt; margin-top: 4px; opacity: 0.7; }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 8pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-green { background: #e0f5e0; color: #1a7a1a; }
+  .badge-red { background: #fde8e8; color: #c0392b; }
+  .badge-yellow { background: #fef9e7; color: #b7950b; }
+  .badge-gray { background: #f0f0f0; color: #666; }
+
+  /* Findings list */
+  .finding { margin: 10px 0; padding: 10px 14px; border-left: 3px solid #ddd; background: #fafafa; border-radius: 0 6px 6px 0; }
+  .finding.critical { border-left-color: #e74c3c; background: #fef5f0; }
+  .finding.high { border-left-color: #f39c12; background: #fef9e7; }
+  .finding.medium { border-left-color: #3498db; background: #f0f7fe; }
+  .finding strong { font-size: 10pt; }
+
+  /* Summary callout */
+  .callout { padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+  .callout-gold { background: linear-gradient(135deg, #fdf6e3, #fef9e7); border: 1px solid #d4a853; }
+  .callout-dark { background: #0b1d2e; color: #f0f7fa; }
+  .callout-dark strong { color: #d4a853; }
+
+  /* Footer */
+  .footer { font-size: 8pt; color: #999; text-align: center; margin-top: 40px; padding-top: 12px; border-top: 1px solid #eee; }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+  <div style="margin-bottom:20px;">
+    <div style="font-size:10pt;letter-spacing:3px;text-transform:uppercase;color:#4a7a9a;margin-bottom:30px;">Competitive SEO Analysis</div>
+    <div class="company gold">Yacht Away Now</div>
+    <div class="vs">VS</div>
+    <div class="company">Well Played Charters</div>
+  </div>
+  <div class="divider"></div>
+  <div class="subtitle">St. Petersburg, FL — Private Yacht Charter Market</div>
+  <div class="meta">Prepared March 25, 2026 &nbsp;|&nbsp; Nexus AI Agency</div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<h2>Executive Summary</h2>
+<p>This report compares the SEO health, content strategy, technical foundations, and competitive positioning of <strong>Yacht Away Now</strong> (yachtawaynow.com) against <strong>Well Played Charters</strong> (wellplayedcharters.com) — two private yacht charter companies operating in St. Petersburg, FL.</p>
+
+<div class="scores">
+  <div class="score-box ya">
+    <div class="score-number gold">80</div>
+    <div class="score-label">Yacht Away Now</div>
+    <div class="score-status">Good — Solid foundation</div>
+  </div>
+  <div class="score-box wp">
+    <div class="score-number red">52</div>
+    <div class="score-label">Well Played Charters</div>
+    <div class="score-status">Poor — Serious constraints</div>
+  </div>
+</div>
+
+<div class="callout callout-gold">
+  <strong>Key Takeaway:</strong> Despite Well Played having more total pages (43 vs 21) and more blog content (22 posts vs 4), Yacht Away Now scores 28 points higher due to clean technical foundations, proper schema implementation, no crawl-blocking errors, and superior mobile optimization. Well Played's critical robots.txt misconfiguration and schema data conflicts are actively suppressing their rankings.
+</div>
+
+<!-- BUSINESS COMPARISON -->
+<h2>Business Comparison</h2>
+<table>
+  <tr><th width="30%">Factor</th><th width="35%">Yacht Away Now</th><th width="35%">Well Played Charters</th></tr>
+  <tr><td><strong>Location</strong></td><td>St. Petersburg, FL</td><td>St. Petersburg, FL</td></tr>
+  <tr><td><strong>Vessel(s)</strong></td><td class="winner">52ft Marquis Flybridge + fleet on request</td><td>41ft Regal Commodore + 41ft Sea Ray Sundancer</td></tr>
+  <tr><td><strong>Capacity</strong></td><td>Up to 13 guests</td><td>Up to 13 guests</td></tr>
+  <tr><td><strong>Starting Price</strong></td><td class="winner">$300/hr weekday</td><td>$1,400 (4-hr minimum)</td></tr>
+  <tr><td><strong>Weekend Price</strong></td><td>$2,000–$2,500</td><td>$1,400+ (4/6/8 hr options)</td></tr>
+  <tr><td><strong>Bahamas/Keys Trips</strong></td><td class="winner-strong">Yes — $5,000+ multi-day</td><td class="loser">No — vessel range too limited</td></tr>
+  <tr><td><strong>Google Reviews</strong></td><td>57 reviews, 5.0 stars</td><td class="winner">5.0 stars (Google, Facebook, Yelp)</td></tr>
+  <tr><td><strong>Booking System</strong></td><td>Contact form (Formspree) + AI chat</td><td class="winner">FareHarbor (instant booking)</td></tr>
+  <tr><td><strong>Operating Hours</strong></td><td>Sunrise to Sunset</td><td>8am–10pm</td></tr>
+  <tr><td><strong>Social Platforms</strong></td><td>Facebook, Instagram, Google</td><td class="winner">Facebook, Instagram, TikTok, LinkedIn, YouTube, X, Pinterest</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- SEO SCORE BREAKDOWN -->
+<h2>SEO Health Score Breakdown</h2>
+<table>
+  <tr><th>Category</th><th>Weight</th><th>Yacht Away Now</th><th>Well Played Charters</th><th>Advantage</th></tr>
+  <tr><td><strong>Crawlability & Indexation</strong></td><td>30%</td><td class="winner-strong">92</td><td class="loser">55</td><td><span class="badge badge-green">YAN +37</span></td></tr>
+  <tr><td><strong>Technical Foundations</strong></td><td>25%</td><td class="winner-strong">68</td><td class="loser">48</td><td><span class="badge badge-green">YAN +20</span></td></tr>
+  <tr><td><strong>On-Page Optimization</strong></td><td>20%</td><td class="winner-strong">90</td><td class="loser">58</td><td><span class="badge badge-green">YAN +32</span></td></tr>
+  <tr><td><strong>Content Quality & E-E-A-T</strong></td><td>15%</td><td class="winner">62</td><td class="loser">52</td><td><span class="badge badge-green">YAN +10</span></td></tr>
+  <tr><td><strong>Authority & Trust Signals</strong></td><td>10%</td><td class="winner">72</td><td class="loser">45</td><td><span class="badge badge-green">YAN +27</span></td></tr>
+  <tr><td><strong>Weighted Total</strong></td><td>100%</td><td class="winner-strong"><strong>80/100</strong></td><td class="loser"><strong>52/100</strong></td><td><span class="badge badge-green">YAN +28</span></td></tr>
+</table>
+
+<!-- TECHNICAL COMPARISON -->
+<h2>Technical SEO Comparison</h2>
+<table>
+  <tr><th>Factor</th><th>Yacht Away Now</th><th>Well Played Charters</th></tr>
+  <tr><td><strong>Platform</strong></td><td class="winner">Static HTML on Vercel (fast, lightweight)</td><td class="loser">WordPress + Elementor (heavy)</td></tr>
+  <tr><td><strong>robots.txt</strong></td><td class="winner-strong">Clean — Allow all</td><td class="loser">Blocks /wp-content/ (breaks rendering)</td></tr>
+  <tr><td><strong>Sitemap</strong></td><td class="winner">21 URLs, no conflicts</td><td>43 URLs, conflicts with robots.txt</td></tr>
+  <tr><td><strong>Canonical Tags</strong></td><td class="winner">Self-referencing on all pages</td><td class="loser">Missing on multiple pages</td></tr>
+  <tr><td><strong>Schema Markup</strong></td><td class="winner-strong">LocalBusiness, Service, Article, FAQ, BreadcrumbList, Product — consistent data</td><td class="loser">LocalBusiness, Article — conflicting hours (09:00-17:00 vs 8am-10pm)</td></tr>
+  <tr><td><strong>Security Headers</strong></td><td class="winner-strong">CSP, HSTS, X-Frame, nosniff, Referrer-Policy, Permissions-Policy</td><td class="loser">None detected</td></tr>
+  <tr><td><strong>Image Optimization</strong></td><td class="winner">WebP with JPEG fallback, lazy loading, width/height</td><td class="loser">JPEG only, missing alt text, lazy loaded via JS</td></tr>
+  <tr><td><strong>OG / Twitter Cards</strong></td><td class="winner">Full tags on every page</td><td class="loser">Missing on homepage</td></tr>
+  <tr><td><strong>llms.txt</strong></td><td class="winner-strong">Present, spec-compliant</td><td class="loser">Missing</td></tr>
+  <tr><td><strong>URL Structure</strong></td><td class="winner">Clean, no typos</td><td class="loser">Typo in key URL: "peterburg" instead of "petersburg"</td></tr>
+  <tr><td><strong>GBP Link</strong></td><td class="winner">Linked on every review section + schema sameAs</td><td class="loser">Not linked anywhere on site</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- CONTENT COMPARISON -->
+<h2>Content Strategy Comparison</h2>
+<table>
+  <tr><th>Content Type</th><th>Yacht Away Now</th><th>Well Played Charters</th></tr>
+  <tr><td><strong>Total Pages</strong></td><td>21</td><td class="winner">43</td></tr>
+  <tr><td><strong>Blog Posts</strong></td><td>4 (varied topics)</td><td class="winner">22 (all bachelor/bachelorette)</td></tr>
+  <tr><td><strong>Location Pages</strong></td><td class="winner-strong">3 (Tampa, St. Pete, Clearwater)</td><td>2 (1 has URL typo)</td></tr>
+  <tr><td><strong>Occasion/Service Pages</strong></td><td class="winner">4 dedicated (bachelorette, birthday, corporate, sunset)</td><td>7 (bachelor, wedding, corporate, family, sunset, cruises, custom)</td></tr>
+  <tr><td><strong>Destination Pages</strong></td><td>0</td><td class="winner">5 (Pass-a-Grille, Shell Key, Skyway, Egmont Key, Johns Pass)</td></tr>
+  <tr><td><strong>FAQ Page</strong></td><td class="winner">Yes — with FAQPage schema (7 Q&As)</td><td>FAQ section on location page only</td></tr>
+  <tr><td><strong>Privacy/Terms</strong></td><td class="winner">Both pages exist and are linked</td><td>Privacy, Terms, Cookie Policy, Disclaimer, Anti-Discrimination</td></tr>
+  <tr><td><strong>Blog Topic Diversity</strong></td><td class="winner-strong">Sunset spots, bachelorette guide, yacht vs party boat, packing list</td><td class="loser">100% bachelor/bachelorette content (22 posts, zero other topics)</td></tr>
+  <tr><td><strong>Content Freshness</strong></td><td class="winner">Pages updated March 2026</td><td class="loser">Most pages last updated May-July 2025</td></tr>
+  <tr><td><strong>Author Attribution</strong></td><td>Organization (should be Person)</td><td class="loser">"adms" — WordPress admin username</td></tr>
+</table>
+
+<h3>Content Gap Analysis</h3>
+<p>Keywords that <strong>Yacht Away Now covers</strong> but Well Played does not:</p>
+<table>
+  <tr><th>Keyword Target</th><th>YAN Page</th><th>WPC Coverage</th></tr>
+  <tr><td>yacht charter tampa</td><td class="winner">/yacht-charter-tampa</td><td class="loser">None</td></tr>
+  <tr><td>yacht charter clearwater</td><td class="winner">/yacht-charter-clearwater</td><td class="loser">None</td></tr>
+  <tr><td>sunset cruise st petersburg</td><td class="winner">/sunset-cruise-st-petersburg</td><td>/services/sunset-charters/</td></tr>
+  <tr><td>birthday yacht charter</td><td class="winner">/birthday-yacht-charter</td><td class="loser">None (1 blog post only)</td></tr>
+  <tr><td>yacht charter vs party boat</td><td class="winner">/blog/yacht-charter-vs-party-boat</td><td class="loser">None</td></tr>
+  <tr><td>what to bring yacht charter</td><td class="winner">/blog/what-to-bring-on-a-yacht-charter</td><td class="loser">None</td></tr>
+  <tr><td>bahamas yacht charter</td><td class="winner">Homepage + pricing (unique offering)</td><td class="loser">Cannot offer — vessel range too short</td></tr>
+</table>
+
+<p>Keywords that <strong>Well Played covers</strong> but Yacht Away Now does not:</p>
+<table>
+  <tr><th>Keyword Target</th><th>WPC Page</th><th>YAN Coverage</th></tr>
+  <tr><td>wedding yacht charter</td><td class="winner">/wedding-charters/</td><td class="loser">None</td></tr>
+  <tr><td>shell key charter</td><td class="winner">/destinations-shell-key-preserve/</td><td class="loser">Mentioned in copy, no dedicated page</td></tr>
+  <tr><td>egmont key charter</td><td class="winner">/destinations-egmont-key/</td><td class="loser">Mentioned in copy, no dedicated page</td></tr>
+  <tr><td>pass-a-grille charter</td><td class="winner">/destinations-pass-a-grille/</td><td class="loser">Mentioned in blog, no dedicated page</td></tr>
+  <tr><td>family vacation charter</td><td class="winner">/family-vacation-charters/</td><td class="loser">None</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- CRITICAL ISSUES -->
+<h2>Well Played Charters — Critical Issues</h2>
+<p>These issues are actively suppressing their search visibility:</p>
+
+<div class="finding critical">
+  <strong>F1. robots.txt blocks /wp-content/ — images, CSS, and JS hidden from Google</strong><br>
+  Google cannot render their pages properly. This is the single most damaging SEO issue on the site. All images are stored in /wp-content/uploads/ which is blocked from crawling.
+</div>
+
+<div class="finding critical">
+  <strong>F2. Schema data conflict — operating hours show 9am-5pm in code, 8am-10pm on page</strong><br>
+  Google may display incorrect business hours in search results and Maps, eroding trust and causing missed bookings.
+</div>
+
+<div class="finding high">
+  <strong>F3. Key location URL has "peterburg" typo (missing a letter)</strong><br>
+  Their most important geo-targeted page misspells the city name in the URL, missing exact-match keyword searches.
+</div>
+
+<div class="finding high">
+  <strong>F4. Blog author is "adms" — WordPress admin username, not a real person</strong><br>
+  Google's E-E-A-T guidelines heavily weight named human authorship. An admin username signals low-effort or auto-generated content.
+</div>
+
+<div class="finding high">
+  <strong>F5. "As Seen On" section uses paid press release syndication, not earned media</strong><br>
+  Presenting paid distribution as media coverage is misleading and could trigger Google's link spam penalties.
+</div>
+
+<div class="finding high">
+  <strong>F6. All 22 blog posts are about bachelor/bachelorette parties only</strong><br>
+  Zero content covering weddings, corporate events, family charters, sunset cruises, or destinations — despite offering all these services. Massive keyword gap.
+</div>
+
+<!-- YAN ADVANTAGES -->
+<h2>Yacht Away Now — Competitive Advantages</h2>
+
+<div class="callout callout-dark">
+  <strong>Unique Selling Propositions that Well Played cannot match:</strong>
+  <ul style="margin-top:8px;padding-left:18px;color:#b8d8e8;">
+    <li><strong>Bahamas & Keys trips</strong> — 600-mile range vs Well Played's coastal-only vessels</li>
+    <li><strong>52ft Marquis Flybridge</strong> — larger, more luxurious single vessel vs two 41ft boats</li>
+    <li><strong>Lower weekday entry point</strong> — $300/hr vs $1,400 minimum</li>
+    <li><strong>Multiple yachts available</strong> — fleet flexibility on request</li>
+    <li><strong>AI chat concierge</strong> — 24/7 instant response on website</li>
+  </ul>
+</div>
+
+<table>
+  <tr><th>SEO Advantage</th><th>Details</th></tr>
+  <tr><td><strong>Technical cleanliness</strong></td><td>Hand-coded static HTML loads 3-5x faster than Elementor. No CMS vulnerabilities, no plugin bloat.</td></tr>
+  <tr><td><strong>Schema completeness</strong></td><td>7 schema types (LocalBusiness, Service, Article, FAQ, BreadcrumbList, Product, WebSite) vs 3 inconsistent types.</td></tr>
+  <tr><td><strong>AI search readiness</strong></td><td>llms.txt present, FAQPage schema, clear factual passages optimized for citation by ChatGPT, Perplexity, Google AIO.</td></tr>
+  <tr><td><strong>Security posture</strong></td><td>Full security header suite (CSP, HSTS, X-Frame-Options) signals trustworthiness to both users and search engines.</td></tr>
+  <tr><td><strong>Image optimization</strong></td><td>WebP format with JPEG fallback saves 64% bandwidth. Every image has alt text, dimensions, and lazy loading.</td></tr>
+  <tr><td><strong>Content freshness</strong></td><td>All pages updated March 2026. Well Played's core pages haven't been updated since May-July 2025.</td></tr>
+  <tr><td><strong>GBP integration</strong></td><td>Google Business Profile linked on every review section and in schema sameAs. Well Played has no GBP link.</td></tr>
+</table>
+
+<div class="page-break"></div>
+
+<!-- RECOMMENDATIONS -->
+<h2>Recommendations for Yacht Away Now</h2>
+<h3>To Widen the Gap (Next 30 Days)</h3>
+<table>
+  <tr><th>#</th><th>Action</th><th>Impact</th><th>Effort</th></tr>
+  <tr><td>1</td><td>Create destination pages (Shell Key, Egmont Key, Pass-a-Grille, Skyway Bridge)</td><td><span class="badge badge-green">High</span></td><td>Medium</td></tr>
+  <tr><td>2</td><td>Create wedding charter page (WPC's strongest keyword you don't cover)</td><td><span class="badge badge-green">High</span></td><td>Low</td></tr>
+  <tr><td>3</td><td>Create family charter page</td><td><span class="badge badge-yellow">Medium</span></td><td>Low</td></tr>
+  <tr><td>4</td><td>Add 3-5 YouTube videos (yacht tour, sunset cruise, bachelorette)</td><td><span class="badge badge-green">High</span></td><td>Medium</td></tr>
+  <tr><td>5</td><td>List on TripAdvisor, Yelp, and local directories</td><td><span class="badge badge-green">High</span></td><td>Low</td></tr>
+  <tr><td>6</td><td>Add real team photos and captain credentials</td><td><span class="badge badge-yellow">Medium</span></td><td>Low</td></tr>
+  <tr><td>7</td><td>Expand FAQ to 20+ questions</td><td><span class="badge badge-yellow">Medium</span></td><td>Low</td></tr>
+  <tr><td>8</td><td>Implement FareHarbor or similar instant booking</td><td><span class="badge badge-green">High</span></td><td>Medium</td></tr>
+</table>
+
+<h3>Well Played's Vulnerabilities to Exploit</h3>
+<table>
+  <tr><th>Their Weakness</th><th>Your Opportunity</th></tr>
+  <tr><td>Zero blog content outside bachelor/ette</td><td>Dominate sunset cruise, corporate, wedding, family charter keywords with blog content</td></tr>
+  <tr><td>No Tampa or Clearwater location pages</td><td>You already own these — they're ranking for St. Pete only</td></tr>
+  <tr><td>Broken robots.txt blocking images from Google</td><td>Your properly rendered pages will display rich results while theirs may show broken previews</td></tr>
+  <tr><td>No AI search optimization (no llms.txt)</td><td>You'll be cited by ChatGPT, Perplexity, and Google AIO before they are</td></tr>
+  <tr><td>Stale content (last updated mid-2025)</td><td>Your fresh March 2026 content signals active maintenance to Google</td></tr>
+  <tr><td>No Bahamas/Keys capability</td><td>Own the "Bahamas yacht charter from Florida" keyword space entirely</td></tr>
+</table>
+
+<div class="callout callout-gold" style="margin-top:24px;">
+  <strong>Bottom Line:</strong> Yacht Away Now has a 28-point SEO advantage over Well Played Charters. The gap will widen as Google crawls and indexes the recent improvements. The priority now is offensive expansion — destination pages, wedding/family content, YouTube, and directory listings — to capture keywords Well Played currently owns while their technical issues continue to suppress their visibility.
+</div>
+
+<div class="footer">
+  Competitive Analysis prepared by Nexus AI Agency &nbsp;|&nbsp; March 25, 2026 &nbsp;|&nbsp; Data sourced from live site analysis, schema extraction, and sitemap audits
+</div>
+
+</body>
+</html>
