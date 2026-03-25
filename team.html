@@ -35,6 +35,11 @@
       "name": "Yacht Away Now",
       "url": "https://www.yachtawaynow.com",
       "telephone": "+17276092248",
+      "sameAs": [
+        "https://facebook.com/yachtawaynow",
+        "https://instagram.com/yachtawaynow",
+        "https://share.google/7e44SLfCM74VXYfe2"
+      ],
       "member": [
         {
           "@type": "Person",
@@ -53,13 +58,23 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.yachtawaynow.com"},
+      {"@type": "ListItem", "position": 2, "name": "Team", "item": "https://www.yachtawaynow.com/team"}
+    ]
+  }
+  </script>
 </head>
 <body>
 
 <nav class="navbar" id="navbar">
   <div class="container">
     <a href="/" class="logo">
-      <img src="/images/logo-gold.png" alt="Yacht Away Now" class="logo-icon">
+      <img src="/images/logo.svg" alt="Yacht Away Now" class="logo-icon">
       Yacht <span>Away</span> Now
     </a>
     <div class="nav-links" id="navLinks">
@@ -95,7 +110,10 @@
     <div class="grid-3">
 
       <div class="team-card reveal">
-        <img src="/images/yacht-docked.jpg" alt="Josh Wilson, Founder of Yacht Away Now" width="400" height="400" loading="lazy">
+        <picture>
+  <source srcset="/images/yacht-docked.webp" type="image/webp">
+  <img src="/images/yacht-docked.jpg" alt="Josh Wilson, Founder of Yacht Away Now" width="400" height="400" loading="lazy">
+</picture>
         <h3>Josh Wilson</h3>
         <p class="team-role">Founder &amp; Owner</p>
         <p class="team-bio">Founded Yacht Away Now to share the magic of Florida's Gulf Coast. Manages all bookings, client relationships, and business operations.</p>
@@ -106,7 +124,10 @@
       </div>
 
       <div class="team-card reveal">
-        <img src="/images/yacht-night.jpg" alt="Captain Jason, licensed yacht captain" width="400" height="400" loading="lazy">
+        <picture>
+  <source srcset="/images/yacht-night.webp" type="image/webp">
+  <img src="/images/yacht-night.jpg" alt="Captain Jason, licensed yacht captain" width="400" height="400" loading="lazy">
+</picture>
         <h3>Captain Jason</h3>
         <p class="team-role">Captain</p>
         <p class="team-bio">Our experienced and licensed captain ensures every voyage is safe, smooth, and unforgettable. Known for his warm hospitality and deep knowledge of the Gulf Coast.</p>
@@ -116,7 +137,10 @@
       </div>
 
       <div class="team-card reveal">
-        <img src="/images/yacht-stern.jpg" alt="Professional charter crew aboard the yacht" width="400" height="400" loading="lazy">
+        <picture>
+  <source srcset="/images/yacht-stern.webp" type="image/webp">
+  <img src="/images/yacht-stern.jpg" alt="Professional charter crew aboard the yacht" width="400" height="400" loading="lazy">
+</picture>
         <h3>Charter Crew</h3>
         <p class="team-role">Hospitality &amp; Crew</p>
         <p class="team-bio">Our professional crew members are trained to deliver five-star service. From setup to send-off, they ensure your experience exceeds expectations.</p>
@@ -146,11 +170,12 @@
         <div class="footer-socials">
           <a href="https://facebook.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Facebook">f</a>
           <a href="https://instagram.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Instagram">ig</a>
+          <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" class="footer-social" title="Google Reviews">G</a>
         </div>
       </div>
-      <div><h4>Quick Links</h4><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/our-yacht">Our Yacht</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/contact">Book Now</a></li></ul></div>
-      <div><h4>Charters</h4><ul><li><a href="/pricing">Sunset Cruises</a></li><li><a href="/pricing">Day Charters</a></li><li><a href="/pricing">Bachelorette Parties</a></li><li><a href="/pricing">Birthday Charters</a></li><li><a href="/pricing">Bahamas Trips</a></li></ul></div>
-      <div><h4>Contact</h4><ul><li><a href="tel:7276092248">(727) 609-2248</a></li><li><a href="mailto:josh@yachtawaynow.com">josh@yachtawaynow.com</a></li><li>38th Way S<br>St. Petersburg, FL</li></ul></div>
+      <div><strong class="footer-heading">Quick Links</strong><ul><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/our-yacht">Our Yacht</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/contact">Book Now</a></li></ul></div>
+      <div><strong class="footer-heading">Charters</strong><ul><li><a href="/sunset-cruise-st-petersburg">Sunset Cruises</a></li><li><a href="/pricing">Day Charters</a></li><li><a href="/bachelorette-party-yacht-charter">Bachelorette Parties</a></li><li><a href="/birthday-yacht-charter">Birthday Charters</a></li><li><a href="/pricing">Bahamas Trips</a></li></ul></div>
+      <div><strong class="footer-heading">Contact</strong><ul><li><a href="tel:7276092248">(727) 609-2248</a></li><li><a href="mailto:josh@yachtawaynow.com">josh@yachtawaynow.com</a></li><li>38th Way S<br>St. Petersburg, FL</li></ul></div>
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Yacht Away Now. All rights reserved.</p>
@@ -159,6 +184,6 @@
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
-<script src="/app.js"></script>
+<script src="/app.js" defer></script>
 </body>
 </html>

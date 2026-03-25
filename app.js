@@ -353,20 +353,30 @@ function initParticles() {
     }
   }
 
+  var isVisible = true;
+  document.addEventListener('visibilitychange', function() {
+    isVisible = !document.hidden;
+    if (isVisible) requestAnimationFrame(animate);
+  });
+
+  var isMobile = window.innerWidth < 768;
+
   function animate() {
+    if (!isVisible) return;
     time++;
     ctx.clearRect(0, 0, w, h);
 
     // Caustic light ripples (behind waves)
-    drawCaustics(time * 0.016);
+    if (!isMobile) drawCaustics(time * 0.016);
 
     // Draw wave layers back to front
-    for (var i = 0; i < waves.length; i++) {
+    var step = isMobile ? 3 : waves.length;
+    for (var i = 0; i < step; i++) {
       drawWave(waves[i], time);
     }
 
     // Floating motes on top
-    drawMotes(time * 0.016);
+    if (!isMobile) drawMotes(time * 0.016);
 
     requestAnimationFrame(animate);
   }
