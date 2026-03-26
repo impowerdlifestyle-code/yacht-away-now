@@ -518,11 +518,30 @@ function sendChat() {
         messages.appendChild(bookingCard);
         messages.scrollTop = messages.scrollHeight;
 
-        // Submit booking to Formspree via our API
-        fetch('/api/book', {
+        // Submit booking email via Web3Forms (client-side)
+        var emailBody = 'NEW BOOKING REQUEST — AI Chat Concierge\n========================================\n\n' +
+          'Name: ' + (booking.first_name || '') + ' ' + (booking.last_name || '') + '\n' +
+          'Phone: ' + (booking.phone || '') + '\n' +
+          'Email: ' + (booking.email || '') + '\n' +
+          'Charter Type: ' + (booking.charter_type || 'Not specified') + '\n' +
+          'Preferred Date: ' + (booking.preferred_date || 'Flexible') + '\n' +
+          'Guests: ' + (booking.guests || 'Not specified') + '\n' +
+          'Duration: ' + (booking.duration || 'Not specified') + '\n' +
+          'Special Notes: ' + (booking.message || 'None') + '\n\n' +
+          '========================================\n' +
+          'Source: AI Chat Concierge on yachtawaynow.com\n' +
+          'Reply to this email to reach the customer at ' + (booking.email || '');
+
+        fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(booking)
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            access_key: 'dea9f1e3-2ab6-489f-bab2-9d003db7b977',
+            subject: 'New Charter Booking — ' + (booking.first_name || '') + ' ' + (booking.last_name || '') + ' (' + (booking.charter_type || 'Charter') + ')',
+            from_name: 'Yacht Away Now — AI Concierge',
+            reply_to: booking.email || '',
+            message: emailBody
+          })
         })
         .then(function(r) { return r.json(); })
         .then(function(result) {
