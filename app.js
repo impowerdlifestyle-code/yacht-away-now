@@ -493,13 +493,14 @@ function sendChat() {
     messages.removeChild(typing);
     var reply = data.reply || 'Sorry, I had trouble with that. Please call us at (727) 609-2248!';
 
-    // Check if the AI wants to submit a booking
-    var bookingMatch = reply.match(/BOOKING_SUBMIT:(\{.*\})/);
+    // Check if the AI wants to submit a booking — flexible regex
+    var bookingMatch = reply.match(/BOOKING_SUBMIT:\s*(\{[\s\S]*?\})/);
     if (bookingMatch) {
       try {
-        var booking = JSON.parse(bookingMatch[1]);
-        // Remove the JSON line from the displayed reply
-        var displayReply = reply.replace(/BOOKING_SUBMIT:\{.*\}/, '').trim();
+        var jsonStr = bookingMatch[1].replace(/[\r\n]/g, '');
+        var booking = JSON.parse(jsonStr);
+        // Remove the entire BOOKING_SUBMIT line from the displayed reply
+        var displayReply = reply.replace(/BOOKING_SUBMIT:\s*\{[\s\S]*?\}/, '').trim();
 
         // Show a booking confirmation card
         var bookingCard = document.createElement('div');
