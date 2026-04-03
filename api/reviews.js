@@ -16,7 +16,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    const placeId = 'ChIJ7za8P4sdw4gR8zIl0CuGgyk';
+    // Search for the place first to get the Place ID
+    const searchUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Yacht+Away+Now+St+Petersburg+FL&inputtype=textquery&fields=place_id&key=${apiKey}`;
+    const searchRes = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+
+    if (!searchData.candidates || !searchData.candidates.length) {
+      return res.status(404).json({ error: 'Place not found' });
+    }
+
+    const placeId = searchData.candidates[0].place_id;
+
+    // Get place details with review count
     const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=user_ratings_total,rating&key=${apiKey}`;
     const detailsRes = await fetch(detailsUrl);
     const detailsData = await detailsRes.json();
