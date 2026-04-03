@@ -2,6 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "yachtawaynow.com" }],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
     { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 }
   ],
   "headers": [
