@@ -22,7 +22,9 @@
     { "source": "/private-boat-charter-tampa-bay", "destination": "/yacht-charter-tampa", "statusCode": 301 },
     { "source": "/blog/how-much-does-a-yacht-charter-cost", "destination": "/yacht-charter-cost-tampa-bay", "statusCode": 301 },
     { "source": "/home", "destination": "/", "statusCode": 301 },
-    { "source": "/captain", "destination": "https://yan-dashboard.vercel.app/captain", "statusCode": 301 }
+    { "source": "/captain", "destination": "https://yan-dashboard.vercel.app/captain", "statusCode": 301 },
+    { "source": "/ta", "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html?utm_source=yan&utm_medium=sms&utm_campaign=review_request", "statusCode": 302 },
+    { "source": "/tripadvisor", "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html", "statusCode": 302 }
   ],
   "headers": [
     {
