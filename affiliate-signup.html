@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Join Our Affiliate Program | Yacht Away Now</title>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f0f7fa;line-height:1.6;font-weight:300;min-height:100vh}
+
+:root{
+  --navy:#071520;--navy-light:#0a1f30;--navy-card:#0d2538;--navy-border:#163248;
+  --gold:#d4a853;--gold-light:#ffe5a0;--gold-dark:#b8912e;
+  --seafoam:#4ecdc4;--seafoam-dark:#1a8bb3;
+  --text:#f0f7fa;--text-muted:#8bbad4;--text-dim:#5a7d96;
+  --red:#e63946;--green:#2ecc71;
+}
+
+/* Hero */
+.hero{text-align:center;padding:80px 24px 48px;max-width:700px;margin:0 auto}
+.hero-logo{font-size:3rem;margin-bottom:16px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;line-height:1.15;margin-bottom:12px}
+.hero h1 span{color:var(--gold)}
+.hero p{color:var(--text-muted);font-size:1rem;max-width:520px;margin:0 auto 32px}
+
+/* Perks grid */
+.perks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto 56px;padding:0 24px}
+.perk{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:24px;text-align:center}
+.perk-icon{font-size:1.8rem;margin-bottom:10px}
+.perk h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:6px;color:var(--text)}
+.perk p{font-size:0.8rem;color:var(--text-muted);line-height:1.5}
+
+/* How it works */
+.how-it-works{max-width:700px;margin:0 auto 56px;padding:0 24px}
+.how-it-works h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;text-align:center;margin-bottom:28px;color:var(--text)}
+.steps{display:flex;flex-direction:column;gap:20px}
+.step{display:flex;align-items:flex-start;gap:16px}
+.step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0b1d2e;font-size:0.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text h4{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.step-text p{font-size:0.82rem;color:var(--text-muted)}
+
+/* Signup form */
+.form-section{max-width:520px;margin:0 auto 80px;padding:0 24px}
+.form-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,0.35)}
+.form-card h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin-bottom:6px;text-align:center}
+.form-card .form-sub{font-size:0.82rem;color:var(--text-muted);text-align:center;margin-bottom:24px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:6px;font-weight:500}
+.form-group input,.form-group select{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.9rem;font-family:inherit}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--gold)}
+.form-group select{cursor:pointer}
+
+.btn{padding:14px 28px;border-radius:10px;font-size:0.85rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;width:100%;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:#0b1d2e}
+.btn-gold:hover{background-position:right center;box-shadow:0 4px 20px rgba(212,168,83,0.3)}
+.btn-gold:disabled{opacity:0.5;cursor:not-allowed}
+#form-error{color:var(--red);font-size:0.8rem;text-align:center;margin-top:12px;display:none}
+
+/* Success state */
+#success-view{display:none}
+.success-card{background:var(--navy-card);border:1px solid var(--gold);border-radius:16px;padding:48px 36px;max-width:560px;margin:0 auto;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.35),0 0 40px rgba(212,168,83,0.08)}
+.success-icon{font-size:3rem;margin-bottom:16px}
+.success-card h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:8px}
+.success-card .welcome-msg{color:var(--text-muted);font-size:0.9rem;margin-bottom:28px}
+
+.credential-box{background:var(--navy);border:1px solid var(--navy-border);border-radius:12px;padding:20px;margin-bottom:20px;text-align:left}
+.credential-box .cred-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:4px}
+.credential-box .cred-value{font-size:1.1rem;font-weight:600;color:var(--seafoam);font-family:'SF Mono',Monaco,monospace;word-break:break-all}
+.credential-box .cred-row{margin-bottom:14px}
+.credential-box .cred-row:last-child{margin-bottom:0}
+
+.link-display{background:var(--navy);border:1px solid var(--navy-border);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.link-display code{flex:1;font-size:0.75rem;color:var(--seafoam);word-break:break-all;font-family:'SF Mono',Monaco,monospace}
+.copy-btn{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.72rem;cursor:pointer;font-family:inherit;flex-shrink:0}
+.copy-btn:hover{border-color:var(--seafoam);color:var(--seafoam)}
+
+.success-actions{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.btn-outline{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:12px 24px;border-radius:10px;font-size:0.85rem;font-weight:500;cursor:pointer;font-family:inherit;text-decoration:none;text-align:center;transition:all 0.2s}
+.btn-outline:hover{border-color:var(--seafoam);color:var(--seafoam)}
+
+.commission-badge{display:inline-block;background:rgba(212,168,83,0.15);color:var(--gold);padding:6px 16px;border-radius:50px;font-size:0.82rem;font-weight:600;margin-bottom:20px}
+
+/* Footer note */
+.footer-note{text-align:center;padding:24px;font-size:0.75rem;color:var(--text-dim)}
+.footer-note a{color:var(--seafoam);text-decoration:none}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy-card);border:1px solid var(--gold);border-radius:10px;padding:12px 20px;font-size:0.85rem;color:var(--gold);z-index:2000;opacity:0;transform:translateY(10px);transition:all 0.3s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .hero{padding:48px 20px 32px}
+  .hero h1{font-size:2rem}
+  .perks{grid-template-columns:1fr 1fr}
+  .form-card{padding:28px 20px}
+  .success-card{padding:32px 20px}
+}
+@media(max-width:480px){
+  .perks{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Signup View -->
+<div id="signup-view">
+  <div class="hero">
+    <div class="hero-logo">&#9875;</div>
+    <h1>Earn Money Referring <span>Yacht Charters</span></h1>
+    <p>Join the Yacht Away Now affiliate program and earn 10% commission on every booking you refer. It's free to join — start earning today.</p>
+  </div>
+
+  <div class="perks">
+    <div class="perk">
+      <div class="perk-icon">&#128176;</div>
+      <h3>10% Commission</h3>
+      <p>Earn 10% on every booking made through your referral link. Charters start at $1,500+.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128279;</div>
+      <h3>Custom Links</h3>
+      <p>Get your own unique referral links to share on social media, email, or your website.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128200;</div>
+      <h3>Real-Time Tracking</h3>
+      <p>Track clicks, conversions, and earnings from your own affiliate dashboard.</p>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">&#128181;</div>
+      <h3>Easy Payouts</h3>
+      <p>Request payouts anytime via Venmo, Zelle, PayPal, or check. No minimums.</p>
+    </div>
+  </div>
+
+  <div class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4>Sign Up (Free)</h4>
+          <p>Fill out the form below. You'll get your unique referral code and links instantly.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4>Share Your Link</h4>
+          <p>Send your referral link to friends, post it on social media, or add it to your website.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4>Earn Commission</h4>
+          <p>When someone books a charter through your link, you earn 10% of the booking total.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h4>Get Paid</h4>
+          <p>Request a payout anytime from your affiliate portal. We'll send it within 3-5 business days.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" id="form-section">
+    <div class="form-card">
+      <h2>Join the Program</h2>
+      <p class="form-sub">Free to join. Start earning immediately.</p>
+      <div class="form-group"><label>Full Name *</label><input id="s-name" placeholder="John Smith"></div>
+      <div class="form-group"><label>Email *</label><input id="s-email" type="email" placeholder="john@example.com"></div>
+      <div class="form-group"><label>Phone (optional)</label><input id="s-phone" placeholder="(555) 123-4567"></div>
+      <div class="form-group">
+        <label>Choose Your Referral Code *</label>
+        <input id="s-code" placeholder="e.g. JOHNDOE, SUNSHINE, TAMPALIFE" maxlength="20" oninput="checkCode()" style="text-transform:uppercase">
+        <div id="code-status" style="font-size:0.75rem;margin-top:5px;min-height:18px"></div>
+      </div>
+      <div class="form-group"><label>How did you hear about us?</label>
+        <select id="s-source">
+          <option value="">Select one...</option>
+          <option value="friend">Friend or family</option>
+          <option value="social">Social media</option>
+          <option value="search">Google search</option>
+          <option value="concierge">Hotel / concierge</option>
+          <option value="event">Event or networking</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <button class="btn btn-gold" id="submit-btn" onclick="doSignup()">Join Now — It's Free</button>
+      <p id="form-error"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Success View -->
+<div id="success-view">
+  <div style="padding:60px 24px 40px;max-width:600px;margin:0 auto">
+    <div class="success-card">
+      <div class="success-icon">&#127881;</div>
+      <h2>Welcome Aboard!</h2>
+      <p class="welcome-msg">You're officially a Yacht Away Now affiliate partner, <strong id="success-name"></strong>.</p>
+      <div class="commission-badge">10% Commission Per Booking</div>
+
+      <div class="credential-box">
+        <div class="cred-row">
+          <div class="cred-label">Your Referral Code</div>
+          <div class="cred-value" id="success-code"></div>
+        </div>
+        <div class="cred-row">
+          <div class="cred-label">Portal Login</div>
+          <div class="cred-value" style="font-size:0.85rem;color:var(--text-muted)">Use your <span style="color:var(--seafoam)">email</span> + <span style="color:var(--seafoam)">referral code</span> to sign in</div>
+        </div>
+      </div>
+
+      <div style="text-align:left;margin-bottom:8px"><div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:6px">Your Referral Link</div></div>
+      <div class="link-display">
+        <code id="success-link"></code>
+        <button class="copy-btn" onclick="copyLink()">Copy</button>
+      </div>
+
+      <div class="success-actions">
+        <a href="/affiliate-portal" class="btn btn-gold" style="text-decoration:none">Go to Your Dashboard</a>
+        <a href="/" class="btn-outline">Back to Yacht Away Now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  <p>Already a partner? <a href="/affiliate-portal">Sign in to your dashboard</a></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function copyLink() {
+  const link = document.getElementById('success-link').textContent;
+  navigator.clipboard.writeText(link).then(() => toast('Link copied!')).catch(() => toast('Copy failed'));
+}
+
+let codeTimer = null;
+let codeAvailable = false;
+
+function checkCode() {
+  const input = document.getElementById('s-code');
+  const status = document.getElementById('code-status');
+  const raw = input.value.replace(/[^a-zA-Z0-9\-_]/g, '').toUpperCase();
+  input.value = raw;
+
+  if (raw.length === 0) {
+    status.innerHTML = '';
+    codeAvailable = false;
+    return;
+  }
+  if (raw.length < 3) {
+    status.innerHTML = '<span style="color:var(--text-dim)">At least 3 characters</span>';
+    codeAvailable = false;
+    return;
+  }
+
+  status.innerHTML = '<span style="color:var(--text-dim)">Checking...</span>';
+  clearTimeout(codeTimer);
+  codeTimer = setTimeout(async () => {
+    try {
+      const res = await fetch(`/api/affiliates?action=check-code&code=${encodeURIComponent(raw)}`);
+      const data = await res.json();
+      if (data.available) {
+        status.innerHTML = '<span style="color:var(--green)">' + raw + ' is available!</span>';
+        codeAvailable = true;
+      } else {
+        status.innerHTML = '<span style="color:var(--red)">' + raw + ' is already taken</span>';
+        codeAvailable = false;
+      }
+    } catch (e) {
+      status.innerHTML = '<span style="color:var(--text-dim)">Could not check — try again</span>';
+      codeAvailable = false;
+    }
+  }, 400);
+}
+
+async function doSignup() {
+  const name = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const phone = document.getElementById('s-phone').value.trim();
+  const customCode = document.getElementById('s-code').value.trim().toUpperCase();
+  const source = document.getElementById('s-source').value;
+  const errEl = document.getElementById('form-error');
+  const btn = document.getElementById('submit-btn');
+
+  if (!name || !email) {
+    errEl.textContent = 'Name and email are required';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!customCode || customCode.length < 3) {
+    errEl.textContent = 'Please choose a referral code (at least 3 characters)';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!codeAvailable) {
+    errEl.textContent = 'That referral code is unavailable. Please choose a different one.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creating your account...';
+  errEl.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/affiliates?action=signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, referral_source: source, custom_code: customCode }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      errEl.textContent = data.error || 'Something went wrong';
+      errEl.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Join Now — It\'s Free';
+      return;
+    }
+
+    document.getElementById('success-name').textContent = data.name;
+    document.getElementById('success-code').textContent = data.code;
+    document.getElementById('success-link').textContent = 'https://www.yachtawaynow.com/api/affiliates?action=click&code=' + data.code;
+
+    document.getElementById('signup-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+    window.scrollTo(0, 0);
+
+  } catch (e) {
+    errEl.textContent = 'Network error. Please try again.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Join Now — It\'s Free';
+  }
+}
+</script>
+</body>
+</html>

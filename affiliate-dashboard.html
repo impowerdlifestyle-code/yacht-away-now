@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Affiliate Dashboard | Yacht Away Now</title>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f0f7fa;line-height:1.6;font-weight:300;min-height:100vh}
+
+:root{
+  --navy:#071520;--navy-light:#0a1f30;--navy-card:#0d2538;--navy-border:#163248;
+  --gold:#d4a853;--gold-light:#ffe5a0;--gold-dark:#b8912e;
+  --seafoam:#4ecdc4;--seafoam-dark:#1a8bb3;
+  --text:#f0f7fa;--text-muted:#8bbad4;--text-dim:#5a7d96;
+  --red:#e63946;--green:#2ecc71;
+}
+
+/* Layout */
+.dash-header{background:linear-gradient(135deg,#0b1d2e,#122d45);border-bottom:1px solid var(--navy-border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.dash-header h1{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--gold)}
+.dash-header .subtitle{font-size:0.75rem;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase}
+.dash-nav{display:flex;gap:8px}
+.dash-nav button{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:8px 16px;border-radius:8px;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.dash-nav button:hover,.dash-nav button.active{background:var(--navy-card);color:var(--gold);border-color:var(--gold)}
+
+.dash-body{max-width:1400px;margin:0 auto;padding:24px 32px}
+
+/* Auth gate */
+#auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh}
+.auth-box{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:48px;text-align:center;max-width:400px;width:100%}
+.auth-box h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:8px}
+.auth-box p{color:var(--text-muted);font-size:0.85rem;margin-bottom:24px}
+.auth-box input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.9rem;font-family:inherit;margin-bottom:16px}
+.auth-box input:focus{outline:none;border-color:var(--gold)}
+
+/* Stats cards */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.stat-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:20px 24px}
+.stat-card .label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:4px}
+.stat-card .value{font-size:1.8rem;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.stat-card .value.gold{color:var(--gold)}
+.stat-card .value.seafoam{color:var(--seafoam)}
+
+/* Tables */
+.panel{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.panel-header{padding:16px 24px;border-bottom:1px solid var(--navy-border);display:flex;align-items:center;justify-content:space-between}
+.panel-header h2{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--text)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px 24px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);border-bottom:1px solid var(--navy-border);font-weight:600}
+td{padding:12px 24px;font-size:0.85rem;border-bottom:1px solid rgba(22,50,72,0.5);color:var(--text-muted)}
+tr:hover td{background:rgba(78,205,196,0.03)}
+
+/* Badges */
+.badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:0.7rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.badge-active{background:rgba(46,204,113,0.15);color:#2ecc71}
+.badge-inactive{background:rgba(230,57,70,0.15);color:#e63946}
+.badge-pending{background:rgba(212,168,83,0.15);color:var(--gold)}
+.badge-paid{background:rgba(78,205,196,0.15);color:var(--seafoam)}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:#0b1d2e}
+.btn-gold:hover{background-position:right center;box-shadow:0 4px 20px rgba(212,168,83,0.3)}
+.btn-outline{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted)}
+.btn-outline:hover{border-color:var(--seafoam);color:var(--seafoam)}
+.btn-sm{padding:6px 14px;font-size:0.72rem}
+.btn-danger{background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)}
+.btn-danger:hover{background:rgba(230,57,70,0.25)}
+
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(7,21,32,0.85);display:none;align-items:center;justify-content:center;z-index:1000;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:32px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto}
+.modal h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);margin-bottom:20px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:6px;font-weight:500}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.85rem;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+.form-group select{cursor:pointer}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-actions{display:flex;gap:10px;margin-top:24px}
+
+/* Link display */
+.link-box{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-top:8px}
+.link-box code{flex:1;font-size:0.8rem;color:var(--seafoam);word-break:break-all;font-family:'SF Mono',Monaco,monospace}
+.link-box button{flex-shrink:0}
+
+/* Detail view */
+.detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;margin-bottom:20px;background:none;border:none;font-family:inherit}
+.detail-back:hover{color:var(--seafoam)}
+.detail-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+.detail-name{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--text)}
+.detail-meta{font-size:0.8rem;color:var(--text-muted);margin-top:4px}
+
+/* Sections */
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin:24px 0 12px}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy-card);border:1px solid var(--gold);border-radius:10px;padding:12px 20px;font-size:0.85rem;color:var(--gold);z-index:2000;opacity:0;transform:translateY(10px);transition:all 0.3s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:768px){
+  .dash-header{flex-direction:column;gap:12px;padding:16px}
+  .dash-body{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+  th,td{padding:10px 14px;font-size:0.78rem}
+  .detail-header{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- Auth Gate -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <h2>Affiliate Dashboard</h2>
+    <p>Enter your credentials to continue</p>
+    <input type="text" id="auth-user" placeholder="Username" onkeydown="if(event.key==='Enter')document.getElementById('auth-input').focus()" style="margin-bottom:12px">
+    <input type="password" id="auth-input" placeholder="Password" onkeydown="if(event.key==='Enter')doAuth()">
+    <button class="btn btn-gold" style="width:100%" onclick="doAuth()">Enter Dashboard</button>
+    <p id="auth-error" style="color:var(--red);font-size:0.8rem;margin-top:12px;display:none">Invalid admin key</p>
+  </div>
+</div>
+
+<!-- Dashboard (hidden until auth) -->
+<div id="dashboard" style="display:none">
+  <header class="dash-header">
+    <div>
+      <h1>&#9875; Affiliate Program</h1>
+      <div class="subtitle">Yacht Away Now — Partner Management</div>
+    </div>
+    <nav class="dash-nav">
+      <button class="active" onclick="showView('overview')">Overview</button>
+      <button onclick="showView('affiliates')">Affiliates</button>
+      <button onclick="showView('conversions')">Conversions</button>
+      <button onclick="showView('payouts')">Payouts</button>
+      <button class="btn btn-gold btn-sm" onclick="copySignupLink()" style="margin-left:8px">Copy Signup Link</button>
+    </nav>
+  </header>
+
+  <main class="dash-body">
+    <!-- OVERVIEW -->
+    <div id="view-overview">
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Recent Affiliates</h2>
+          <button class="btn btn-gold btn-sm" onclick="openCreateModal()">+ Add Affiliate</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Name</th><th>Code</th><th>Commission</th><th>Clicks</th><th>Conversions</th><th>Earned</th><th>Owed</th><th>Status</th><th></th></tr></thead>
+            <tbody id="overview-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFFILIATES LIST -->
+    <div id="view-affiliates" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem">All Affiliates</h2>
+        <button class="btn btn-gold" onclick="openCreateModal()">+ Add Affiliate</button>
+      </div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Name</th><th>Email</th><th>Code</th><th>Commission</th><th>Clicks</th><th>Conversions</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="affiliates-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFFILIATE DETAIL -->
+    <div id="view-detail" style="display:none">
+      <button class="detail-back" onclick="showView('affiliates')">&larr; Back to Affiliates</button>
+      <div id="detail-content"></div>
+    </div>
+
+    <!-- CONVERSIONS -->
+    <div id="view-conversions" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem">All Conversions</h2>
+        <button class="btn btn-gold" onclick="openConversionModal()">+ Record Conversion</button>
+      </div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Affiliate</th><th>Booking Amount</th><th>Commission</th><th>Description</th><th>Status</th></tr></thead>
+            <tbody id="conversions-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYOUTS -->
+    <div id="view-payouts" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem">Payout History</h2>
+        <button class="btn btn-gold" onclick="openPayoutModal()">+ Record Payout</button>
+      </div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Affiliate</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th></tr></thead>
+            <tbody id="payouts-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- CREATE AFFILIATE MODAL -->
+<div class="modal-overlay" id="modal-create">
+  <div class="modal">
+    <h2>Add New Affiliate</h2>
+    <div class="form-group"><label>Full Name *</label><input id="f-name" placeholder="John Smith"></div>
+    <div class="form-group"><label>Email *</label><input id="f-email" type="email" placeholder="john@example.com"></div>
+    <div class="form-group"><label>Phone</label><input id="f-phone" placeholder="(555) 123-4567"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Commission Type</label>
+        <select id="f-comm-type"><option value="percentage">Percentage (%)</option><option value="flat">Flat ($)</option></select>
+      </div>
+      <div class="form-group"><label>Commission Value</label><input id="f-comm-value" type="number" value="10" min="0" step="0.5"></div>
+    </div>
+    <div class="form-group"><label>Custom Referral Code (optional)</label><input id="f-code" placeholder="Leave blank to auto-generate"></div>
+    <div class="form-group"><label>Notes</label><textarea id="f-notes" placeholder="Hotel concierge, influencer, etc."></textarea></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="createAffiliate()">Create Affiliate</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-create')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONVERSION MODAL -->
+<div class="modal-overlay" id="modal-conversion">
+  <div class="modal">
+    <h2>Record Conversion</h2>
+    <div class="form-group"><label>Affiliate *</label><select id="c-affiliate"></select></div>
+    <div class="form-row">
+      <div class="form-group"><label>Booking Amount ($) *</label><input id="c-amount" type="number" min="0" step="0.01" placeholder="2500"></div>
+      <div class="form-group"><label>Booking ID</label><input id="c-booking-id" placeholder="Optional"></div>
+    </div>
+    <div class="form-group"><label>Description</label><input id="c-desc" placeholder="Sunset cruise booking, etc."></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="recordConversion()">Record Conversion</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-conversion')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYOUT MODAL -->
+<div class="modal-overlay" id="modal-payout">
+  <div class="modal">
+    <h2>Record Payout</h2>
+    <div class="form-group"><label>Affiliate *</label><select id="p-affiliate"></select></div>
+    <div class="form-row">
+      <div class="form-group"><label>Amount ($) *</label><input id="p-amount" type="number" min="0" step="0.01" placeholder="250"></div>
+      <div class="form-group"><label>Method</label>
+        <select id="p-method"><option value="venmo">Venmo</option><option value="zelle">Zelle</option><option value="paypal">PayPal</option><option value="check">Check</option><option value="cash">Cash</option><option value="other">Other</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label>Reference / Note</label><input id="p-ref" placeholder="Venmo @handle, check #, etc."></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="recordPayout()">Record Payout</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-payout')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT AFFILIATE MODAL -->
+<div class="modal-overlay" id="modal-edit">
+  <div class="modal">
+    <h2>Edit Affiliate</h2>
+    <input type="hidden" id="e-id">
+    <div class="form-group"><label>Full Name *</label><input id="e-name"></div>
+    <div class="form-group"><label>Email *</label><input id="e-email" type="email"></div>
+    <div class="form-group"><label>Phone</label><input id="e-phone"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Commission Type</label>
+        <select id="e-comm-type"><option value="percentage">Percentage (%)</option><option value="flat">Flat ($)</option></select>
+      </div>
+      <div class="form-group"><label>Commission Value</label><input id="e-comm-value" type="number" min="0" step="0.5"></div>
+    </div>
+    <div class="form-group"><label>Referral Code</label><input id="e-code"></div>
+    <div class="form-group"><label>Status</label>
+      <select id="e-status"><option value="active">Active</option><option value="inactive">Inactive</option></select>
+    </div>
+    <div class="form-group"><label>Notes</label><textarea id="e-notes"></textarea></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="updateAffiliate()">Save Changes</button>
+      <button class="btn btn-outline" onclick="closeModal('modal-edit')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let ADMIN_KEY = '';
+let affiliatesCache = [];
+let allConversions = [];
+let allPayouts = [];
+let ADMIN_USER = '';
+
+// Auth
+function doAuth() {
+  ADMIN_USER = document.getElementById('auth-user').value.trim();
+  ADMIN_KEY = document.getElementById('auth-input').value.trim();
+  if (!ADMIN_USER || !ADMIN_KEY) return;
+  api('GET', 'list').then(data => {
+    document.getElementById('auth-gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    affiliatesCache = data;
+    loadDashboard();
+  }).catch(() => {
+    document.getElementById('auth-error').style.display = 'block';
+  });
+}
+
+// API helper
+async function api(method, action, body, params) {
+  let url = `/api/affiliates?action=${action}`;
+  if (params) Object.entries(params).forEach(([k,v]) => url += `&${k}=${encodeURIComponent(v)}`);
+  const opts = { method, headers: { 'x-admin-key': ADMIN_KEY, 'x-admin-user': ADMIN_USER, 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+// Toast
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Views
+function showView(name) {
+  ['overview','affiliates','detail','conversions','payouts'].forEach(v => {
+    document.getElementById('view-' + v).style.display = v === name ? 'block' : 'none';
+  });
+  document.querySelectorAll('.dash-nav button').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === name || (name === 'detail' && b.textContent.toLowerCase() === 'affiliates'));
+  });
+  if (name === 'overview') loadDashboard();
+  if (name === 'affiliates') renderAffiliatesTable();
+  if (name === 'conversions') loadConversions();
+  if (name === 'payouts') loadPayouts();
+}
+
+// Load everything
+async function loadDashboard() {
+  try {
+    const [stats, affiliates] = await Promise.all([
+      api('GET', 'stats'),
+      api('GET', 'list'),
+    ]);
+    affiliatesCache = affiliates;
+    renderStats(stats);
+    renderOverviewTable(affiliates);
+  } catch (e) { console.error(e); }
+}
+
+function renderStats(s) {
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-card"><div class="label">Active Affiliates</div><div class="value seafoam">${s.activeAffiliates}</div></div>
+    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${s.totalClicks}</div></div>
+    <div class="stat-card"><div class="label">Total Conversions</div><div class="value">${s.totalConversions}</div></div>
+    <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${s.totalEarned}</div></div>
+    <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${s.totalPaid}</div></div>
+    <div class="stat-card"><div class="label">Outstanding Balance</div><div class="value" style="color:${parseFloat(s.outstandingBalance)>0?'var(--red)':'var(--green)'}">$${s.outstandingBalance}</div></div>
+  `;
+}
+
+function commLabel(a) {
+  return a.commission_type === 'percentage' ? `${a.commission_value}%` : `$${a.commission_value}`;
+}
+
+function renderOverviewTable(list) {
+  document.getElementById('overview-table').innerHTML = list.slice(0, 10).map(a => `
+    <tr>
+      <td style="color:var(--text);font-weight:500">${a.name}</td>
+      <td><code style="color:var(--seafoam);font-size:0.78rem">${a.code}</code></td>
+      <td>${commLabel(a)}</td>
+      <td>${a.total_clicks || 0}</td>
+      <td>${a.total_conversions || 0}</td>
+      <td style="color:var(--gold)">$${parseFloat(a.total_earned||0).toFixed(2)}</td>
+      <td style="color:${(a.total_earned-a.total_paid)>0?'var(--red)':'var(--green)'}">$${(parseFloat(a.total_earned||0)-parseFloat(a.total_paid||0)).toFixed(2)}</td>
+      <td><span class="badge badge-${a.status}">${a.status}</span></td>
+      <td><button class="btn btn-outline btn-sm" onclick="viewDetail('${a.id}')">View</button></td>
+    </tr>
+  `).join('') || '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-dim)">No affiliates yet. Click "+ Add Affiliate" to get started.</td></tr>';
+}
+
+function renderAffiliatesTable() {
+  document.getElementById('affiliates-table').innerHTML = affiliatesCache.map(a => `
+    <tr>
+      <td style="color:var(--text);font-weight:500">${a.name}</td>
+      <td>${a.email}</td>
+      <td><code style="color:var(--seafoam);font-size:0.78rem">${a.code}</code></td>
+      <td>${commLabel(a)}</td>
+      <td>${a.total_clicks||0}</td>
+      <td>${a.total_conversions||0}</td>
+      <td style="color:var(--gold)">$${parseFloat(a.total_earned||0).toFixed(2)}</td>
+      <td style="color:var(--seafoam)">$${parseFloat(a.total_paid||0).toFixed(2)}</td>
+      <td style="color:${(a.total_earned-a.total_paid)>0?'var(--red)':'var(--green)'}">$${(parseFloat(a.total_earned||0)-parseFloat(a.total_paid||0)).toFixed(2)}</td>
+      <td><span class="badge badge-${a.status}">${a.status}</span></td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-outline btn-sm" onclick="viewDetail('${a.id}')">View</button>
+        <button class="btn btn-outline btn-sm" onclick="openEditModal('${a.id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteAffiliate('${a.id}','${a.name}')">Delete</button>
+      </td>
+    </tr>
+  `).join('') || '<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--text-dim)">No affiliates yet.</td></tr>';
+}
+
+// Detail view
+async function viewDetail(id) {
+  showView('detail');
+  try {
+    const data = await api('GET', 'detail', null, { id });
+    const a = data.affiliate;
+    const owed = (parseFloat(a.total_earned||0) - parseFloat(a.total_paid||0)).toFixed(2);
+    const link = `https://www.yachtawaynow.com/api/affiliates?action=click&code=${a.code}`;
+
+    document.getElementById('detail-content').innerHTML = `
+      <div class="detail-header">
+        <div>
+          <div class="detail-name">${a.name} <span class="badge badge-${a.status}" style="vertical-align:middle;font-size:0.65rem">${a.status}</span></div>
+          <div class="detail-meta">${a.email}${a.phone?' &middot; '+a.phone:''}${a.notes?' &middot; '+a.notes:''}</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline btn-sm" onclick="openEditModal('${a.id}')">Edit</button>
+          <button class="btn btn-gold btn-sm" onclick="openPayoutModalFor('${a.id}','${a.name}',${owed})">Record Payout</button>
+          <button class="btn btn-gold btn-sm" onclick="openConversionModalFor('${a.id}','${a.name}')">Record Conversion</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteAffiliate('${a.id}','${a.name}')">Delete</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="label">Commission</div><div class="value gold">${commLabel(a)}</div></div>
+        <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${a.total_clicks||0}</div></div>
+        <div class="stat-card"><div class="label">Conversions</div><div class="value">${a.total_conversions||0}</div></div>
+        <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${parseFloat(a.total_earned||0).toFixed(2)}</div></div>
+        <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${parseFloat(a.total_paid||0).toFixed(2)}</div></div>
+        <div class="stat-card"><div class="label">Balance Owed</div><div class="value" style="color:${parseFloat(owed)>0?'var(--red)':'var(--green)'}">$${owed}</div></div>
+      </div>
+
+      <div style="margin-bottom:24px">
+        <div class="section-title">Referral Link</div>
+        <div class="link-box">
+          <code>${link}</code>
+          <button class="btn btn-outline btn-sm" onclick="copyLink('${link}')">Copy</button>
+        </div>
+        <div style="margin-top:8px">
+          <div class="section-title" style="font-size:0.85rem;margin:12px 0 6px">Custom Destination Links</div>
+          <div class="link-box"><code>${link}&dest=https://www.yachtawaynow.com/pricing</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/pricing')">Copy</button></div>
+          <div class="link-box" style="margin-top:6px"><code>${link}&dest=https://www.yachtawaynow.com/contact</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/contact')">Copy</button></div>
+          <div class="link-box" style="margin-top:6px"><code>${link}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')">Copy</button></div>
+        </div>
+      </div>
+
+      <div class="section-title">Conversions (${data.conversions.length})</div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Booking Amount</th><th>Commission</th><th>Description</th><th>Status</th></tr></thead>
+            <tbody>${data.conversions.map(c => `
+              <tr>
+                <td>${new Date(c.created_at).toLocaleDateString()}</td>
+                <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
+                <td style="color:var(--gold)">$${parseFloat(c.commission_amount).toFixed(2)}</td>
+                <td>${c.description||'—'}</td>
+                <td><span class="badge badge-${c.status}">${c.status}</span></td>
+              </tr>
+            `).join('') || '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-dim)">No conversions yet</td></tr>'}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-title">Payouts (${data.payouts.length})</div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th></tr></thead>
+            <tbody>${data.payouts.map(p => `
+              <tr>
+                <td>${new Date(p.created_at).toLocaleDateString()}</td>
+                <td style="color:var(--seafoam)">$${parseFloat(p.amount).toFixed(2)}</td>
+                <td>${p.method||'—'}</td>
+                <td>${p.reference||'—'}</td>
+                <td><span class="badge badge-paid">${p.status}</span></td>
+              </tr>
+            `).join('') || '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-dim)">No payouts yet</td></tr>'}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } catch (e) { console.error(e); toast('Error loading details'); }
+}
+
+function copyLink(link) {
+  navigator.clipboard.writeText(link).then(() => toast('Link copied!')).catch(() => toast('Copy failed'));
+}
+
+function copySignupLink() {
+  navigator.clipboard.writeText('https://www.yachtawaynow.com/affiliate-signup').then(() => toast('Signup link copied!')).catch(() => toast('Copy failed'));
+}
+
+async function deleteAffiliate(id, name) {
+  if (!confirm(`Are you sure you want to delete ${name}? This will permanently remove all their clicks, conversions, and payout history.`)) return;
+  try {
+    await api('DELETE', 'delete', null, { id });
+    toast(`${name} deleted`);
+    affiliatesCache = await api('GET', 'list');
+    showView('affiliates');
+  } catch (e) { toast('Error: ' + e.message); }
+}
+
+// Modals
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function openCreateModal() { openModal('modal-create'); }
+
+function openEditModal(id) {
+  const a = affiliatesCache.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById('e-id').value = a.id;
+  document.getElementById('e-name').value = a.name;
+  document.getElementById('e-email').value = a.email;
+  document.getElementById('e-phone').value = a.phone || '';
+  document.getElementById('e-comm-type').value = a.commission_type;
+  document.getElementById('e-comm-value').value = a.commission_value;
+  document.getElementById('e-code').value = a.code;
+  document.getElementById('e-status').value = a.status;
+  document.getElementById('e-notes').value = a.notes || '';
+  openModal('modal-edit');
+}
+
+function populateAffiliateSelect(selectId) {
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = '<option value="">Select affiliate...</option>' +
+    affiliatesCache.filter(a => a.status === 'active').map(a => `<option value="${a.id}">${a.name} (${a.code})</option>`).join('');
+}
+
+function openConversionModal() {
+  populateAffiliateSelect('c-affiliate');
+  document.getElementById('c-amount').value = '';
+  document.getElementById('c-booking-id').value = '';
+  document.getElementById('c-desc').value = '';
+  openModal('modal-conversion');
+}
+
+function openConversionModalFor(id, name) {
+  populateAffiliateSelect('c-affiliate');
+  document.getElementById('c-affiliate').value = id;
+  document.getElementById('c-amount').value = '';
+  document.getElementById('c-booking-id').value = '';
+  document.getElementById('c-desc').value = '';
+  openModal('modal-conversion');
+}
+
+function openPayoutModal() {
+  populateAffiliateSelect('p-affiliate');
+  document.getElementById('p-amount').value = '';
+  document.getElementById('p-ref').value = '';
+  openModal('modal-payout');
+}
+
+function openPayoutModalFor(id, name, owed) {
+  populateAffiliateSelect('p-affiliate');
+  document.getElementById('p-affiliate').value = id;
+  document.getElementById('p-amount').value = owed > 0 ? owed : '';
+  document.getElementById('p-ref').value = '';
+  openModal('modal-payout');
+}
+
+// CRUD
+async function createAffiliate() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  if (!name || !email) return toast('Name and email are required');
+  try {
+    await api('POST', 'create', {
+      name,
+      email,
+      phone: document.getElementById('f-phone').value.trim(),
+      commission_type: document.getElementById('f-comm-type').value,
+      commission_value: parseFloat(document.getElementById('f-comm-value').value),
+      custom_code: document.getElementById('f-code').value.trim() || null,
+      notes: document.getElementById('f-notes').value.trim(),
+    });
+    closeModal('modal-create');
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-email').value = '';
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-code').value = '';
+    document.getElementById('f-notes').value = '';
+    toast('Affiliate created!');
+    loadDashboard();
+  } catch (e) { toast('Error: ' + e.message); }
+}
+
+async function updateAffiliate() {
+  const id = document.getElementById('e-id').value;
+  try {
+    await api('PATCH', 'update', {
+      name: document.getElementById('e-name').value.trim(),
+      email: document.getElementById('e-email').value.trim(),
+      phone: document.getElementById('e-phone').value.trim() || null,
+      commission_type: document.getElementById('e-comm-type').value,
+      commission_value: parseFloat(document.getElementById('e-comm-value').value),
+      code: document.getElementById('e-code').value.trim(),
+      status: document.getElementById('e-status').value,
+      notes: document.getElementById('e-notes').value.trim() || null,
+    }, { id });
+    closeModal('modal-edit');
+    toast('Affiliate updated!');
+    affiliatesCache = await api('GET', 'list');
+    viewDetail(id);
+  } catch (e) { toast('Error: ' + e.message); }
+}
+
+async function recordConversion() {
+  const affiliate_id = document.getElementById('c-affiliate').value;
+  const amount = parseFloat(document.getElementById('c-amount').value);
+  if (!affiliate_id || !amount) return toast('Affiliate and amount required');
+  try {
+    const result = await api('POST', 'conversion', {
+      affiliate_id,
+      amount,
+      booking_id: document.getElementById('c-booking-id').value.trim() || null,
+      description: document.getElementById('c-desc').value.trim(),
+    });
+    closeModal('modal-conversion');
+    toast(`Commission of $${result.commission.toFixed(2)} recorded for ${result.affiliate}`);
+    loadDashboard();
+  } catch (e) { toast('Error: ' + e.message); }
+}
+
+async function recordPayout() {
+  const affiliate_id = document.getElementById('p-affiliate').value;
+  const amount = parseFloat(document.getElementById('p-amount').value);
+  if (!affiliate_id || !amount) return toast('Affiliate and amount required');
+  try {
+    const result = await api('POST', 'payout', {
+      affiliate_id,
+      amount,
+      method: document.getElementById('p-method').value,
+      reference: document.getElementById('p-ref').value.trim(),
+    });
+    closeModal('modal-payout');
+    toast(`$${result.paid} payout recorded for ${result.affiliate}`);
+    loadDashboard();
+  } catch (e) { toast('Error: ' + e.message); }
+}
+
+// Load conversions & payouts across all affiliates
+async function loadConversions() {
+  try {
+    const affiliates = affiliatesCache;
+    const all = [];
+    for (const a of affiliates) {
+      const detail = await api('GET', 'detail', null, { id: a.id });
+      detail.conversions.forEach(c => { c._affiliate = a.name; all.push(c); });
+    }
+    all.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    document.getElementById('conversions-table').innerHTML = all.map(c => `
+      <tr>
+        <td>${new Date(c.created_at).toLocaleDateString()}</td>
+        <td style="color:var(--text);font-weight:500">${c._affiliate}</td>
+        <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
+        <td style="color:var(--gold)">$${parseFloat(c.commission_amount).toFixed(2)}</td>
+        <td>${c.description||'—'}</td>
+        <td><span class="badge badge-${c.status}">${c.status}</span></td>
+      </tr>
+    `).join('') || '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-dim)">No conversions yet</td></tr>';
+  } catch (e) { console.error(e); }
+}
+
+async function loadPayouts() {
+  try {
+    const affiliates = affiliatesCache;
+    const all = [];
+    for (const a of affiliates) {
+      const detail = await api('GET', 'detail', null, { id: a.id });
+      detail.payouts.forEach(p => { p._affiliate = a.name; all.push(p); });
+    }
+    all.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    document.getElementById('payouts-table').innerHTML = all.map(p => `
+      <tr>
+        <td>${new Date(p.created_at).toLocaleDateString()}</td>
+        <td style="color:var(--text);font-weight:500">${p._affiliate}</td>
+        <td style="color:var(--seafoam)">$${parseFloat(p.amount).toFixed(2)}</td>
+        <td>${p.method||'—'}</td>
+        <td>${p.reference||'—'}</td>
+        <td><span class="badge badge-paid">${p.status}</span></td>
+      </tr>
+    `).join('') || '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-dim)">No payouts yet</td></tr>';
+  } catch (e) { console.error(e); }
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Signed Contracts | Yacht Away Now</title>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f0f7fa;min-height:100vh;font-weight:300}
+
+:root{--navy:#071520;--navy-card:#0d2538;--navy-border:#163248;--gold:#d4a853;--gold-dark:#b8912e;--gold-light:#ffe5a0;--seafoam:#4ecdc4;--text:#f0f7fa;--text-muted:#8bbad4;--text-dim:#5a7d96;--red:#e63946;--green:#2ecc71}
+
+/* Auth */
+#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.auth-box{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:40px;text-align:center;max-width:380px;width:100%}
+.auth-box h2{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.4rem;margin-bottom:16px}
+.auth-box input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.85rem;font-family:inherit;margin-bottom:10px}
+.auth-box input:focus{outline:none;border-color:var(--gold)}
+
+/* Header */
+.header{background:linear-gradient(135deg,#0b1d2e,#122d45);border-bottom:1px solid var(--navy-border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold)}
+.header .sub{font-size:0.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em}
+
+.main{max-width:1200px;margin:0 auto;padding:28px 32px}
+
+/* Table */
+.panel{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px 20px;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);border-bottom:1px solid var(--navy-border);font-weight:600}
+td{padding:12px 20px;font-size:0.83rem;border-bottom:1px solid rgba(22,50,72,0.5);color:var(--text-muted)}
+tr:hover td{background:rgba(78,205,196,0.03)}
+
+.btn{padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:#0b1d2e}
+.btn-gold:hover{background-position:right center}
+.btn-outline{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:6px 14px;border-radius:8px;font-size:0.72rem;cursor:pointer;font-family:inherit}
+.btn-outline:hover{border-color:var(--seafoam);color:var(--seafoam)}
+.btn-sm{padding:6px 14px;font-size:0.72rem}
+
+/* Contract detail / PDF view */
+#detail-view{display:none}
+.detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--text-muted);font-size:0.8rem;cursor:pointer;margin-bottom:20px;background:none;border:none;font-family:inherit}
+.detail-back:hover{color:var(--seafoam)}
+
+.contract-pdf{background:#fff;color:#1a1a1a;border-radius:12px;max-width:800px;margin:0 auto;padding:48px;font-family:Georgia,'Times New Roman',serif;line-height:1.7}
+.contract-pdf .pdf-header{text-align:center;border-bottom:2px solid #c9a84c;padding-bottom:20px;margin-bottom:28px}
+.contract-pdf .pdf-header h1{font-size:1.6rem;color:#0a1628;margin-bottom:4px}
+.contract-pdf .pdf-header p{font-size:0.8rem;color:#666}
+.contract-pdf .pdf-logo{font-size:1.8rem;margin-bottom:8px}
+.contract-pdf h2{font-size:1rem;color:#0a1628;margin:24px 0 8px;text-transform:uppercase;letter-spacing:0.08em;font-family:Montserrat,sans-serif;border-bottom:1px solid #e5e5e5;padding-bottom:6px}
+.contract-pdf .detail-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:0.88rem}
+.contract-pdf .detail-row .label{color:#666;font-family:Montserrat,sans-serif;font-size:0.78rem}
+.contract-pdf .detail-row .val{font-weight:600;color:#1a1a1a}
+.contract-pdf .sig-section{margin-top:32px;padding-top:20px;border-top:2px solid #c9a84c}
+.contract-pdf .sig-section h2{border:none;margin-bottom:16px}
+.contract-pdf .sig-img{max-width:300px;height:auto;border-bottom:1px solid #333;padding-bottom:8px}
+.contract-pdf .sig-name{font-size:0.85rem;color:#666;margin-top:4px;font-family:Montserrat,sans-serif}
+.contract-pdf .sig-date{font-size:0.78rem;color:#999;margin-top:2px;font-family:Montserrat,sans-serif}
+.contract-pdf .contracts-list{font-size:0.82rem;color:#444;margin:8px 0;line-height:1.8}
+.contract-pdf .footer{text-align:center;margin-top:32px;padding-top:16px;border-top:1px solid #e5e5e5;font-size:0.72rem;color:#999;font-family:Montserrat,sans-serif}
+
+.actions-bar{display:flex;gap:10px;justify-content:center;margin:20px 0}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy-card);border:1px solid var(--gold);border-radius:10px;padding:12px 20px;font-size:0.85rem;color:var(--gold);z-index:2000;opacity:0;transform:translateY(10px);transition:all 0.3s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .header{flex-direction:column;gap:8px;padding:14px 16px}
+  .main{padding:16px}
+  th,td{padding:10px 12px;font-size:0.76rem}
+  .contract-pdf{padding:24px 16px}
+}
+
+@media print{
+  body{background:#fff}
+  #auth,.header,.detail-back,.actions-bar,.toast{display:none!important}
+  #detail-view{display:block!important}
+  #list-view{display:none!important}
+  .main{padding:0;max-width:none}
+  .contract-pdf{border-radius:0;box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div id="auth">
+  <div class="auth-box">
+    <h2>&#9875; Signed Contracts</h2>
+    <input type="text" id="a-user" placeholder="Username" onkeydown="if(event.key==='Enter')document.getElementById('a-key').focus()">
+    <input type="password" id="a-key" placeholder="Password" onkeydown="if(event.key==='Enter')doAuth()">
+    <button class="btn btn-gold" style="width:100%" onclick="doAuth()">Sign In</button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
+  <header class="header">
+    <div>
+      <h1>&#9875; Signed Contracts</h1>
+      <div class="sub">Yacht Away Now — Contract Archive</div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- List View -->
+    <div id="list-view">
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date Signed</th><th>Charterer</th><th>Email</th><th>Charter Type</th><th>Charter Date</th><th>Guests</th><th>Total</th><th>Deposit</th><th></th></tr></thead>
+            <tbody id="contracts-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail View -->
+    <div id="detail-view">
+      <button class="detail-back" onclick="showList()">&larr; Back to Contracts</button>
+      <div class="actions-bar">
+        <button class="btn btn-gold" onclick="window.print()">Print / Save as PDF</button>
+        <button class="btn-outline" onclick="showList()">Close</button>
+      </div>
+      <div class="contract-pdf" id="contract-pdf"></div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let ADMIN_KEY = '';
+let ADMIN_USER = '';
+
+function doAuth() {
+  ADMIN_USER = document.getElementById('a-user').value.trim();
+  ADMIN_KEY = document.getElementById('a-key').value.trim();
+  if (!ADMIN_USER || !ADMIN_KEY) return;
+  api('GET', 'list').then(data => {
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderList(data);
+  }).catch(() => {
+    toast('Invalid credentials');
+  });
+}
+
+async function api(method, action, params) {
+  let url = `/api/contracts?action=${action}`;
+  if (params) Object.entries(params).forEach(([k,v]) => url += `&${k}=${encodeURIComponent(v)}`);
+  const res = await fetch(url, {
+    method,
+    headers: { 'x-admin-key': ADMIN_KEY, 'x-admin-user': ADMIN_USER, 'Content-Type': 'application/json' },
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function fmtDate(d) {
+  return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function fmtCharterDate(d) {
+  if (!d) return 'TBD';
+  return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function renderList(contracts) {
+  document.getElementById('contracts-table').innerHTML = contracts.length ? contracts.map(c => `
+    <tr>
+      <td>${fmtDate(c.signed_at)}</td>
+      <td style="color:var(--text);font-weight:500">${c.charterer_name}</td>
+      <td>${c.email}</td>
+      <td>${c.charter_type || '—'}</td>
+      <td>${fmtCharterDate(c.charter_date)}</td>
+      <td>${c.guests || '—'}</td>
+      <td style="color:var(--gold);font-weight:600">$${parseFloat(c.total_price||0).toLocaleString()}</td>
+      <td style="color:var(--seafoam)">$${parseFloat(c.deposit_amount||0).toLocaleString()}</td>
+      <td><button class="btn-outline" onclick="viewContract('${c.id}')">View / PDF</button></td>
+    </tr>
+  `).join('') : '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-dim)">No signed contracts yet</td></tr>';
+}
+
+function showList() {
+  document.getElementById('list-view').style.display = 'block';
+  document.getElementById('detail-view').style.display = 'none';
+}
+
+async function viewContract(id) {
+  try {
+    const c = await api('GET', 'detail', { id });
+
+    document.getElementById('contract-pdf').innerHTML = `
+      <div class="pdf-header">
+        <div class="pdf-logo">&#9875;</div>
+        <h1>Yacht Away Now</h1>
+        <p>Private Yacht Charters — St. Petersburg, Florida</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:#999;">Contract ID: ${c.id}</p>
+      </div>
+
+      <h2>Charter Agreement — Signed Contract</h2>
+      <div class="detail-row"><span class="label">Charterer Name</span><span class="val">${c.charterer_name}</span></div>
+      <div class="detail-row"><span class="label">Email</span><span class="val">${c.email}</span></div>
+      <div class="detail-row"><span class="label">Phone</span><span class="val">${c.phone || 'Not provided'}</span></div>
+
+      <h2>Charter Details</h2>
+      <div class="detail-row"><span class="label">Charter Type</span><span class="val">${c.charter_type || 'Not specified'}</span></div>
+      <div class="detail-row"><span class="label">Charter Date</span><span class="val">${fmtCharterDate(c.charter_date)}</span></div>
+      <div class="detail-row"><span class="label">Number of Guests</span><span class="val">${c.guests || 'Not specified'}</span></div>
+      <div class="detail-row"><span class="label">Captain</span><span class="val">${c.captain || 'Not selected'}</span></div>
+
+      <h2>Financial Summary</h2>
+      <div class="detail-row"><span class="label">Charter Total</span><span class="val" style="font-size:1.05rem;color:#c9a84c;">$${parseFloat(c.total_price||0).toLocaleString()}</span></div>
+      <div class="detail-row"><span class="label">Deposit Amount</span><span class="val">$${parseFloat(c.deposit_amount||0).toLocaleString()}</span></div>
+      <div class="detail-row"><span class="label">Balance Due</span><span class="val">$${(parseFloat(c.total_price||0) - parseFloat(c.deposit_amount||0)).toLocaleString()}</span></div>
+
+      <h2>Agreements Signed</h2>
+      <div class="contracts-list">
+        &#10003; Bareboat Charter Agreement<br>
+        &#10003; Liability Waiver and Release Agreement<br>
+        &#10003; Individual Liability Waiver & Limitation<br>
+        &#10003; Captain Selection Agreement
+      </div>
+
+      <div class="sig-section">
+        <h2>Electronic Signature</h2>
+        ${c.signature_data ? `<img class="sig-img" src="${c.signature_data}" alt="Signature">` : '<p style="color:#999;font-style:italic;">Signature not captured</p>'}
+        <div class="sig-name">Signed by: ${c.signer_name || c.charterer_name}</div>
+        <div class="sig-date">Date: ${new Date(c.signed_at).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}</div>
+      </div>
+
+      <div class="footer">
+        <p>Yacht Away Now — (727) 609-2248 — yachtawaynow.com</p>
+        <p>This document was electronically signed and is legally binding.</p>
+      </div>
+    `;
+
+    document.getElementById('list-view').style.display = 'none';
+    document.getElementById('detail-view').style.display = 'block';
+    window.scrollTo(0, 0);
+  } catch (e) {
+    toast('Error loading contract');
+  }
+}
+</script>
+</body>
+</html>

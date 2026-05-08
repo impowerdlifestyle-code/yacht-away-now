@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Send Booking Confirmation | Yacht Away Now</title>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f0f7fa;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;font-weight:300}
+
+:root{--navy:#071520;--navy-card:#0d2538;--navy-border:#163248;--gold:#d4a853;--gold-dark:#b8912e;--gold-light:#ffe5a0;--seafoam:#4ecdc4;--text:#f0f7fa;--text-muted:#8bbad4;--text-dim:#5a7d96;--red:#e63946;--green:#2ecc71}
+
+.card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:36px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.35)}
+h1{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);margin-bottom:4px;text-align:center}
+.sub{text-align:center;color:var(--text-dim);font-size:0.82rem;margin-bottom:28px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:5px;font-weight:500}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.85rem;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:50px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{width:100%;padding:14px;border-radius:10px;font-size:0.85rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:#0b1d2e;margin-top:20px;transition:all 0.2s}
+.btn:hover{background-position:right center;box-shadow:0 4px 20px rgba(212,168,83,0.3)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+#status{text-align:center;margin-top:14px;font-size:0.82rem;display:none}
+
+/* Auth */
+#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;position:fixed;top:0;left:0;right:0;bottom:0;background:#071520;z-index:10;padding:24px}
+.auth-box{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:40px;text-align:center;max-width:380px;width:100%}
+.auth-box h2{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.4rem;margin-bottom:16px}
+.auth-box input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.85rem;font-family:inherit;margin-bottom:10px}
+.auth-box input:focus{outline:none;border-color:var(--gold)}
+.auth-btn{width:100%;padding:12px;border-radius:10px;font-size:0.85rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;background:linear-gradient(135deg,var(--gold-dark),var(--gold));color:#0b1d2e;margin-top:4px}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy-card);border:1px solid var(--gold);border-radius:10px;padding:12px 20px;font-size:0.85rem;color:var(--gold);z-index:2000;opacity:0;transform:translateY(10px);transition:all 0.3s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){.form-row{grid-template-columns:1fr}.card{padding:24px 20px}}
+</style>
+</head>
+<body>
+
+<div id="auth">
+  <div class="auth-box">
+    <h2>&#9875; Send Confirmation</h2>
+    <input type="text" id="a-user" placeholder="Username" onkeydown="if(event.key==='Enter')document.getElementById('a-key').focus()">
+    <input type="password" id="a-key" placeholder="Password" onkeydown="if(event.key==='Enter')doAuth()">
+    <button class="auth-btn" onclick="doAuth()">Sign In</button>
+  </div>
+</div>
+
+<div class="card">
+  <h1>&#9875; Send Booking Confirmation</h1>
+  <p class="sub">Fill in the charter details and send the guest their confirmation email.</p>
+
+  <div class="form-group"><label>Guest Name *</label><input id="f-name" placeholder="John Smith"></div>
+  <div class="form-group"><label>Guest Email *</label><input id="f-email" type="email" placeholder="john@example.com"></div>
+  <div class="form-row">
+    <div class="form-group"><label>Charter Type</label>
+      <select id="f-type">
+        <option value="Private Charter">Private Charter</option>
+        <option value="Sunset Cruise">Sunset Cruise</option>
+        <option value="Birthday Charter">Birthday Charter</option>
+        <option value="Bachelorette Party">Bachelorette Party</option>
+        <option value="Anniversary Cruise">Anniversary Cruise</option>
+        <option value="Corporate Charter">Corporate Charter</option>
+        <option value="Wedding Charter">Wedding Charter</option>
+        <option value="Sandbar Trip">Sandbar Trip</option>
+        <option value="Bahamas Trip">Bahamas Trip</option>
+        <option value="Fishing Charter">Fishing Charter</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Charter Date</label><input id="f-date" type="date"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Number of Guests</label><input id="f-guests" type="number" min="1" max="13" placeholder="8"></div>
+    <div class="form-group"><label>Duration</label>
+      <select id="f-duration">
+        <option value="4 Hours">4 Hours</option>
+        <option value="6 Hours">6 Hours</option>
+        <option value="8 Hours">8 Hours</option>
+        <option value="Full Day">Full Day</option>
+        <option value="Multi-Day">Multi-Day</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Total Price ($)</label><input id="f-total" type="number" min="0" step="0.01" placeholder="2500"></div>
+    <div class="form-group"><label>Deposit Paid ($)</label><input id="f-deposit" type="number" min="0" step="0.01" placeholder="500"></div>
+  </div>
+  <div class="form-group"><label>Special Notes (optional)</label><textarea id="f-notes" placeholder="Birthday cake, decorations, etc."></textarea></div>
+
+  <button class="btn" id="send-btn" onclick="sendConfirmation()">Send Confirmation Email</button>
+  <p id="status"></p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let ADMIN_KEY = '';
+
+function doAuth() {
+  const user = document.getElementById('a-user').value.trim();
+  const key = document.getElementById('a-key').value.trim();
+  if (!user || !key) return;
+  ADMIN_KEY = key;
+  document.getElementById('auth').style.display = 'none';
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+async function sendConfirmation() {
+  const name = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const status = document.getElementById('status');
+  const btn = document.getElementById('send-btn');
+
+  if (!name || !email) {
+    status.textContent = 'Name and email are required';
+    status.style.color = 'var(--red)';
+    status.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  status.style.display = 'none';
+
+  try {
+    const res = await fetch('/api/send-confirmation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': ADMIN_KEY },
+      body: JSON.stringify({
+        name,
+        email,
+        charter_type: document.getElementById('f-type').value,
+        charter_date: document.getElementById('f-date').value,
+        guests: document.getElementById('f-guests').value,
+        duration: document.getElementById('f-duration').value,
+        total: document.getElementById('f-total').value,
+        deposit: document.getElementById('f-deposit').value,
+        special_requests: document.getElementById('f-notes').value.trim(),
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Failed to send');
+
+    status.textContent = 'Confirmation email sent to ' + email + '!';
+    status.style.color = 'var(--seafoam)';
+    status.style.display = 'block';
+    btn.textContent = 'Sent!';
+    toast('Confirmation email sent!');
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = 'Send Confirmation Email';
+    }, 3000);
+
+  } catch (e) {
+    status.textContent = e.message;
+    status.style.color = 'var(--red)';
+    status.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Send Confirmation Email';
+  }
+}
+</script>
+</body>
+</html>

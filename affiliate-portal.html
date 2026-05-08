@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Affiliate Portal | Yacht Away Now</title>
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,::after,::before{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px}
+body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f0f7fa;line-height:1.6;font-weight:300;min-height:100vh}
+
+:root{
+  --navy:#071520;--navy-light:#0a1f30;--navy-card:#0d2538;--navy-border:#163248;
+  --gold:#d4a853;--gold-light:#ffe5a0;--gold-dark:#b8912e;
+  --seafoam:#4ecdc4;--seafoam-dark:#1a8bb3;
+  --text:#f0f7fa;--text-muted:#8bbad4;--text-dim:#5a7d96;
+  --red:#e63946;--green:#2ecc71;
+}
+
+/* Auth gate */
+#auth-gate{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.auth-box{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:48px;text-align:center;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.auth-logo{font-size:2.5rem;margin-bottom:12px}
+.auth-box h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--gold);margin-bottom:4px}
+.auth-box .auth-sub{color:var(--text-muted);font-size:0.85rem;margin-bottom:28px}
+.auth-box input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.9rem;font-family:inherit;margin-bottom:12px}
+.auth-box input:focus{outline:none;border-color:var(--gold)}
+#auth-error{color:var(--red);font-size:0.8rem;margin-top:8px;display:none}
+
+/* Header */
+.portal-header{background:linear-gradient(135deg,#0b1d2e,#122d45);border-bottom:1px solid var(--navy-border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.portal-header .brand{display:flex;align-items:center;gap:12px}
+.portal-header .brand h1{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold)}
+.portal-header .welcome{font-size:0.85rem;color:var(--text-muted)}
+.portal-header .welcome strong{color:var(--text)}
+
+.portal-body{max-width:1100px;margin:0 auto;padding:28px 32px}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.stat-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:20px 22px}
+.stat-card .label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-dim);margin-bottom:4px}
+.stat-card .value{font-size:1.7rem;font-weight:700;font-variant-numeric:tabular-nums}
+.stat-card .value.gold{color:var(--gold)}
+.stat-card .value.seafoam{color:var(--seafoam)}
+.stat-card .value.green{color:var(--green)}
+
+/* Link section */
+.link-section{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:24px;margin-bottom:28px}
+.link-section h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:4px}
+.link-section .hint{font-size:0.78rem;color:var(--text-dim);margin-bottom:14px}
+.link-box{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.link-box code{flex:1;font-size:0.78rem;color:var(--seafoam);word-break:break-all;font-family:'SF Mono',Monaco,monospace}
+.link-box button{flex-shrink:0}
+.link-label{font-size:0.72rem;color:var(--text-dim);margin-bottom:4px;margin-top:10px}
+
+/* Chart */
+.chart-section{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:24px;margin-bottom:28px}
+.chart-section h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:16px}
+.chart-container{height:140px;display:flex;align-items:flex-end;gap:3px;padding:0 4px}
+.chart-bar{flex:1;background:linear-gradient(to top,var(--seafoam-dark),var(--seafoam));border-radius:3px 3px 0 0;min-height:2px;position:relative;transition:all 0.3s}
+.chart-bar:hover{opacity:0.8}
+.chart-bar .tip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:4px 8px;font-size:0.65rem;color:var(--text);white-space:nowrap;display:none;z-index:10}
+.chart-bar:hover .tip{display:block}
+.chart-labels{display:flex;gap:3px;padding:4px 4px 0;justify-content:space-between}
+.chart-labels span{font-size:0.55rem;color:var(--text-dim)}
+
+/* Tables */
+.panel{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;overflow:hidden;margin-bottom:24px}
+.panel-header{padding:16px 24px;border-bottom:1px solid var(--navy-border);display:flex;align-items:center;justify-content:space-between}
+.panel-header h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--text)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:12px 24px;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);border-bottom:1px solid var(--navy-border);font-weight:600}
+td{padding:12px 24px;font-size:0.83rem;border-bottom:1px solid rgba(22,50,72,0.5);color:var(--text-muted)}
+tr:hover td{background:rgba(78,205,196,0.03)}
+.empty-row{text-align:center;padding:40px 24px;color:var(--text-dim)}
+
+.badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:0.68rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase}
+.badge-pending{background:rgba(212,168,83,0.15);color:var(--gold)}
+.badge-approved{background:rgba(46,204,113,0.15);color:var(--green)}
+.badge-paid{background:rgba(78,205,196,0.15);color:var(--seafoam)}
+.badge-completed{background:rgba(78,205,196,0.15);color:var(--seafoam)}
+.badge-rejected{background:rgba(230,57,70,0.15);color:var(--red)}
+
+/* Buttons */
+.btn{padding:10px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold{background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold));background-size:200% auto;color:#0b1d2e}
+.btn-gold:hover{background-position:right center;box-shadow:0 4px 20px rgba(212,168,83,0.3)}
+.btn-outline{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:8px 14px;border-radius:8px;font-size:0.78rem;cursor:pointer;font-family:inherit}
+.btn-outline:hover{border-color:var(--seafoam);color:var(--seafoam)}
+.btn-sm{padding:6px 14px;font-size:0.72rem}
+
+/* Payout request modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(7,21,32,0.85);display:none;align-items:center;justify-content:center;z-index:1000;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;padding:32px;max-width:480px;width:100%}
+.modal h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);margin-bottom:20px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-bottom:6px;font-weight:500}
+.form-group input,.form-group select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--navy-border);background:var(--navy);color:var(--text);font-size:0.85rem;font-family:inherit}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-actions{display:flex;gap:10px;margin-top:24px}
+.balance-hint{font-size:0.78rem;color:var(--seafoam);margin-bottom:16px}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy-card);border:1px solid var(--gold);border-radius:10px;padding:12px 20px;font-size:0.85rem;color:var(--gold);z-index:2000;opacity:0;transform:translateY(10px);transition:all 0.3s}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* Member since */
+.member-since{font-size:0.75rem;color:var(--text-dim);margin-top:8px;text-align:right}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:24px}
+.tabs button{background:transparent;border:1px solid var(--navy-border);color:var(--text-muted);padding:8px 18px;border-radius:8px;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
+.tabs button:hover,.tabs button.active{background:var(--navy-card);color:var(--gold);border-color:var(--gold)}
+
+/* Responsive */
+@media(max-width:768px){
+  .portal-header{flex-direction:column;gap:8px;padding:14px 16px}
+  .portal-body{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  th,td{padding:10px 12px;font-size:0.76rem}
+  .form-row{grid-template-columns:1fr}
+  .tabs{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- Auth Gate -->
+<div id="auth-gate">
+  <div class="auth-box">
+    <div class="auth-logo">&#9875;</div>
+    <h2>Affiliate Portal</h2>
+    <p class="auth-sub">Sign in to view your earnings and referral stats</p>
+    <!-- Login form -->
+    <div id="login-form">
+      <input type="email" id="auth-email" placeholder="Your email address" onkeydown="if(event.key==='Enter')document.getElementById('auth-code').focus()">
+      <input type="password" id="auth-code" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="btn btn-gold" style="width:100%" onclick="doLogin()">Sign In</button>
+      <p id="auth-error">Invalid email or password</p>
+      <p style="margin-top:14px"><a href="#" onclick="showForgot();return false" style="color:var(--seafoam);font-size:0.8rem;text-decoration:none">Forgot password?</a></p>
+    </div>
+    <!-- Forgot password form -->
+    <div id="forgot-form" style="display:none">
+      <input type="email" id="forgot-email" placeholder="Your email address" onkeydown="if(event.key==='Enter')sendReset()">
+      <button class="btn btn-gold" style="width:100%;margin-top:4px" onclick="sendReset()">Send Reset Link</button>
+      <p id="forgot-msg" style="font-size:0.8rem;margin-top:12px;display:none"></p>
+      <p style="margin-top:14px"><a href="#" onclick="showLogin();return false" style="color:var(--seafoam);font-size:0.8rem;text-decoration:none">Back to sign in</a></p>
+    </div>
+    <!-- Reset password form -->
+    <div id="reset-form" style="display:none">
+      <p class="auth-sub" style="margin-bottom:16px">Hi <strong id="reset-name"></strong>, enter your new password below.</p>
+      <input type="password" id="reset-pw" placeholder="New password" onkeydown="if(event.key==='Enter')document.getElementById('reset-pw2').focus()">
+      <input type="password" id="reset-pw2" placeholder="Confirm password" onkeydown="if(event.key==='Enter')doReset()" style="margin-top:12px">
+      <button class="btn btn-gold" style="width:100%;margin-top:16px" onclick="doReset()">Set New Password</button>
+      <p id="reset-msg" style="font-size:0.8rem;margin-top:12px;display:none"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Portal -->
+<div id="portal" style="display:none">
+  <header class="portal-header">
+    <div class="brand">
+      <h1>&#9875; Yacht Away Now</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="welcome">Welcome, <strong id="welcome-name"></strong></div>
+      <button class="btn-outline" onclick="openChangePassword()">Change Password</button>
+      <button class="btn-outline" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <main class="portal-body">
+    <!-- Stats -->
+    <div class="stats-grid" id="stats-grid"></div>
+
+    <!-- Referral Links -->
+    <div class="link-section" id="link-section"></div>
+
+    <!-- Clicks Chart -->
+    <div class="chart-section">
+      <h3>Clicks — Last 30 Days</h3>
+      <div class="chart-container" id="chart"></div>
+      <div class="chart-labels" id="chart-labels"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="active" onclick="showTab('conversions')">My Conversions</button>
+      <button onclick="showTab('payouts')">Payout History</button>
+    </div>
+
+    <!-- Conversions Table -->
+    <div id="tab-conversions">
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Booking Amount</th><th>Your Commission</th><th>Description</th><th>Status</th></tr></thead>
+            <tbody id="conversions-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payouts Table -->
+    <div id="tab-payouts" style="display:none">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+        <button class="btn btn-gold" onclick="openPayoutRequest()">Request Payout</button>
+      </div>
+      <div class="panel">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Reference</th><th>Status</th></tr></thead>
+            <tbody id="payouts-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="member-since" id="member-since"></div>
+  </main>
+</div>
+
+<!-- Payout Request Modal -->
+<div class="modal-overlay" id="modal-payout">
+  <div class="modal">
+    <h2>Request Payout</h2>
+    <div class="balance-hint">Available balance: <strong id="payout-balance">$0.00</strong></div>
+    <div class="form-row">
+      <div class="form-group"><label>Amount ($) *</label><input id="pr-amount" type="number" min="0" step="0.01" placeholder="250.00"></div>
+      <div class="form-group"><label>Preferred Method</label>
+        <select id="pr-method"><option value="venmo">Venmo</option><option value="zelle">Zelle</option><option value="paypal">PayPal</option><option value="check">Check</option><option value="other">Other</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label>Payment Details</label><input id="pr-details" placeholder="Venmo @handle, PayPal email, mailing address, etc."></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="submitPayoutRequest()">Submit Request</button>
+      <button class="btn-outline" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal-overlay" id="modal-password">
+  <div class="modal">
+    <h2>Change Password</h2>
+    <div class="form-group"><label>New Password</label><input type="password" id="cp-pw" placeholder="Enter new password"></div>
+    <div class="form-group"><label>Confirm Password</label><input type="password" id="cp-pw2" placeholder="Confirm new password"></div>
+    <div class="form-actions">
+      <button class="btn btn-gold" onclick="doChangePassword()">Update Password</button>
+      <button class="btn-outline" style="padding:10px 20px;font-size:0.8rem;font-weight:600" onclick="document.getElementById('modal-password').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let authEmail = '';
+let authCode = '';
+let dashData = null;
+let resetToken = null;
+
+// Check for reset token in URL on load
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('reset');
+  if (token) {
+    resetToken = token;
+    showResetForm(token);
+  }
+});
+
+function showLogin() {
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('forgot-form').style.display = 'none';
+  document.getElementById('reset-form').style.display = 'none';
+  document.querySelector('.auth-box h2').textContent = 'Affiliate Portal';
+  document.querySelector('.auth-sub').textContent = 'Sign in to view your earnings and referral stats';
+}
+
+function showForgot() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('forgot-form').style.display = 'block';
+  document.getElementById('reset-form').style.display = 'none';
+  document.querySelector('.auth-box h2').textContent = 'Reset Password';
+  document.querySelector('.auth-sub').textContent = 'Enter your email and we\'ll send you a reset link';
+}
+
+async function sendReset() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const msg = document.getElementById('forgot-msg');
+  if (!email) return;
+
+  try {
+    const res = await fetch('/api/affiliate-portal?action=forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    const data = await res.json();
+    msg.textContent = 'If an account exists with that email, a reset link has been sent. Check your inbox.';
+    msg.style.color = 'var(--seafoam)';
+    msg.style.display = 'block';
+  } catch (e) {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.style.color = 'var(--red)';
+    msg.style.display = 'block';
+  }
+}
+
+async function showResetForm(token) {
+  try {
+    const res = await fetch('/api/affiliate-portal?action=verify-reset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      document.getElementById('login-form').style.display = 'block';
+      document.getElementById('auth-error').textContent = data.error || 'Invalid or expired reset link';
+      document.getElementById('auth-error').style.display = 'block';
+      return;
+    }
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('reset-form').style.display = 'block';
+    document.getElementById('reset-name').textContent = data.name;
+    document.querySelector('.auth-box h2').textContent = 'Set New Password';
+    document.querySelector('.auth-sub').textContent = '';
+  } catch (e) {
+    document.getElementById('auth-error').textContent = 'Could not verify reset link';
+    document.getElementById('auth-error').style.display = 'block';
+  }
+}
+
+async function doReset() {
+  const pw = document.getElementById('reset-pw').value;
+  const pw2 = document.getElementById('reset-pw2').value;
+  const msg = document.getElementById('reset-msg');
+
+  if (!pw || pw.length < 4) {
+    msg.textContent = 'Password must be at least 4 characters';
+    msg.style.color = 'var(--red)';
+    msg.style.display = 'block';
+    return;
+  }
+  if (pw !== pw2) {
+    msg.textContent = 'Passwords do not match';
+    msg.style.color = 'var(--red)';
+    msg.style.display = 'block';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/affiliate-portal?action=reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: resetToken, new_password: pw }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.textContent = data.error;
+      msg.style.color = 'var(--red)';
+      msg.style.display = 'block';
+      return;
+    }
+    msg.textContent = 'Password updated! Redirecting to login...';
+    msg.style.color = 'var(--seafoam)';
+    msg.style.display = 'block';
+    setTimeout(() => {
+      window.location.href = '/affiliate-portal';
+    }, 2000);
+  } catch (e) {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.style.color = 'var(--red)';
+    msg.style.display = 'block';
+  }
+}
+
+function doLogin() {
+  authEmail = document.getElementById('auth-email').value.trim();
+  authCode = document.getElementById('auth-code').value.trim();
+  if (!authEmail || !authCode) return;
+
+  fetch('/api/affiliate-portal?action=login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: authEmail, password: authCode }),
+  }).then(r => {
+    if (!r.ok) throw new Error();
+    return r.json();
+  }).then(() => {
+    document.getElementById('auth-gate').style.display = 'none';
+    document.getElementById('portal').style.display = 'block';
+    loadDashboard();
+  }).catch(() => {
+    document.getElementById('auth-error').style.display = 'block';
+  });
+}
+
+function doLogout() {
+  authEmail = '';
+  authCode = '';
+  document.getElementById('portal').style.display = 'none';
+  document.getElementById('auth-gate').style.display = 'flex';
+  document.getElementById('auth-email').value = '';
+  document.getElementById('auth-code').value = '';
+  showLogin();
+}
+
+function openChangePassword() {
+  document.getElementById('cp-pw').value = '';
+  document.getElementById('cp-pw2').value = '';
+  document.getElementById('modal-password').classList.add('open');
+}
+
+async function doChangePassword() {
+  const pw = document.getElementById('cp-pw').value;
+  const pw2 = document.getElementById('cp-pw2').value;
+  if (!pw || pw.length < 4) return toast('Password must be at least 4 characters');
+  if (pw !== pw2) return toast('Passwords do not match');
+
+  try {
+    await apiCall('POST', 'change-password', { new_password: pw });
+    authCode = pw;
+    document.getElementById('modal-password').classList.remove('open');
+    toast('Password updated successfully!');
+  } catch (e) {
+    toast(e.message);
+  }
+}
+
+document.getElementById('modal-password').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
+});
+
+async function apiCall(method, action, body) {
+  const opts = {
+    method,
+    headers: {
+      'x-affiliate-email': authEmail,
+      'x-affiliate-code': authCode,
+      'Content-Type': 'application/json',
+    },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(`/api/affiliate-portal?action=${action}`, opts);
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(data.error || 'Request failed');
+  }
+  return res.json();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+async function loadDashboard() {
+  try {
+    dashData = await apiCall('GET', 'dashboard');
+    const a = dashData.affiliate;
+
+    document.getElementById('welcome-name').textContent = a.name;
+    document.getElementById('member-since').textContent = 'Partner since ' + new Date(a.member_since).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+    // Stats
+    const owed = parseFloat(a.balance_owed);
+    document.getElementById('stats-grid').innerHTML = `
+      <div class="stat-card"><div class="label">Total Clicks</div><div class="value seafoam">${a.total_clicks}</div></div>
+      <div class="stat-card"><div class="label">Conversions</div><div class="value">${a.total_conversions}</div></div>
+      <div class="stat-card"><div class="label">Conversion Rate</div><div class="value">${a.total_clicks > 0 ? ((a.total_conversions / a.total_clicks) * 100).toFixed(1) + '%' : '0%'}</div></div>
+      <div class="stat-card"><div class="label">Commission Rate</div><div class="value gold">${a.commission_type === 'percentage' ? a.commission_value + '%' : '$' + a.commission_value}</div></div>
+      <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${a.total_earned}</div></div>
+      <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${a.total_paid}</div></div>
+      <div class="stat-card"><div class="label">Available Balance</div><div class="value ${owed > 0 ? 'green' : ''}">$${a.balance_owed}</div></div>
+    `;
+
+    // Referral links
+    const base = 'https://www.yachtawaynow.com/api/affiliates?action=click&code=' + a.code;
+    document.getElementById('link-section').innerHTML = `
+      <h3>Your Referral Links</h3>
+      <div class="hint">Share these links to earn commission on every booking. Clicks are tracked automatically.</div>
+      <div class="link-label">Main Link</div>
+      <div class="link-box"><code>${base}</code><button class="btn-outline btn-sm" onclick="copyLink('${base}')">Copy</button></div>
+      <div class="link-label">Pricing Page</div>
+      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/pricing</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/pricing')">Copy</button></div>
+      <div class="link-label">Booking Page</div>
+      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/contact</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/contact')">Copy</button></div>
+      <div class="link-label">Sunset Cruise</div>
+      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')">Copy</button></div>
+    `;
+
+    // Chart
+    renderChart(dashData.clicksByDay);
+
+    // Tables
+    renderConversions(dashData.conversions);
+    renderPayouts(dashData.payouts);
+
+  } catch (e) {
+    console.error(e);
+    toast('Error loading dashboard');
+  }
+}
+
+function renderChart(clicksByDay) {
+  const days = Object.keys(clicksByDay);
+  const values = Object.values(clicksByDay);
+  const max = Math.max(...values, 1);
+
+  document.getElementById('chart').innerHTML = days.map((day, i) => {
+    const h = Math.max((values[i] / max) * 130, 2);
+    const label = new Date(day + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `<div class="chart-bar" style="height:${h}px"><div class="tip">${label}: ${values[i]} clicks</div></div>`;
+  }).join('');
+
+  // Show every 7th label
+  document.getElementById('chart-labels').innerHTML = days.map((day, i) => {
+    if (i % 7 === 0 || i === days.length - 1) {
+      return `<span>${new Date(day + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>`;
+    }
+    return '<span></span>';
+  }).join('');
+}
+
+function renderConversions(conversions) {
+  document.getElementById('conversions-table').innerHTML = conversions.length ? conversions.map(c => `
+    <tr>
+      <td>${new Date(c.created_at).toLocaleDateString()}</td>
+      <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
+      <td style="color:var(--gold);font-weight:600">$${parseFloat(c.commission_amount).toFixed(2)}</td>
+      <td>${c.description || '—'}</td>
+      <td><span class="badge badge-${c.status}">${c.status}</span></td>
+    </tr>
+  `).join('') : '<tr><td class="empty-row" colspan="5">No conversions yet — share your referral links to start earning!</td></tr>';
+}
+
+function renderPayouts(payouts) {
+  document.getElementById('payouts-table').innerHTML = payouts.length ? payouts.map(p => `
+    <tr>
+      <td>${new Date(p.created_at).toLocaleDateString()}</td>
+      <td style="color:var(--seafoam);font-weight:600">$${parseFloat(p.amount).toFixed(2)}</td>
+      <td style="text-transform:capitalize">${p.method || '—'}</td>
+      <td>${p.reference || '—'}</td>
+      <td><span class="badge badge-${p.status}">${p.status}</span></td>
+    </tr>
+  `).join('') : '<tr><td class="empty-row" colspan="5">No payouts yet</td></tr>';
+}
+
+function showTab(tab) {
+  document.getElementById('tab-conversions').style.display = tab === 'conversions' ? 'block' : 'none';
+  document.getElementById('tab-payouts').style.display = tab === 'payouts' ? 'block' : 'none';
+  document.querySelectorAll('.tabs button').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(tab));
+  });
+}
+
+function copyLink(link) {
+  navigator.clipboard.writeText(link).then(() => toast('Link copied!')).catch(() => toast('Copy failed'));
+}
+
+function openPayoutRequest() {
+  if (!dashData) return;
+  document.getElementById('payout-balance').textContent = '$' + dashData.affiliate.balance_owed;
+  document.getElementById('pr-amount').value = parseFloat(dashData.affiliate.balance_owed) > 0 ? dashData.affiliate.balance_owed : '';
+  document.getElementById('pr-details').value = '';
+  document.getElementById('modal-payout').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-payout').classList.remove('open');
+}
+
+async function submitPayoutRequest() {
+  const amount = parseFloat(document.getElementById('pr-amount').value);
+  if (!amount || amount <= 0) return toast('Enter a valid amount');
+  try {
+    await apiCall('POST', 'request-payout', {
+      amount,
+      method: document.getElementById('pr-method').value,
+      details: document.getElementById('pr-details').value.trim(),
+    });
+    closeModal();
+    toast('Payout request submitted! We\'ll process it within 3-5 business days.');
+    loadDashboard();
+  } catch (e) {
+    toast(e.message);
+  }
+}
+
+document.getElementById('modal-payout').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
