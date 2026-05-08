@@ -3,6 +3,10 @@
     {
       "path": "/api/review-responder",
       "schedule": "0 */1 * * *"
+    },
+    {
+      "path": "/api/gbp-post",
+      "schedule": "0 14 * * 1"
     }
   ],
   "cleanUrls": true,
@@ -14,7 +18,10 @@
       "destination": "https://www.yachtawaynow.com/:path",
       "statusCode": 308
     },
-    { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 }
+    { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 },
+    { "source": "/private-boat-charter-tampa-bay", "destination": "/yacht-charter-tampa", "statusCode": 301 },
+    { "source": "/blog/how-much-does-a-yacht-charter-cost", "destination": "/yacht-charter-cost-tampa-bay", "statusCode": 301 },
+    { "source": "/home", "destination": "/", "statusCode": 301 }
   ],
   "headers": [
     {
@@ -25,23 +32,29 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com; frame-src https://js.stripe.com https://checkout.stripe.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com; form-action 'self' https://formspree.io https://checkout.stripe.com; base-uri 'self'; frame-ancestors 'none';" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com; frame-src https://js.stripe.com https://checkout.stripe.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com; form-action 'self' https://formspree.io https://checkout.stripe.com https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none';" }
       ]
     },
     {
       "source": "/style.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" }
       ]
     },
     {
       "source": "/app.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" }
       ]
     },
     {
       "source": "/images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
