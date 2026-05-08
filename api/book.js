@@ -13,6 +13,7 @@ export default async function handler(req, res) {
   }
 
   // Save to Supabase dashboard database (primary purpose)
+  let bookingId = null;
   try {
     const booking = {
       first_name,
@@ -36,7 +37,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`,
-        'Prefer': 'return=minimal',
+        'Prefer': 'return=representation',
       },
       body: JSON.stringify(booking),
     });
@@ -44,6 +45,9 @@ export default async function handler(req, res) {
     if (!dbRes.ok) {
       const err = await dbRes.text();
       console.error('Supabase error:', err);
+    } else {
+      const inserted = await dbRes.json();
+      bookingId = Array.isArray(inserted) && inserted[0] ? inserted[0].id : null;
     }
   } catch (err) {
     console.error('Supabase save error:', err);
@@ -118,6 +122,7 @@ Reply directly to this email to reach the customer at ${email}
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        booking_id: bookingId,
         first_name, last_name, email, phone,
         charter_type: charter_type || 'Charter',
         charter_date: preferred_date || 'TBD',
@@ -132,5 +137,5 @@ Reply directly to this email to reach the customer at ${email}
     console.error('Captain notify error (non-fatal):', err);
   }
 
-  return res.status(200).json({ success: true });
+  return res.status(200).json({ success: true, booking_id: bookingId });
 }
