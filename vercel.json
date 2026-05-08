@@ -21,7 +21,8 @@
     { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 },
     { "source": "/private-boat-charter-tampa-bay", "destination": "/yacht-charter-tampa", "statusCode": 301 },
     { "source": "/blog/how-much-does-a-yacht-charter-cost", "destination": "/yacht-charter-cost-tampa-bay", "statusCode": 301 },
-    { "source": "/home", "destination": "/", "statusCode": 301 }
+    { "source": "/home", "destination": "/", "statusCode": 301 },
+    { "source": "/captain", "destination": "https://yan-dashboard.vercel.app/captain", "statusCode": 301 }
   ],
   "headers": [
     {
