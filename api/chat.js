@@ -19,7 +19,7 @@ COMPANY INFO:
 - BYOB — guests bring their own food and drinks
 
 PRICING:
-- Hourly: $300/hr (4-hour minimum) + $50/hr fuel + $100/hr captain
+- Hourly: $400/hr (4-hour minimum) + $50/hr fuel + $100/hr captain
 - Weekend packages: $2,000 (4hr) or $2,500 (5hr sunset) — all inclusive
 - Overnight/Bahamas: $5,000+ (custom quote)
 
