@@ -321,6 +321,65 @@
     </div>
   </div>
 </section>
+
+<section class="booking section" id="book">
+  <div class="container">
+    <div class="booking-card booking-card-full reveal">
+      <h3>Book Your Anniversary Cruise</h3>
+      <p class="booking-card-subtitle">Tell us a few quick details and we'll confirm your charter within 24 hours.</p>
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)">
+        <input type="hidden" name="access_key" value="dea9f1e3-2ab6-489f-bab2-9d003db7b977">
+        <input type="hidden" name="subject" value="New Charter Booking Request — Yacht Away Now">
+        <input type="hidden" name="from_name" value="Yacht Away Now Website">
+        <input type="text" name="botcheck" style="display:none">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" for="ya-fname">First Name *</label><input type="text" id="ya-fname" name="first_name" class="form-input" placeholder="John" required></div>
+          <div class="form-group"><label class="form-label" for="ya-lname">Last Name *</label><input type="text" id="ya-lname" name="last_name" class="form-input" placeholder="Smith" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" for="ya-phone">Phone *</label><input type="tel" id="ya-phone" name="phone" class="form-input" placeholder="(555) 123-4567" required></div>
+          <div class="form-group"><label class="form-label" for="ya-email">Email *</label><input type="email" id="ya-email" name="email" class="form-input" placeholder="john@email.com" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="ya-charter">Charter Type *</label>
+            <select id="ya-charter" name="charter_type" class="form-select" required><option value="" disabled>Select...</option><option value="sunset" selected>Sunset Cruise</option><option value="day">Day Charter</option><option value="bachelorette">Bachelorette Party</option><option value="birthday">Birthday Celebration</option><option value="overnight">Overnight / Bahamas</option><option value="other">Other</option></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ya-date">Preferred Date *</label>
+            <input type="date" id="ya-date" name="preferred_date" class="form-input" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label" for="ya-guests">Number of Guests</label><input type="number" id="ya-guests" name="guests" class="form-input" placeholder="1-13" min="1" max="13"></div>
+          <div class="form-group"><label class="form-label" for="ya-duration">Duration</label>
+            <select id="ya-duration" name="duration" class="form-select">
+              <option value="4hr">4 Hours</option><option value="5hr">5 Hours</option><option value="6hr">6+ Hours</option><option value="overnight">Overnight</option><option value="multi">Multi-Day</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+          <label for="ya-sms-consent" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.78rem;line-height:1.5;color:var(--gray-400);font-weight:400;text-transform:none;letter-spacing:0;">
+            <input type="checkbox" id="ya-sms-consent" name="sms_consent" value="Yes - opted in to SMS" style="margin-top:3px;flex-shrink:0;width:auto;accent-color:#c9a84c;">
+            <span>I agree to receive SMS text messages from Yacht Away Now about my booking. Msg &amp; data rates may apply. Reply STOP to opt out. See <a href="/privacy-policy" style="color:var(--gold);text-decoration:underline;" target="_blank" rel="noopener">Privacy Policy</a>. Consent is not required to book.</span>
+          </label>
+        </div>
+        <div class="form-group"><label class="form-label" for="ya-requests">Special Requests</label><textarea id="ya-requests" name="message" class="form-textarea" placeholder="Tell us about your occasion, any special requests, or questions..."></textarea></div>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:18px;font-size:0.8rem;">Request Your Charter <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(78,205,196,0.08);flex-wrap:wrap;">
+          <span style="font-size:0.7rem;color:var(--gray-600);">USCG-licensed captain</span>
+          <span style="font-size:0.7rem;color:var(--gray-600);"><a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;">103 Five-Star Reviews</a></span>
+          <span style="font-size:0.7rem;color:var(--gray-600);">24hr Response</span>
+        </div>
+      </form>
+      <div id="formSuccess" style="display:none;text-align:center;padding:40px 20px;">
+        <div style="font-size:3rem;margin-bottom:16px;"><svg width="48" height="48" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--gold);">Booking Request Received!</h3>
+        <p style="color:var(--gray-400);line-height:1.7;">One of our yacht specialists will contact you within 24 hours to finalize your charter.</p>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="footer">
