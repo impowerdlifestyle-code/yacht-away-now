@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.yachtawaynow.com/</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-11</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Luxury 52ft Marquis yacht in turquoise Tampa Bay water</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/yacht-charter-cost-tampa-bay</loc>
@@ -23,14 +27,26 @@
   <url>
     <loc>https://www.yachtawaynow.com/our-yacht</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-exterior.jpg</image:loc>
+      <image:caption>52ft Marquis Flybridge yacht</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/pricing</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/charter-img_0815.jpg</image:loc>
+      <image:caption>Yacht Away Now 52ft Marquis Flybridge docked St. Petersburg</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/team</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-11</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/captain-josh-wilson.jpg</image:loc>
+      <image:caption>Captain Josh Wilson, USCG-licensed Master 100-ton captain</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/contact</loc>
@@ -43,14 +59,26 @@
   <url>
     <loc>https://www.yachtawaynow.com/yacht-charter-st-petersburg</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Yacht charter in St. Petersburg FL</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/yacht-charter-tampa</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Yacht charter in Tampa FL</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/yacht-charter-clearwater</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Yacht charter near Clearwater FL</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/blog/best-sunset-cruise-spots-tampa-bay</loc>
@@ -63,6 +91,10 @@
   <url>
     <loc>https://www.yachtawaynow.com/bachelorette-party-yacht-charter</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/bachelorette-party.jpg</image:loc>
+      <image:caption>Bachelorette party group on luxury yacht St. Petersburg</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/birthday-yacht-charter</loc>
@@ -75,6 +107,10 @@
   <url>
     <loc>https://www.yachtawaynow.com/sunset-cruise-st-petersburg</loc>
     <lastmod>2026-05-08</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Sunset cruise St. Petersburg</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/blog/yacht-charter-vs-party-boat-which-is-better</loc>
@@ -174,7 +210,11 @@
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/sandbar-boat-trip-tampa-bay</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-11</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Sandbar yacht trip Tampa Bay</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/yacht-charter-treasure-island</loc>
@@ -186,7 +226,11 @@
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/fireworks-boat-charter-tampa-bay</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-11</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-night.jpg</image:loc>
+      <image:caption>Fireworks yacht charter Tampa Bay</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/blog/bachelorette-yacht-itinerary-st-pete</loc>
@@ -199,5 +243,21 @@
   <url>
     <loc>https://www.yachtawaynow.com/blog/best-boat-charter-companies-st-petersburg</loc>
     <lastmod>2026-05-08</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/sms-terms</loc>
+    <lastmod>2026-05-15</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/private-boat-charter-tampa-bay</loc>
+    <lastmod>2026-05-15</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg</image:loc>
+      <image:caption>Private boat charter Tampa Bay</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost</loc>
+    <lastmod>2026-05-15</lastmod>
   </url>
 </urlset>

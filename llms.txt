@@ -52,12 +52,15 @@ Yacht Away Now is a luxury private yacht charter company based in St. Petersburg
 - GetMyBoat: https://www.getmyboat.com/trips/6YzOvWLK/
 
 ## Team
-- Josh Wilson: Founder & Owner
-- Captain Josh: USCG Licensed Captain
+- Captain Josh Wilson: Founder, Owner & USCG-licensed Master 100-ton captain (10+ years licensed); CPR / AED / First Aid certified
 - Professional hospitality crew
 
+## Identifiers
+- Wikidata: Q139701526 (https://www.wikidata.org/entity/Q139701526)
+- Founded: 2024
+
 ## Reviews
-- 103 verified Google reviews
+- 104 verified Google reviews
 - 5.0 star average rating
 - Google Reviews: https://share.google/7e44SLfCM74VXYfe2
 

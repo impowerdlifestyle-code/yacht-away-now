@@ -116,25 +116,36 @@ Reply directly to this email to reach the customer at ${email}
     }
   }
 
-  // Notify captains of new booking
-  try {
-    await fetch('https://yan-dashboard.vercel.app/api/captain-notify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        booking_id: bookingId,
-        first_name, last_name, email, phone,
-        charter_type: charter_type || 'Charter',
-        charter_date: preferred_date || 'TBD',
-        charter_time: req.body.preferred_time || '',
-        guests: guests || '',
-        duration: duration || '4hr',
-        total_price: null,
-        special_requests: message || '',
-      }),
-    });
-  } catch (err) {
-    console.error('Captain notify error (non-fatal):', err);
+  // Captain notification is deferred until contract is signed + deposit is paid.
+  // Fires from yacht-away-now/api/stripe-webhook.js on checkout.session.completed.
+
+  // Forward to Business Brain — auto-sends pre-nurture email with deposit + contract links
+  if (process.env.YAN_BOOKING_SECRET) {
+    try {
+      await fetch('https://business-brain-six.vercel.app/api/yan/booking-received', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-yan-booking-secret': process.env.YAN_BOOKING_SECRET,
+        },
+        body: JSON.stringify({
+          booking_id: bookingId,
+          first_name,
+          last_name: last_name || null,
+          email,
+          phone: phone || null,
+          charter_type: charter_type || null,
+          charter_date: preferred_date || null,
+          charter_time: req.body.preferred_time || null,
+          duration: duration || null,
+          guests: guests || null,
+          special_requests: message || null,
+          source: source === 'chat' ? 'ai_concierge' : 'website',
+        }),
+      });
+    } catch (err) {
+      console.error('Brain forward error (non-fatal):', err);
+    }
   }
 
   return res.status(200).json({ success: true, booking_id: bookingId });

@@ -13,9 +13,20 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/:path(.+)/",
+      "has": [{ "type": "host", "value": "yachtawaynow.com" }],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
       "source": "/:path(.*)",
       "has": [{ "type": "host", "value": "yachtawaynow.com" }],
       "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.+)/",
+      "destination": "/:path",
       "statusCode": 308
     },
     { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 },
@@ -34,9 +45,9 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()" },
         { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com; frame-src https://js.stripe.com https://checkout.stripe.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com; form-action 'self' https://formspree.io https://checkout.stripe.com https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none';" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com https://*.tripadvisor.com https://*.yelp.com https://*.googleapis.com https://*.gstatic.com https://www.wikidata.org; frame-src https://js.stripe.com https://checkout.stripe.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com; form-action 'self' https://formspree.io https://checkout.stripe.com https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none';" }
       ]
     },
     {
