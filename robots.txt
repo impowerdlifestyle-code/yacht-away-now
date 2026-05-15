@@ -1,9 +1,17 @@
 User-agent: *
 Allow: /
 Disallow: /contract
+Disallow: /contracts
 Disallow: /competitive-analysis
 Disallow: /affiliate-dashboard
 Disallow: /affiliate-portal
+Disallow: /affiliate-signup
+Disallow: /send-confirmation
+Disallow: /send-welcome
+
+# Bingbot explicit (helps Bing Copilot confidence)
+User-agent: Bingbot
+Allow: /
 
 # AI Search Crawlers — Welcome
 User-agent: GPTBot
