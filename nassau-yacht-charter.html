@@ -178,8 +178,8 @@
     </div>
 
     <div class="grid-3">
-      <div class="reveal reveal-delay-1" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;">
-        <div style="color:var(--gold);margin-bottom:16px;">
+      <div class="reveal reveal-delay-1" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;text-align:center;">
+        <div style="color:var(--gold);margin-bottom:16px;display:flex;justify-content:center;">
           <svg width="32" height="32" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
         </div>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--white);">Four Real Bedrooms</h3>
@@ -187,8 +187,8 @@
           Three queen-bed master suites and a twin-bed cabin, each with its own door, climate control, and ensuite or adjacent full bath. Linens, pillows, and bath towels stocked. The master suites are sized for couples; the twin cabin sleeps two with room to spare.
         </p>
       </div>
-      <div class="reveal reveal-delay-2" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;">
-        <div style="color:var(--gold);margin-bottom:16px;">
+      <div class="reveal reveal-delay-2" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;text-align:center;">
+        <div style="color:var(--gold);margin-bottom:16px;display:flex;justify-content:center;">
           <svg width="32" height="32" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
         </div>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--white);">Optional Chef &amp; Captain</h3>
@@ -196,8 +196,8 @@
           A licensed captain and a private chef can be arranged on request. The captain handles cruising, marina coordination, and excursion routing. The chef provisions and prepares breakfasts, lunches, and dinners aboard — coordinated through our concierge before you arrive.
         </p>
       </div>
-      <div class="reveal reveal-delay-3" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;">
-        <div style="color:var(--gold);margin-bottom:16px;">
+      <div class="reveal reveal-delay-3" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius);padding:32px 28px;text-align:center;">
+        <div style="color:var(--gold);margin-bottom:16px;display:flex;justify-content:center;">
           <svg width="32" height="32" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12h18M3 12l3-8h12l3 8M3 12v6a2 2 0 002 2h14a2 2 0 002-2v-6"/></svg>
         </div>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--white);">Atlantis Marina Docking</h3>
@@ -323,9 +323,18 @@
 
 <section class="booking section" id="book">
   <div class="container">
-    <div class="booking-card booking-card-full reveal">
+    <div class="booking-card booking-card-full reveal" style="text-align:center;">
       <h3>Reserve the Nassau Yacht</h3>
-      <p class="booking-card-subtitle">Tell us your dates and party size. We&rsquo;ll confirm availability and itemize pricing within 24 hours.</p>
+      <p class="booking-card-subtitle" style="margin-left:auto;margin-right:auto;max-width:560px;">Tell us your dates and party size. We&rsquo;ll confirm availability and itemize pricing within 24 hours.</p>
+      <style>
+        #contactForm { text-align:left; max-width:640px; margin:24px auto 0; }
+        #contactForm .form-label { display:block; text-align:center; }
+        #contactForm .form-input, #contactForm .form-select, #contactForm .form-textarea { text-align:center; }
+        #contactForm .form-input::placeholder, #contactForm .form-textarea::placeholder { text-align:center; }
+        #contactForm .form-input[type="date"] { text-align:center; }
+        #contactForm label[for="ya-sms-consent"] { justify-content:center; text-align:left; }
+        #contactForm label[for="ya-sms-consent"] span { text-align:left; }
+      </style>
       <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)">
         <input type="hidden" name="access_key" value="dea9f1e3-2ab6-489f-bab2-9d003db7b977">
         <input type="hidden" name="subject" value="New Nassau Yacht Inquiry — Yacht Away Now">
