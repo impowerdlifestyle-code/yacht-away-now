@@ -1,3 +1,49 @@
 .DS_Store
 .vercel
 .env*.local
+
+# Backup files
+*.backup.*
+*.bak
+*.backup
+app.backup.*
+style.backup.*
+
+# Internal strategy / planning docs (not for public site)
+SEO-STRATEGY.md
+REVIEW-STRATEGY.md
+YOUTUBE-STRATEGY.md
+GBP-CONTENT-CALENDAR.md
+GETMYBOAT-LISTING.md
+LISTINGS-READY.md
+SMS-COMPLIANCE-SOP.md
+
+# Partnership / business docs
+partnership-proposal.*
+Yacht-Away-Now-Partnership-Proposal.*
+
+# Generated reports & tools
+generate_*.py
+generate-*.py
+generate-seo-report.*
+getmyboat-auto-draft.js
+google-apps-script.js
+
+# Internal directories
+marketing/
+print-assets/
+scripts/patch-local-seo.mjs
+agents/SETUP.md
+agents/test-*.mjs
+
+# Database schemas (internal only)
+*-schema.sql
+*.sql
+
+# Python / Node noise
+__pycache__/
+node_modules/
+*.pyc
+
+# OS
+Thumbs.db
