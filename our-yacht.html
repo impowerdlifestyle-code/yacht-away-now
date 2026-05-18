@@ -261,31 +261,50 @@
     <div class="reveal" style="margin-top:64px;text-align:center;">
       <div class="section-label">Vessel Data</div>
       <h2 class="section-title" style="font-size:1.8rem;">Full <em>Specifications</em></h2>
+      <p class="section-subtitle" style="margin:8px auto 0;max-width:640px;">Twelve numbers that tell the whole story — grouped by what matters when you book.</p>
       <style>
-        .spec-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:32px; max-width:900px; margin-left:auto; margin-right:auto; }
-        .spec-card { position:relative; text-align:center; padding:28px 16px; border-radius:12px; background:rgba(11,29,46,0.6); overflow:hidden; transition:all 0.4s ease; }
-        .spec-card::before { content:''; position:absolute; inset:-1px; border-radius:13px; padding:1px; background:linear-gradient(135deg, rgba(184,145,46,0.3), rgba(212,168,83,0.5), rgba(255,229,160,0.7), rgba(212,168,83,0.5), rgba(184,145,46,0.3)); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 3s ease-in-out infinite; pointer-events:none; }
-        @keyframes specShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-        .spec-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(201,168,76,0.15); }
-        .spec-val { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:#f5f0e8; line-height:1; margin-bottom:6px; }
-        .spec-val span { font-size:0.9rem; font-weight:400; color:#c9a84c; }
-        .spec-lbl { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#6b7a8d; }
-        @media(max-width:768px) { .spec-grid { grid-template-columns:repeat(3,1fr); gap:10px; } .spec-card { padding:20px 12px; } .spec-val { font-size:1.6rem; } }
-        @media(max-width:480px) { .spec-grid { grid-template-columns:repeat(2,1fr); } }
+        .spec-groups{display:flex;flex-direction:column;gap:36px;margin-top:40px;max-width:960px;margin-left:auto;margin-right:auto}
+        .spec-group{text-align:center}
+        .spec-group-label{display:inline-flex;align-items:center;gap:12px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#c9a84c;margin-bottom:18px}
+        .spec-group-label::before,.spec-group-label::after{content:"";width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,0.55),transparent)}
+        .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+        .spec-card{position:relative;text-align:center;padding:28px 16px;border-radius:12px;background:rgba(11,29,46,0.6);overflow:hidden;transition:all 0.4s ease}
+        .spec-card::before{content:'';position:absolute;inset:-1px;border-radius:13px;padding:1px;background:linear-gradient(135deg,rgba(184,145,46,0.3),rgba(212,168,83,0.5),rgba(255,229,160,0.7),rgba(212,168,83,0.5),rgba(184,145,46,0.3));background-size:300% 300%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:specShimmer 3s ease-in-out infinite;pointer-events:none}
+        @keyframes specShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .spec-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(201,168,76,0.15)}
+        .spec-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#f5f0e8;line-height:1;margin-bottom:6px}
+        .spec-val span{font-size:0.9rem;font-weight:400;color:#c9a84c}
+        .spec-lbl{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:#6b7a8d}
+        @media(max-width:768px){.spec-grid{grid-template-columns:repeat(2,1fr);gap:10px}.spec-card{padding:20px 12px}.spec-val{font-size:1.6rem}.spec-groups{gap:28px}.spec-group-label::before,.spec-group-label::after{width:20px}}
       </style>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="spec-val">52 <span>ft</span></div><div class="spec-lbl">Length Overall</div></div>
-        <div class="spec-card"><div class="spec-val">16 <span>ft</span></div><div class="spec-lbl">Beam</div></div>
-        <div class="spec-card"><div class="spec-val">4.5 <span>ft</span></div><div class="spec-lbl">Draft</div></div>
-        <div class="spec-card"><div class="spec-val">13</div><div class="spec-lbl">Guest Capacity</div></div>
-        <div class="spec-card"><div class="spec-val">1320<span>hp</span></div><div class="spec-lbl">Twin CAT Engines</div></div>
-        <div class="spec-card"><div class="spec-val">30<span>+ kts</span></div><div class="spec-lbl">Top Speed</div></div>
-        <div class="spec-card"><div class="spec-val">600 <span>mi</span></div><div class="spec-lbl">Range</div></div>
-        <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Deck Levels</div></div>
-        <div class="spec-card"><div class="spec-val">750 <span>gal</span></div><div class="spec-lbl">Fuel Capacity</div></div>
-        <div class="spec-card"><div class="spec-val">150 <span>gal</span></div><div class="spec-lbl">Water Capacity</div></div>
-        <div class="spec-card"><div class="spec-val">1,200 <span>ft&sup2;</span></div><div class="spec-lbl">Cabin Space</div></div>
-        <div class="spec-card"><div class="spec-val">800<span>+ ft&sup2;</span></div><div class="spec-lbl">Outdoor Deck</div></div>
+      <div class="spec-groups">
+        <div class="spec-group">
+          <div class="spec-group-label">Dimensions</div>
+          <div class="spec-grid">
+            <div class="spec-card"><div class="spec-val">52 <span>ft</span></div><div class="spec-lbl">Length Overall</div></div>
+            <div class="spec-card"><div class="spec-val">16 <span>ft</span></div><div class="spec-lbl">Beam</div></div>
+            <div class="spec-card"><div class="spec-val">4.5 <span>ft</span></div><div class="spec-lbl">Draft</div></div>
+            <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Deck Levels</div></div>
+          </div>
+        </div>
+        <div class="spec-group">
+          <div class="spec-group-label">Capacity &amp; Space</div>
+          <div class="spec-grid">
+            <div class="spec-card"><div class="spec-val">13</div><div class="spec-lbl">Guest Capacity</div></div>
+            <div class="spec-card"><div class="spec-val">1,200 <span>ft&sup2;</span></div><div class="spec-lbl">Cabin Space</div></div>
+            <div class="spec-card"><div class="spec-val">800<span>+ ft&sup2;</span></div><div class="spec-lbl">Outdoor Deck</div></div>
+            <div class="spec-card"><div class="spec-val">2</div><div class="spec-lbl">Overnight Cabins</div></div>
+          </div>
+        </div>
+        <div class="spec-group">
+          <div class="spec-group-label">Power &amp; Range</div>
+          <div class="spec-grid">
+            <div class="spec-card"><div class="spec-val">1320<span>hp</span></div><div class="spec-lbl">Twin CAT Engines</div></div>
+            <div class="spec-card"><div class="spec-val">30<span>+ kts</span></div><div class="spec-lbl">Top Speed</div></div>
+            <div class="spec-card"><div class="spec-val">600 <span>mi</span></div><div class="spec-lbl">Range</div></div>
+            <div class="spec-card"><div class="spec-val">750 <span>gal</span></div><div class="spec-lbl">Fuel Capacity</div></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
