@@ -130,10 +130,12 @@
       .nassau-photo img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
       .nassau-specs { text-align:center; }
       .spec-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:28px; max-width:480px; margin-left:auto; margin-right:auto; }
-      .spec-card { position:relative; text-align:center; padding:24px 14px; border-radius:12px; background:rgba(11,29,46,0.6); overflow:hidden; transition:all 0.4s ease; }
-      .spec-card::before { content:''; position:absolute; inset:-1px; border-radius:13px; padding:1px; background:linear-gradient(135deg, rgba(184,145,46,0.3), rgba(212,168,83,0.5), rgba(255,229,160,0.7), rgba(212,168,83,0.5), rgba(184,145,46,0.3)); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 3s ease-in-out infinite; pointer-events:none; }
+      .spec-card { position:relative; text-align:center; padding:24px 14px; border-radius:12px; background:linear-gradient(180deg, rgba(11,29,46,0.85), rgba(7,21,32,0.92)); overflow:hidden; transition:all 0.4s ease; box-shadow:0 0 0 1px rgba(212,168,83,0.18), 0 6px 24px -8px rgba(212,168,83,0.18), inset 0 1px 0 rgba(255,229,160,0.04); }
+      .spec-card::before { content:''; position:absolute; inset:0; border-radius:12px; padding:2px; background:linear-gradient(135deg, #8b6914 0%, #b8912e 18%, #d4a853 34%, #ffe5a0 50%, #d4a853 66%, #b8912e 82%, #8b6914 100%); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 2.6s ease-in-out infinite; pointer-events:none; }
+      .spec-card::after { content:''; position:absolute; inset:-1px; border-radius:13px; box-shadow:0 0 22px -2px rgba(255,229,160,0.35); opacity:0.65; pointer-events:none; animation:specGlow 3.4s ease-in-out infinite alternate; }
       @keyframes specShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-      .spec-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(201,168,76,0.15); }
+      @keyframes specGlow { 0%{opacity:0.45} 100%{opacity:0.85} }
+      .spec-card:hover { transform:translateY(-4px); box-shadow:0 0 0 1px rgba(255,229,160,0.45), 0 14px 36px -10px rgba(255,229,160,0.4), inset 0 1px 0 rgba(255,229,160,0.08); }
       .spec-val { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; color:#f5f0e8; line-height:1; margin-bottom:6px; }
       .spec-val span { font-size:0.9rem; font-weight:400; color:#c9a84c; }
       .spec-lbl { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#6b7a8d; }
