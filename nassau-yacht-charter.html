@@ -144,7 +144,7 @@
       <div class="section-label">Vessel Specs</div>
       <h2 class="section-title" style="font-size:1.8rem;">Layout &amp; <em>Capacity</em></h2>
       <style>
-        .spec-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:32px; max-width:900px; margin-left:auto; margin-right:auto; }
+        .spec-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; max-width:780px; margin-left:auto; margin-right:auto; }
         .spec-card { position:relative; text-align:center; padding:28px 16px; border-radius:12px; background:rgba(11,29,46,0.6); overflow:hidden; transition:all 0.4s ease; }
         .spec-card::before { content:''; position:absolute; inset:-1px; border-radius:13px; padding:1px; background:linear-gradient(135deg, rgba(184,145,46,0.3), rgba(212,168,83,0.5), rgba(255,229,160,0.7), rgba(212,168,83,0.5), rgba(184,145,46,0.3)); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 3s ease-in-out infinite; pointer-events:none; }
         @keyframes specShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
@@ -152,16 +152,14 @@
         .spec-val { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:#f5f0e8; line-height:1; margin-bottom:6px; }
         .spec-val span { font-size:0.9rem; font-weight:400; color:#c9a84c; }
         .spec-lbl { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#6b7a8d; }
-        @media(max-width:768px) { .spec-grid { grid-template-columns:repeat(3,1fr); gap:10px; } .spec-card { padding:20px 12px; } .spec-val { font-size:1.6rem; } }
+        @media(max-width:768px) { .spec-grid { gap:10px; } .spec-card { padding:20px 12px; } .spec-val { font-size:1.6rem; } }
         @media(max-width:480px) { .spec-grid { grid-template-columns:repeat(2,1fr); } }
       </style>
       <div class="spec-grid">
         <div class="spec-card"><div class="spec-val">4</div><div class="spec-lbl">Bedrooms</div></div>
         <div class="spec-card"><div class="spec-val">4.5</div><div class="spec-lbl">Bathrooms</div></div>
-        <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Queen Suites</div></div>
-        <div class="spec-card"><div class="spec-val">1</div><div class="spec-lbl">Twin Room</div></div>
         <div class="spec-card"><div class="spec-val">6</div><div class="spec-lbl">Sleeps</div></div>
-        <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Decks</div></div>
+        <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Queen Suites</div></div>
         <div class="spec-card"><div class="spec-val">Nassau</div><div class="spec-lbl">Home Port</div></div>
         <div class="spec-card"><div class="spec-val">Atlantis</div><div class="spec-lbl">Marina Access</div></div>
       </div>
