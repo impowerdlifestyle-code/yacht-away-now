@@ -29,6 +29,7 @@
       "destination": "/:path",
       "statusCode": 308
     },
+    { "source": "/nassau-yacht-charter", "destination": "/sly-fox", "statusCode": 301 },
     { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 },
     { "source": "/private-boat-charter-tampa-bay", "destination": "/yacht-charter-tampa", "statusCode": 301 },
     { "source": "/blog/how-much-does-a-yacht-charter-cost", "destination": "/yacht-charter-cost-tampa-bay", "statusCode": 301 },
