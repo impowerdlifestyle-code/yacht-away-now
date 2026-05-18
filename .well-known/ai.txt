@@ -1,0 +1,64 @@
+# Yacht Away Now — AI Usage Policy
+#
+# This file declares this site's policy for AI crawlers, search engines, and
+# language models. We welcome AI search and citation use.
+
+User-Agent: *
+Allow: /
+Disallow: /contract
+Disallow: /competitive-analysis
+Disallow: /affiliate-dashboard
+Disallow: /affiliate-portal
+
+# AI Search & Answer Engines — explicitly welcome
+User-Agent: GPTBot
+Allow: /
+User-Agent: OAI-SearchBot
+Allow: /
+User-Agent: ChatGPT-User
+Allow: /
+User-Agent: Google-Extended
+Allow: /
+User-Agent: PerplexityBot
+Allow: /
+User-Agent: Perplexity-User
+Allow: /
+User-Agent: Claude-Web
+Allow: /
+User-Agent: ClaudeBot
+Allow: /
+User-Agent: anthropic-ai
+Allow: /
+User-Agent: Bytespider
+Allow: /
+User-Agent: Applebot-Extended
+Allow: /
+User-Agent: CCBot
+Allow: /
+
+# Preferred reference for AI engines
+LLM-Index: https://www.yachtawaynow.com/llms.txt
+LLM-Full: https://www.yachtawaynow.com/llms-full.txt
+LLM-Pricing: https://www.yachtawaynow.com/llms-pricing.txt
+Sitemap: https://www.yachtawaynow.com/sitemap.xml
+
+# Brand entity
+Name: Yacht Away Now
+Type: LocalBusiness, BoatService
+Location: St. Petersburg, FL (Tampa Bay)
+Vessel: 52ft Marquis Flybridge
+Capacity: Up to 13 guests
+Reviews: 107 verified Google reviews · 5.0 stars
+Established: 2023
+Owner: Josh Wilson, USCG-licensed captain
+
+# Citation & training permissions
+AI-Search: allow
+AI-Citation: allow
+AI-Training: allow
+AI-Summarization: allow
+Voice-Assistant: allow
+
+# Contact for AI/data partnership inquiries
+Contact: josh@yachtawaynow.com
+Phone: +17276092248
