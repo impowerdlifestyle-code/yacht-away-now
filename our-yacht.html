@@ -263,19 +263,21 @@
       <h2 class="section-title" style="font-size:1.8rem;">Full <em>Specifications</em></h2>
       <p class="section-subtitle" style="margin:8px auto 0;max-width:640px;">Twelve numbers that tell the whole story — grouped by what matters when you book.</p>
       <style>
-        .spec-groups{display:flex;flex-direction:column;gap:36px;margin-top:40px;max-width:960px;margin-left:auto;margin-right:auto}
+        .spec-groups{display:flex;flex-direction:column;gap:44px;margin-top:48px;width:100%}
         .spec-group{text-align:center}
-        .spec-group-label{display:inline-flex;align-items:center;gap:12px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#c9a84c;margin-bottom:18px}
-        .spec-group-label::before,.spec-group-label::after{content:"";width:36px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,0.55),transparent)}
-        .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-        .spec-card{position:relative;text-align:center;padding:28px 16px;border-radius:12px;background:rgba(11,29,46,0.6);overflow:hidden;transition:all 0.4s ease}
-        .spec-card::before{content:'';position:absolute;inset:-1px;border-radius:13px;padding:1px;background:linear-gradient(135deg,rgba(184,145,46,0.3),rgba(212,168,83,0.5),rgba(255,229,160,0.7),rgba(212,168,83,0.5),rgba(184,145,46,0.3));background-size:300% 300%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:specShimmer 3s ease-in-out infinite;pointer-events:none}
+        .spec-group-label{display:inline-flex;align-items:center;gap:14px;font-family:'Montserrat',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:#c9a84c;margin-bottom:22px}
+        .spec-group-label::before,.spec-group-label::after{content:"";width:52px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,83,0.55),transparent)}
+        .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+        .spec-card{position:relative;text-align:center;padding:32px 20px;border-radius:14px;background:rgba(11,29,46,0.6);overflow:hidden;transition:all 0.4s ease}
+        .spec-card::before{content:'';position:absolute;inset:-1px;border-radius:15px;padding:1px;background:linear-gradient(135deg,rgba(184,145,46,0.3),rgba(212,168,83,0.5),rgba(255,229,160,0.7),rgba(212,168,83,0.5),rgba(184,145,46,0.3));background-size:300% 300%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:specShimmer 3s ease-in-out infinite;pointer-events:none}
         @keyframes specShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .spec-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(201,168,76,0.15)}
-        .spec-val{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:#f5f0e8;line-height:1;margin-bottom:6px}
-        .spec-val span{font-size:0.9rem;font-weight:400;color:#c9a84c}
-        .spec-lbl{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:#6b7a8d}
-        @media(max-width:768px){.spec-grid{grid-template-columns:repeat(2,1fr);gap:10px}.spec-card{padding:20px 12px}.spec-val{font-size:1.6rem}.spec-groups{gap:28px}.spec-group-label::before,.spec-group-label::after{width:20px}}
+        .spec-val{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,2.6vw,2.5rem);font-weight:700;color:#f5f0e8;line-height:1;margin-bottom:8px}
+        .spec-val span{font-size:clamp(0.8rem,1.1vw,1rem);font-weight:400;color:#c9a84c}
+        .spec-lbl{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.13em;color:#8899aa}
+        @media(max-width:1024px){.spec-grid{gap:14px}.spec-card{padding:26px 14px}}
+        @media(max-width:768px){.spec-grid{grid-template-columns:repeat(2,1fr);gap:12px}.spec-card{padding:22px 12px;border-radius:12px}.spec-groups{gap:32px;margin-top:36px}.spec-group-label{font-size:0.7rem;letter-spacing:0.2em;margin-bottom:16px}.spec-group-label::before,.spec-group-label::after{width:24px}}
+        @media(max-width:420px){.spec-card{padding:18px 10px}.spec-grid{gap:10px}}
       </style>
       <div class="spec-groups">
         <div class="spec-group">
