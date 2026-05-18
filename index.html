@@ -691,15 +691,37 @@
 </section>
 
 <section class="reviews section">
+  <style>
+    .reviews-intro{max-width:760px;margin:0 auto 56px;text-align:center;padding:0 16px}
+    .reviews-intro .section-label{margin-bottom:18px}
+    .reviews-intro h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.08;letter-spacing:-0.015em;color:var(--white);margin-bottom:20px;max-width:18ch;margin-left:auto;margin-right:auto}
+    .reviews-intro h2 em{font-style:italic;background:linear-gradient(105deg,var(--gold-dark),var(--gold),var(--gold-bright),var(--gold-light),var(--gold-bright),var(--gold),var(--gold-dark));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 4s ease infinite}
+    .reviews-trust{display:inline-flex;align-items:center;gap:18px;margin-top:8px;padding:14px 24px;border:1px solid rgba(212,168,83,0.22);border-radius:999px;background:linear-gradient(180deg,rgba(212,168,83,0.06),rgba(212,168,83,0.02))}
+    .reviews-trust .stars{font-size:1.15rem;letter-spacing:3px;background:linear-gradient(105deg,var(--gold-dark),var(--gold),var(--gold-bright),var(--gold-light),var(--gold-bright),var(--gold),var(--gold-dark));background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 4s ease infinite;filter:drop-shadow(0 0 10px rgba(212,168,83,0.55))}
+    .reviews-trust-text{display:flex;flex-direction:column;text-align:left;line-height:1.25}
+    .reviews-trust-text strong{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--white);letter-spacing:0.01em}
+    .reviews-trust-text a{font-size:0.78rem;color:var(--gray-400);letter-spacing:0.04em}
+    .reviews-trust-text a:hover{color:var(--gold)}
+    @media(max-width:600px){
+      .reviews-intro{margin-bottom:40px}
+      .reviews-intro h2{font-size:clamp(1.7rem,7vw,2.2rem);max-width:14ch}
+      .reviews-trust{gap:12px;padding:12px 18px}
+      .reviews-trust .stars{font-size:1rem;letter-spacing:2px}
+      .reviews-trust-text strong{font-size:0.92rem}
+      .reviews-trust-text a{font-size:0.72rem}
+    }
+  </style>
   <div class="container">
-    <div class="reviews-header reveal">
+    <div class="reviews-intro reveal">
       <div class="section-label">Testimonials</div>
-      <h2 class="section-title">What Do Guests Say About <em>Yacht Away Now?</em></h2>
-      <div class="gold-divider"></div>
-    </div>
-    <div class="reviews-rating reveal">
-      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-      <span>Excellent &middot; <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;">104 verified Google reviews</a></span>
+      <h2>What guests say about <em>Yacht Away Now</em></h2>
+      <div class="reviews-trust">
+        <span class="stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="reviews-trust-text">
+          <strong>Rated Excellent</strong>
+          <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer">104 verified Google reviews &rsaquo;</a>
+        </span>
+      </div>
     </div>
     <div class="grid-3">
       <div class="review-card reveal reveal-delay-1">
@@ -757,51 +779,6 @@
         Leave Us a Google Review
       </a>
       <p style="margin-top:12px;font-size:0.8rem;color:var(--gray-600);">Had a great time? Your review helps other guests find us.</p>
-    </div>
-  </div>
-</section>
-
-<section class="gallery section">
-  <div class="container">
-    <div class="gallery-header reveal">
-      <div class="section-label">Photo Gallery</div>
-      <h2 class="section-title">See Our Yacht Charters in <em>Action</em></h2>
-      <div class="gold-divider"></div>
-      <p class="section-subtitle">Captured moments from our charters — sunset cruises, celebrations, and unforgettable days on the Gulf Coast.</p>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item reveal reveal-delay-1"><picture>
-  <source srcset="/images/charter-img_0815.webp" type="image/webp">
-  <img src="/images/charter-img_0815.jpg" alt="52ft Marquis Flybridge yacht at the St. Petersburg marina" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-2"><picture>
-  <source srcset="/images/yacht-docked.webp" type="image/webp">
-  <img src="/images/yacht-docked.jpg" alt="Yacht docked at the St. Petersburg marina" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-3"><picture>
-  <source srcset="/images/yacht-sandbar.webp" type="image/webp">
-  <img src="/images/yacht-sandbar.jpg" alt="Yacht anchored at sandbar with guests swimming in crystal clear turquoise water" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-1"><picture>
-  <source srcset="/images/charter-img_0877.webp" type="image/webp">
-  <img src="/images/charter-img_0877.jpg" alt="Marquis Flybridge yacht illuminated at night in the marina" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-2"><picture>
-  <source srcset="/images/yacht-turquoise-hero.webp" type="image/webp">
-  <img src="/images/yacht-turquoise-hero.jpg" alt="Luxury yacht anchored in turquoise waters with boats nearby" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-1"><picture>
-  <source srcset="/images/bachelorette-party.webp" type="image/webp">
-  <img src="/images/bachelorette-party.jpg" alt="Women celebrating a bachelorette party on a yacht at sunset" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-2"><picture>
-  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
-  <img src="/images/yacht-rear-angle.jpg" alt="Rear view of 52ft Marquis yacht with American flag in turquoise water" width="600" height="400" loading="lazy">
-</picture></div>
-      <div class="gallery-item reveal reveal-delay-3"><picture>
-  <source srcset="/images/charter-img_1178.webp" type="image/webp">
-  <img src="/images/charter-img_1178.jpg" alt="Yacht with American flag flying at the marina" width="600" height="400" loading="lazy">
-</picture></div>
     </div>
   </div>
 </section>
