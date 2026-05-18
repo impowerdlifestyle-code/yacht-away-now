@@ -122,47 +122,53 @@
 
 <section class="section" style="background:var(--dark);">
   <div class="container">
-    <div class="reveal" style="text-align:center;">
-      <div style="aspect-ratio:16/9;max-width:1000px;margin:0 auto;overflow:hidden;border-radius:12px;"><picture>
-  <source srcset="/images/nassau-yacht-03.webp" type="image/webp">
-  <img src="/images/nassau-yacht-03.jpg" alt="Luxury motor yacht cruising in Nassau Bahamas waters with city skyline behind" width="1290" height="725" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;display:block;">
-</picture></div>
+    <style>
+      .nassau-vessel-row { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+      @media (max-width:900px) { .nassau-vessel-row { grid-template-columns:1fr; gap:40px; } }
+      .nassau-photo { aspect-ratio:16/9; overflow:hidden; border-radius:12px; box-shadow:0 24px 48px -16px rgba(0,0,0,0.55); }
+      .nassau-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+      .nassau-specs { text-align:center; }
+      .spec-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:28px; max-width:480px; margin-left:auto; margin-right:auto; }
+      .spec-card { position:relative; text-align:center; padding:24px 14px; border-radius:12px; background:rgba(11,29,46,0.6); overflow:hidden; transition:all 0.4s ease; }
+      .spec-card::before { content:''; position:absolute; inset:-1px; border-radius:13px; padding:1px; background:linear-gradient(135deg, rgba(184,145,46,0.3), rgba(212,168,83,0.5), rgba(255,229,160,0.7), rgba(212,168,83,0.5), rgba(184,145,46,0.3)); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 3s ease-in-out infinite; pointer-events:none; }
+      @keyframes specShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+      .spec-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(201,168,76,0.15); }
+      .spec-val { font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:700; color:#f5f0e8; line-height:1; margin-bottom:6px; }
+      .spec-val span { font-size:0.9rem; font-weight:400; color:#c9a84c; }
+      .spec-lbl { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#6b7a8d; }
+      @media (max-width:480px) { .spec-card { padding:18px 10px; } .spec-val { font-size:1.5rem; } }
+    </style>
+
+    <div class="nassau-vessel-row">
+      <div class="reveal nassau-photo">
+        <picture>
+          <source srcset="/images/nassau-yacht-03.webp" type="image/webp">
+          <img src="/images/nassau-yacht-03.jpg" alt="Luxury motor yacht cruising in Nassau Bahamas waters with city skyline behind" width="1290" height="725" fetchpriority="high">
+        </picture>
+      </div>
+      <div class="reveal nassau-specs">
+        <div class="section-label" style="justify-content:center;">Vessel Specs</div>
+        <h2 class="section-title" style="font-size:1.8rem;">Layout &amp; <em>Capacity</em></h2>
+        <div class="spec-grid">
+          <div class="spec-card"><div class="spec-val">4</div><div class="spec-lbl">Bedrooms</div></div>
+          <div class="spec-card"><div class="spec-val">4.5</div><div class="spec-lbl">Bathrooms</div></div>
+          <div class="spec-card"><div class="spec-val">6</div><div class="spec-lbl">Sleeps</div></div>
+          <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Queen Suites</div></div>
+          <div class="spec-card"><div class="spec-val">Nassau</div><div class="spec-lbl">Home Port</div></div>
+          <div class="spec-card"><div class="spec-val">Atlantis</div><div class="spec-lbl">Marina Access</div></div>
+        </div>
+      </div>
     </div>
 
-    <div class="reveal" style="margin:48px auto 0;max-width:800px;text-align:center;">
-      <div class="section-label">Overview</div>
+    <div class="reveal" style="margin:80px auto 0;max-width:820px;text-align:center;">
+      <div class="section-label" style="justify-content:center;">Overview</div>
       <h2 class="section-title" style="font-size:1.8rem;">A Floating Escape <em>in Nassau</em></h2>
-      <p class="section-subtitle" style="max-width:100%;margin:0 auto 20px;">
+      <p class="section-subtitle" style="margin:0 auto 20px;">
         Wake to the Bahamian sun, cross to a private cay for the afternoon, then dock for the night at Atlantis Marina with the resort buzzing one slip away. This is a liveaboard yacht — a real home on the water with four bedrooms, four and a half bathrooms, and the room to entertain six guests in serious comfort. The boat anchors the night, the chef cooks dinner if you want one, and the captain handles every detail of the cruise the next morning.
       </p>
-      <p class="section-subtitle" style="max-width:100%;margin:0 auto;">
+      <p class="section-subtitle" style="margin:0 auto;">
         Three queen-bed master suites and a twin-bed cabin mean every guest gets a real room — no folding sofas, no shared bunks. The aft deck, salon, and flybridge each accommodate the full party at once, which makes the yacht equally good for a multi-couple long weekend, a family island-hopping trip, or a quiet retreat for two with the run of the whole vessel.
       </p>
-    </div>
-
-    <div class="reveal" style="margin:64px auto 0;text-align:center;max-width:960px;">
-      <div class="section-label">Vessel Specs</div>
-      <h2 class="section-title" style="font-size:1.8rem;">Layout &amp; <em>Capacity</em></h2>
-      <style>
-        .spec-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; max-width:780px; margin-left:auto; margin-right:auto; }
-        .spec-card { position:relative; text-align:center; padding:28px 16px; border-radius:12px; background:rgba(11,29,46,0.6); overflow:hidden; transition:all 0.4s ease; }
-        .spec-card::before { content:''; position:absolute; inset:-1px; border-radius:13px; padding:1px; background:linear-gradient(135deg, rgba(184,145,46,0.3), rgba(212,168,83,0.5), rgba(255,229,160,0.7), rgba(212,168,83,0.5), rgba(184,145,46,0.3)); background-size:300% 300%; -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:specShimmer 3s ease-in-out infinite; pointer-events:none; }
-        @keyframes specShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-        .spec-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(201,168,76,0.15); }
-        .spec-val { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:#f5f0e8; line-height:1; margin-bottom:6px; }
-        .spec-val span { font-size:0.9rem; font-weight:400; color:#c9a84c; }
-        .spec-lbl { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:#6b7a8d; }
-        @media(max-width:768px) { .spec-grid { gap:10px; } .spec-card { padding:20px 12px; } .spec-val { font-size:1.6rem; } }
-        @media(max-width:480px) { .spec-grid { grid-template-columns:repeat(2,1fr); } }
-      </style>
-      <div class="spec-grid">
-        <div class="spec-card"><div class="spec-val">4</div><div class="spec-lbl">Bedrooms</div></div>
-        <div class="spec-card"><div class="spec-val">4.5</div><div class="spec-lbl">Bathrooms</div></div>
-        <div class="spec-card"><div class="spec-val">6</div><div class="spec-lbl">Sleeps</div></div>
-        <div class="spec-card"><div class="spec-val">3</div><div class="spec-lbl">Queen Suites</div></div>
-        <div class="spec-card"><div class="spec-val">Nassau</div><div class="spec-lbl">Home Port</div></div>
-        <div class="spec-card"><div class="spec-val">Atlantis</div><div class="spec-lbl">Marina Access</div></div>
-      </div>
     </div>
   </div>
 </section>
