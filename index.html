@@ -498,8 +498,8 @@
   <div class="container">
     <div class="vessel-visual reveal">
       <div class="vessel-image"><picture>
-  <source srcset="/images/charter-img_0815.webp" type="image/webp">
-  <img src="/images/charter-img_0815.jpg" alt="52ft Marquis Flybridge luxury yacht docked in St. Petersburg FL" width="800" height="600" loading="lazy">
+  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
+  <img src="/images/yacht-rear-angle.jpg" alt="52ft Marquis Flybridge yacht in crystal clear turquoise water off the Gulf Coast" width="800" height="600" loading="lazy">
 </picture></div>
       <div class="vessel-float">
         <div class="vessel-float-value">52'</div>
@@ -519,6 +519,13 @@
         trips to the Keys are a weekend adventure.
       </p>
       <p class="section-subtitle" style="margin-top:12px;"><strong>Multiple yachts available upon request.</strong> Our flagship 52ft Marquis Flybridge is our most popular vessel, but we have additional yachts in our fleet to accommodate your needs. <a href="/contact" style="color:var(--gold);">Contact us</a> to discuss options.</p>
+      <style>
+        .vessel-specs .vessel-spec{position:relative;overflow:hidden;background:rgba(11,29,46,0.6);transition:all 0.4s ease}
+        .vessel-specs .vessel-spec::before{content:"";position:absolute;inset:-1px;border-radius:13px;padding:1px;background:linear-gradient(135deg,rgba(184,145,46,0.3),rgba(212,168,83,0.55),rgba(255,229,160,0.75),rgba(212,168,83,0.55),rgba(184,145,46,0.3));background-size:300% 300%;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:specShimmer 3.2s ease-in-out infinite;pointer-events:none}
+        .vessel-specs .vessel-spec::after{content:"";position:absolute;inset:0;border-radius:12px;background:radial-gradient(circle at 50% 0%,rgba(255,229,160,0.08),transparent 70%);pointer-events:none;opacity:0.6}
+        .vessel-specs .vessel-spec:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,168,83,0.18)}
+        @keyframes specShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+      </style>
       <div class="vessel-specs">
         <div class="vessel-spec"><div class="vessel-spec-value">52 <span>ft</span></div><div class="vessel-spec-label">Length</div></div>
         <div class="vessel-spec"><div class="vessel-spec-value">3</div><div class="vessel-spec-label">Decks</div></div>
