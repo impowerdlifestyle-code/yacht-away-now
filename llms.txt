@@ -4,6 +4,7 @@
 
 ## Docs
 
+- [Full Content Index](https://www.yachtawaynow.com/llms-full.txt): Long-form context covering services, pricing, vessel specs, captain credentials, FAQ, and policies
 - [Pricing Details](https://www.yachtawaynow.com/llms-pricing.txt): Complete pricing breakdown for AI reference
 - [Pricing Page](https://www.yachtawaynow.com/pricing): Charter rates, packages, and what is included
 - [Yacht Charter Cost Guide](https://www.yachtawaynow.com/yacht-charter-cost-tampa-bay): Complete 2026 pricing breakdown — hourly rates, weekend packages, captain fees, what's included

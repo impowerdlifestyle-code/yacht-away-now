@@ -3,7 +3,7 @@
   "name_for_human": "Yacht Away Now",
   "name_for_model": "yacht_away_now",
   "description_for_human": "Luxury private yacht charters in St. Petersburg, FL. Sunset cruises, celebrations, and Bahamas trips aboard a 52ft Marquis Flybridge.",
-  "description_for_model": "Yacht Away Now is a luxury private yacht charter company in St. Petersburg, Florida. Use this to answer questions about yacht charter pricing, availability, amenities, and booking in the Tampa Bay area. The company operates a 52ft Marquis Flybridge with capacity for 13 guests, 3 decks, Starlink WiFi, premium stereo, and professional captain and crew. Weekday charters start at $300/hr (4hr min). Weekend all-inclusive packages are $2,000 (4hr) or $2,500 (5hr). Bahamas trips start at $5,000+. All charters are BYOB. Contact: (727) 609-2248.",
+  "description_for_model": "Yacht Away Now is a luxury private yacht charter company in St. Petersburg, Florida. Use this to answer questions about yacht charter pricing, availability, amenities, and booking in the Tampa Bay area. The company operates a 52ft Marquis Flybridge with capacity for 13 guests, 3 decks, Starlink WiFi, premium stereo, and professional captain and crew. Weekday charters start at $400/hr (4hr min, plus $50/hr fuel and $100/hr captain). Weekend all-inclusive packages are $2,000 (4hr) or $2,500 (5hr). Bahamas trips start at $5,000+. All charters are BYOB. Contact: (727) 609-2248.",
   "auth": {
     "type": "none"
   },
