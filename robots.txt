@@ -1,13 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /contract
-Disallow: /contracts
-Disallow: /competitive-analysis
-Disallow: /affiliate-dashboard
-Disallow: /affiliate-portal
-Disallow: /affiliate-signup
-Disallow: /send-confirmation
-Disallow: /send-welcome
+# Private/utility pages — enforced via X-Robots-Tag: noindex header
+# in vercel.json so Googlebot can crawl and SEE the noindex (a Disallow
+# would prevent reading the noindex tag entirely if backlinks exist)
 
 # Googlebot explicit (so AI-search audits don't flag it as implicit-only)
 User-agent: Googlebot
