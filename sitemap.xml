@@ -256,4 +256,37 @@
       <image:caption>Luxury 4-bedroom liveaboard yacht — second vessel in the Yacht Away Now St. Petersburg fleet</image:caption>
     </image:image>
   </url>
+  <!-- Spanish (es) versions of money pages — Tier 2 international SEO -->
+  <url>
+    <loc>https://www.yachtawaynow.com/es</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/pricing</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/contact</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/our-yacht</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/faq</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/sunset-cruise-st-petersburg</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/bachelorette-party-yacht-charter</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/es/wedding-yacht-charter</loc>
+    <lastmod>2026-05-21</lastmod>
+  </url>
 </urlset>
