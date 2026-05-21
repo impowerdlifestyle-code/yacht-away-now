@@ -1,0 +1,28 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:analytics": "esbuild scripts/analytics.js --bundle --minify --outfile=analytics-bundle.js --format=iife"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impowerdlifestyle-code/yacht-away-now.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/impowerdlifestyle-code/yacht-away-now/issues"
+  },
+  "homepage": "https://github.com/impowerdlifestyle-code/yacht-away-now#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
