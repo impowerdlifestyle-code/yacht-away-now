@@ -30,6 +30,27 @@ EMAIL = "josh@yachtawaynow.com"
 PRICE_RANGE = "$$$"
 IMAGE = "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg"
 LOGO = "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png"
+ADDRESS = {
+    "@type": "PostalAddress",
+    "streetAddress": "38th Way S",
+    "addressLocality": "St. Petersburg",
+    "addressRegion": "FL",
+    "postalCode": "33711",
+    "addressCountry": "US",
+}
+DESCRIPTION = (
+    "Luxury private yacht charters on Florida's Gulf Coast. 52ft Marquis "
+    "Flybridge for sunset cruises, bachelorette parties, birthday celebrations, "
+    "day charters, and Bahamas adventures. Up to 13 guests."
+)
+AGGREGATE_RATING = {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "bestRating": "5",
+    "worstRating": "1",
+    "reviewCount": "107",
+    "ratingCount": "107",
+}
 OPENING_HOURS = {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -51,9 +72,11 @@ AREA_SERVED = [
 # dict insertion order; we re-emit each LB block with fields grouped logically.
 FIELDS_TO_INJECT = [
     ("@id", CANONICAL_ID),
+    ("description", DESCRIPTION),
     ("identifier", PLACE_ID_IDENTIFIER),
     ("telephone", TELEPHONE),
     ("email", EMAIL),
+    ("address", ADDRESS),
     ("priceRange", PRICE_RANGE),
     ("image", IMAGE),
     ("logo", LOGO),
@@ -61,6 +84,7 @@ FIELDS_TO_INJECT = [
     ("hasMap", HAS_MAP),
     ("areaServed", AREA_SERVED),
     ("openingHoursSpecification", OPENING_HOURS),
+    ("aggregateRating", AGGREGATE_RATING),
 ]
 
 TARGETS = [
