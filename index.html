@@ -546,13 +546,29 @@
 <main>
 <section class="hero">
   <div class="hero-bg">
-    <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <video id="hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
       <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
       <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.mp4" type="video/mp4">
       <source src="/images/hero-yacht-drone.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.mp4" type="video/mp4">
-      <img src="/images/hero-yacht-drone-poster.jpg" alt="Luxury yacht aerial drone view in Tampa Bay">
     </video>
+    <script>
+      // Defer hero video on slow/metered connections — CSS background poster stays visible.
+      (function(){
+        var v = document.getElementById('hero-video');
+        if (!v) return;
+        var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) {
+          v.removeAttribute('autoplay');
+          v.pause();
+          return;
+        }
+        // Otherwise nudge the load after first idle to avoid competing with LCP.
+        var nudge = function(){ try { v.load(); v.play().catch(function(){}); } catch(_) {} };
+        if ('requestIdleCallback' in window) requestIdleCallback(nudge, { timeout: 1500 });
+        else setTimeout(nudge, 800);
+      })();
+    </script>
   </div>
   <div class="container">
     <h1 class="hero-title">
@@ -591,7 +607,7 @@
       </div>
       <div>
         <div class="hero-stat-value">600<span>mi</span></div>
-        <div class="hero-stat-label">Range &middot; Bahamas Ready</div>
+        <div class="hero-stat-label">Range &middot; Multi-Day Capable</div>
       </div>
     </div>
   </div>
@@ -618,7 +634,7 @@
       </p>
       <p class="section-subtitle">
         Three levels of space — over 1,200 sq ft of cabin and over 800 sq ft of outside deck
-        and bridge area. Powered by high-output 1320hp engines moving at 30+ knots, with a 600 mile range that turns Bahamas and Florida Keys runs into a weekend adventure.
+        and bridge area. Powered by high-output 1320hp engines moving at 30+ knots, with a 600 mile range that opens up overnight runs along the Gulf Coast and Florida Keys.
       </p>
       <p class="section-subtitle" style="margin-top:12px;"><strong>A curated collection — not a marketplace.</strong> Our flagship Marquis is the most popular yacht we charter, but we operate a hand-selected platform of premium private vessels from like-minded owners. No commodity rentals, no jet skis, no party barges. <a href="/contact" style="color:var(--gold);">Contact us</a> to discuss the right boat for your group.</p>
       <style>
@@ -650,7 +666,7 @@
     <div class="experiences-header reveal">
       <div class="section-label">Curated Experiences</div>
       <h2 class="section-title">What Types of Yacht Charters Are Available in <em>St. Petersburg?</em></h2>
-      <p class="section-subtitle">Yacht Away Now offers sunset cruises, bachelorette parties, birthday celebrations, corporate events, and multi-day Bahamas adventures — all tailored to your vision.</p>
+      <p class="section-subtitle">Yacht Away Now offers sunset cruises, bachelorette parties, birthday celebrations, corporate events, and multi-day overnight charters — all from St. Petersburg, all tailored to your vision.</p>
     </div>
     <div class="grid-3">
       <div class="exp-card reveal reveal-delay-1">
@@ -682,13 +698,13 @@
       <div class="exp-card reveal reveal-delay-3">
         <div class="exp-card-image"><picture>
   <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
-  <img src="/images/yacht-rear-angle.jpg" alt="52ft Marquis yacht in crystal clear Bahamas turquoise water" width="600" height="375" loading="lazy">
+  <img src="/images/yacht-rear-angle.jpg" alt="52ft Marquis yacht in crystal clear turquoise Gulf Coast water" width="600" height="375" loading="lazy">
 </picture>
           <div class="exp-card-number">03</div>
         </div>
         <div class="exp-card-body">
-          <h3>Bahamas Adventures</h3>
-          <p>Multi-day excursions to the Florida Keys and Bahamas. Full cabin accommodations, island-to-island itineraries, and memories that last a lifetime.</p>
+          <h3>Overnight &amp; Multi-Day</h3>
+          <p>Full-cabin overnight charters from St. Petersburg — sunset to sunrise on the water. Custom itineraries along the Gulf Coast, Florida Keys, or further afield on request.</p>
           <a href="/contact" class="exp-link">Book Now &rarr;</a>
         </div>
       </div>
@@ -731,13 +747,13 @@
         <a href="/contact" class="btn btn-gold" style="width:100%;justify-content:center;">Reserve Your Date</a>
       </div>
       <div class="price-card reveal reveal-delay-3">
-        <div class="price-card-title">Overnight / Bahamas</div>
+        <div class="price-card-title">Overnight &amp; Multi-Day</div>
         <div class="price-card-amount">$5,000<span>+</span></div>
-        <div class="price-card-detail">Multi-day trips &middot; +fuel &amp; captain<br>Keys, Bahamas &amp; beyond</div>
+        <div class="price-card-detail">Multi-day Gulf Coast trips &middot; +fuel &amp; captain<br>Custom destinations available</div>
         <div class="price-features">
-          <div class="price-feature"><span class="check">&#10003;</span> Multi-day adventures</div>
-          <div class="price-feature"><span class="check">&#10003;</span> Island-to-island itinerary</div>
-          <div class="price-feature"><span class="check">&#10003;</span> Florida Keys &amp; Bahamas</div>
+          <div class="price-feature"><span class="check">&#10003;</span> Overnight on the water</div>
+          <div class="price-feature"><span class="check">&#10003;</span> Island-to-island itineraries</div>
+          <div class="price-feature"><span class="check">&#10003;</span> Florida Keys &amp; beyond on request</div>
           <div class="price-feature"><span class="check">&#10003;</span> Full cabin accommodations</div>
           <div class="price-feature"><span class="check">&#10003;</span> 600-mile offshore range</div>
         </div>
@@ -796,13 +812,6 @@
           <h3>Yacht Charter Cost Guide</h3>
           <p>Real 2026 pricing breakdown — hourly rates, weekend packages, captain fees, what's included.</p>
           <span class="exp-link">Read the guide &rarr;</span>
-        </div>
-      </a>
-      <a href="/best-yacht-charters-tampa-bay-2026" class="exp-card reveal" style="display:block;text-decoration:none;color:inherit;">
-        <div class="exp-card-body" style="padding:32px 28px;">
-          <h3>Best Charter Companies 2026</h3>
-          <p>Independent ranking of the top 7 yacht charter companies in Tampa Bay this year.</p>
-          <span class="exp-link">See the list &rarr;</span>
         </div>
       </a>
       <a href="/tampa-bay-vs-miami-yacht-charter" class="exp-card reveal" style="display:block;text-decoration:none;color:inherit;">
@@ -996,7 +1005,7 @@
     <div>
       <span class="owners-band-eyebrow">For Yacht Owners</span>
       <h2>Own a Premium Private Yacht? <em>You Should Be Earning From It.</em></h2>
-      <p>Yacht Away Now is a hand-curated charter platform — not a marketplace. If you care about the kind of guests stepping aboard your vessel and you want real charter revenue without the GetMyBoat-style dilution, let's talk.</p>
+      <p>Yacht Away Now is a hand-curated charter platform — not a marketplace. If you care about the kind of guests stepping aboard your vessel and you want real charter revenue without the directory-style dilution, let's talk.</p>
     </div>
     <div class="owners-band-cta">
       <a href="/owners" class="btn btn-gold">
@@ -1094,7 +1103,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <a href="/" class="logo" style="margin-bottom:4px;">Yacht <span>Away</span> Now</a>
-        <p>Luxury private yacht charters on Florida's Gulf Coast. Creating unforgettable experiences from St. Petersburg to the Bahamas.</p>
+        <p>Luxury private yacht charters from St. Petersburg, Florida. Hand-curated experiences across Tampa Bay and the Gulf Coast.</p>
         <div class="footer-socials">
           <a href="https://facebook.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Facebook">f</a>
           <a href="https://instagram.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Instagram">ig</a>
