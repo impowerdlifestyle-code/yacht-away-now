@@ -62,16 +62,17 @@
     @media(max-width:768px){
       .hero-actions .btn-gold,.hero-actions .hero-call-mobile{display:none!important}
       .hero-actions .btn-outline.btn-hero{
-        border:none;
-        background:linear-gradient(105deg,#8b6914,#b8912e,#d4a853,#f0d48a,#ffe5a0,#f0d48a,#d4a853,#b8912e,#8b6914);
-        background-size:200% auto;
-        color:#0a1825;
-        box-shadow:0 12px 32px -10px rgba(212,168,83,0.55),0 0 0 1px rgba(255,229,160,0.3) inset;
-        animation:goldShimmer 5s ease infinite;
-        font-weight:800;
-        text-shadow:none
+        border:1.5px solid rgba(212,168,83,0.75);
+        background:rgba(212,168,83,0.14);
+        backdrop-filter:blur(6px);
+        -webkit-backdrop-filter:blur(6px);
+        color:#ffe5a0;
+        box-shadow:0 8px 24px -12px rgba(212,168,83,0.45),0 0 0 1px rgba(255,229,160,0.18) inset;
+        font-weight:700;
+        text-shadow:0 1px 6px rgba(0,0,0,0.55)
       }
-      .hero-actions .btn-outline.btn-hero svg{stroke:#0a1825}
+      .hero-actions .btn-outline.btn-hero svg{stroke:#ffe5a0}
+      .hero-stats > div:nth-child(4){display:none}
     }
     @keyframes goldShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
     @media(max-width:768px){
