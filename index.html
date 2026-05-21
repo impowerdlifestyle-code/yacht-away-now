@@ -72,6 +72,16 @@
         text-shadow:0 1px 6px rgba(0,0,0,0.55)
       }
       .hero-actions .btn-outline.btn-hero svg{stroke:#ffe5a0}
+      .hero-actions .btn-outline.btn-hero .view-yacht-text{
+        background:linear-gradient(105deg,#8b6914,#b8912e,#d4a853,#f0d48a,#ffe5a0,#f0d48a,#d4a853,#b8912e,#8b6914);
+        background-size:300% auto;
+        -webkit-background-clip:text;
+        background-clip:text;
+        -webkit-text-fill-color:transparent;
+        color:transparent;
+        animation:goldShimmer 5s ease infinite;
+        filter:drop-shadow(0 1px 4px rgba(212,168,83,0.35))
+      }
       .hero-stats > div:nth-child(4){display:none}
     }
     @keyframes goldShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
@@ -173,7 +183,7 @@
       </a>
       <a href="/our-yacht" class="btn btn-outline btn-hero">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 18h18l-1.5-5H4.5L3 18z"/><path d="M5 13V8a2 2 0 012-2h10a2 2 0 012 2v5"/><path d="M12 6V3"/></svg>
-        View Our Yacht
+        <span class="view-yacht-text">View Our Yacht</span>
       </a>
     </div>
     <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" class="hero-trust-pill" aria-label="5.0 stars from 108 Google reviews" style="display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:50px;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.35);font-size:0.8rem;color:#ffe5a0;font-weight:600;margin-top:20px;margin-bottom:6px;text-decoration:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fadeInUp 0.8s ease 0.35s both">
