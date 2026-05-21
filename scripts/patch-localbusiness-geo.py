@@ -48,8 +48,8 @@ AGGREGATE_RATING = {
     "ratingValue": "5.0",
     "bestRating": "5",
     "worstRating": "1",
-    "reviewCount": "107",
-    "ratingCount": "107",
+    "reviewCount": "108",
+    "ratingCount": "108",
 }
 OPENING_HOURS = {
     "@type": "OpeningHoursSpecification",
