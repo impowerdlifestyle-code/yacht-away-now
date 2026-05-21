@@ -385,70 +385,296 @@
 
 <section class="booking section" id="book">
   <div class="container">
-    <div class="booking-card booking-card-full reveal" style="text-align:center;">
-      <h3>Reserve Sly Fox</h3>
-      <p class="booking-card-subtitle" style="margin-left:auto;margin-right:auto;max-width:560px;">Tell us your dates and party size. We&rsquo;ll confirm availability and itemize pricing within 24 hours.</p>
+    <div class="booking-card booking-card-full reveal" id="wizardCard">
       <style>
-        #contactForm { text-align:left; max-width:640px; margin:24px auto 0; }
-        #contactForm .form-label { display:block; text-align:center; }
-        #contactForm .form-input, #contactForm .form-select, #contactForm .form-textarea { text-align:center; }
-        #contactForm .form-input::placeholder, #contactForm .form-textarea::placeholder { text-align:center; }
-        #contactForm .form-input[type="date"] { text-align:center; }
-        #contactForm label[for="ya-sms-consent"] { justify-content:center; text-align:left; }
-        #contactForm label[for="ya-sms-consent"] span { text-align:left; }
+        #wizardCard{max-width:640px;margin:0 auto;text-align:left}
+        .wiz-progress{display:flex;gap:6px;margin-bottom:24px}
+        .wiz-progress span{flex:1;height:4px;border-radius:2px;background:rgba(78,205,196,0.12);transition:background .4s ease,box-shadow .4s ease}
+        .wiz-progress span.done{background:linear-gradient(90deg,#b8912e,#d4a853,#ffe5a0);box-shadow:0 0 12px rgba(212,168,83,.45)}
+        .wiz-progress span.current{background:linear-gradient(90deg,rgba(212,168,83,.35),rgba(255,229,160,.7));box-shadow:0 0 14px rgba(255,229,160,.5)}
+        .wiz-step{display:none;animation:wizFadeIn .35s ease}
+        .wiz-step.active{display:block}
+        @keyframes wizFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .wiz-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:block}
+        .wiz-question{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.5rem,3.2vw,2rem);line-height:1.15;color:#f5f0e8;margin-bottom:6px;letter-spacing:-.005em}
+        .wiz-hint{font-size:.82rem;color:rgba(245,240,232,.6);margin-bottom:22px;line-height:1.6}
+        .wiz-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+        .wiz-card{position:relative;background:rgba(12,21,36,.7);border:1px solid rgba(78,205,196,.14);border-radius:14px;padding:18px 16px;cursor:pointer;text-align:center;transition:all .25s ease;color:#f0f7fa;font-size:.88rem;font-weight:600;letter-spacing:.01em;display:flex;flex-direction:column;align-items:center;gap:8px}
+        .wiz-card:hover{transform:translateY(-2px);border-color:rgba(212,168,83,.45);box-shadow:0 10px 30px rgba(0,0,0,.3),0 0 24px rgba(212,168,83,.12)}
+        .wiz-card.selected{border-color:#d4a853;background:linear-gradient(135deg,rgba(212,168,83,.15),rgba(255,229,160,.08));box-shadow:0 0 0 1px rgba(212,168,83,.5),0 0 30px rgba(212,168,83,.25)}
+        .wiz-card svg{stroke:#c9a84c;width:24px;height:24px}
+        .wiz-card.selected svg{stroke:#ffe5a0}
+        .wiz-card-sub{font-size:.7rem;font-weight:400;color:rgba(184,216,232,.7);letter-spacing:.02em;text-transform:none}
+        .wiz-chips{display:flex;flex-wrap:wrap;gap:10px}
+        .wiz-chip{background:rgba(12,21,36,.7);border:1px solid rgba(78,205,196,.14);border-radius:50px;padding:12px 22px;cursor:pointer;font-size:.85rem;font-weight:600;color:#f0f7fa;transition:all .25s ease;letter-spacing:.02em;font-family:inherit}
+        .wiz-chip:hover{border-color:rgba(212,168,83,.45);transform:translateY(-1px)}
+        .wiz-chip.selected{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;border-color:transparent;color:#0a1628;box-shadow:0 6px 20px rgba(212,168,83,.35);animation:goldShimmer 5s ease infinite}
+        .wiz-input{width:100%;padding:14px 18px;background:rgba(7,21,32,.7);border:1px solid rgba(78,205,196,.18);border-radius:12px;color:#f0f7fa;font-size:.92rem;font-family:inherit;outline:none;transition:border-color .25s ease}
+        .wiz-input:focus{border-color:#d4a853;box-shadow:0 0 0 3px rgba(212,168,83,.18)}
+        .wiz-input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+        @media(max-width:540px){.wiz-input-row{grid-template-columns:1fr}}
+        .wiz-textarea{min-height:84px;resize:vertical;line-height:1.55}
+        .wiz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:24px;padding-top:18px;border-top:1px solid rgba(78,205,196,.08)}
+        .wiz-back{background:none;border:none;color:rgba(184,216,232,.65);font-size:.78rem;letter-spacing:.04em;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit;transition:color .2s ease}
+        .wiz-back:hover{color:#4ecdc4}
+        .wiz-back:disabled{visibility:hidden}
+        .wiz-next{padding:13px 28px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:50px;border:none;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628;cursor:pointer;display:inline-flex;align-items:center;gap:8px;animation:goldShimmer 5s ease infinite;transition:transform .25s ease,box-shadow .25s ease;font-family:inherit}
+        .wiz-next:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 10px 30px rgba(212,168,83,.4)}
+        .wiz-next:disabled{opacity:.4;cursor:not-allowed;animation:none}
+        .wiz-skip{background:none;border:none;color:rgba(184,216,232,.5);font-size:.72rem;letter-spacing:.04em;cursor:pointer;font-family:inherit;text-decoration:underline}
+        .wiz-skip:hover{color:#4ecdc4}
+        .wiz-consent{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.74rem;line-height:1.5;color:rgba(184,216,232,.6);margin-top:12px;font-weight:400}
+        .wiz-consent input{margin-top:3px;flex-shrink:0;width:auto;accent-color:#c9a84c}
+        .wiz-trust{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid rgba(78,205,196,.08);font-size:.7rem;color:var(--gray-600);letter-spacing:.05em}
+        .wiz-trust span{display:flex;align-items:center;gap:6px}
+        .wiz-trust svg{stroke:var(--seafoam)}
       </style>
+      <h3 style="margin-bottom:6px;">Reserve Sly Fox</h3>
+      <p class="booking-card-subtitle">Five quick taps. We text you back within the hour &mdash; no long forms, no waiting.</p>
+
+      <div class="wiz-progress" aria-hidden="true">
+        <span class="current" data-step="1"></span>
+        <span data-step="2"></span>
+        <span data-step="3"></span>
+        <span data-step="4"></span>
+        <span data-step="5"></span>
+      </div>
+
       <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)">
         <input type="hidden" name="access_key" value="dea9f1e3-2ab6-489f-bab2-9d003db7b977">
         <input type="hidden" name="subject" value="New Sly Fox Inquiry — Yacht Away Now">
         <input type="hidden" name="from_name" value="Yacht Away Now Website">
         <input type="hidden" name="yacht" value="Sly Fox">
         <input type="text" name="botcheck" style="display:none">
-        <div class="form-row">
-          <div class="form-group"><label class="form-label" for="ya-fname">First Name *</label><input type="text" id="ya-fname" name="first_name" class="form-input" placeholder="John" required></div>
-          <div class="form-group"><label class="form-label" for="ya-lname">Last Name *</label><input type="text" id="ya-lname" name="last_name" class="form-input" placeholder="Smith" required></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label" for="ya-phone">Phone *</label><input type="tel" id="ya-phone" name="phone" class="form-input" placeholder="(555) 123-4567" required></div>
-          <div class="form-group"><label class="form-label" for="ya-email">Email *</label><input type="email" id="ya-email" name="email" class="form-input" placeholder="john@email.com" required></div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="ya-package">Package *</label>
-            <select id="ya-package" name="package" class="form-select" required><option value="" disabled selected>Select...</option><option value="bareboat">Bareboat Stay</option><option value="captain">With Captain</option><option value="full">Full Service (Captain + Chef)</option><option value="other">Not sure yet</option></select>
+        <input type="hidden" id="ya-charter" name="charter_type" value="">
+        <input type="hidden" id="ya-date" name="preferred_date" value="">
+        <input type="hidden" id="ya-guests" name="guests" value="">
+        <input type="hidden" id="ya-duration" name="duration" value="">
+
+        <div class="wiz-step active" data-step="1">
+          <span class="wiz-eyebrow">Step 1 of 5</span>
+          <h4 class="wiz-question">Which experience?</h4>
+          <p class="wiz-hint">Sly Fox sleeps 6 in three private cabins &mdash; pick how you want to run her.</p>
+          <div class="wiz-options">
+            <button type="button" class="wiz-card" data-value="Sly Fox — Bareboat">
+              <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 16l9-12 9 12"/><path d="M5 16h14l-2 5H7l-2-5z"/></svg>
+              Bareboat Stay
+              <span class="wiz-card-sub">You drive &mdash; dockside</span>
+            </button>
+            <button type="button" class="wiz-card" data-value="Sly Fox — With Captain">
+              <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21v-2a7 7 0 0114 0v2"/></svg>
+              With Captain
+              <span class="wiz-card-sub">USCG captain runs the boat</span>
+            </button>
+            <button type="button" class="wiz-card" data-value="Sly Fox — Full Service">
+              <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 12h18M5 16h14M7 8h10"/><circle cx="12" cy="4" r="1.5"/></svg>
+              Full Service
+              <span class="wiz-card-sub">Captain + private chef</span>
+            </button>
+            <button type="button" class="wiz-card" data-value="Sly Fox — Not Sure">
+              <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 2-2.5 2-2.5 4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>
+              Not Sure Yet
+              <span class="wiz-card-sub">We&rsquo;ll guide you</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="ya-date">Preferred Arrival *</label>
-            <input type="date" id="ya-date" name="preferred_date" class="form-input" required>
+        </div>
+
+        <div class="wiz-step" data-step="2">
+          <span class="wiz-eyebrow">Step 2 of 5</span>
+          <h4 class="wiz-question">When would you arrive?</h4>
+          <p class="wiz-hint">Pick a quick option or choose any date &mdash; we&rsquo;ll confirm availability.</p>
+          <div class="wiz-chips" id="wiz-date-chips" style="margin-bottom:14px;">
+            <button type="button" class="wiz-chip" data-relative="this-weekend">This Weekend</button>
+            <button type="button" class="wiz-chip" data-relative="next-weekend">Next Weekend</button>
+            <button type="button" class="wiz-chip" data-relative="this-month">This Month</button>
+            <button type="button" class="wiz-chip" data-relative="flexible">Flexible / Not sure</button>
+          </div>
+          <input type="date" id="wiz-date-input" class="wiz-input" style="margin-top:6px;">
+        </div>
+
+        <div class="wiz-step" data-step="3">
+          <span class="wiz-eyebrow">Step 3 of 5</span>
+          <h4 class="wiz-question">How many guests?</h4>
+          <p class="wiz-hint">Sly Fox sleeps up to 6 in three cabins.</p>
+          <div class="wiz-chips">
+            <button type="button" class="wiz-chip" data-value="1-2">1&ndash;2 guests</button>
+            <button type="button" class="wiz-chip" data-value="3-4">3&ndash;4 guests</button>
+            <button type="button" class="wiz-chip" data-value="5-6">5&ndash;6 guests</button>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group"><label class="form-label" for="ya-guests">Guests</label><input type="number" id="ya-guests" name="guests" class="form-input" placeholder="1-6" min="1" max="6"></div>
-          <div class="form-group"><label class="form-label" for="ya-nights">Nights</label>
-            <select id="ya-nights" name="nights" class="form-select">
-              <option value="2">2 nights</option><option value="3">3 nights</option><option value="4">4 nights</option><option value="5">5 nights</option><option value="6">6 nights</option><option value="7">7 nights</option><option value="multi">Longer</option>
-            </select>
+
+        <div class="wiz-step" data-step="4">
+          <span class="wiz-eyebrow">Step 4 of 5</span>
+          <h4 class="wiz-question">How many nights?</h4>
+          <p class="wiz-hint">Most stays run 2&ndash;4 nights. Bahamas crossings go longer.</p>
+          <div class="wiz-chips">
+            <button type="button" class="wiz-chip" data-value="2 nights">2 nights</button>
+            <button type="button" class="wiz-chip" data-value="3 nights">3 nights</button>
+            <button type="button" class="wiz-chip" data-value="4 nights">4 nights</button>
+            <button type="button" class="wiz-chip" data-value="5-7 nights">5&ndash;7 nights</button>
+            <button type="button" class="wiz-chip" data-value="Longer">Longer</button>
           </div>
         </div>
-        <div class="form-group" style="margin-bottom:18px;">
-          <label for="ya-sms-consent" style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.78rem;line-height:1.5;color:var(--gray-400);font-weight:400;text-transform:none;letter-spacing:0;">
-            <input type="checkbox" id="ya-sms-consent" name="sms_consent" value="Yes - opted in to SMS" style="margin-top:3px;flex-shrink:0;width:auto;accent-color:#c9a84c;">
-            <span>I agree to receive SMS text messages from Yacht Away Now about my booking. Msg &amp; data rates may apply. Reply STOP to opt out. See our <a href="/sms-terms" style="color:var(--gold);text-decoration:underline;" target="_blank" rel="noopener">SMS Terms</a> &amp; <a href="/privacy-policy" style="color:var(--gold);text-decoration:underline;" target="_blank" rel="noopener">Privacy Policy</a>. Consent is not required to book.</span>
+
+        <div class="wiz-step" data-step="5">
+          <span class="wiz-eyebrow">Step 5 of 5</span>
+          <h4 class="wiz-question">Where should we reach you?</h4>
+          <p class="wiz-hint">We respond by text within an hour. Promise.</p>
+          <div class="wiz-input-row">
+            <input type="text" name="first_name" class="wiz-input" placeholder="First name" required>
+            <input type="text" name="last_name" class="wiz-input" placeholder="Last name" required>
+          </div>
+          <div class="wiz-input-row">
+            <input type="tel" name="phone" class="wiz-input" placeholder="Phone — (555) 123-4567" required>
+            <input type="email" name="email" class="wiz-input" placeholder="Email (for receipt)" required>
+          </div>
+          <textarea name="message" class="wiz-input wiz-textarea" placeholder="Itinerary ideas? Chef preferences? Anything we should know? (optional)"></textarea>
+          <label class="wiz-consent">
+            <input type="checkbox" name="sms_consent" value="Yes - opted in to SMS">
+            <span>OK to text me about my booking. Reply STOP anytime. <a href="/sms-terms" style="color:var(--gold);" target="_blank" rel="noopener">SMS Terms</a> &middot; <a href="/privacy-policy" style="color:var(--gold);" target="_blank" rel="noopener">Privacy</a></span>
           </label>
         </div>
-        <div class="form-group"><label class="form-label" for="ya-requests">Special Requests</label><textarea id="ya-requests" name="message" class="form-textarea" placeholder="Itinerary ideas? Chef preferences? Group composition? Tell us anything we should know."></textarea></div>
-        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:18px;font-size:0.8rem;">Request Availability <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
-        <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-top:20px;padding-top:20px;border-top:1px solid rgba(78,205,196,0.08);flex-wrap:wrap;">
-          <span style="font-size:0.7rem;color:var(--gray-600);">USCG-licensed captain available</span>
-          <span style="font-size:0.7rem;color:var(--gray-600);"><a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;">108 Five-Star Reviews</a></span>
-          <span style="font-size:0.7rem;color:var(--gray-600);">24hr Response</span>
+
+        <div class="wiz-nav">
+          <button type="button" class="wiz-back" id="wizBack" disabled>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Back
+          </button>
+          <div style="display:flex;gap:14px;align-items:center;">
+            <button type="button" class="wiz-skip" id="wizSkip" style="display:none;">Skip this step</button>
+            <button type="button" class="wiz-next" id="wizNext" disabled>
+              <span id="wizNextLabel">Continue</span>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="wiz-trust">
+          <span><svg width="12" height="12" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secure</span>
+          <span><svg width="12" height="12" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;">108 Five-Star Reviews</a></span>
+          <span><svg width="12" height="12" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72"/></svg>Response within 1 hr</span>
         </div>
       </form>
       <div id="formSuccess" style="display:none;text-align:center;padding:40px 20px;">
         <div style="font-size:3rem;margin-bottom:16px;"><svg width="48" height="48" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--gold);">Inquiry Received!</h3>
-        <p style="color:var(--gray-400);line-height:1.7;">We&rsquo;ll confirm availability for your dates within 24 hours.</p>
+        <p style="color:var(--gray-400);line-height:1.7;">We&rsquo;ll text you within the hour to confirm availability for your dates.</p>
       </div>
     </div>
+
+    <script>
+    (function(){
+      var card=document.getElementById('wizardCard');if(!card)return;
+      var form=document.getElementById('contactForm');
+      var steps=card.querySelectorAll('.wiz-step');
+      var progSegs=card.querySelectorAll('.wiz-progress span');
+      var backBtn=document.getElementById('wizBack');
+      var nextBtn=document.getElementById('wizNext');
+      var nextLabel=document.getElementById('wizNextLabel');
+      var skipBtn=document.getElementById('wizSkip');
+      var current=1;var TOTAL=5;
+      var values={charter_type:'',preferred_date:'',guests:'',duration:''};
+
+      function show(n){
+        steps.forEach(function(s){s.classList.toggle('active',+s.dataset.step===n)});
+        progSegs.forEach(function(p){var s=+p.dataset.step;p.classList.toggle('done',s<n);p.classList.toggle('current',s===n)});
+        backBtn.disabled=(n===1);
+        updateNextState();
+        nextLabel.textContent=(n===TOTAL?'Send Request':'Continue');
+        skipBtn.style.display=(n===2)?'inline':'none';
+        var first=card.querySelector('.wiz-step.active input, .wiz-step.active button');
+        if(first&&first.tagName==='INPUT'&&!first.value)setTimeout(function(){first.focus()},120);
+      }
+      function updateNextState(){
+        var ok=false;
+        if(current===1)ok=!!values.charter_type;
+        else if(current===2)ok=!!values.preferred_date;
+        else if(current===3)ok=!!values.guests;
+        else if(current===4)ok=!!values.duration;
+        else if(current===5){
+          var s5=card.querySelector('.wiz-step[data-step="5"]');
+          var fn=s5.querySelector('[name=first_name]').value.trim();
+          var ln=s5.querySelector('[name=last_name]').value.trim();
+          var ph=s5.querySelector('[name=phone]').value.trim();
+          var em=s5.querySelector('[name=email]').value.trim();
+          ok=fn&&ln&&ph&&em;
+        }
+        nextBtn.disabled=!ok;
+      }
+
+      card.querySelectorAll('.wiz-step[data-step="1"] .wiz-card').forEach(function(b){
+        b.addEventListener('click',function(){
+          card.querySelectorAll('.wiz-step[data-step="1"] .wiz-card').forEach(function(x){x.classList.remove('selected')});
+          b.classList.add('selected');
+          values.charter_type=b.dataset.value;
+          document.getElementById('ya-charter').value=b.dataset.value;
+          updateNextState();
+          setTimeout(function(){current=2;show(2);},250);
+        });
+      });
+
+      function setDate(val,labelChip){
+        values.preferred_date=val;
+        document.getElementById('ya-date').value=val;
+        card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(x){x.classList.toggle('selected',x===labelChip)});
+        updateNextState();
+      }
+      function relativeToISO(rel){
+        var d=new Date(),day=d.getDay();
+        if(rel==='this-weekend'){var add=(6-day+7)%7||0;d.setDate(d.getDate()+add);}
+        else if(rel==='next-weekend'){var add=(6-day+7)%7;d.setDate(d.getDate()+add+7);}
+        else if(rel==='this-month'){d.setDate(d.getDate()+10);}
+        else if(rel==='flexible'){return 'Flexible';}
+        return d.toISOString().slice(0,10);
+      }
+      card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(b){
+        b.addEventListener('click',function(){
+          var iso=relativeToISO(b.dataset.relative);
+          setDate(iso,b);
+          var dateInput=document.getElementById('wiz-date-input');
+          if(iso!=='Flexible')dateInput.value=iso;else dateInput.value='';
+        });
+      });
+      document.getElementById('wiz-date-input').addEventListener('change',function(e){
+        if(e.target.value){
+          setDate(e.target.value,null);
+          card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(x){x.classList.remove('selected')});
+        }
+      });
+
+      function chipGroup(stepEl,key,inputId){
+        stepEl.querySelectorAll('.wiz-chip').forEach(function(b){
+          b.addEventListener('click',function(){
+            stepEl.querySelectorAll('.wiz-chip').forEach(function(x){x.classList.remove('selected')});
+            b.classList.add('selected');
+            values[key]=b.dataset.value;
+            document.getElementById(inputId).value=b.dataset.value;
+            updateNextState();
+            setTimeout(function(){if(current<TOTAL){current++;show(current);}},220);
+          });
+        });
+      }
+      chipGroup(card.querySelector('.wiz-step[data-step="3"]'),'guests','ya-guests');
+      chipGroup(card.querySelector('.wiz-step[data-step="4"]'),'duration','ya-duration');
+
+      var s5=card.querySelector('.wiz-step[data-step="5"]');
+      s5.querySelectorAll('input').forEach(function(i){i.addEventListener('input',updateNextState)});
+
+      nextBtn.addEventListener('click',function(){
+        if(current<TOTAL){current++;show(current);return;}
+        form.requestSubmit?form.requestSubmit():form.submit();
+      });
+      backBtn.addEventListener('click',function(){if(current>1){current--;show(current);}});
+      skipBtn.addEventListener('click',function(){
+        values.preferred_date='Flexible';
+        document.getElementById('ya-date').value='Flexible';
+        updateNextState();
+        if(current<TOTAL){current++;show(current);}
+      });
+
+      show(1);
+    })();
+    </script>
   </div>
 </section>
 </main>
