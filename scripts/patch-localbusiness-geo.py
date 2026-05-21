@@ -17,12 +17,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+CANONICAL_ID = "https://www.yachtawaynow.com/#business"
 GEO = {"@type": "GeoCoordinates", "latitude": 27.7232126, "longitude": -82.6831018}
 HAS_MAP = "https://share.google/7e44SLfCM74VXYfe2"
 PLACE_ID_IDENTIFIER = {
     "@type": "PropertyValue",
     "propertyID": "Google Place ID",
     "value": "ChIJ7za8P4sdw4gR8zIl0CuGgyk",
+}
+TELEPHONE = "+17276092248"
+EMAIL = "josh@yachtawaynow.com"
+PRICE_RANGE = "$$$"
+IMAGE = "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg"
+LOGO = "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png"
+OPENING_HOURS = {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "06:00",
+    "closes": "20:00",
 }
 AREA_SERVED = [
     {"@type": "City", "name": "St. Petersburg",
@@ -35,7 +47,24 @@ AREA_SERVED = [
      "containedInPlace": {"@type": "State", "name": "Florida"}},
 ]
 
+# Map Pack-critical fields injected when absent. Order preserved by Python 3.7+
+# dict insertion order; we re-emit each LB block with fields grouped logically.
+FIELDS_TO_INJECT = [
+    ("@id", CANONICAL_ID),
+    ("identifier", PLACE_ID_IDENTIFIER),
+    ("telephone", TELEPHONE),
+    ("email", EMAIL),
+    ("priceRange", PRICE_RANGE),
+    ("image", IMAGE),
+    ("logo", LOGO),
+    ("geo", GEO),
+    ("hasMap", HAS_MAP),
+    ("areaServed", AREA_SERVED),
+    ("openingHoursSpecification", OPENING_HOURS),
+]
+
 TARGETS = [
+    "contact.html",
     "yacht-charter-tampa.html",
     "yacht-charter-clearwater.html",
     "yacht-charter-st-petersburg.html",
@@ -78,24 +107,16 @@ def patch_object(obj):
     if isinstance(obj, dict):
         t = obj.get("@type")
         is_lb = (t == "LocalBusiness" or (isinstance(t, list) and "LocalBusiness" in t))
-        if is_lb and is_yan_business(obj) and "geo" not in obj:
-            new = {}
-            for k, v in obj.items():
-                new[k] = v
-                if k == "address":
-                    new["geo"] = GEO
-                    new["hasMap"] = HAS_MAP
-                    if "areaServed" not in obj:
-                        new["areaServed"] = AREA_SERVED
-            # If there was no address (defensive), still attach at end
-            if "geo" not in new:
-                new["geo"] = GEO
-                new["hasMap"] = HAS_MAP
-                if "areaServed" not in obj:
-                    new["areaServed"] = AREA_SERVED
-            obj = new
-            changed += 1
-        # Recurse
+        # Patch when it's the YAN business AND it's not a pure @id-only reference
+        # (an @id-only ref has just @type and @id; we don't want to balloon those).
+        is_ref_only = is_lb and set(obj.keys()) <= {"@type", "@id"}
+        if is_lb and not is_ref_only and is_yan_business(obj):
+            # Inject any missing Map Pack–critical fields
+            for field, value in FIELDS_TO_INJECT:
+                if field not in obj:
+                    obj = {**obj, field: value}
+                    changed += 1
+        # Recurse into children
         out = {}
         for k, v in obj.items():
             new_v, c = patch_object(v)
