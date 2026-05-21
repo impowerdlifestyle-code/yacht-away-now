@@ -137,23 +137,23 @@
 <section class="hero">
   <div class="hero-bg">
     <video id="hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
+      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.mp4" type="video/mp4">
       <source src="/images/hero-yacht-drone.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.mp4" type="video/mp4">
     </video>
     <script>
-      // Mobile + slow/metered connections: skip video entirely, AVIF poster stays.
+      // Defer hero video on slow/metered connections — CSS background poster stays visible.
       (function(){
         var v = document.getElementById('hero-video');
         if (!v) return;
         var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        var slow = c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType));
-        var isMobile = window.matchMedia && window.matchMedia('(max-width:768px)').matches;
-        if (slow || isMobile) {
+        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) {
           v.removeAttribute('autoplay');
           v.pause();
-          v.remove();
           return;
         }
+        // Otherwise nudge the load after first idle to avoid competing with LCP.
         var nudge = function(){ try { v.load(); v.play().catch(function(){}); } catch(_) {} };
         if ('requestIdleCallback' in window) requestIdleCallback(nudge, { timeout: 1500 });
         else setTimeout(nudge, 800);
