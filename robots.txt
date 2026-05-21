@@ -9,6 +9,10 @@ Disallow: /affiliate-signup
 Disallow: /send-confirmation
 Disallow: /send-welcome
 
+# Googlebot explicit (so AI-search audits don't flag it as implicit-only)
+User-agent: Googlebot
+Allow: /
+
 # Bingbot explicit (helps Bing Copilot confidence)
 User-agent: Bingbot
 Allow: /
@@ -36,6 +40,12 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
 Allow: /
 
 User-agent: anthropic-ai
