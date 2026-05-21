@@ -29,68 +29,118 @@
   <noscript><link rel="stylesheet" href="/style.css"></noscript>
   <script type="application/ld+json">
   {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Yacht Charter Pricing \u2014 Yacht Away Now",
-  "url": "https://www.yachtawaynow.com/pricing",
-  "speakable": {
-    "@type": "SpeakableSpecification",
-    "cssSelector": [
-      ".price-card-amount",
-      ".price-card-detail",
-      ".price-features",
-      ".section-subtitle"
-    ]
-  },
-  "mainEntity": {
-    "@type": "ItemList",
-    "itemListElement": [
+    "@context": "https://schema.org",
+    "@graph": [
       {
-        "@type": "Offer",
-        "position": 1,
-        "name": "Hourly Yacht Charter",
-        "description": "4-hour minimum private yacht charter with 2 cabins and 3 decks, professional captain and crew, premium high-quality stereo, up to 13 guests.",
-        "price": "400",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2026-12-31",
-        "url": "https://www.yachtawaynow.com/pricing",
-        "priceSpecification": {
-          "@type": "UnitPriceSpecification",
-          "price": "400",
-          "priceCurrency": "USD",
-          "unitText": "hour"
+        "@type": ["BoatCharter", "LocalBusiness"],
+        "@id": "https://www.yachtawaynow.com/#business",
+        "name": "Yacht Away Now",
+        "url": "https://www.yachtawaynow.com",
+        "telephone": "+17276092248",
+        "email": "josh@yachtawaynow.com",
+        "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
+        "logo": "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png",
+        "priceRange": "$400-$5000+",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "38th Way S",
+          "addressLocality": "St. Petersburg",
+          "addressRegion": "FL",
+          "postalCode": "33711",
+          "addressCountry": "US"
         },
-        "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 27.7232126,
+          "longitude": -82.6831018
+        },
+        "areaServed": ["St. Petersburg", "Tampa Bay", "Clearwater", "Gulf Coast Florida", "Florida Keys", "Bahamas"]
       },
       {
-        "@type": "Offer",
-        "position": 2,
-        "name": "Weekend Yacht Charter",
-        "description": "4-hour weekend charter (11am-2pm) from $2,000 or 5-hour charter (2:30pm-7:30pm) for $2,500.",
-        "price": "2000",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2026-12-31",
+        "@type": "WebPage",
+        "@id": "https://www.yachtawaynow.com/pricing#webpage",
+        "name": "Yacht Charter Pricing \u2014 Yacht Away Now",
         "url": "https://www.yachtawaynow.com/pricing",
-        "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+        "isPartOf": { "@id": "https://www.yachtawaynow.com/#business" },
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [".price-card-amount", ".price-card-detail", ".price-features", ".section-subtitle"]
+        },
+        "dateModified": "2026-05-21"
       },
       {
-        "@type": "Offer",
-        "position": 3,
-        "name": "Overnight / Bahamas Yacht Trip",
-        "description": "Multi-day yacht charter to the Florida Keys and Bahamas with full cabin accommodations and 600-mile range.",
-        "price": "5000",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "priceValidUntil": "2026-12-31",
-        "url": "https://www.yachtawaynow.com/pricing",
-        "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+        "@type": "Service",
+        "@id": "https://www.yachtawaynow.com/pricing#service",
+        "name": "Private Yacht Charter Service",
+        "serviceType": "Yacht Charter",
+        "provider": { "@id": "https://www.yachtawaynow.com/#business" },
+        "areaServed": ["St. Petersburg", "Tampa Bay", "Clearwater", "Florida Keys", "Bahamas"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Charter Packages",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "position": 1,
+              "name": "Hourly Yacht Charter",
+              "description": "4-hour minimum private yacht charter with 2 cabins and 3 decks, professional captain and crew, premium high-quality stereo, up to 13 guests.",
+              "price": "400",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing",
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "400",
+                "priceCurrency": "USD",
+                "unitText": "HUR"
+              },
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Hourly Yacht Charter",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            },
+            {
+              "@type": "Offer",
+              "position": 2,
+              "name": "Weekend Yacht Charter",
+              "description": "4-hour weekend charter (11am-2pm) from $2,000 or 5-hour charter (2:30pm-7:30pm) for $2,500. All-inclusive \u2014 captain, crew, and fuel included.",
+              "price": "2000",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Weekend Yacht Charter Package",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            },
+            {
+              "@type": "Offer",
+              "position": 3,
+              "name": "Overnight / Bahamas Yacht Trip",
+              "description": "Multi-day yacht charter to the Florida Keys and Bahamas with full cabin accommodations and 600-mile range.",
+              "price": "5000",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Overnight & Bahamas Yacht Charter",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            }
+          ]
+        }
       }
     ]
-  },
-  "dateModified": "2026-05-08"
-}
+  }
   </script>
   <script type="application/ld+json">
   {
