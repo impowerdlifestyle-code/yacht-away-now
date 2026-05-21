@@ -22,7 +22,15 @@
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/about</loc>
-    <lastmod>2026-05-08</lastmod>
+    <lastmod>2026-05-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.yachtawaynow.com/owners</loc>
+    <lastmod>2026-05-21</lastmod>
+    <image:image>
+      <image:loc>https://www.yachtawaynow.com/images/yacht-deck-aesthetic-1400.jpg</image:loc>
+      <image:caption>List your premium private yacht with Yacht Away Now</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://www.yachtawaynow.com/our-yacht</loc>
