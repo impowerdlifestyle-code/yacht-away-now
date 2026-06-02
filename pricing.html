@@ -182,7 +182,7 @@
         "name": "How far in advance should I book?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit is required to confirm your reservation."
+          "text": "We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A $1,000 refundable deposit holds your charter date."
         }
       },
       {
@@ -190,7 +190,7 @@
         "name": "What is the cancellation policy?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Cancellations made 72+ hours before departure receive a full refund of the deposit. Cancellations within 72 hours are non-refundable. If we cancel due to unsafe weather conditions, you'll receive a full refund or the option to reschedule at no extra cost."
+          "text": "Your $1,000 deposit is fully refundable up to 72 hours before departure. Cancellations within 72 hours are non-refundable. If we cancel due to unsafe weather — or if a named storm is forecast within 72 hours of your charter — you'll receive a full refund or the option to reschedule at no extra cost."
         }
       },
       {
@@ -534,7 +534,7 @@
           <div style="text-align:right;">
             <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b7a8d;margin-bottom:4px;">Deposit to Book</div>
             <div id="calcDeposit" style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:#4ecdc4;line-height:1;"></div>
-            <div style="font-size:0.7rem;color:#6b7a8d;margin-top:4px;">Refundable &bull; Min $1,000</div>
+            <div style="font-size:0.7rem;color:#6b7a8d;margin-top:4px;">Refundable up to 72hr before charter</div>
           </div>
         </div>
 
@@ -782,7 +782,7 @@
       const fuelCost = hours * 50;
       const captainCost = hours * 100;
       const total = charterCost + fuelCost + captainCost;
-      const deposit = Math.max(1000, Math.round(total * 0.5));
+      const deposit = 1000;
 
       document.getElementById('calcEstimate').textContent = '$' + total.toLocaleString();
       document.getElementById('calcDeposit').textContent = '$' + deposit.toLocaleString();
@@ -800,7 +800,7 @@
       const total = weekendSlot === 'wknd4' ? 2000 : 2500;
       const hrs = weekendSlot === 'wknd4' ? 4 : 5;
       const timeSlot = weekendSlot === 'wknd4' ? '11am — 3pm' : '2:30pm — 7:30pm';
-      const deposit = Math.max(1000, Math.round(total * 0.5));
+      const deposit = 1000;
 
       document.getElementById('calcEstimate').textContent = '$' + total.toLocaleString();
       document.getElementById('calcDeposit').textContent = '$' + deposit.toLocaleString();
@@ -1144,12 +1144,12 @@
 
       <div class="faq-item reveal" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:16px;">
         <h3 style="font-size:1rem;font-weight:600;color:#f5f0e8;margin-bottom:10px;">How far in advance should I book?</h3>
-        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit is required to confirm your reservation.</p>
+        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A $1,000 refundable deposit holds your charter date.</p>
       </div>
 
       <div class="faq-item reveal" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:16px;">
         <h3 style="font-size:1rem;font-weight:600;color:#f5f0e8;margin-bottom:10px;">What is the cancellation policy?</h3>
-        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">Cancellations made 72+ hours before departure receive a full refund of the deposit. Cancellations within 72 hours are non-refundable. If we cancel due to unsafe weather conditions, you'll receive a full refund or the option to reschedule at no extra cost. Your safety is always our top priority.</p>
+        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">Your $1,000 deposit is fully refundable up to 72 hours before departure. Cancellations within 72 hours are non-refundable. If we cancel due to unsafe weather — or if a named storm is forecast within 72 hours of your charter — you'll receive a full refund or the option to reschedule at no extra cost. Your safety is always our top priority.</p>
       </div>
 
       <div class="faq-item reveal" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:16px;">
