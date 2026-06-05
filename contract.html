@@ -1079,6 +1079,29 @@ sumNameEl.addEventListener('change', () => { sigNameEl.value = sumNameEl.value; 
 if (sumNameEl.value) sigNameEl.value = sumNameEl.value;
 
 // ============================================
+// NO-PAY (signature-only) MODE — deposit already on file
+// ============================================
+const noPay = params.get('nopay') === '1';
+if (noPay) {
+  const subtitle = document.querySelector('.contract-header p');
+  if (subtitle) subtitle.textContent = 'Please review all agreements below and provide your initials and signature. Your deposit is already on file — no further payment is needed.';
+  const pkgSection = document.getElementById('packageGrid') && document.getElementById('packageGrid').parentElement;
+  if (pkgSection) pkgSection.style.display = 'none';
+  const depRow = document.querySelector('.deposit-row');
+  if (depRow) depRow.style.display = 'none';
+  const step3span = document.querySelector('#step3 span');
+  if (step3span) step3span.textContent = 'Done';
+  const payBtn = document.getElementById('payBtn');
+  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign Contract';
+  const secure = document.querySelector('.pay-secure');
+  if (secure) secure.innerHTML = '<span><svg width="12" height="12" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Deposit already received — no payment due</span>';
+  const successH = document.querySelector('.success-state h2');
+  if (successH) successH.textContent = 'Contract Signed Successfully!';
+  const successP = document.querySelector('.success-state p');
+  if (successP) successP.textContent = 'Thank you — your signed contract is on file. We\'ll see you on the water!';
+}
+
+// ============================================
 // PACKAGE SELECTION & DEPOSIT CALCULATION
 // ============================================
 const depositDisplay = document.getElementById('depositAmount');
@@ -1231,7 +1254,7 @@ function validateForm() {
   const hasChartererName = document.getElementById('sumName').value.trim().length > 0;
   const hasEmail = document.getElementById('sumEmail').value.trim().length > 0;
 
-  const valid = allInitialed && hasName && hasSigned && hasAgreed && hasTotal && hasChartererName && hasEmail;
+  const valid = allInitialed && hasName && hasSigned && hasAgreed && (noPay || hasTotal) && hasChartererName && hasEmail;
   document.getElementById('payBtn').disabled = !valid;
 }
 
@@ -1265,6 +1288,42 @@ async function submitAndPay() {
     captain = captainRadio.value === 'charterer_choice'
       ? document.getElementById('captainCustom').value || 'Charterer choice'
       : captainRadio.value;
+  }
+
+  if (noPay) {
+    try {
+      const res = await fetch('/api/sign-contract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, phone,
+          charter_type: charterType,
+          charter_date: charterDate,
+          guests, captain,
+          total_price: total || null,
+          signature_data: sigData,
+          signer_name: document.getElementById('sigName').value.trim(),
+          signed_at: new Date().toISOString()
+        })
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'Failed to record signature');
+
+      document.getElementById('contractSection').style.display = 'none';
+      document.getElementById('signatureSection').style.display = 'none';
+      document.querySelector('.booking-summary').style.display = 'none';
+      document.getElementById('successState').classList.add('show');
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step2').classList.add('done');
+      document.getElementById('progressLine2').classList.add('done');
+      document.getElementById('step3').classList.add('active');
+      document.getElementById('step3').classList.add('done');
+    } catch (err) {
+      alert('Something went wrong: ' + err.message + '\n\nPlease try again or call (727) 609-2248.');
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign Contract';
+    }
+    return;
   }
 
   try {
