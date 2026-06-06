@@ -55,7 +55,17 @@ on_err() {
 
 cd "$BB_REPO_PATH"
 DEFAULT_BRANCH="$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null | sed 's|^origin/||' || echo main)"
+# Bring local default branch up to remote (handles the case where someone
+# pushed to main between worktree-create and now).
+git fetch origin "$DEFAULT_BRANCH" 2>&1 | tee -a "$LOG_FILE"
 git checkout "$DEFAULT_BRANCH" 2>&1 | tee -a "$LOG_FILE"
+git merge --ff-only "origin/$DEFAULT_BRANCH" 2>&1 | tee -a "$LOG_FILE"
+# Rebase agent's commit onto the refreshed main (rebase must run in the
+# worktree because that's where BB_BRANCH is checked out — git won't let
+# you rebase a branch checked out elsewhere).
+cd "$WORKTREE_PATH"
+git rebase "$DEFAULT_BRANCH" 2>&1 | tee -a "$LOG_FILE"
+cd "$BB_REPO_PATH"
 git merge --ff-only "$BB_BRANCH" 2>&1 | tee -a "$LOG_FILE"
 git push origin "$DEFAULT_BRANCH" 2>&1 | tee -a "$LOG_FILE"
 git worktree remove --force "$WORKTREE_PATH" 2>&1 | tee -a "$LOG_FILE"
