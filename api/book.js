@@ -53,29 +53,10 @@ export default async function handler(req, res) {
     console.error('Supabase save error:', err);
   }
 
-  // Create Google Calendar event in Eastern Time
-  if (process.env.GOOGLE_CALENDAR_WEBHOOK) {
-    try {
-      await fetch(process.env.GOOGLE_CALENDAR_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name,
-          last_name: last_name || '',
-          phone: phone || '',
-          email,
-          charter_type: charter_type || 'Charter',
-          preferred_date: preferred_date || new Date().toISOString().split('T')[0],
-          preferred_time: req.body.preferred_time || '10:00',
-          guests: guests || '',
-          duration: duration || '4hr',
-          message: message || '',
-        }),
-      });
-    } catch (err) {
-      console.error('Google Calendar webhook error (non-fatal):', err);
-    }
-  }
+  // NOTE: Calendar events are intentionally NOT created here. A raw booking
+  // request is not a confirmed charter. The event is created only after the
+  // contract is signed AND the deposit is paid — see api/stripe-webhook.js
+  // (checkout.session.completed, deposit path).
 
   // Send email notification (only for AI chatbot bookings — website form already sends via Web3Forms)
   if (source === 'chat' && process.env.WEB3FORMS_KEY) {

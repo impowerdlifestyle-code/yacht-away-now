@@ -1,5 +1,33 @@
 const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK
+  || 'https://script.google.com/macros/s/AKfycbyuzLmBEYRrZpsFLMPJ0uH2zRDOnprokKPHKrAd_mhnWa3LvWTjSylb_WRCa0zThSdP/exec';
+
+// Create the Google Calendar event. Called ONLY after contract signed + deposit
+// paid — never on a raw booking request. The Apps Script renders in US Eastern.
+async function createCalendarEvent(b) {
+  if (!GOOGLE_CALENDAR_WEBHOOK || !b || !b.charter_date) return;
+  try {
+    await fetch(GOOGLE_CALENDAR_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        first_name: b.first_name || '',
+        last_name: b.last_name || '',
+        phone: b.phone || '',
+        email: b.email || '',
+        charter_type: b.charter_type || 'Charter',
+        preferred_date: b.charter_date,
+        preferred_time: b.charter_time || '10:00',
+        guests: b.guests || '',
+        duration: b.duration || '4hr',
+        message: b.special_requests || '',
+      }),
+    });
+  } catch (err) {
+    console.error('Calendar create error (non-fatal):', err);
+  }
+}
 const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
 
@@ -276,8 +304,11 @@ export default async function handler(req, res) {
         }
       }
 
-      // Captain notify — gated on contract_signed + deposit_paid
+      // Calendar event + Captain notify — both gated on contract_signed + deposit_paid.
+      // Deposit is paid by virtue of being in this handler; contract_signed_at
+      // confirms the signature. A booking that is not both is never put on the calendar.
       if (bookingForNotify && bookingForNotify.contract_signed_at) {
+        await createCalendarEvent(bookingForNotify);
         try {
           await fetch('https://yan-dashboard.vercel.app/api/captain-notify', {
             method: 'POST',
