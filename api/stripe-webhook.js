@@ -228,6 +228,23 @@ export default async function handler(req, res) {
             });
           }
         }
+
+        // Immediate owner alert (email + SMS to Josh & Ciaran) — balance/invoice paid
+        try {
+          await fetch('https://yan-dashboard.vercel.app/api/owner-notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              event: 'balance_paid',
+              name: metadata.charterer_name || 'Guest',
+              email: email || null,
+              amount: amountPaid,
+            }),
+          });
+        } catch (notifyErr) {
+          console.error('Owner notify error (non-fatal):', notifyErr);
+        }
+
         return res.json({ received: true, action: 'balance_paid' });
       }
 
@@ -283,6 +300,28 @@ export default async function handler(req, res) {
         } catch (err) {
           console.error('Captain notify error (non-fatal):', err);
         }
+      }
+
+      // Immediate owner alert (email + SMS to Josh & Ciaran) — deposit paid
+      try {
+        await fetch('https://yan-dashboard.vercel.app/api/owner-notify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'deposit_paid',
+            booking_id: bookingForNotify?.id || null,
+            name,
+            email,
+            phone: bookingForNotify?.phone || metadata.phone || null,
+            charter_type: charterType,
+            charter_date: charterDate,
+            guests,
+            total_price: totalPrice,
+            amount: depositAmount,
+          }),
+        });
+      } catch (notifyErr) {
+        console.error('Owner notify error (non-fatal):', notifyErr);
       }
 
       // Create balance payment link if there's a remaining balance

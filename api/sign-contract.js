@@ -75,39 +75,22 @@ export default async function handler(req, res) {
     }
 
     try {
-      const contractMsg = `
-CONTRACT SIGNED (deposit already on file — no payment collected)
-========================================
-
-Charterer:      ${name}
-Email:          ${email}
-Phone:          ${phone || 'Not provided'}
-Charter Type:   ${charter_type || 'Not specified'}
-Charter Date:   ${charter_date || 'TBD'}
-Guests:         ${guests || 'Not specified'}
-Captain:        ${captain || 'Not selected'}
-
-Status: Customer signed all 4 contracts. No deposit charged (signature-only link).
-View on dashboard: https://yan-dashboard.vercel.app/dashboard/contracts
-
-========================================
-Source: Signature-only contract link on yachtawaynow.com
-      `.trim();
-
-      await fetch('https://api.web3forms.com/submit', {
+      await fetch('https://yan-dashboard.vercel.app/api/owner-notify', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: process.env.WEB3FORMS_KEY,
-          subject: `Contract Signed (no payment) — ${name} (${charter_type || 'Charter'})`,
-          from_name: 'Yacht Away Now — Contract System',
-          reply_to: email,
-          ccemail: 'josh@yachtawaynow.com',
-          message: contractMsg,
+          event: 'contract_signed',
+          name,
+          email,
+          phone: phone || null,
+          charter_type: charter_type || null,
+          charter_date: charter_date || null,
+          guests: guests || null,
+          total_price: total_price || null,
         }),
       });
-    } catch (emailErr) {
-      console.error('Email notification error (non-fatal):', emailErr);
+    } catch (notifyErr) {
+      console.error('Owner notify error (non-fatal):', notifyErr);
     }
 
     return res.status(200).json({ ok: true });
