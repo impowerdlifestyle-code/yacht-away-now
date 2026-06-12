@@ -335,6 +335,34 @@ export default async function handler(req, res) {
         } catch (err) {
           console.error('Captain notify error (non-fatal):', err);
         }
+
+        // AI-drafted confirmation email — queued in the dashboard's Pending
+        // Actions for review; nothing reaches the customer until approved.
+        try {
+          await fetch('https://yan-dashboard.vercel.app/api/agents/draft-confirmation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-yan-booking-secret': process.env.YAN_BOOKING_SECRET || '',
+            },
+            body: JSON.stringify({
+              booking_id: bookingForNotify.id,
+              first_name: bookingForNotify.first_name || name,
+              last_name: bookingForNotify.last_name || null,
+              email,
+              charter_type: bookingForNotify.charter_type || charterType || 'Charter',
+              charter_date: bookingForNotify.charter_date || charterDate || null,
+              charter_time: bookingForNotify.charter_time || '',
+              guests: bookingForNotify.guests || guests || '',
+              duration: bookingForNotify.duration || metadata.duration || '4hr',
+              total_price: bookingForNotify.total_price || totalPrice || null,
+              deposit_amount: bookingForNotify.deposit_amount || depositAmount || null,
+              special_requests: bookingForNotify.special_requests || '',
+            }),
+          });
+        } catch (err) {
+          console.error('Confirmation draft error (non-fatal):', err);
+        }
       }
 
       // Immediate owner alert (email + SMS to Josh & Ciaran) — deposit paid
