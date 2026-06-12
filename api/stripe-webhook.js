@@ -1,7 +1,7 @@
 const STRIPE_KEY = process.env.STRIPE_SECRET_KEY;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK
-  || 'https://script.google.com/macros/s/AKfycbyuzLmBEYRrZpsFLMPJ0uH2zRDOnprokKPHKrAd_mhnWa3LvWTjSylb_WRCa0zThSdP/exec';
+  || 'https://script.google.com/macros/s/AKfycbwvbcNmqi9QRDriGsv7rKZNIAOOm9u8KbLxL6sOndNzUspmqT3ecC_Dj53LovtxsWrh/exec';
 
 // Create the Google Calendar event. Called ONLY after contract signed + deposit
 // paid — never on a raw booking request. The Apps Script renders in US Eastern.

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   if (!signature_data) return res.status(400).json({ ok: false, error: 'Signature is required' });
 
   const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK
-    || 'https://script.google.com/macros/s/AKfycbyuzLmBEYRrZpsFLMPJ0uH2zRDOnprokKPHKrAd_mhnWa3LvWTjSylb_WRCa0zThSdP/exec';
+    || 'https://script.google.com/macros/s/AKfycbwvbcNmqi9QRDriGsv7rKZNIAOOm9u8KbLxL6sOndNzUspmqT3ecC_Dj53LovtxsWrh/exec';
 
   const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
