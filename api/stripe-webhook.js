@@ -146,10 +146,14 @@ async function sendWelcomeEmail(name, email, charterType, charterDate, guests, d
         </tr>
         <tr>
           <td style="padding:10px 12px 10px 0;vertical-align:top;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#b8912e,#d4a853);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#0b1d2e;text-align:center;line-height:32px;">2</div></td>
-          <td style="padding:10px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">48 Hours Before</strong><br>We'll send you the exact dock location, parking info, and a reminder to pay any remaining balance.</td>
+          <td style="padding:10px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">7 Days Before</strong><br>Your remaining 50% balance is due. We'll send a secure payment link — or use the button above any time.</td>
         </tr>
         <tr>
           <td style="padding:10px 12px 10px 0;vertical-align:top;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#b8912e,#d4a853);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#0b1d2e;text-align:center;line-height:32px;">3</div></td>
+          <td style="padding:10px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">48 Hours Before</strong><br>We'll send you the exact dock location and parking info.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px 10px 0;vertical-align:top;"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#b8912e,#d4a853);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:#0b1d2e;text-align:center;line-height:32px;">4</div></td>
           <td style="padding:10px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Charter Day!</strong><br>Show up, step aboard, and let us handle the rest. Your only job is to enjoy.</td>
         </tr>
       </table>

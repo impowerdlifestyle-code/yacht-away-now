@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     params.append('cancel_url', 'https://www.yachtawaynow.com/contract?canceled=true');
     params.append('customer_email', email);
     params.append('line_items[0][price_data][currency]', 'usd');
-    params.append('line_items[0][price_data][product_data][name]', 'Yacht Charter Refundable Deposit');
+    params.append('line_items[0][price_data][product_data][name]', 'Yacht Charter Deposit (50%)');
     params.append('line_items[0][price_data][product_data][description]',
       `${charter_type || 'Charter'} — ${charter_date || 'TBD'} — ${guests || '?'} guests — Charter Total: $${total_price || 'TBD'}`
     );

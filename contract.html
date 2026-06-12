@@ -673,16 +673,16 @@
             <input type="radio" name="package" value="weekday" onchange="selectPackage(this)">
             <div class="package-card">
               <div class="package-name">Weekday Charter</div>
-              <div class="package-price">From $400<span>/hr</span></div>
-              <div class="package-detail">4-hour minimum + fuel & captain</div>
+              <div class="package-price">$500<span>/hr</span></div>
+              <div class="package-detail">Mon&ndash;Thu &middot; all-inclusive &middot; 4-hr minimum</div>
             </div>
           </label>
           <label class="package-option" id="pkg-weekend">
             <input type="radio" name="package" value="weekend" onchange="selectPackage(this)">
             <div class="package-card">
-              <div class="package-name">Weekend Package</div>
-              <div class="package-price">$2,000 <span>- $2,500</span></div>
-              <div class="package-detail">All-inclusive, 4-5 hours</div>
+              <div class="package-name">Weekend Charter</div>
+              <div class="package-price">$600<span>/hr</span></div>
+              <div class="package-detail">Fri&ndash;Sun &middot; all-inclusive &middot; 4-hr minimum</div>
             </div>
           </label>
           <label class="package-option" id="pkg-bahamas">
@@ -714,10 +714,10 @@
 
       <div class="deposit-row">
         <div>
-          <div class="total-label">Refundable Deposit to Hold Your Date</div>
-          <div style="font-size:0.75rem;color:var(--gray-600);margin-top:2px;">Minimum $1,000 &mdash; applied toward your charter total</div>
+          <div class="total-label">50% Deposit Due Today</div>
+          <div style="font-size:0.75rem;color:var(--gray-600);margin-top:2px;">Charter total <span id="charterTotalDisplay" style="color:var(--gray-400);font-weight:600;">$0</span> &mdash; remaining <span id="balanceDisplay" style="color:var(--gray-400);font-weight:600;">$0</span> due <span id="balanceDueDisplay">7 days before departure</span></div>
         </div>
-        <div class="total-amount" id="depositAmount">$1,000</div>
+        <div class="total-amount" id="depositAmount">$0</div>
       </div>
     </div>
 
@@ -764,9 +764,9 @@
 
             <p><strong>9.</strong> CHARTERER shall not sub-charter or assign this Charter without obtaining the consent of OWNER in writing. If at any time CHARTERER fails to remedy any default with respect to any of the provisions, covenants or conditions of this Charter to be kept or performed by CHARTERER within days after notice thereof, or such additional time as is reasonably required to cure such default, OWNER shall have the right to terminate this Charter by giving written notice of such termination to CHARTERER.</p>
 
-            <p><strong>10.</strong> OWNER shall not be responsible for failure to deliver the Vessel at commencement of the Charter if such failure is caused by reasons beyond the control of OWNER or by reason of said Vessel having been lost or disabled. Should such delivery not be made within one day after specified date, this Agreement may be canceled by CHARTERER and any deposits or amounts theretofore paid on charter hire shall be returned by OWNER to CHARTERER.</p>
+            <p><strong>10.</strong> OWNER shall not be responsible for failure to deliver the Vessel at commencement of the Charter if such failure is caused by reasons beyond the control of OWNER or by reason of said Vessel having been lost or disabled. Should such delivery not be made within one day after specified date, CHARTERER may select a replacement charter date, and any deposits or amounts theretofore paid on charter hire shall be applied in full toward the replacement charter.</p>
 
-            <p><strong>11. REFUNDS:</strong> The deposit will NOT be refunded unless it is unsafe to go out. We will reschedule in the event of an emergency, so you do not lose your deposit, you have one year to use your trip, we want to keep you as a client and make your yachting experience the best.</p>
+            <p><strong>11. PAYMENTS &amp; RESCHEDULING:</strong> A deposit of fifty percent (50%) of the Charter Fee is due upon execution of this Agreement. The remaining balance is due no later than seven (7) days prior to the scheduled departure. All payments are applied to CHARTERER's charter. If the captain determines conditions are unsafe to depart, the charter will be rescheduled at no cost to CHARTERER for any open future date of CHARTERER's choosing, and the booking shall remain valid for twelve (12) months from the original charter date.</p>
 
             <p><strong>12. ARRIVALS:</strong> If you arrive at the boat late, you will lose that time.</p>
 
@@ -960,7 +960,7 @@
       <div class="pay-btn-wrapper">
         <button class="btn btn-gold" id="payBtn" disabled onclick="submitAndPay()">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Sign & Pay Refundable Deposit — <span id="payAmount">$0</span>
+          Sign & Pay 50% Deposit — <span id="payAmount">$0</span>
         </button>
         <div class="pay-secure">
           <span>
@@ -1111,24 +1111,54 @@ const customTotalInput = document.getElementById('sumTotal');
 const hiddenTotal = document.getElementById('sumTotalHidden');
 let selectedPackage = '';
 
-const packageDefaults = {
-  weekday: 1600,   // 4hr x $400
-  weekend: 2000,
-  bahamas: 5000,
-  custom: 0
-};
+// All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
+const HOURLY_RATES = { weekday: 500, weekend: 600 };
+const DURATION_HOURS = { '4hr': 4, '5hr': 5, '6hr': 6 };
+
+function selectedHours() {
+  const sel = document.getElementById('sumDuration');
+  return DURATION_HOURS[sel && sel.value] || 0;
+}
+
+// Fri(5)/Sat(6)/Sun(0) = weekend rate. Returns null when no valid date yet.
+function isWeekendCharter() {
+  const v = document.getElementById('sumDate').value;
+  if (!v) return null;
+  const d = new Date(v + 'T12:00:00');
+  if (isNaN(d.getTime())) return null;
+  const day = d.getDay();
+  return day === 5 || day === 6 || day === 0;
+}
 
 function selectPackage(radio) {
   selectedPackage = radio.value;
   if (radio.value === 'custom') {
     customTotalRow.style.display = 'block';
     customTotalInput.focus();
+  } else if (radio.value === 'bahamas') {
+    customTotalRow.style.display = 'none';
+    hiddenTotal.value = 5000;
   } else {
     customTotalRow.style.display = 'none';
-    hiddenTotal.value = packageDefaults[radio.value];
+    hiddenTotal.value = HOURLY_RATES[radio.value] * (selectedHours() || 4);
   }
   updateDeposit();
   validateForm();
+}
+
+// Exact quote: auto-pick weekday/weekend from the charter date so the
+// customer sees the precise price for the date they chose.
+function syncPackageToDate() {
+  const wk = isWeekendCharter();
+  if (wk === null) return;
+  if (selectedPackage === 'bahamas' || selectedPackage === 'custom') return;
+  const target = document.querySelector('input[name="package"][value="' + (wk ? 'weekend' : 'weekday') + '"]');
+  if (target && !target.checked) {
+    target.checked = true;
+    selectPackage(target);
+  } else if (target) {
+    selectPackage(target);
+  }
 }
 
 function getCharterTotal() {
@@ -1139,20 +1169,39 @@ function getCharterTotal() {
 }
 
 function getDeposit() {
-  const total = getCharterTotal();
-  // 50% of total, but minimum $1,000
-  return Math.max(1000, Math.round(total * 0.5));
+  return Math.round(getCharterTotal() * 0.5);
+}
+
+function balanceDueDateText() {
+  const v = document.getElementById('sumDate').value;
+  if (!v) return '7 days before departure';
+  const d = new Date(v + 'T12:00:00');
+  if (isNaN(d.getTime())) return '7 days before departure';
+  d.setDate(d.getDate() - 7);
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
 function updateDeposit() {
+  const total = getCharterTotal();
   const deposit = getDeposit();
   depositDisplay.textContent = '$' + deposit.toLocaleString();
   payAmountDisplay.textContent = '$' + deposit.toLocaleString();
+  const totalEl = document.getElementById('charterTotalDisplay');
+  const balEl = document.getElementById('balanceDisplay');
+  const dueEl = document.getElementById('balanceDueDisplay');
+  if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+  if (balEl) balEl.textContent = '$' + (total - deposit).toLocaleString();
+  if (dueEl) dueEl.textContent = balanceDueDateText();
 }
 
 if (customTotalInput) {
   customTotalInput.addEventListener('input', () => { updateDeposit(); validateForm(); });
 }
+document.getElementById('sumDate').addEventListener('change', () => { syncPackageToDate(); updateDeposit(); });
+document.getElementById('sumDuration').addEventListener('change', () => {
+  if (selectedPackage === 'weekday' || selectedPackage === 'weekend') selectPackage(document.querySelector('input[name="package"]:checked'));
+});
+syncPackageToDate();
 updateDeposit();
 
 // ============================================
@@ -1368,7 +1417,7 @@ async function submitAndPay() {
   } catch (err) {
     alert('Something went wrong: ' + err.message + '\n\nPlease try again or call (727) 609-2248.');
     btn.disabled = false;
-    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay Refundable Deposit — <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
+    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay 50% Deposit — <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
   }
 }
 
