@@ -12,6 +12,9 @@ export default async function handler(req, res) {
   if (!email) return res.status(400).json({ ok: false, error: 'Email is required' });
   if (!signature_data) return res.status(400).json({ ok: false, error: 'Signature is required' });
 
+  const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK
+    || 'https://script.google.com/macros/s/AKfycbyuzLmBEYRrZpsFLMPJ0uH2zRDOnprokKPHKrAd_mhnWa3LvWTjSylb_WRCa0zThSdP/exec';
+
   const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
   const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
 
@@ -24,7 +27,7 @@ export default async function handler(req, res) {
       const matches = await findRes.json();
 
       if (Array.isArray(matches) && matches.length > 0) {
-        const bookingId = matches[0].id;
+        const booking = matches[0];
         const update = {
           status: 'contract_signed',
           contract_signed_at: signed_at || new Date().toISOString(),
@@ -33,7 +36,7 @@ export default async function handler(req, res) {
         if (captain) update.captain = captain;
         if (guests) update.guests = parseInt(guests);
 
-        await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${bookingId}`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${booking.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -43,6 +46,33 @@ export default async function handler(req, res) {
           },
           body: JSON.stringify(update),
         });
+
+        // Signature-only flow signs AFTER payment, so the Stripe webhook (the
+        // normal calendar trigger) never fires. Same signed+paid gate applies:
+        // only paid bookings reach the calendar.
+        const paid = booking.payment_status === 'deposit_paid' || booking.payment_status === 'paid_full';
+        if (paid && GOOGLE_CALENDAR_WEBHOOK && (booking.charter_date || charter_date)) {
+          try {
+            await fetch(GOOGLE_CALENDAR_WEBHOOK, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                first_name: booking.first_name || (name || '').split(' ')[0] || '',
+                last_name: booking.last_name || (name || '').split(' ').slice(1).join(' ') || '',
+                phone: booking.phone || phone || '',
+                email,
+                charter_type: booking.charter_type || charter_type || 'Charter',
+                preferred_date: booking.charter_date || charter_date,
+                preferred_time: booking.charter_time || '10:00',
+                guests: booking.guests || guests || '',
+                duration: booking.duration || '4hr',
+                message: booking.special_requests || '',
+              }),
+            });
+          } catch (calErr) {
+            console.error('Calendar create error (non-fatal):', calErr);
+          }
+        }
       }
 
       await fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
