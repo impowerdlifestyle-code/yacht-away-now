@@ -15,7 +15,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 108 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
+    summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 109 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
     url: "https://www.yachtawaynow.com/blog/best-boat-charter-companies-st-petersburg",
     action: "LEARN_MORE"
   },
@@ -35,7 +35,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "108 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful — spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 108 reviews and book your charter today.",
+    summary: "109 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful — spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 109 reviews and book your charter today.",
     url: "https://www.yachtawaynow.com/about",
     action: "LEARN_MORE"
   },
@@ -70,7 +70,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless — our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 108 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
+    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless — our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 109 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
     url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },
