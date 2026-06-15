@@ -15,7 +15,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 82 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
+    summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 108 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
     url: "https://www.yachtawaynow.com/blog/best-boat-charter-companies-st-petersburg",
     action: "LEARN_MORE"
   },
@@ -35,7 +35,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "82 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful — spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 82 reviews and book your charter today.",
+    summary: "108 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful — spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 108 reviews and book your charter today.",
     url: "https://www.yachtawaynow.com/about",
     action: "LEARN_MORE"
   },
@@ -57,6 +57,21 @@ const POSTS = [
   {
     summary: "Birthday Yacht Charter — Celebrate on the Water 🎂\n\nMake your next birthday unforgettable aboard a private 52ft luxury yacht. 3 decks, premium Bluetooth stereo, Starlink WiFi, swim platform.\n\nBring your own cake, drinks, and decorations. Up to 13 guests. All-inclusive weekend packages from $2,000.\n\nBook your birthday charter!",
     url: "https://www.yachtawaynow.com/birthday-yacht-charter",
+    action: "BOOK"
+  },
+  {
+    summary: "Rent a Yacht in St. Petersburg, FL ⚓\n\nLooking to rent a yacht in St. Pete? Yacht Away Now is a private, fully-crewed yacht rental — step aboard and we handle the rest.\n\n💰 Weekday rentals from $500/hour (4-hour minimum, all-inclusive)\n⛵ 52ft Marquis Flybridge, up to 13 guests\n🧑‍✈️ USCG-licensed captain & crew included — no boating license needed\n\nDeparts right from downtown St. Petersburg. Reserve your date!",
+    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
+    action: "BOOK"
+  },
+  {
+    summary: "Can You Rent a Yacht for a Day in St. Pete? 🏝️\n\nYes! Rent our 52ft Marquis Flybridge for a full day on Tampa Bay — island-hop to Shell Key & Egmont Key, anchor at a sandbar, or chase the sunset.\n\nEvery rental is captained, so no license or experience required. BYOB welcome, up to 13 guests.\n\nDeparting from our private St. Petersburg marina. Book your day on the water!",
+    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
+    action: "BOOK"
+  },
+  {
+    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless — our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 108 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
+    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },
 ];
