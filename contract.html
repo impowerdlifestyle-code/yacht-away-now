@@ -635,6 +635,14 @@
           <input type="time" id="sumTime">
         </div>
         <div class="summary-item">
+          <label>Boat</label>
+          <select id="sumBoat">
+            <option value="" disabled selected>Select...</option>
+            <option value="Sly Fox">Sly Fox</option>
+            <option value="52ft Marquis Flybridge">52ft Marquis Flybridge</option>
+          </select>
+        </div>
+        <div class="summary-item">
           <label>Charter Type</label>
           <select id="sumCharterType">
             <option value="" disabled selected>Select...</option>
@@ -768,7 +776,7 @@
 
             <p><strong>11. PAYMENTS &amp; RESCHEDULING:</strong> A deposit of fifty percent (50%) of the Charter Fee is due upon execution of this Agreement. The remaining balance is due no later than seven (7) days prior to the scheduled departure. All payments are applied to CHARTERER's charter. If the captain determines conditions are unsafe to depart, the charter will be rescheduled at no cost to CHARTERER for any open future date of CHARTERER's choosing, and the booking shall remain valid for twelve (12) months from the original charter date.</p>
 
-            <p><strong>12. ARRIVALS:</strong> If you arrive at the boat late, you will lose that time.</p>
+            <p><strong>12. ARRIVALS &amp; CHARTER TIME:</strong> Please arrive at your designated charter time and be punctual. Your charter time runs from the scheduled start time, not from your actual arrival — for example, a charter scheduled to begin at noon and run four hours ends at 4:00 PM even if you board at 12:30 PM. Late arrival does not extend the charter, and any time missed due to late arrival is forfeited.</p>
 
             <h4>Boat Rules and Warnings</h4>
             <ul>
@@ -1063,6 +1071,19 @@ if (durParam) {
   const sel = document.getElementById('sumDuration');
   for (let opt of sel.options) {
     if (opt.value === durParam) { sel.value = durParam; break; }
+  }
+}
+
+// Boat selection — autofilled from the booking instead of defaulting to one vessel
+const boatParam = params.get('boat');
+if (boatParam) {
+  const sel = document.getElementById('sumBoat');
+  if (sel) {
+    const want = boatParam.toLowerCase();
+    for (let opt of sel.options) {
+      const v = opt.value.toLowerCase();
+      if (v && (v.includes(want) || want.includes(v))) { sel.value = opt.value; break; }
+    }
   }
 }
 
