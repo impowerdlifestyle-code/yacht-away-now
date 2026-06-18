@@ -461,8 +461,8 @@
         var values={preferred_date:'',duration:'',preferred_time:'',boat:'',charter_type:'',guests:''};
 
         var BOATS=[
-          {id:'sly-fox',name:'Sly Fox',specs:'Sleeps 6 · 3 bed · 2 bath',price:'From $600/hr',badge:'Most Requested'},
-          {id:'marquis',name:'52ft Marquis Flybridge',specs:'Up to 13 guests · 3 decks',price:'From $500/hr',badge:'Flagship'}
+          {id:'marquis',name:'52ft Marquis Flybridge',specs:'Up to 13 guests · 3 decks',price:'From $500/hr',badge:'Most Requested'},
+          {id:'sly-fox',name:'Sly Fox',specs:'Sleeps 6 · 3 bed · 2 bath',price:'From $600/hr',badge:'Luxury · Overnight'}
         ];
         var OPEN=540,CLOSE=1200,STEP=30,BUFFER=30; // 9am–8pm, 30-min steps + turnaround
         var availCache={},slotFreeMap={};
@@ -577,7 +577,7 @@
           BOATS.forEach(function(b){
             var avail=freeMap[b.id]!==false;
             html+='<div class="boat-card'+(avail?'':' unavailable')+'" data-name="'+b.name+'">'+
-              '<span class="boat-badge'+(b.badge==='Flagship'?' flag':'')+'">'+b.badge+'</span>'+
+              '<span class="boat-badge'+(b.id==='sly-fox'?' flag':'')+'">'+b.badge+'</span>'+
               '<div class="boat-name">'+b.name+'</div><div class="boat-specs">'+b.specs+'</div>'+
               '<div class="boat-price">'+(avail?b.price:'Booked for this time')+'</div></div>';
           });
