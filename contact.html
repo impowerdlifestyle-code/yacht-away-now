@@ -242,9 +242,39 @@
           .wiz-trust{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid rgba(78,205,196,.08);font-size:.7rem;color:var(--gray-600);letter-spacing:.05em}
           .wiz-trust span{display:flex;align-items:center;gap:6px}
           .wiz-trust svg{stroke:var(--seafoam)}
+          .slot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+          .slot{background:rgba(12,21,36,.7);border:1px solid rgba(78,205,196,.14);border-radius:12px;padding:13px 10px;cursor:pointer;text-align:center;font-size:.84rem;font-weight:600;color:#f0f7fa;transition:all .25s ease;line-height:1.35}
+          .slot small{display:block;font-size:.66rem;font-weight:500;color:rgba(184,216,232,.6);letter-spacing:.02em;margin-top:3px}
+          .slot:hover:not(.taken){border-color:rgba(212,168,83,.45);transform:translateY(-1px)}
+          .slot.selected{border-color:#d4a853;background:linear-gradient(135deg,rgba(212,168,83,.16),rgba(255,229,160,.08));box-shadow:0 0 0 1px rgba(212,168,83,.5),0 0 22px rgba(212,168,83,.22)}
+          .slot.taken{opacity:.38;cursor:not-allowed;text-decoration:line-through;border-style:dashed}
+          .slot.taken small{text-decoration:none}
+          .wiz-loading{font-size:.82rem;color:rgba(184,216,232,.7);padding:14px 0;display:flex;align-items:center;gap:9px}
+          .wiz-loading::before{content:"";width:15px;height:15px;border:2px solid rgba(212,168,83,.3);border-top-color:#d4a853;border-radius:50%;animation:wizSpin .7s linear infinite;flex-shrink:0}
+          @keyframes wizSpin{to{transform:rotate(360deg)}}
+          .boat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+          @media(max-width:560px){.boat-grid{grid-template-columns:1fr}}
+          .boat-card{position:relative;background:rgba(12,21,36,.7);border:1px solid rgba(78,205,196,.14);border-radius:16px;padding:18px 16px;cursor:pointer;transition:all .25s ease;text-align:left}
+          .boat-card:hover:not(.unavailable){transform:translateY(-2px);border-color:rgba(212,168,83,.45);box-shadow:0 10px 30px rgba(0,0,0,.3)}
+          .boat-card.selected{border-color:#d4a853;background:linear-gradient(135deg,rgba(212,168,83,.14),rgba(255,229,160,.06));box-shadow:0 0 0 1px rgba(212,168,83,.5),0 0 26px rgba(212,168,83,.22)}
+          .boat-card.unavailable{opacity:.4;cursor:not-allowed}
+          .boat-name{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:700;color:#f5f0e8;margin-bottom:3px}
+          .boat-specs{font-size:.74rem;color:rgba(184,216,232,.7);line-height:1.5}
+          .boat-price{font-size:.82rem;font-weight:700;color:#c9a84c;margin-top:8px}
+          .boat-badge{position:absolute;top:-9px;right:12px;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0);color:#0a1628;font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:50px;box-shadow:0 4px 12px rgba(212,168,83,.4)}
+          .boat-badge.flag{background:rgba(78,205,196,.18);color:#4ecdc4;box-shadow:none}
+          .hold-overlay{position:fixed;inset:0;z-index:2000;background:rgba(5,12,22,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px;animation:wizFadeIn .3s ease}
+          .hold-overlay.show{display:flex}
+          .hold-box{background:#0c1524;border:1px solid rgba(212,168,83,.4);border-radius:20px;padding:30px 26px;max-width:380px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 40px rgba(212,168,83,.12)}
+          .hold-clock{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;color:#ffe5a0;letter-spacing:.04em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+          .hold-box h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#f5f0e8;margin-bottom:6px}
+          .hold-box p{font-size:.82rem;color:rgba(184,216,232,.78);line-height:1.6;margin-bottom:18px}
+          .hold-box .btn{width:100%;justify-content:center;margin-bottom:10px}
+          .decision-grid{display:flex;flex-direction:column;gap:12px;max-width:440px;margin:22px auto 0}
+          .decision-grid .btn{width:100%;justify-content:center;padding:16px 28px;font-size:.85rem}
         </style>
         <h3 style="margin-bottom:6px;">Book Your Charter</h3>
-        <p class="booking-card-subtitle">Five quick taps. We text you back within the hour — no long forms, no waiting.</p>
+        <p class="booking-card-subtitle">Pick your date, time, and yacht — we'll show you what's open in real time. No waiting, no back-and-forth.</p>
 
         <div class="wiz-progress" aria-hidden="true">
           <span class="current" data-step="1"></span>
@@ -252,32 +282,72 @@
           <span data-step="3"></span>
           <span data-step="4"></span>
           <span data-step="5"></span>
+          <span data-step="6"></span>
+          <span data-step="7"></span>
         </div>
 
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)">
+        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="return false;">
           <input type="hidden" name="access_key" value="dea9f1e3-2ab6-489f-bab2-9d003db7b977">
           <input type="hidden" name="subject" value="New Charter Booking Request — Yacht Away Now">
           <input type="hidden" name="from_name" value="Yacht Away Now Website">
           <input type="text" name="botcheck" style="display:none">
           <input type="hidden" id="ya-charter" name="charter_type" value="">
           <input type="hidden" id="ya-date" name="preferred_date" value="">
+          <input type="hidden" id="ya-time" name="preferred_time" value="">
+          <input type="hidden" id="ya-boat" name="boat" value="">
           <input type="hidden" id="ya-guests" name="guests" value="">
           <input type="hidden" id="ya-duration" name="duration" value="">
 
           <div class="wiz-step active" data-step="1">
-            <span class="wiz-eyebrow">Step 1 of 5</span>
-            <h4 class="wiz-question">What kind of charter?</h4>
-            <p class="wiz-hint">Tap the option that fits — we'll customize the rest.</p>
+            <span class="wiz-eyebrow">Step 1 of 7</span>
+            <h4 class="wiz-question">What date?</h4>
+            <p class="wiz-hint">Pick the day you want on the water — we'll show what's open in real time.</p>
+            <input type="date" id="wiz-date-input" class="wiz-input">
+          </div>
+
+          <div class="wiz-step" data-step="2">
+            <span class="wiz-eyebrow">Step 2 of 7</span>
+            <h4 class="wiz-question">How long?</h4>
+            <p class="wiz-hint">Minimum is 4 hours. Most groups go for 5–6.</p>
+            <div class="wiz-chips">
+              <button type="button" class="wiz-chip" data-value="4hr">4 hours</button>
+              <button type="button" class="wiz-chip" data-value="5hr">5 hours</button>
+              <button type="button" class="wiz-chip" data-value="6hr">6 hours</button>
+              <button type="button" class="wiz-chip" data-value="8hr">8 hours</button>
+              <button type="button" class="wiz-chip" data-value="overnight">Overnight</button>
+              <button type="button" class="wiz-chip" data-value="multi">Multi-day</button>
+            </div>
+          </div>
+
+          <div class="wiz-step" data-step="3">
+            <span class="wiz-eyebrow">Step 3 of 7</span>
+            <h4 class="wiz-question">Pick your time</h4>
+            <p class="wiz-hint">Slots already booked are grayed out — what you see is open right now.</p>
+            <div id="wiz-slots" class="slot-grid"></div>
+            <div id="wiz-slots-msg" class="wiz-hint" style="margin:14px 0 0;"></div>
+          </div>
+
+          <div class="wiz-step" data-step="4">
+            <span class="wiz-eyebrow">Step 4 of 7</span>
+            <h4 class="wiz-question">Choose your yacht</h4>
+            <p class="wiz-hint">Both are fully captained and all-inclusive. Here's what's open for your time.</p>
+            <div id="wiz-boats" class="boat-grid"></div>
+          </div>
+
+          <div class="wiz-step" data-step="5">
+            <span class="wiz-eyebrow">Step 5 of 7</span>
+            <h4 class="wiz-question">What's the occasion?</h4>
+            <p class="wiz-hint">Helps your captain tailor the route and the little touches.</p>
             <div class="wiz-options">
               <button type="button" class="wiz-card" data-value="sunset">
                 <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
                 Sunset Cruise
-                <span class="wiz-card-sub">2–3 hours, golden hour</span>
+                <span class="wiz-card-sub">Golden hour on the water</span>
               </button>
               <button type="button" class="wiz-card" data-value="day">
                 <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18h18l-1.5-5H4.5L3 18z"/><path d="M5 13V8a2 2 0 012-2h10a2 2 0 012 2v5"/></svg>
                 Day Charter
-                <span class="wiz-card-sub">4–8 hours on the water</span>
+                <span class="wiz-card-sub">Sandbars & islands</span>
               </button>
               <button type="button" class="wiz-card" data-value="bachelorette">
                 <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 3h12l-2 9H8L6 3z"/><path d="M6 21h12M9 21V12M15 21V12"/></svg>
@@ -294,29 +364,16 @@
                 Wedding / Anniversary
                 <span class="wiz-card-sub">Romantic occasion</span>
               </button>
-              <button type="button" class="wiz-card" data-value="overnight">
+              <button type="button" class="wiz-card" data-value="other">
                 <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-                Overnight / Multi-Day
-                <span class="wiz-card-sub">Full cabin accommodations</span>
+                Corporate / Other
+                <span class="wiz-card-sub">Tell us your plan</span>
               </button>
             </div>
           </div>
 
-          <div class="wiz-step" data-step="2">
-            <span class="wiz-eyebrow">Step 2 of 5</span>
-            <h4 class="wiz-question">When are you thinking?</h4>
-            <p class="wiz-hint">Pick a quick option or choose any date — we'll confirm availability.</p>
-            <div class="wiz-chips" id="wiz-date-chips" style="margin-bottom:14px;">
-              <button type="button" class="wiz-chip" data-relative="this-weekend">This Weekend</button>
-              <button type="button" class="wiz-chip" data-relative="next-weekend">Next Weekend</button>
-              <button type="button" class="wiz-chip" data-relative="this-month">This Month</button>
-              <button type="button" class="wiz-chip" data-relative="flexible">Flexible / Not sure</button>
-            </div>
-            <input type="date" id="wiz-date-input" class="wiz-input" style="margin-top:6px;" placeholder="Or pick a specific date">
-          </div>
-
-          <div class="wiz-step" data-step="3">
-            <span class="wiz-eyebrow">Step 3 of 5</span>
+          <div class="wiz-step" data-step="6">
+            <span class="wiz-eyebrow">Step 6 of 7</span>
             <h4 class="wiz-question">How many guests?</h4>
             <p class="wiz-hint">Our flagship comfortably hosts up to 13.</p>
             <div class="wiz-chips">
@@ -326,23 +383,10 @@
             </div>
           </div>
 
-          <div class="wiz-step" data-step="4">
-            <span class="wiz-eyebrow">Step 4 of 5</span>
-            <h4 class="wiz-question">How long?</h4>
-            <p class="wiz-hint">Minimum is 4 hours. Most groups go for 5–6.</p>
-            <div class="wiz-chips">
-              <button type="button" class="wiz-chip" data-value="4hr">4 hours</button>
-              <button type="button" class="wiz-chip" data-value="5hr">5 hours</button>
-              <button type="button" class="wiz-chip" data-value="6hr">6+ hours</button>
-              <button type="button" class="wiz-chip" data-value="overnight">Overnight</button>
-              <button type="button" class="wiz-chip" data-value="multi">Multi-day</button>
-            </div>
-          </div>
-
-          <div class="wiz-step" data-step="5">
-            <span class="wiz-eyebrow">Step 5 of 5</span>
+          <div class="wiz-step" data-step="7">
+            <span class="wiz-eyebrow">Step 7 of 7</span>
             <h4 class="wiz-question">Where should we reach you?</h4>
-            <p class="wiz-hint">We respond by text within an hour. Promise.</p>
+            <p class="wiz-hint">We confirm by text within the hour. Promise.</p>
             <div class="wiz-input-row">
               <input type="text" name="first_name" class="wiz-input" placeholder="First name" required>
               <input type="text" name="last_name" class="wiz-input" placeholder="Last name" required>
@@ -380,8 +424,26 @@
         </form>
         <div id="formSuccess" style="display:none;text-align:center;padding:40px 20px;">
           <div style="font-size:3rem;margin-bottom:16px;"><svg width="48" height="48" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
-          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:12px;color:var(--gold);">Booking Request Received!</h3>
-          <p style="color:var(--gray-400);line-height:1.7;">We'll text you within the hour to confirm your charter details and finalize pricing.</p>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;margin-bottom:10px;color:var(--gold);">Your Spot Is Held</h3>
+          <p id="successSummary" style="color:var(--gray-400);line-height:1.7;margin-bottom:6px;"></p>
+          <p style="color:var(--gray-400);line-height:1.7;font-size:.86rem;">Lock it in now with a 50% deposit, or have our staff follow up — your details are already saved.</p>
+          <div class="decision-grid">
+            <a id="successPay" href="#" class="btn btn-gold">Pay Now &amp; Lock In Your Spot <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <button type="button" id="successTicket" class="btn btn-outline">Have our staff reach out instead</button>
+          </div>
+          <p id="ticketConfirm" style="display:none;color:var(--seafoam);font-size:.82rem;margin-top:18px;">Got it — our team will text and email you within the hour to finish your booking. No rush.</p>
+        </div>
+      </div>
+
+      <!-- 5-minute slot hold -->
+      <div class="hold-overlay" id="holdOverlay" role="dialog" aria-modal="true" aria-labelledby="holdTitle">
+        <div class="hold-box">
+          <div class="wiz-eyebrow" style="color:#c9a84c;">Slot held</div>
+          <div class="hold-clock" id="holdClock">5:00</div>
+          <h4 id="holdTitle">This slot is held for 5 minutes</h4>
+          <p>Pay your deposit now to lock it in — or it's released to the next customer. Your details are saved either way.</p>
+          <a id="holdPay" href="#" class="btn btn-gold">Pay Now &amp; Lock In Your Spot</a>
+          <button type="button" id="holdLater" class="btn btn-outline">I'll have staff follow up</button>
         </div>
       </div>
 
@@ -395,113 +457,211 @@
         var nextBtn=document.getElementById('wizNext');
         var nextLabel=document.getElementById('wizNextLabel');
         var skipBtn=document.getElementById('wizSkip');
-        var current=1;var TOTAL=5;
-        var values={charter_type:'',preferred_date:'',guests:'',duration:''};
+        var TOTAL=7,current=1;
+        var values={preferred_date:'',duration:'',preferred_time:'',boat:'',charter_type:'',guests:''};
+
+        var BOATS=[
+          {id:'sly-fox',name:'Sly Fox',specs:'Sleeps 6 · 3 bed · 2 bath',price:'From $600/hr',badge:'Most Requested'},
+          {id:'marquis',name:'52ft Marquis Flybridge',specs:'Up to 13 guests · 3 decks',price:'From $500/hr',badge:'Flagship'}
+        ];
+        var OPEN=540,CLOSE=1200,STEP=30,BUFFER=30; // 9am–8pm, 30-min steps + turnaround
+        var availCache={},slotFreeMap={};
+
+        function hoursFor(d){return ({'4hr':4,'5hr':5,'6hr':6,'8hr':8})[d]||null;}
+        function isHourly(d){return !!hoursFor(d);}
+        function fmt(min){var h=Math.floor(min/60),m=min%60,ap=h>=12?'PM':'AM',hh=h%12||12;return hh+':'+(m<10?'0':'')+m+' '+ap;}
+        function boatId(n){if(!n)return null;n=String(n).toLowerCase();if(n.indexOf('sly')>=0)return 'sly-fox';if(n.indexOf('marquis')>=0||n.indexOf('52')>=0)return 'marquis';return null;}
+        function stepEl(n){return card.querySelector('.wiz-step[data-step="'+n+'"]');}
 
         function show(n){
           steps.forEach(function(s){s.classList.toggle('active',+s.dataset.step===n)});
           progSegs.forEach(function(p){var s=+p.dataset.step;p.classList.toggle('done',s<n);p.classList.toggle('current',s===n)});
           backBtn.disabled=(n===1);
+          nextLabel.textContent=(n===TOTAL?'Book Your Charter Now':'Continue');
+          skipBtn.style.display='none';
           updateNextState();
-          nextLabel.textContent=(n===TOTAL?'Send Request':'Continue');
-          skipBtn.style.display=(n===2)?'inline':'none';
-          var first=card.querySelector('.wiz-step.active input, .wiz-step.active button');
-          if(first&&first.tagName==='INPUT'&&!first.value)setTimeout(function(){first.focus()},120);
+          var f=card.querySelector('.wiz-step.active input[type=text],.wiz-step.active input[type=date],.wiz-step.active input[type=tel]');
+          if(f&&!f.value)setTimeout(function(){f.focus()},120);
         }
         function updateNextState(){
           var ok=false;
-          if(current===1)ok=!!values.charter_type;
-          else if(current===2)ok=!!values.preferred_date;
-          else if(current===3)ok=!!values.guests;
-          else if(current===4)ok=!!values.duration;
-          else if(current===5){
-            var s5=card.querySelector('.wiz-step[data-step="5"]');
-            var fn=s5.querySelector('[name=first_name]').value.trim();
-            var ln=s5.querySelector('[name=last_name]').value.trim();
-            var ph=s5.querySelector('[name=phone]').value.trim();
-            var em=s5.querySelector('[name=email]').value.trim();
-            ok=fn&&ln&&ph&&em;
-          }
+          if(current===1)ok=!!values.preferred_date;
+          else if(current===2)ok=!!values.duration;
+          else if(current===3)ok=!isHourly(values.duration)||!!values.preferred_time;
+          else if(current===4)ok=!!values.boat;
+          else if(current===5)ok=!!values.charter_type;
+          else if(current===6)ok=!!values.guests;
+          else if(current===7)ok=['first_name','last_name','phone','email'].every(function(k){return stepEl(7).querySelector('[name='+k+']').value.trim();});
           nextBtn.disabled=!ok;
         }
+        function goNext(){
+          if(current===2&&!isHourly(values.duration)){values.preferred_time='';document.getElementById('ya-time').value='';current=4;buildBoats();show(4);return;}
+          if(current<TOTAL){current++;if(current===3)loadSlots();if(current===4)buildBoats();show(current);}
+        }
+        function goBack(){
+          if(current===4&&!isHourly(values.duration)){current=2;show(2);return;}
+          if(current>1){current--;show(current);}
+        }
 
-        // Step 1: charter type cards
-        card.querySelectorAll('.wiz-step[data-step="1"] .wiz-card').forEach(function(b){
+        // Step 1 — date (forces a specific day; no vague "when are you thinking" options)
+        var dateInput=document.getElementById('wiz-date-input');
+        dateInput.min=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+        dateInput.addEventListener('change',function(){
+          if(!dateInput.value)return;
+          values.preferred_date=dateInput.value;document.getElementById('ya-date').value=dateInput.value;
+          values.preferred_time='';document.getElementById('ya-time').value='';
+          updateNextState();setTimeout(goNext,200);
+        });
+
+        // Step 2 — duration
+        stepEl(2).querySelectorAll('.wiz-chip').forEach(function(b){
           b.addEventListener('click',function(){
-            card.querySelectorAll('.wiz-step[data-step="1"] .wiz-card').forEach(function(x){x.classList.remove('selected')});
+            stepEl(2).querySelectorAll('.wiz-chip').forEach(function(x){x.classList.remove('selected')});
             b.classList.add('selected');
-            values.charter_type=b.dataset.value;
-            document.getElementById('ya-charter').value=b.dataset.value;
-            updateNextState();
-            setTimeout(function(){current=2;show(2);},250);
+            values.duration=b.dataset.value;document.getElementById('ya-duration').value=b.dataset.value;
+            values.preferred_time='';document.getElementById('ya-time').value='';values.boat='';document.getElementById('ya-boat').value='';
+            updateNextState();setTimeout(goNext,200);
           });
         });
 
-        // Step 2: date chips + input
-        function setDate(val,labelChip){
-          values.preferred_date=val;
-          document.getElementById('ya-date').value=val;
-          card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(x){x.classList.toggle('selected',x===labelChip)});
-          updateNextState();
+        // Step 3 — time slots, synced to the live calendar
+        function fetchAvail(date){
+          if(availCache[date])return Promise.resolve(availCache[date]);
+          return fetch('/api/availability?date='+encodeURIComponent(date)).then(function(r){return r.json()}).then(function(j){
+            var v={hasBoat:!!j.hasBoat,busy:Array.isArray(j.busy)?j.busy:[]};availCache[date]=v;return v;
+          }).catch(function(){var v={hasBoat:false,busy:[]};availCache[date]=v;return v;});
         }
-        function relativeToISO(rel){
-          var d=new Date(),day=d.getDay();
-          if(rel==='this-weekend'){var add=(6-day+7)%7||0;d.setDate(d.getDate()+add);}
-          else if(rel==='next-weekend'){var add=(6-day+7)%7;d.setDate(d.getDate()+add+7);}
-          else if(rel==='this-month'){d.setDate(d.getDate()+10);}
-          else if(rel==='flexible'){return 'Flexible';}
-          return d.toISOString().slice(0,10);
-        }
-        card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(b){
-          b.addEventListener('click',function(){
-            var iso=relativeToISO(b.dataset.relative);
-            setDate(iso,b);
-            var dateInput=document.getElementById('wiz-date-input');
-            if(iso!=='Flexible')dateInput.value=iso;else dateInput.value='';
+        function boatsFreeAt(start,hrs,av){
+          var end=start+hrs*60,free={};BOATS.forEach(function(b){free[b.id]=true;});
+          av.busy.forEach(function(r){
+            if(start<r.endMin+BUFFER&&end>r.startMin-BUFFER){
+              var bid=av.hasBoat?boatId(r.boat):null;
+              if(bid)free[bid]=false;else BOATS.forEach(function(b){free[b.id]=false;});
+            }
           });
-        });
-        document.getElementById('wiz-date-input').addEventListener('change',function(e){
-          if(e.target.value){
-            setDate(e.target.value,null);
-            card.querySelectorAll('#wiz-date-chips .wiz-chip').forEach(function(x){x.classList.remove('selected')});
-          }
-        });
-
-        // Step 3 & 4: chips
-        function chipGroup(stepEl,key,inputId){
-          stepEl.querySelectorAll('.wiz-chip').forEach(function(b){
-            b.addEventListener('click',function(){
-              stepEl.querySelectorAll('.wiz-chip').forEach(function(x){x.classList.remove('selected')});
-              b.classList.add('selected');
-              values[key]=b.dataset.value;
-              document.getElementById(inputId).value=b.dataset.value;
-              updateNextState();
-              setTimeout(function(){if(current<TOTAL){current++;show(current);}},220);
+          return free;
+        }
+        function loadSlots(){
+          var wrap=document.getElementById('wiz-slots'),msg=document.getElementById('wiz-slots-msg');
+          if(!isHourly(values.duration)){wrap.innerHTML='';msg.textContent='';return;}
+          wrap.innerHTML='<div class="wiz-loading">Checking live availability…</div>';msg.textContent='';
+          var hrs=hoursFor(values.duration);
+          fetchAvail(values.preferred_date).then(function(av){
+            var html='',anyOpen=false;
+            for(var st=OPEN;st+hrs*60<=CLOSE;st+=STEP){
+              var free=boatsFreeAt(st,hrs,av),open=BOATS.some(function(b){return free[b.id]});
+              if(open)anyOpen=true;
+              html+='<div class="slot'+(open?'':' taken')+'" data-start="'+st+'">'+fmt(st)+' – '+fmt(st+hrs*60)+'<small>'+(open?(hrs+' hr charter'):'Booked')+'</small></div>';
+            }
+            wrap.innerHTML=html;
+            if(!anyOpen)msg.innerHTML='No open times for this date. <a href="#" id="wiz-picknew" style="color:var(--gold);text-decoration:underline;">Try another date</a> or call (727) 609-2248.';
+            var pn=document.getElementById('wiz-picknew');if(pn)pn.addEventListener('click',function(e){e.preventDefault();current=1;show(1);});
+            wrap.querySelectorAll('.slot:not(.taken)').forEach(function(el){
+              el.addEventListener('click',function(){
+                wrap.querySelectorAll('.slot').forEach(function(x){x.classList.remove('selected')});el.classList.add('selected');
+                var st=+el.dataset.start;
+                values.preferred_time=(st/60<10?'0':'')+Math.floor(st/60)+':'+(st%60<10?'0':'')+(st%60);
+                document.getElementById('ya-time').value=values.preferred_time;
+                slotFreeMap=boatsFreeAt(st,hrs,av);values.boat='';document.getElementById('ya-boat').value='';
+                updateNextState();setTimeout(goNext,200);
+              });
             });
           });
         }
-        chipGroup(card.querySelector('.wiz-step[data-step="3"]'),'guests','ya-guests');
-        chipGroup(card.querySelector('.wiz-step[data-step="4"]'),'duration','ya-duration');
 
-        // Step 5: live validate
-        var s5=card.querySelector('.wiz-step[data-step="5"]');
-        s5.querySelectorAll('input').forEach(function(i){i.addEventListener('input',updateNextState)});
+        // Step 4 — boat (shows which yachts are free for the chosen slot; Sly Fox first/recommended)
+        function buildBoats(){
+          var wrap=document.getElementById('wiz-boats');
+          var freeMap=isHourly(values.duration)?slotFreeMap:{'sly-fox':true,'marquis':true};
+          var html='';
+          BOATS.forEach(function(b){
+            var avail=freeMap[b.id]!==false;
+            html+='<div class="boat-card'+(avail?'':' unavailable')+'" data-name="'+b.name+'">'+
+              '<span class="boat-badge'+(b.badge==='Flagship'?' flag':'')+'">'+b.badge+'</span>'+
+              '<div class="boat-name">'+b.name+'</div><div class="boat-specs">'+b.specs+'</div>'+
+              '<div class="boat-price">'+(avail?b.price:'Booked for this time')+'</div></div>';
+          });
+          wrap.innerHTML=html;
+          wrap.querySelectorAll('.boat-card:not(.unavailable)').forEach(function(el){
+            el.addEventListener('click',function(){
+              wrap.querySelectorAll('.boat-card').forEach(function(x){x.classList.remove('selected')});el.classList.add('selected');
+              values.boat=el.dataset.name;document.getElementById('ya-boat').value=el.dataset.name;
+              updateNextState();setTimeout(goNext,200);
+            });
+          });
+        }
 
-        nextBtn.addEventListener('click',function(){
-          if(current<TOTAL){current++;show(current);return;}
-          // final submit — make sure required form fields have values, then trigger native submit
-          if(values.preferred_date==='Flexible'){
-            // need a fallback because input type=date can't be 'Flexible' string in some validators
-          }
-          form.requestSubmit?form.requestSubmit():form.submit();
+        // Step 5 — occasion
+        stepEl(5).querySelectorAll('.wiz-card').forEach(function(b){
+          b.addEventListener('click',function(){
+            stepEl(5).querySelectorAll('.wiz-card').forEach(function(x){x.classList.remove('selected')});
+            b.classList.add('selected');values.charter_type=b.dataset.value;document.getElementById('ya-charter').value=b.dataset.value;
+            updateNextState();setTimeout(goNext,250);
+          });
         });
-        backBtn.addEventListener('click',function(){if(current>1){current--;show(current);}});
-        skipBtn.addEventListener('click',function(){
-          values.preferred_date='Flexible';
-          document.getElementById('ya-date').value='Flexible';
-          updateNextState();
-          if(current<TOTAL){current++;show(current);}
+
+        // Step 6 — guests
+        stepEl(6).querySelectorAll('.wiz-chip').forEach(function(b){
+          b.addEventListener('click',function(){
+            stepEl(6).querySelectorAll('.wiz-chip').forEach(function(x){x.classList.remove('selected')});
+            b.classList.add('selected');values.guests=b.dataset.value;document.getElementById('ya-guests').value=b.dataset.value;
+            updateNextState();setTimeout(goNext,220);
+          });
         });
+
+        // Step 7 — contact (captured BEFORE the pay/skip decision)
+        stepEl(7).querySelectorAll('input').forEach(function(i){i.addEventListener('input',updateNextState)});
+
+        nextBtn.addEventListener('click',function(){if(current<TOTAL){goNext();return;}submitBooking();});
+        backBtn.addEventListener('click',goBack);
+
+        function contractUrl(){
+          var n=new FormData(form),p=new URLSearchParams();
+          var fn=(n.get('first_name')||'').trim(),ln=(n.get('last_name')||'').trim();
+          if(fn||ln)p.set('name',(fn+' '+ln).trim());
+          if(n.get('email'))p.set('email',n.get('email'));
+          if(n.get('phone'))p.set('phone',n.get('phone'));
+          if(values.charter_type)p.set('charter_type',values.charter_type);
+          if(values.preferred_date)p.set('date',values.preferred_date);
+          if(values.preferred_time)p.set('time',values.preferred_time);
+          if(values.boat)p.set('boat',values.boat);
+          if(values.guests)p.set('guests',values.guests);
+          if(values.duration)p.set('duration',values.duration);
+          return '/contract?'+p.toString();
+        }
+
+        var holdTimer=null;
+        function startHold(){
+          var overlay=document.getElementById('holdOverlay'),clock=document.getElementById('holdClock');
+          overlay.classList.add('show');var left=300;
+          (function tick(){
+            var m=Math.floor(left/60),s=left%60;clock.textContent=m+':'+(s<10?'0':'')+s;
+            if(left<=0){clearInterval(holdTimer);clock.textContent='0:00';
+              document.getElementById('holdTitle').textContent='Hold released';
+              overlay.querySelector('p').textContent='No worries — your details are saved. Pick a fresh time or have our staff follow up.';
+              var hp=document.getElementById('holdPay');hp.textContent='Pick a new time';hp.onclick=function(e){e.preventDefault();location.reload();};
+              return;}
+            left--;holdTimer=setTimeout(tick,1000);
+          })();
+        }
+        function closeHold(){if(holdTimer)clearTimeout(holdTimer);document.getElementById('holdOverlay').classList.remove('show');}
+
+        function submitBooking(){
+          var n=new FormData(form);
+          var payload={first_name:n.get('first_name')||'',last_name:n.get('last_name')||'',phone:n.get('phone')||'',email:n.get('email')||'',charter_type:values.charter_type,preferred_date:values.preferred_date,preferred_time:values.preferred_time,boat:values.boat,guests:values.guests,duration:values.duration,message:n.get('message')||'',sms_consent:!!n.get('sms_consent'),source:'website'};
+          try{fetch(form.action,{method:'POST',body:n,headers:{Accept:'application/json'}});}catch(e){}
+          try{fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
+          if(typeof gtag==='function')gtag('event','generate_lead',{currency:'USD',value:1,charter_type:values.charter_type||'',boat:values.boat||''});
+          var url=contractUrl();
+          document.getElementById('successPay').href=url;document.getElementById('holdPay').href=url;
+          var when=values.preferred_date+(values.preferred_time?(' at '+fmt(parseInt(values.preferred_time.split(':')[0],10)*60+parseInt(values.preferred_time.split(':')[1],10))):'');
+          document.getElementById('successSummary').innerHTML='<strong>'+(values.boat||'Your charter')+'</strong> · '+when;
+          form.style.display='none';
+          document.getElementById('formSuccess').style.display='block';
+          startHold();
+        }
+        document.getElementById('holdLater').addEventListener('click',function(){closeHold();document.getElementById('ticketConfirm').style.display='block';});
+        document.getElementById('successTicket').addEventListener('click',function(){closeHold();document.getElementById('ticketConfirm').style.display='block';});
 
         show(1);
       })();
@@ -557,17 +717,17 @@
         <h2>What Happens <em>After You Book</em></h2>
         <p>Booking with Yacht Away Now is a simple, owner-operated process designed to lock in your date fast and skip the back-and-forth most charter companies put you through. Here is exactly what to expect from the moment you submit the form above to the moment you board.</p>
         <ol class="timeline">
-          <li><strong>Within 24 hours</strong>You'll get a personal reply from Captain Josh Wilson confirming availability for your date and answering any preliminary questions. Most replies come the same day.</li>
+          <li><strong>Within 24 hours</strong>You'll get a personal reply from your captain confirming availability for your date and answering any preliminary questions. Most replies come the same day. You're always free to request the USCG-licensed captain of your choice — just let us know.</li>
           <li><strong>Within 48 hours</strong>We send a written quote with your exact all-inclusive total — $500/hr weekdays, $600/hr weekends, captain, crew, and fuel included — plus any add-ons (catering coordination, dock pickup adjustments, special routing). No surprises, no hidden fees.</li>
           <li><strong>Date hold &amp; deposit</strong>A 50% deposit locks in your charter date; the remaining balance is due 7 days before departure. If a named storm or unsafe weather forces a cancellation, you choose any open future date &mdash; no rebooking fees, and your booking stays valid for 12 months. Yacht Away Now operates under a fully insured commercial marine policy.</li>
           <li><strong>72 hours before charter</strong>You receive a captain's check-in: confirmed slip address (a private St. Petersburg marina), arrival window, weather outlook, and a packing list tailored to your itinerary &mdash; sunset cruise, sandbar trip, multi-day Bahamas crossing, etc.</li>
-          <li><strong>Day of charter</strong>Arrive 15 minutes early at the slip address. Captain Josh handles the dock-line work, runs the safety briefing, and gets you on the water on time. Your only job is showing up.</li>
+          <li><strong>Day of charter</strong>Please arrive at your designated time and be punctual — your charter window runs from your scheduled start, not your arrival (a noon charter still wraps at its scheduled end even if you board at 12:30), so being on time keeps your full time on the water. Your captain handles the dock-line work, runs the safety briefing, and gets you out on schedule. Your only job is showing up.</li>
         </ol>
       </div>
 
       <div>
         <h2>Response Times &amp; <em>How to Reach Us</em></h2>
-        <p>Yacht Away Now is owner-operated by Captain Josh Wilson, which means every inquiry, quote, and pre-charter question goes directly to the captain at the helm of your trip. There are no booking agents, no offshore call centers, and no auto-replies pretending to be a person.</p>
+        <p>Yacht Away Now is owner-operated, which means every inquiry, quote, and pre-charter question goes directly to our team and the captain at the helm of your trip. There are no booking agents, no offshore call centers, and no auto-replies pretending to be a person.</p>
         <div class="sla-card">
           <div class="sla-row"><span>Phone calls (6am&ndash;8pm)</span><strong>Live answer or 60-min callback</strong></div>
           <div class="sla-row"><span>Charter inquiry form</span><strong>Reply within 24 hours</strong></div>

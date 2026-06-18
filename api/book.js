@@ -6,11 +6,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { first_name, last_name, phone, email, charter_type, preferred_date, guests, duration, message, source, sms_consent } = req.body;
+  const { first_name, last_name, phone, email, charter_type, preferred_date, preferred_time, boat, guests, duration, message, source, sms_consent } = req.body;
 
   if (!first_name || !email) {
     return res.status(400).json({ error: 'Name and email are required' });
   }
+
+  const notes = message || null;
 
   // Save to Supabase dashboard database (primary purpose)
   let bookingId = null;
@@ -21,10 +23,12 @@ export default async function handler(req, res) {
       email,
       phone: phone || null,
       charter_type: charter_type || null,
+      boat: boat || null,
       charter_date: preferred_date || null,
+      charter_time: preferred_time || null,
       duration: duration || null,
       guests: guests ? parseInt(guests) : null,
-      special_requests: message || null,
+      special_requests: notes,
       sms_consent: !!sms_consent && sms_consent !== 'false',
       status: 'new',
       payment_status: 'unpaid',
@@ -117,7 +121,8 @@ Reply directly to this email to reach the customer at ${email}
           phone: phone || null,
           charter_type: charter_type || null,
           charter_date: preferred_date || null,
-          charter_time: req.body.preferred_time || null,
+          charter_time: preferred_time || null,
+          boat: boat || null,
           duration: duration || null,
           guests: guests || null,
           special_requests: message || null,
