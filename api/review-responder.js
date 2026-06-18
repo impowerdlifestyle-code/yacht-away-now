@@ -89,7 +89,7 @@ export default async function handler(req, res) {
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-sonnet-4-6',
           max_tokens: 300,
           system: `You are responding to Google reviews for Yacht Away Now, a luxury private yacht charter company in St. Petersburg, Florida. You operate a 52ft Marquis Flybridge for sunset cruises, parties, and Bahamas trips.
 
@@ -115,7 +115,8 @@ Write warm, personal, and genuine review responses. Guidelines:
       const replyText = aiData.content?.[0]?.text || '';
 
       if (!replyText) {
-        results.push({ reviewer: reviewerName, status: 'skipped', reason: 'AI response empty' });
+        console.error('AI response empty:', JSON.stringify(aiData));
+        results.push({ reviewer: reviewerName, status: 'skipped', reason: aiData.error?.message || 'AI response empty' });
         continue;
       }
 
