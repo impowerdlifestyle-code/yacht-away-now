@@ -313,27 +313,20 @@ export default async function handler(req, res) {
       // confirms the signature. A booking that is not both is never put on the calendar.
       if (bookingForNotify && bookingForNotify.contract_signed_at) {
         await createCalendarEvent(bookingForNotify);
+        // Priority dispatch: Joe Ward gets a 2-hour exclusive; /api/cron/captain-broadcast
+        // fans the offer out to all active captains if he doesn't accept in time. The
+        // dashboard reads the booking itself, so only the id is needed.
         try {
-          await fetch('https://yan-dashboard.vercel.app/api/captain-notify', {
+          await fetch('https://yan-dashboard.vercel.app/api/captain-dispatch', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              booking_id: bookingForNotify.id,
-              first_name: bookingForNotify.first_name || name,
-              last_name: bookingForNotify.last_name || null,
-              email,
-              phone: bookingForNotify.phone || metadata.phone || null,
-              charter_type: bookingForNotify.charter_type || charterType || 'Charter',
-              charter_date: bookingForNotify.charter_date || charterDate || 'TBD',
-              charter_time: bookingForNotify.charter_time || '',
-              guests: bookingForNotify.guests || guests || '',
-              duration: bookingForNotify.duration || metadata.duration || '4hr',
-              total_price: bookingForNotify.total_price || totalPrice || null,
-              special_requests: bookingForNotify.special_requests || '',
-            }),
+            headers: {
+              'Content-Type': 'application/json',
+              'x-yan-booking-secret': process.env.YAN_BOOKING_SECRET || '',
+            },
+            body: JSON.stringify({ booking_id: bookingForNotify.id }),
           });
         } catch (err) {
-          console.error('Captain notify error (non-fatal):', err);
+          console.error('Captain dispatch error (non-fatal):', err);
         }
 
         // AI-drafted confirmation email — queued in the dashboard's Pending
