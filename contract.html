@@ -1183,6 +1183,9 @@ const customTotalRow = document.getElementById('customTotalRow');
 const customTotalInput = document.getElementById('sumTotal');
 const hiddenTotal = document.getElementById('sumTotalHidden');
 let selectedPackage = '';
+// Declared early: the package init below calls validateForm(), which reads
+// initialsState — must exist before that runs (links with a date param do).
+const initialsState = [false, false, false, false];
 
 // All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
 const HOURLY_RATES = { weekday: 500, weekend: 600 };
@@ -1293,8 +1296,6 @@ function switchTab(index) {
 // ============================================
 // INITIALS TRACKING
 // ============================================
-const initialsState = [false, false, false, false];
-
 function checkInitials(index) {
   const input = document.getElementById('initials' + index);
   const filled = input.value.trim().length >= 2;
