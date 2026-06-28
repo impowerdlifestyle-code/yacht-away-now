@@ -1496,6 +1496,14 @@ async function submitAndPay() {
       : captainRadio.value;
   }
 
+  // Client's initials per agreement (in order shown on the contract).
+  const initials = {
+    bareboat_charter: (document.getElementById('initials0').value || '').trim().toUpperCase(),
+    liability_waiver: (document.getElementById('initials1').value || '').trim().toUpperCase(),
+    individual_waiver: (document.getElementById('initials2').value || '').trim().toUpperCase(),
+    captain_selection: (document.getElementById('initials3').value || '').trim().toUpperCase(),
+  };
+
   if (noPay) {
     try {
       const res = await fetch('/api/sign-contract', {
@@ -1509,7 +1517,8 @@ async function submitAndPay() {
           total_price: total || null,
           signature_data: sigData,
           signer_name: document.getElementById('sigName').value.trim(),
-          signed_at: new Date().toISOString()
+          signed_at: new Date().toISOString(),
+          initials
         })
       });
       const data = await res.json();
@@ -1548,7 +1557,8 @@ async function submitAndPay() {
         total_price: total,
         signature_data: sigData,
         signer_name: document.getElementById('sigName').value.trim(),
-        signed_at: new Date().toISOString()
+        signed_at: new Date().toISOString(),
+        initials
       })
     });
 

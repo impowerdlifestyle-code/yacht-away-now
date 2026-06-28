@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  const { name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at } = req.body;
+  const { name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials } = req.body;
 
   if (!email) return res.status(400).json({ ok: false, error: 'Email is required' });
   if (!signature_data) return res.status(400).json({ ok: false, error: 'Signature is required' });
@@ -75,7 +75,22 @@ export default async function handler(req, res) {
         }
       }
 
-      await fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
+      const contractRow = {
+        charterer_name: name,
+        email,
+        phone: phone || null,
+        charter_type: charter_type || null,
+        charter_date: charter_date || null,
+        guests: guests ? parseInt(guests) : null,
+        captain: captain || null,
+        total_price: total_price ? parseFloat(total_price) : null,
+        deposit_amount: null,
+        signer_name: signer_name || name,
+        signature_data,
+        signed_at: signed_at || new Date().toISOString(),
+        stripe_session_id: null,
+      };
+      const postContract = (extra) => fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,22 +98,12 @@ export default async function handler(req, res) {
           Authorization: `Bearer ${SUPABASE_KEY}`,
           Prefer: 'return=minimal',
         },
-        body: JSON.stringify({
-          charterer_name: name,
-          email,
-          phone: phone || null,
-          charter_type: charter_type || null,
-          charter_date: charter_date || null,
-          guests: guests ? parseInt(guests) : null,
-          captain: captain || null,
-          total_price: total_price ? parseFloat(total_price) : null,
-          deposit_amount: null,
-          signer_name: signer_name || name,
-          signature_data,
-          signed_at: signed_at || new Date().toISOString(),
-          stripe_session_id: null,
-        }),
+        body: JSON.stringify({ ...contractRow, ...extra }),
       });
+      // Store initials if the column exists; fall back gracefully if not so
+      // signing never breaks before the migration runs.
+      let cResp = await postContract(initials ? { initials } : {});
+      if (!cResp.ok && initials) cResp = await postContract({});
     } catch (dbErr) {
       console.error('Supabase sign-contract error:', dbErr);
       return res.status(500).json({ ok: false, error: 'Failed to record signature' });

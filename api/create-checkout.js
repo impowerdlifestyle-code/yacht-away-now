@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { amount, name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at } = req.body;
+  const { amount, name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials } = req.body;
 
   if (!amount || amount < 1) {
     return res.status(400).json({ error: 'Invalid deposit amount' });
@@ -95,7 +95,22 @@ export default async function handler(req, res) {
 
       // Save signed contract data
       if (signature_data) {
-        await fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
+        const contractRow = {
+          charterer_name: name,
+          email,
+          phone: phone || null,
+          charter_type: charter_type || null,
+          charter_date: charter_date || null,
+          guests: guests ? parseInt(guests) : null,
+          captain: captain || null,
+          total_price: total_price ? parseFloat(total_price) : null,
+          deposit_amount: amount,
+          signer_name: signer_name || name,
+          signature_data,
+          signed_at: signed_at || new Date().toISOString(),
+          stripe_session_id: session.id,
+        };
+        const postContract = (extra) => fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -103,22 +118,11 @@ export default async function handler(req, res) {
             'Authorization': `Bearer ${SUPABASE_KEY}`,
             'Prefer': 'return=minimal',
           },
-          body: JSON.stringify({
-            charterer_name: name,
-            email,
-            phone: phone || null,
-            charter_type: charter_type || null,
-            charter_date: charter_date || null,
-            guests: guests ? parseInt(guests) : null,
-            captain: captain || null,
-            total_price: total_price ? parseFloat(total_price) : null,
-            deposit_amount: amount,
-            signer_name: signer_name || name,
-            signature_data,
-            signed_at: signed_at || new Date().toISOString(),
-            stripe_session_id: session.id,
-          }),
+          body: JSON.stringify({ ...contractRow, ...extra }),
         });
+        // Store initials if the column exists; fall back gracefully if not.
+        let cResp = await postContract(initials ? { initials } : {});
+        if (!cResp.ok && initials) cResp = await postContract({});
       }
     } catch (dbErr) {
       console.error('Supabase contract update error (non-fatal):', dbErr);
