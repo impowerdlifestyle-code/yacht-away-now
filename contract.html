@@ -341,6 +341,10 @@
       border: 2px solid var(--dark-border);
       overflow: hidden;
     }
+    /* The floating chat widget (z-index:9999, fixed bottom-right) overlaps the
+       signature pad on mobile and intercepts taps on Draw/Type and the canvas.
+       Hide it on the signing page so signatures work. */
+    #chat-widget { display: none !important; }
     #signatureCanvas {
       display: block;
       width: 100%;
