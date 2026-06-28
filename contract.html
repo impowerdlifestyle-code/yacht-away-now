@@ -1299,21 +1299,50 @@ window.addEventListener('resize', resizeCanvas);
 
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
-  const touch = e.touches ? e.touches[0] : e;
   return {
-    x: touch.clientX - rect.left,
-    y: touch.clientY - rect.top
+    x: (e.clientX - rect.left),
+    y: (e.clientY - rect.top)
   };
 }
 
-canvas.addEventListener('mousedown', (e) => { isDrawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); });
-canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; });
-canvas.addEventListener('mouseup', () => { isDrawing = false; validateForm(); });
-canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+// Unified Pointer Events handle finger, stylus, and mouse identically and are
+// the most reliable signature-pad path across mobile browsers. Pointer capture
+// keeps the stroke going even if the finger drifts off the canvas edge.
+function startDraw(e) {
+  e.preventDefault();
+  if (!canvas.width) resizeCanvas();           // size lazily if it was 0 at load
+  isDrawing = true;
+  const p = getPos(e);
+  ctx.beginPath();
+  ctx.moveTo(p.x, p.y);
+  // Mark a dot so even a quick tap counts as a signature.
+  ctx.lineTo(p.x + 0.1, p.y + 0.1);
+  ctx.stroke();
+  hasSigned = true;
+  if (e.pointerId != null && canvas.setPointerCapture) {
+    try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+  }
+  validateForm();
+}
+function moveDraw(e) {
+  if (!isDrawing) return;
+  e.preventDefault();
+  const p = getPos(e);
+  ctx.lineTo(p.x, p.y);
+  ctx.stroke();
+  hasSigned = true;
+}
+function endDraw() {
+  if (!isDrawing) return;
+  isDrawing = false;
+  validateForm();
+}
 
-canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isDrawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); }, { passive: false });
-canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!isDrawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; }, { passive: false });
-canvas.addEventListener('touchend', () => { isDrawing = false; validateForm(); });
+canvas.addEventListener('pointerdown', startDraw);
+canvas.addEventListener('pointermove', moveDraw);
+canvas.addEventListener('pointerup', endDraw);
+canvas.addEventListener('pointercancel', endDraw);
+canvas.addEventListener('pointerleave', endDraw);
 
 function clearSignature() {
   const ratio = window.devicePixelRatio || 1;
