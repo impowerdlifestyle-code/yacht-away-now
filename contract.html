@@ -346,6 +346,10 @@
       width: 100%;
       height: 150px;
       cursor: crosshair;
+      touch-action: none;
+      -ms-touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
     .clear-sig {
       position: absolute;
@@ -1271,10 +1275,16 @@ const ctx = canvas.getContext('2d');
 let isDrawing = false;
 let hasSigned = false;
 
+let lastCanvasWidth = 0;
 function resizeCanvas() {
   const container = canvas.parentElement;
+  const width = container.offsetWidth;
+  // Ignore height-only viewport changes (mobile URL bar show/hide fires resize);
+  // re-setting canvas.width would wipe an in-progress signature.
+  if (width === lastCanvasWidth) return;
+  lastCanvasWidth = width;
   const ratio = window.devicePixelRatio || 1;
-  canvas.width = container.offsetWidth * ratio;
+  canvas.width = width * ratio;
   canvas.height = 150 * ratio;
   canvas.style.height = '150px';
   ctx.scale(ratio, ratio);
