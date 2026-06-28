@@ -945,8 +945,8 @@
           <input type="date" id="sigDob">
         </div>
         <div class="sig-field">
-          <label>Date</label>
-          <input type="date" id="sigDate" readonly>
+          <label>Date Signed</label>
+          <input type="text" id="sigDate" readonly>
         </div>
         <div class="sig-field">
           <label>Email</label>
@@ -1232,7 +1232,7 @@ updateDeposit();
 // ============================================
 // SET TODAY'S DATE
 // ============================================
-document.getElementById('sigDate').value = new Date().toISOString().split('T')[0];
+document.getElementById('sigDate').value = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
 // ============================================
 // TAB SWITCHING
