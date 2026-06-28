@@ -947,6 +947,7 @@
         <div class="sig-field">
           <label>Date Signed</label>
           <input type="text" id="sigDate" readonly>
+          <script>(function(){var d=document.getElementById('sigDate');if(d)d.value=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});})();</script>
         </div>
         <div class="sig-field">
           <label>Email</label>
