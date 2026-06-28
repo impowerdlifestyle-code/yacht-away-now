@@ -1257,8 +1257,8 @@ function balanceDueDateText() {
 function updateDeposit() {
   const total = getCharterTotal();
   const deposit = getDeposit();
-  depositDisplay.textContent = '$' + deposit.toLocaleString();
-  payAmountDisplay.textContent = '$' + deposit.toLocaleString();
+  if (depositDisplay) depositDisplay.textContent = '$' + deposit.toLocaleString();
+  if (payAmountDisplay) payAmountDisplay.textContent = '$' + deposit.toLocaleString();
   const totalEl = document.getElementById('charterTotalDisplay');
   const balEl = document.getElementById('balanceDisplay');
   const dueEl = document.getElementById('balanceDueDisplay');
