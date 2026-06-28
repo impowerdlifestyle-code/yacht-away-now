@@ -351,6 +351,44 @@
       -webkit-user-select: none;
       user-select: none;
     }
+    .sig-mode-toggle {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: rgba(11,29,46,0.8);
+      border: 1px solid var(--dark-border);
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .sig-mode-btn {
+      padding: 8px 18px;
+      border: none;
+      background: transparent;
+      color: var(--gray-600);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sig-mode-btn.active {
+      background: linear-gradient(135deg, #b8912e, #d4a853);
+      color: #0a1628;
+    }
+    #typedSignature {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: rgba(11,29,46,0.8);
+      border: 1px solid var(--dark-border);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 12px;
+    }
+    #typedSignature:focus { border-color: var(--seafoam); }
     .clear-sig {
       position: absolute;
       top: 8px;
@@ -956,10 +994,15 @@
       </div>
 
       <div class="signature-pad-wrapper">
-        <label>Draw Your Signature Below</label>
+        <label>Your Signature</label>
+        <div class="sig-mode-toggle">
+          <button type="button" id="modeDrawBtn" class="sig-mode-btn active" onclick="setSigMode('draw')">✍️ Draw</button>
+          <button type="button" id="modeTypeBtn" class="sig-mode-btn" onclick="setSigMode('type')">⌨️ Type</button>
+        </div>
+        <input type="text" id="typedSignature" placeholder="Type your full name" autocomplete="off" oninput="renderTypedSignature()" style="display:none;">
         <div class="signature-canvas-container">
           <canvas id="signatureCanvas"></canvas>
-          <button class="clear-sig" onclick="clearSignature()">Clear</button>
+          <button type="button" class="clear-sig" onclick="clearSignature()">Clear</button>
         </div>
       </div>
 
@@ -1345,10 +1388,58 @@ canvas.addEventListener('pointerup', endDraw);
 canvas.addEventListener('pointercancel', endDraw);
 canvas.addEventListener('pointerleave', endDraw);
 
-function clearSignature() {
+function clearCanvas() {
   const ratio = window.devicePixelRatio || 1;
   ctx.clearRect(0, 0, canvas.width / ratio, canvas.height / ratio);
+}
+
+function clearSignature() {
+  clearCanvas();
+  const typed = document.getElementById('typedSignature');
+  if (typed) typed.value = '';
   hasSigned = false;
+  validateForm();
+}
+
+// ============================================
+// SIGNATURE MODE: DRAW vs TYPE
+// ============================================
+let sigMode = 'draw';
+function setSigMode(mode) {
+  sigMode = mode;
+  document.getElementById('modeDrawBtn').classList.toggle('active', mode === 'draw');
+  document.getElementById('modeTypeBtn').classList.toggle('active', mode === 'type');
+  const typed = document.getElementById('typedSignature');
+  typed.style.display = mode === 'type' ? 'block' : 'none';
+  // In type mode, block pointer drawing so taps don't scribble over the text.
+  canvas.style.pointerEvents = mode === 'type' ? 'none' : 'auto';
+  canvas.style.cursor = mode === 'type' ? 'default' : 'crosshair';
+  clearCanvas();
+  hasSigned = false;
+  if (mode === 'type') { renderTypedSignature(); typed.focus(); }
+  validateForm();
+}
+
+function renderTypedSignature() {
+  if (sigMode !== 'type') return;
+  if (!canvas.width) resizeCanvas();
+  const ratio = window.devicePixelRatio || 1;
+  const w = canvas.width / ratio, h = canvas.height / ratio;
+  clearCanvas();
+  const txt = document.getElementById('typedSignature').value.trim();
+  if (!txt) { hasSigned = false; validateForm(); return; }
+  ctx.save();
+  ctx.fillStyle = '#0a1628';
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center';
+  let size = 56;
+  const maxW = w - 24;
+  const font = (s) => `italic ${s}px "Snell Roundhand", "Brush Script MT", "Segoe Script", cursive`;
+  ctx.font = font(size);
+  while (ctx.measureText(txt).width > maxW && size > 18) { size -= 2; ctx.font = font(size); }
+  ctx.fillText(txt, w / 2, h / 2);
+  ctx.restore();
+  hasSigned = true;
   validateForm();
 }
 
