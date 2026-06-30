@@ -720,7 +720,7 @@
       </div>
 
       <!-- Pricing Package Selection -->
-      <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--dark-border);">
+      <div id="pricingSection" style="margin-top:24px;padding-top:24px;border-top:1px solid var(--dark-border);">
         <label style="display:block;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);margin-bottom:12px;">Select Your Charter Package</label>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;" id="packageGrid">
           <label class="package-option" id="pkg-weekday">
@@ -1179,6 +1179,10 @@ if (noPay) {
 // ============================================
 const payFull = params.get('pay') === 'full';
 const payVerb = payFull ? 'Sign & Pay in Full' : 'Sign & Pay 50% Deposit';
+// When the booking already carries a total (every dashboard-sent link does), the
+// price is fixed — hide the package picker entirely and lock the charter total to
+// exactly what the team entered. No weekday/weekend/overnight/custom choices.
+const lockedTotal = !noPay && parseFloat(params.get('total')) > 0;
 if (payFull && !noPay) {
   const depLabel = document.querySelector('.deposit-row .total-label');
   if (depLabel) {
@@ -1202,6 +1206,14 @@ const customTotalRow = document.getElementById('customTotalRow');
 const customTotalInput = document.getElementById('sumTotal');
 const hiddenTotal = document.getElementById('sumTotalHidden');
 let selectedPackage = '';
+
+// Locked-total mode: the price came from the dashboard, so there's nothing to
+// pick. Hide the whole package section and treat the passed total as final.
+if (lockedTotal) {
+  selectedPackage = 'locked';
+  const pricing = document.getElementById('pricingSection');
+  if (pricing) pricing.style.display = 'none';
+}
 // Declared early: the package init below calls validateForm(), which reads
 // initialsState — must exist before that runs (links with a date param do).
 const initialsState = [false, false, false, false];
@@ -1244,6 +1256,7 @@ function selectPackage(radio) {
 // Exact quote: auto-pick weekday/weekend from the charter date so the
 // customer sees the precise price for the date they chose.
 function syncPackageToDate() {
+  if (lockedTotal) return; // price is fixed by the dashboard — never recompute
   const wk = isWeekendCharter();
   if (wk === null) return;
   if (selectedPackage === 'bahamas' || selectedPackage === 'custom') return;
