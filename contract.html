@@ -1175,6 +1175,25 @@ if (noPay) {
 }
 
 // ============================================
+// PAY-IN-FULL MODE — charge the entire charter total at signing
+// ============================================
+const payFull = params.get('pay') === 'full';
+const payVerb = payFull ? 'Sign & Pay in Full' : 'Sign & Pay 50% Deposit';
+if (payFull && !noPay) {
+  const depLabel = document.querySelector('.deposit-row .total-label');
+  if (depLabel) {
+    depLabel.textContent = 'Full Payment Due Today';
+    const sub = depLabel.nextElementSibling;
+    if (sub) sub.style.display = 'none';
+  }
+  const payBtn = document.getElementById('payBtn');
+  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay in Full — <span id="payAmount">$0</span>';
+  document.querySelectorAll('p').forEach(p => {
+    if (p.textContent.includes('complete your 50% deposit')) p.textContent = p.textContent.replace('complete your 50% deposit', 'complete your full payment');
+  });
+}
+
+// ============================================
 // PACKAGE SELECTION & DEPOSIT CALCULATION
 // ============================================
 const depositDisplay = document.getElementById('depositAmount');
@@ -1245,6 +1264,8 @@ function getCharterTotal() {
 }
 
 function getDeposit() {
+  // In pay-in-full mode the "amount due today" is the entire charter total.
+  if (payFull) return Math.round(getCharterTotal());
   return Math.round(getCharterTotal() * 0.5);
 }
 
@@ -1555,6 +1576,7 @@ async function submitAndPay() {
         guests,
         captain,
         total_price: total,
+        payment_type: payFull ? 'full' : 'deposit',
         signature_data: sigData,
         signer_name: document.getElementById('sigName').value.trim(),
         signed_at: new Date().toISOString(),
@@ -1584,7 +1606,7 @@ async function submitAndPay() {
   } catch (err) {
     alert('Something went wrong: ' + err.message + '\n\nPlease try again or call (727) 609-2248.');
     btn.disabled = false;
-    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay 50% Deposit — <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
+    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + payVerb + ' — <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
   }
 }
 

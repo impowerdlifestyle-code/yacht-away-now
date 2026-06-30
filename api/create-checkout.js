@@ -3,7 +3,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { amount, name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials } = req.body;
+  const { amount, name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials, payment_type } = req.body;
+  const isFull = payment_type === 'full';
 
   if (!amount || amount < 1) {
     return res.status(400).json({ error: 'Invalid deposit amount' });
@@ -23,7 +24,7 @@ export default async function handler(req, res) {
     params.append('cancel_url', 'https://www.yachtawaynow.com/contract?canceled=true');
     params.append('customer_email', email);
     params.append('line_items[0][price_data][currency]', 'usd');
-    params.append('line_items[0][price_data][product_data][name]', 'Yacht Charter Deposit (50%)');
+    params.append('line_items[0][price_data][product_data][name]', isFull ? 'Yacht Charter — Full Payment' : 'Yacht Charter Deposit (50%)');
     params.append('line_items[0][price_data][product_data][description]',
       `${charter_type || 'Charter'} — ${charter_date || 'TBD'} — ${guests || '?'} guests — Charter Total: $${total_price || 'TBD'}`
     );
@@ -38,6 +39,7 @@ export default async function handler(req, res) {
     params.append('payment_intent_data[metadata][captain]', captain || '');
     params.append('payment_intent_data[metadata][total_price]', (total_price || '').toString());
     params.append('payment_intent_data[metadata][deposit_amount]', amount.toString());
+    params.append('payment_intent_data[metadata][type]', isFull ? 'full_payment' : 'deposit');
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',

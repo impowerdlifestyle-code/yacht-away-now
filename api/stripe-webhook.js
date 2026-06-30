@@ -301,7 +301,7 @@ export default async function handler(req, res) {
           bookingForNotify = matches[0];
           await supabasePatch(`bookings?id=eq.${bookingForNotify.id}`, {
             status: 'deposit_paid',
-            payment_status: 'deposit_paid',
+            payment_status: metadata.type === 'full_payment' ? 'paid_full' : 'deposit_paid',
             paid_at: new Date().toISOString(),
             stripe_payment_id: session.payment_intent || null,
           });
