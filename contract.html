@@ -941,26 +941,12 @@
             <p><strong>Under this bareboat charter contract, the person who agrees to the charter contract has the option to hire any operator of their choosing, or operate the boat themselves (vetted and qualified for vessel). In addition, we have a number of captains also that you may choose from that are enrolled in a USCG approved Drug testing Consortium.</strong></p>
 
             <p>Please select your preferred captain:</p>
-            <div style="margin: 12px 0 16px;">
+            <div style="margin: 12px 0 16px;" id="captainList">
               <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
                 <input type="radio" name="captain" value="charterer_choice" checked style="accent-color:var(--seafoam);width:16px;height:16px;"> Charterer's Choice:
                 <input type="text" id="captainCustom" value="First Available" placeholder="Captain name" style="padding:6px 10px;border-radius:6px;background:rgba(11,29,46,0.8);border:1px solid var(--dark-border);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.85rem;width:180px;outline:none;">
               </label>
-              <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
-                <input type="radio" name="captain" value="Capt. John True" style="accent-color:var(--seafoam);width:16px;height:16px;"> Capt. John True
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
-                <input type="radio" name="captain" value="Capt. Mitch Parent" style="accent-color:var(--seafoam);width:16px;height:16px;"> Capt. Mitch Parent
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
-                <input type="radio" name="captain" value="Capt. John Pettigrew" style="accent-color:var(--seafoam);width:16px;height:16px;"> Capt. John Pettigrew
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
-                <input type="radio" name="captain" value="Capt. Jason Durnin" style="accent-color:var(--seafoam);width:16px;height:16px;"> Capt. Jason Durnin
-              </label>
-              <label style="display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;">
-                <input type="radio" name="captain" value="Capt. Les Weis" style="accent-color:var(--seafoam);width:16px;height:16px;"> Capt. Les Weis
-              </label>
+              <!-- Live captain roster injected here from /api/captains -->
             </div>
           </div>
           <div class="initials-row">
@@ -1627,6 +1613,31 @@ async function submitAndPay() {
 const style = document.createElement('style');
 style.textContent = '@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
 document.head.appendChild(style);
+
+// Pull the live captain roster from Supabase so the selection always matches
+// the dashboard. Charterer's Choice (First Available) stays pinned at the top.
+(async function loadCaptainRoster(){
+  try {
+    const res = await fetch('/api/captains');
+    if (!res.ok) return;
+    const data = await res.json();
+    const names = Array.isArray(data.captains) ? data.captains : [];
+    const list = document.getElementById('captainList');
+    if (!list || !names.length) return;
+    const frag = document.createDocumentFragment();
+    names.forEach(function(n){
+      const label = document.createElement('label');
+      label.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;';
+      const input = document.createElement('input');
+      input.type = 'radio'; input.name = 'captain'; input.value = n;
+      input.style.cssText = 'accent-color:var(--seafoam);width:16px;height:16px;';
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(' ' + n));
+      frag.appendChild(label);
+    });
+    list.appendChild(frag);
+  } catch (e) { /* keep Charterer's Choice / First Available as fallback */ }
+})();
 </script>
 <script>
 (function(){function loadGA(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-QTEXZD81XN';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-QTEXZD81XN');}var gaLoaded=false;function triggerGA(){if(gaLoaded)return;gaLoaded=true;loadGA();}['scroll','touchstart','keydown','mousedown'].forEach(function(ev){addEventListener(ev,triggerGA,{once:true,passive:true});});setTimeout(triggerGA,15000);})();
