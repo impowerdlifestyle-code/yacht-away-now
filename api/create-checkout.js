@@ -16,11 +16,30 @@ export default async function handler(req, res) {
 
   const amountInCents = Math.round(amount * 100);
 
+  const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
+  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
+
+  // Look up the booking up-front so its id can ride along in the Stripe
+  // metadata — the dashboard marks it paid the instant the payment lands.
+  let bookingId = null;
   try {
-    // Create Stripe Checkout Session via REST API
+    const findRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/bookings?email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+    const found = await findRes.json();
+    if (Array.isArray(found) && found.length > 0) bookingId = found[0].id;
+  } catch (lookupErr) {
+    console.error('Booking pre-lookup error (non-fatal):', lookupErr);
+  }
+
+  try {
+    // Create Stripe Checkout Session via REST API. Route success through the
+    // dashboard's verify-and-mark handler, then on to the contract success page.
+    const successNext = encodeURIComponent('https://www.yachtawaynow.com/contract?success=true');
     const params = new URLSearchParams();
     params.append('mode', 'payment');
-    params.append('success_url', 'https://www.yachtawaynow.com/contract?success=true');
+    params.append('success_url', `https://yan-dashboard.vercel.app/api/pay/complete?session_id={CHECKOUT_SESSION_ID}&next=${successNext}`);
     params.append('cancel_url', 'https://www.yachtawaynow.com/contract?canceled=true');
     params.append('customer_email', email);
     params.append('line_items[0][price_data][currency]', 'usd');
@@ -40,6 +59,7 @@ export default async function handler(req, res) {
     params.append('payment_intent_data[metadata][total_price]', (total_price || '').toString());
     params.append('payment_intent_data[metadata][deposit_amount]', amount.toString());
     params.append('payment_intent_data[metadata][type]', isFull ? 'full_payment' : 'deposit');
+    if (bookingId) params.append('payment_intent_data[metadata][booking_id]', bookingId);
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
@@ -58,24 +78,8 @@ export default async function handler(req, res) {
     }
 
     // Update booking in Supabase: mark contract as signed
-    const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
-
     try {
-      // Find the booking by email and update contract status
-      const findRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/bookings?email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1`,
-        {
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-          },
-        }
-      );
-      const matches = await findRes.json();
-
-      if (Array.isArray(matches) && matches.length > 0) {
-        const bookingId = matches[0].id;
+      if (bookingId) {
         await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${bookingId}`, {
           method: 'PATCH',
           headers: {
