@@ -15,6 +15,46 @@ const POSTS = [
     action: "BOOK"
   },
   {
+    summary: "How Much Does a Yacht Charter Actually Cost? \ud83d\udcb0\n\nNo call-for-quote games. Our 2026 Tampa Bay pricing:\n\n\u2705 Weekdays $500/hr \u00b7 Weekends $600/hr\n\u2705 All-inclusive: captain, crew, fuel, ice\n\u2705 4-hour minimum \u00b7 up to 13 guests\n\nSplit 13 ways, a weekend charter is ~$185/person.\n\nFull pricing breakdown on the blog!",
+    url: "https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay",
+    action: "LEARN_MORE"
+  },
+  {
+    summary: "First Yacht Charter? Here's Exactly How It Works \u2693\n\nWhere to park, when to board, who picks the route, and yes \u2014 how tipping works.\n\nWe wrote the step-by-step guide for first-timers, from booking to the golden-hour ride home. No license or experience needed \u2014 our USCG-licensed captain handles everything.\n\nRead the first-timer's guide!",
+    url: "https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect",
+    action: "LEARN_MORE"
+  },
+  {
+    summary: "Two Islands. One Perfect Day. \ud83c\udfdd\ufe0f\n\nEgmont Key: fort ruins, an 1858 lighthouse, and snorkeling over submerged batteries.\nShell Key: the best shelling sandbar on the Gulf Coast.\n\nBoth in one 6-8 hour private charter from St. Pete \u2014 the exact itinerary our captains run is on the blog.\n\nPlan your island day!",
+    url: "https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip",
+    action: "LEARN_MORE"
+  },
+  {
+    summary: "When's the Best Month to Charter in Tampa Bay? \ud83c\udf24\ufe0f\n\nOur captains' honest answer: April, May \u2014 and October, the local's favorite. Summer? Book mornings or sunset cruises and let the 3pm storm have the mid-afternoon.\n\nWe published the full month-by-month weather guide: water temps, seas, and the truth about hurricane season.\n\nFind your month!",
+    url: "https://www.yachtawaynow.com/blog/tampa-bay-boating-weather-by-month",
+    action: "LEARN_MORE"
+  },
+  {
+    summary: "The Best Date Night in St. Pete Isn't a Restaurant \ud83c\udf05\n\nA private 52ft yacht, golden hour off Pass-a-Grille, your playlist, your favorite bottle (BYOB), and a crew that handles everything else.\n\nWeekday evenings from $2,000 all-inclusive for the entire yacht. Anniversaries and proposals are our specialty \u2014 we're undefeated.\n\nPlan your night on the water!",
+    url: "https://www.yachtawaynow.com/blog/date-night-on-the-water-st-petersburg",
+    action: "BOOK"
+  },
+  {
+    summary: "How Many People Fit on a Yacht Charter? \ud83d\udc65\n\nOur 52ft Marquis hosts up to 13 guests across 3 decks \u2014 and yes, kids count toward the limit (it's federal law, and any operator who'll \"squeeze in extras\" is one to avoid).\n\nBigger group? Add Sly Fox for 19 total cruising side by side.\n\nRead the group size guide!",
+    url: "https://www.yachtawaynow.com/blog/how-many-people-fit-on-a-yacht-charter",
+    action: "LEARN_MORE"
+  },
+  {
+    summary: "Beat the Florida Heat \u2600\ufe0f Morning & Sunset Charters\n\nSummer on Tampa Bay has a rhythm: gorgeous mornings, a brief 3pm storm, then a washed-clean golden evening.\n\nSo we run with it \u2014 morning sandbar swims in 88\u00b0 Gulf water, or the 5-hour sunset cruise ($3,000 all-inclusive) when the sky puts on its show.\n\nBook your summer slot!",
+    url: "https://www.yachtawaynow.com/sunset-cruise-st-petersburg",
+    action: "BOOK"
+  },
+  {
+    summary: "Meet Sly Fox \ud83e\udd8a Our 3-Stateroom Luxury Yacht\n\nBuilt for couples' escapes and small-group cruising: up to 6 guests, three private staterooms, optional private chef, and multi-day Gulf Coast itineraries from $5,000.\n\n$650/hr weekdays \u00b7 $750/hr weekends \u00b7 all-inclusive.\n\nThe intimate side of Yacht Away Now. Book Sly Fox!",
+    url: "https://www.yachtawaynow.com/sly-fox",
+    action: "BOOK"
+  },
+  {
     summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 133 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
     url: "https://www.yachtawaynow.com/blog/best-boat-charter-companies-st-petersburg",
     action: "LEARN_MORE"
