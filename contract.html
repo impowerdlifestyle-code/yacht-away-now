@@ -1064,7 +1064,7 @@
   </div>
 </footer>
 
-<script src="/app.js" defer></script>
+<script src="/app.js?v=20260705" defer></script>
 <script>
 // ============================================
 // URL PARAMS PRE-FILL
@@ -1205,7 +1205,21 @@ if (lockedTotal) {
 const initialsState = [false, false, false, false];
 
 // All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
+// Flagship 52ft Marquis $500/$600; Sly Fox (larger vessel) $650/$750.
 const HOURLY_RATES = { weekday: 500, weekend: 600 };
+const SLY_FOX_RATES = { weekday: 650, weekend: 750 };
+function currentRates() {
+  const boat = document.getElementById('sumBoat');
+  return boat && /sly\s*fox/i.test(boat.value) ? SLY_FOX_RATES : HOURLY_RATES;
+}
+// Keep the visible weekday/weekend package cards in sync with the chosen vessel.
+function updatePackageCards() {
+  const r = currentRates();
+  const wd = document.querySelector('#pkg-weekday .package-price');
+  const we = document.querySelector('#pkg-weekend .package-price');
+  if (wd) wd.innerHTML = '$' + r.weekday + '<span>/hr</span>';
+  if (we) we.innerHTML = '$' + r.weekend + '<span>/hr</span>';
+}
 const DURATION_HOURS = { '4hr': 4, '5hr': 5, '6hr': 6 };
 
 function selectedHours() {
@@ -1233,7 +1247,7 @@ function selectPackage(radio) {
     hiddenTotal.value = 5000;
   } else {
     customTotalRow.style.display = 'none';
-    hiddenTotal.value = HOURLY_RATES[radio.value] * (selectedHours() || 4);
+    hiddenTotal.value = currentRates()[radio.value] * (selectedHours() || 4);
   }
   updateDeposit();
   validateForm();
@@ -1297,6 +1311,11 @@ document.getElementById('sumDate').addEventListener('change', () => { syncPackag
 document.getElementById('sumDuration').addEventListener('change', () => {
   if (selectedPackage === 'weekday' || selectedPackage === 'weekend') selectPackage(document.querySelector('input[name="package"]:checked'));
 });
+document.getElementById('sumBoat').addEventListener('change', () => {
+  updatePackageCards();
+  if (selectedPackage === 'weekday' || selectedPackage === 'weekend') selectPackage(document.querySelector('input[name="package"]:checked'));
+});
+updatePackageCards();
 syncPackageToDate();
 updateDeposit();
 
