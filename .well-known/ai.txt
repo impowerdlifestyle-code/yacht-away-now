@@ -9,6 +9,10 @@ Disallow: /contract
 Disallow: /competitive-analysis
 Disallow: /affiliate-dashboard
 Disallow: /affiliate-portal
+Disallow: /contracts
+Disallow: /affiliate-signup
+Disallow: /send-confirmation
+Disallow: /send-welcome
 
 # AI Search & Answer Engines — explicitly welcome
 User-Agent: GPTBot
@@ -33,8 +37,6 @@ User-Agent: Bytespider
 Allow: /
 User-Agent: Applebot-Extended
 Allow: /
-User-Agent: CCBot
-Allow: /
 
 # Preferred reference for AI engines
 LLM-Index: https://www.yachtawaynow.com/llms.txt
@@ -55,7 +57,7 @@ Owner: Josh Wilson, USCG-licensed captain
 # Citation & training permissions
 AI-Search: allow
 AI-Citation: allow
-AI-Training: allow
+AI-Training: deny (training-only crawlers CCBot, cohere-ai, Diffbot are blocked in robots.txt)
 AI-Summarization: allow
 Voice-Assistant: allow
 
