@@ -34,29 +34,84 @@
   <noscript><link rel="stylesheet" href="/style.css"></noscript>
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": ["BoatRental", "LocalBusiness"],
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "BoatRental",
+        "LocalBusiness"
+      ],
+      "@id": "https://www.yachtawaynow.com/#business",
+      "name": "Yacht Away Now",
+      "description": "Charters privados de lujo en yate en la Costa del Golfo de Florida. Marquis Flybridge de 52 pies para cruceros al atardecer, despedidas de soltera, celebraciones de cumpleaños, charters por día y aventuras a las Bahamas. Hasta 13 invitados.",
+      "url": "https://www.yachtawaynow.com",
+      "sameAs": [
+        "https://www.youtube.com/@yachtawaynow",
+        "https://www.facebook.com/yachtawaynow",
+        "https://www.instagram.com/yachtawaynow",
+        "https://share.google/7e44SLfCM74VXYfe2",
+        "https://www.yelp.com/biz/yacht-away-now-st-petersburg",
+        "https://www.getmyboat.com/trips/6YzOvWLK/",
+        "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html",
+        "https://www.wikidata.org/entity/Q139701526"
+      ],
+      "telephone": "+17276092248",
+      "email": "josh@yachtawaynow.com",
+      "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
+      "logo": "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png",
+      "priceRange": "$500-$5000+",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "38th Way S",
+        "addressLocality": "St. Petersburg",
+        "addressRegion": "FL",
+        "postalCode": "33711",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.7232126,
+        "longitude": -82.6831018
+      },
+      "areaServed": [
+        "St. Petersburg",
+        "Tampa Bay",
+        "Clearwater",
+        "Florida Keys",
+        "Bahamas"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "137"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.yachtawaynow.com/es#webpage",
+      "name": "Charters de Yate de Lujo en St. Petersburg FL — Yacht Away Now",
+      "inLanguage": "es",
+      "url": "https://www.yachtawaynow.com/es",
+      "isPartOf": {
+        "@id": "https://www.yachtawaynow.com/#business"
+      },
+      "description": "Charters privados en yate Marquis de 52 pies en St. Petersburg FL. Cruceros al atardecer, despedidas de soltera, viajes a las Bahamas para hasta 13 invitados."
+    },
+    {
+      "@type": "WebSite",
+      "name": "Yacht Away Now",
+      "url": "https://www.yachtawaynow.com",
+      "publisher": {
+        "@type": [
+          "BoatRental",
+          "LocalBusiness"
+        ],
         "@id": "https://www.yachtawaynow.com/#business",
         "name": "Yacht Away Now",
-        "description": "Charters privados de lujo en yate en la Costa del Golfo de Florida. Marquis Flybridge de 52 pies para cruceros al atardecer, despedidas de soltera, celebraciones de cumpleaños, charters por día y aventuras a las Bahamas. Hasta 13 invitados.",
         "url": "https://www.yachtawaynow.com",
-        "sameAs": [
-      "https://www.youtube.com/@yachtawaynow",
-      "https://www.facebook.com/yachtawaynow",
-      "https://www.instagram.com/yachtawaynow",
-      "https://share.google/7e44SLfCM74VXYfe2",
-      "https://www.yelp.com/biz/yacht-away-now-st-petersburg",
-      "https://www.getmyboat.com/trips/6YzOvWLK/",
-      "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html",
-      "https://www.wikidata.org/entity/Q139701526"
-    ],
-    "telephone": "+17276092248",
-        "email": "josh@yachtawaynow.com",
+        "telephone": "+17276092248",
         "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
-        "logo": "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png",
-        "priceRange": "$500-$5000+",
+        "priceRange": "$500-$9500+",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "38th Way S",
@@ -70,24 +125,202 @@
           "latitude": 27.7232126,
           "longitude": -82.6831018
         },
-        "areaServed": ["St. Petersburg", "Tampa Bay", "Clearwater", "Florida Keys", "Bahamas"],
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "5.0",
-          "reviewCount": "137"
+        "areaServed": [
+          "St. Petersburg",
+          "Tampa Bay",
+          "Clearwater",
+          "Florida Keys",
+          "Bahamas"
+        ]
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.yachtawaynow.com/#organization",
+      "name": "Yacht Away Now",
+      "legalName": "Yacht Away Now",
+      "url": "https://www.yachtawaynow.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
+      "description": "Luxury private yacht charter company in St. Petersburg, Florida. Operates a 52ft Marquis Flybridge for sunset cruises, bachelorette parties, day charters, and multi-day Bahamas trips along Florida's Gulf Coast.",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "@id": "https://www.yachtawaynow.com/team#captain-josh-wilson",
+        "name": "Josh Wilson",
+        "jobTitle": "Captain, Founder & Owner",
+        "url": "https://www.yachtawaynow.com/team"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+17276092248",
+          "email": "josh@yachtawaynow.com",
+          "contactType": "Reservations",
+          "areaServed": [
+            "US",
+            "BS"
+          ],
+          "availableLanguage": "English"
+        }
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "38th Way S",
+        "addressLocality": "St. Petersburg",
+        "addressRegion": "FL",
+        "postalCode": "33711",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q139701526",
+        "https://www.youtube.com/@yachtawaynow",
+        "https://www.facebook.com/yachtawaynow",
+        "https://www.instagram.com/yachtawaynow",
+        "https://share.google/7e44SLfCM74VXYfe2",
+        "https://www.yelp.com/biz/yacht-away-now-st-petersburg",
+        "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html",
+        "https://www.getmyboat.com/trips/6YzOvWLK/"
+      ],
+      "knowsAbout": [
+        "Private yacht charters",
+        "Sunset cruises in Tampa Bay",
+        "Bachelorette yacht parties",
+        "Bahamas yacht trips",
+        "Florida Keys yacht charters",
+        "Dolphin cruises in St. Petersburg",
+        "Sandbar boat trips on the Gulf Coast"
+      ],
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "St. Petersburg, FL"
+        },
+        {
+          "@type": "City",
+          "name": "Tampa, FL"
+        },
+        {
+          "@type": "City",
+          "name": "Clearwater, FL"
+        },
+        {
+          "@type": "City",
+          "name": "Sarasota, FL"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Tampa Bay"
+        },
+        {
+          "@type": "Country",
+          "name": "Bahamas"
+        }
+      ],
+      "subOrganization": {
+        "@type": [
+          "BoatRental",
+          "LocalBusiness"
+        ],
+        "@id": "https://www.yachtawaynow.com/#business",
+        "name": "Yacht Away Now",
+        "url": "https://www.yachtawaynow.com",
+        "telephone": "+17276092248",
+        "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
+        "priceRange": "$500-$9500+",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "38th Way S",
+          "addressLocality": "St. Petersburg",
+          "addressRegion": "FL",
+          "postalCode": "33711",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 27.7232126,
+          "longitude": -82.6831018
+        },
+        "areaServed": [
+          "St. Petersburg",
+          "Tampa Bay",
+          "Clearwater",
+          "Florida Keys",
+          "Bahamas"
+        ]
+      }
+    },
+    {
+      "@type": "Vehicle",
+      "@id": "https://www.yachtawaynow.com/#yacht-marquis-52",
+      "name": "52ft Marquis Flybridge",
+      "alternateName": "Yacht Away Now Flagship",
+      "description": "Flagship 52ft Marquis Flybridge motor yacht: 3 decks, over 1,200 sq ft of cabin space, 800+ sq ft of outdoor deck, 1320hp engines (30+ knots), 600-mile range, Starlink, premium audio across all decks. Operated by Yacht Away Now in St. Petersburg, FL.",
+      "vehicleConfiguration": "Flybridge Motor Yacht",
+      "vehicleModelDate": "Marquis 52",
+      "seatingCapacity": 13,
+      "image": [
+        "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg",
+        "https://www.yachtawaynow.com/images/yacht-exterior.jpg"
+      ],
+      "brand": {
+        "@type": "Brand",
+        "name": "Marquis Yachts"
+      },
+      "url": "https://www.yachtawaynow.com/our-yacht",
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "Marquis Yachts"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yachtawaynow.com/contact",
+        "priceCurrency": "USD",
+        "price": "400",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "400",
+          "priceCurrency": "USD",
+          "unitText": "hour"
+        },
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://www.yachtawaynow.com/#hero-video",
+      "name": "Yacht Away Now — Aerial Drone Tour of Our 52ft Marquis Flybridge",
+      "description": "Aerial drone footage of the Yacht Away Now flagship — a 52ft Marquis Flybridge cruising the Gulf Coast off St. Petersburg, Florida. Three decks, premium teak finish, USCG-licensed captain.",
+      "thumbnailUrl": [
+        "https://www.yachtawaynow.com/images/hero-yacht-drone-poster.jpg",
+        "https://www.yachtawaynow.com/images/hero-yacht-drone-poster.webp",
+        "https://www.yachtawaynow.com/images/hero-yacht-drone-poster.avif"
+      ],
+      "uploadDate": "2026-05-21",
+      "contentUrl": "https://www.yachtawaynow.com/images/hero-yacht-drone.mp4",
+      "encodingFormat": "video/mp4",
+      "duration": "PT15S",
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://www.yachtawaynow.com/#organization",
+        "name": "Yacht Away Now",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.yachtawaynow.com/images/yacht-away-now-logo-large.png"
         }
       },
-      {
-        "@type": "WebPage",
-        "@id": "https://www.yachtawaynow.com/es#webpage",
-        "name": "Charters de Yate de Lujo en St. Petersburg FL — Yacht Away Now",
-        "inLanguage": "es",
-        "url": "https://www.yachtawaynow.com/es",
-        "isPartOf": { "@id": "https://www.yachtawaynow.com/#business" },
-        "description": "Charters privados en yate Marquis de 52 pies en St. Petersburg FL. Cruceros al atardecer, despedidas de soltera, viajes a las Bahamas para hasta 13 invitados."
+      "about": {
+        "@id": "https://www.yachtawaynow.com/#yacht-marquis-52"
       }
-    ]
-  }
+    }
+  ]
+}
   </script>
 </head>
 <body>
@@ -177,7 +410,8 @@
   <div class="container">
     <div class="vessel-visual reveal">
       <div class="vessel-image"><picture>
-        <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
+        <source srcset="/images/yacht-rear-angle.avif" type="image/avif">
+  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
         <img src="/images/yacht-rear-angle.jpg" alt="Yate Marquis Flybridge de 52 pies en aguas turquesa cristalinas de la Costa del Golfo" width="800" height="600" loading="lazy">
       </picture></div>
       <div class="vessel-float">
@@ -221,7 +455,8 @@
     <div class="grid-3">
       <div class="exp-card reveal reveal-delay-1">
         <div class="exp-card-image"><picture>
-          <source srcset="/images/charter-img_1180.webp" type="image/webp">
+          <source srcset="/images/charter-img_1180.avif" type="image/avif">
+  <source srcset="/images/charter-img_1180.webp" type="image/webp">
           <img src="/images/charter-img_1180.jpg" alt="Crucero al atardecer en Tampa Bay a bordo de un yate de lujo" width="600" height="375" loading="lazy">
         </picture>
           <div class="exp-card-number">01</div>
@@ -234,7 +469,8 @@
       </div>
       <div class="exp-card reveal reveal-delay-2">
         <div class="exp-card-image"><picture>
-          <source srcset="/images/bachelorette-party.webp" type="image/webp">
+          <source srcset="/images/bachelorette-party.avif" type="image/avif">
+  <source srcset="/images/bachelorette-party.webp" type="image/webp">
           <img src="/images/bachelorette-party.jpg" alt="Mujeres celebrando una despedida de soltera en un yate al atardecer" width="600" height="375" loading="lazy">
         </picture>
           <div class="exp-card-number">02</div>
@@ -247,7 +483,8 @@
       </div>
       <div class="exp-card reveal reveal-delay-3">
         <div class="exp-card-image"><picture>
-          <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
+          <source srcset="/images/yacht-rear-angle.avif" type="image/avif">
+  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
           <img src="/images/yacht-rear-angle.jpg" alt="Yate Marquis de 52 pies en aguas turquesa cristalinas de las Bahamas" width="600" height="375" loading="lazy">
         </picture>
           <div class="exp-card-number">03</div>
