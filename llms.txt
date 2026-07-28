@@ -1,6 +1,6 @@
 # Yacht Away Now
 
-> Luxury private yacht charter company based in St. Petersburg, FL operating a 52ft Marquis Flybridge for sunset cruises, celebrations, and Bahamas adventures.
+> Luxury private yacht charter company based in St. Petersburg, FL operating a two-yacht fleet — a 52ft Marquis Flybridge (up to 13 guests) and Sly Fox, a 3-stateroom luxury yacht (sleeps 6) — for sunset cruises, celebrations, and Bahamas adventures.
 
 ## Docs
 
@@ -17,6 +17,8 @@
 - [Tampa Bay vs Miami Yacht Charter](https://www.yachtawaynow.com/tampa-bay-vs-miami-yacht-charter): Side-by-side comparison of pricing, scenery, and experience
 - [FAQ](https://www.yachtawaynow.com/faq): Common questions about capacity, pricing, and bookings
 - [Our Yacht](https://www.yachtawaynow.com/our-yacht): 52ft Marquis Flybridge specifications and amenities
+- [Sly Fox](https://www.yachtawaynow.com/sly-fox): 3-stateroom / 2-bath luxury yacht — sleeps 6, $650/hr weekdays, $750/hr weekends, multi-day trips from $5,000
+- [Clearwater Sunset Cruise](https://www.yachtawaynow.com/sunset-cruise-clearwater): Private sunset cruises for the Clearwater coast — Sand Key, Clearwater Pass, and the open Gulf
 - [Contact](https://www.yachtawaynow.com/contact): Book a charter or ask questions
 - [Blog](https://www.yachtawaynow.com/blog): Yacht charter tips, guides, and Tampa Bay insights
 
@@ -31,10 +33,11 @@
 - [Preguntas Frecuentes](https://www.yachtawaynow.com/es/faq)
 
 ## About
-Yacht Away Now is a luxury private yacht charter company based in St. Petersburg, Florida. We operate a 52ft Marquis Flybridge yacht offering sunset cruises, day charters, bachelorette parties, birthday celebrations, and multi-day Bahamas adventures on Florida's Gulf Coast. Multiple yachts available upon request.
+Yacht Away Now is a luxury private yacht charter company based in St. Petersburg, Florida. We operate a two-yacht fleet: our flagship 52ft Marquis Flybridge (up to 13 guests) and Sly Fox, a 3-stateroom / 2-bathroom luxury yacht that sleeps 6, offering sunset cruises, day charters, bachelorette parties, birthday celebrations, and multi-day Bahamas adventures on Florida's Gulf Coast. Additional yachts available upon request.
 
 ## Key Facts
 - Location: St. Petersburg, FL (Tampa Bay area)
+- Fleet: 2 yachts — 52ft Marquis Flybridge (flagship) and Sly Fox
 - Vessel: 52ft Marquis Flybridge
 - Capacity: Up to 13 guests
 - Range: 600 miles (Bahamas capable)
@@ -42,6 +45,7 @@ Yacht Away Now is a luxury private yacht charter company based in St. Petersburg
 - Engine: 1320hp, 30+ knot speed
 - Cabin: 1,200 sq ft interior
 - Outdoor: 800+ sq ft deck space
+- Sly Fox: 3 private staterooms, 2 bathrooms, sleeps 6 overnight, optional chef
 
 ## Services
 - Sunset Cruises (4-5 hours)
@@ -55,7 +59,8 @@ Yacht Away Now is a luxury private yacht charter company based in St. Petersburg
 ## Pricing
 - Weekday (Mon-Thu): $500/hr all-inclusive, 4-hour minimum — 4hr $2,000, 5hr $2,500, 6hr $3,000
 - Weekend (Fri-Sun): $600/hr all-inclusive, 4-hour minimum — 4hr $2,400, 5hr $3,000, 6hr $3,600
-- Overnight/Bahamas: Starting at $9,500+
+- Overnight/Bahamas (Marquis): Starting at $9,500+
+- Sly Fox: $650/hr weekdays, $750/hr weekends; multi-day Gulf Coast trips from $5,000
 
 ## Contact
 - Phone: (727) 609-2248
@@ -102,6 +107,9 @@ Yes. The yacht has a 600-mile range and is Bahamas-capable. Multi-day Bahamas an
 
 ### Where does the yacht depart from?
 Yacht Away Now departs from St. Petersburg, Florida (Tampa Bay area). The exact marina and slip details are confirmed at booking. Mailing address: 38th Way S, St. Petersburg, FL.
+
+### Do you have more than one yacht?
+Yes. The flagship 52ft Marquis Flybridge hosts up to 13 guests for day and sunset charters. Sly Fox is a 3-stateroom, 2-bathroom luxury yacht that sleeps 6, at $650/hr on weekdays and $750/hr on weekends, with multi-day Gulf Coast itineraries from $5,000 and an optional private chef.
 
 ### Can I bring my own food and drinks?
 Yes — BYOB and BYO food is welcome on all charters. We provide ice, waters, and basic supplies. Glass bottles are not permitted onboard (Coast Guard rule); we transfer to plastic dockside.

@@ -9,3 +9,6 @@ main p a,main li a,.section-subtitle a{text-decoration:underline;text-underline-
 @media(max-width:768px){.nav-links.open a{padding:14px 20px;min-height:44px;display:flex;align-items:center;justify-content:center}}
 
 input[type="date"],input[type="time"],input[type="datetime-local"]{color-scheme:dark}input[type="date"]::-webkit-calendar-picker-indicator,input[type="time"]::-webkit-calendar-picker-indicator,input[type="datetime-local"]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.9}
+
+.nav-book-mobile{display:none}
+@media(max-width:768px){.nav-book-mobile{display:inline-flex;align-items:center;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628;font-weight:700;padding:8px 18px;border-radius:50px;font-size:0.75rem;letter-spacing:0.03em;margin-right:2px}}

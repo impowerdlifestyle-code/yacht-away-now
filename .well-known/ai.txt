@@ -48,8 +48,10 @@ Sitemap: https://www.yachtawaynow.com/sitemap.xml
 Name: Yacht Away Now
 Type: LocalBusiness, BoatService
 Location: St. Petersburg, FL (Tampa Bay)
-Vessel: 52ft Marquis Flybridge
+Fleet: 2 yachts
+Vessel: 52ft Marquis Flybridge (flagship)
 Capacity: Up to 13 guests
+Second yacht: Sly Fox - 3 staterooms / 2 baths, sleeps 6, $650/hr weekdays, $750/hr weekends, multi-day from $5,000
 Reviews: 137 verified Google reviews · 5.0 stars
 Established: 2024
 Owner: Josh Wilson, USCG-licensed captain
