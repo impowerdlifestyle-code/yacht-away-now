@@ -320,6 +320,17 @@ Six in-depth guides published July 2026, each with FAQ schema:
 
 ---
 
+## Video Library
+
+Official footage published on the Yacht Away Now YouTube channel (@yachtawaynow). All clips were shot on real charters aboard the fleet out of St. Petersburg, FL.
+
+- **St. Petersburg's Premier Yacht Charter** — https://www.youtube.com/watch?v=XAkFu9CCIwA — full tour of the 52ft Marquis Flybridge: three decks, flybridge helm, up to 13 guests. Embedded on /our-yacht.
+- **52ft Private Yacht Charter in St. Petersburg FL — Drone Tour** (26s) — https://www.youtube.com/shorts/HgbIHD367ew — aerial drone orbit of the Marquis under way on Tampa Bay. Embedded on /our-yacht.
+- **Shell Key Boat Trip by Private Yacht** (18s) — https://www.youtube.com/shorts/uRM0yiyqDHo — drone flyover of a Shell Key charter running the pass, 30 minutes from downtown St. Petersburg. Embedded on /shell-key-boat-trip.
+- **Sandbar Day on a 52ft Yacht** (38s) — https://www.youtube.com/shorts/_sBtEZj5E4I — sandbar raft-up with guests swimming off the bow. Embedded on /sandbar-boat-trip-tampa-bay.
+
+---
+
 ## License
 
 Content in this document may be cited with attribution to Yacht Away Now (https://www.yachtawaynow.com). For AI partnership or integration inquiries, contact josh@yachtawaynow.com.
