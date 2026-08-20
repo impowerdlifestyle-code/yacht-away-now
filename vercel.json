@@ -14,13 +14,23 @@
   "redirects": [
     {
       "source": "/:path(.+)/",
-      "has": [{ "type": "host", "value": "yachtawaynow.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtawaynow.com"
+        }
+      ],
       "destination": "https://www.yachtawaynow.com/:path",
       "statusCode": 308
     },
     {
       "source": "/:path(.*)",
-      "has": [{ "type": "host", "value": "yachtawaynow.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtawaynow.com"
+        }
+      ],
       "destination": "https://www.yachtawaynow.com/:path",
       "statusCode": 308
     },
@@ -29,57 +39,130 @@
       "destination": "/:path",
       "statusCode": 308
     },
-    { "source": "/nassau-yacht-charter", "destination": "/sly-fox", "statusCode": 301 },
-    { "source": "/yacht-rental-tampa", "destination": "/yacht-charter-tampa", "statusCode": 301 },
-    { "source": "/private-boat-charter-tampa-bay", "destination": "/yacht-charter-tampa", "statusCode": 301 },
-    { "source": "/blog/how-much-does-a-yacht-charter-cost", "destination": "/pricing", "statusCode": 301 },
-    { "source": "/yacht-charter-cost-tampa-bay", "destination": "/pricing", "statusCode": 301 },
-    { "source": "/home", "destination": "/", "statusCode": 301 },
-    { "source": "/captain", "destination": "https://yan-dashboard.vercel.app/captain", "statusCode": 301 },
-    { "source": "/ta", "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html?utm_source=yan&utm_medium=sms&utm_campaign=review_request", "statusCode": 302 },
-    { "source": "/tripadvisor", "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html", "statusCode": 302 },
-    { "source": "/yelp", "destination": "https://www.yelp.com/biz/yacht-away-now-st-petersburg?utm_source=yan&utm_medium=referral&utm_campaign=footer", "statusCode": 302 }
+    {
+      "source": "/nassau-yacht-charter",
+      "destination": "/sly-fox",
+      "statusCode": 301
+    },
+    {
+      "source": "/yacht-rental-tampa",
+      "destination": "/yacht-charter-tampa",
+      "statusCode": 301
+    },
+    {
+      "source": "/private-boat-charter-tampa-bay",
+      "destination": "/yacht-charter-tampa",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-much-does-a-yacht-charter-cost",
+      "destination": "/pricing",
+      "statusCode": 301
+    },
+    {
+      "source": "/yacht-charter-cost-tampa-bay",
+      "destination": "/pricing",
+      "statusCode": 301
+    },
+    {
+      "source": "/home",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/captain",
+      "destination": "https://yan-dashboard.vercel.app/captain",
+      "statusCode": 301
+    },
+    {
+      "source": "/ta",
+      "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html?utm_source=yan&utm_medium=sms&utm_campaign=review_request",
+      "statusCode": 302
+    },
+    {
+      "source": "/tripadvisor",
+      "destination": "https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html",
+      "statusCode": 302
+    },
+    {
+      "source": "/yelp",
+      "destination": "https://www.yelp.com/biz/yacht-away-now-st-petersburg?utm_source=yan&utm_medium=referral&utm_campaign=footer",
+      "statusCode": 302
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com https://maps.googleapis.com https://ajax.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com https://*.tripadvisor.com https://*.yelp.com https://*.googleapis.com https://*.gstatic.com https://www.wikidata.org https://*.tile.openstreetmap.org https://*.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://js.stripe.com https://checkout.stripe.com https://www.openstreetmap.org https://www.google.com https://maps.google.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com https://maps.googleapis.com; form-action 'self' https://formspree.io https://checkout.stripe.com https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none';" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), browsing-topics=(), interest-cohort=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com https://maps.googleapis.com https://ajax.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com https://*.stripe.com https://*.tripadvisor.com https://*.yelp.com https://*.googleapis.com https://*.gstatic.com https://www.wikidata.org https://*.tile.openstreetmap.org https://*.openstreetmap.org; frame-src https://www.youtube-nocookie.com https://js.stripe.com https://checkout.stripe.com https://www.openstreetmap.org https://www.google.com https://maps.google.com; connect-src 'self' https://formspree.io https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://api.stripe.com https://script.google.com https://maps.googleapis.com; form-action 'self' https://formspree.io https://checkout.stripe.com https://api.web3forms.com; base-uri 'self'; frame-ancestors 'none';"
+        }
       ]
     },
     {
-      "source": "/(contract|contracts|competitive-analysis|affiliate-dashboard|affiliate-portal|affiliate-signup|send-confirmation|send-welcome)",
+      "source": "/(contract|contracts|competitive-analysis|affiliate-dashboard|affiliate-portal|affiliate-signup|send-confirmation|send-welcome|emails/.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
       ]
     },
     {
       "source": "/style.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=604800"
+        }
       ]
     },
     {
       "source": "/app.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000, stale-while-revalidate=604800"
+        }
       ]
     },
     {
       "source": "/images/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/fonts/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ]

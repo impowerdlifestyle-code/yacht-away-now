@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -49,12 +49,14 @@ export default async function handler(req, res) {
     if (!dbRes.ok) {
       const err = await dbRes.text();
       console.error('Supabase error:', err);
+      await alertLeadNotSaved(booking, err);
     } else {
       const inserted = await dbRes.json();
       bookingId = Array.isArray(inserted) && inserted[0] ? inserted[0].id : null;
     }
   } catch (err) {
     console.error('Supabase save error:', err);
+    await alertLeadNotSaved(booking, String(err));
   }
 
   // NOTE: Calendar events are intentionally NOT created here. A raw booking
@@ -135,4 +137,33 @@ Reply directly to this email to reach the customer at ${email}
   }
 
   return res.status(200).json({ success: true, booking_id: bookingId });
+}
+
+// The browser fires this endpoint without awaiting it, so a failed insert is
+// invisible from the page: the guest still sees the success panel and Web3Forms
+// still emails the lead. Without this, the only symptom is a booking that never
+// appears in the dashboard and nobody knows to look for it.
+async function alertLeadNotSaved(booking, detail) {
+  if (!process.env.WEB3FORMS_KEY) return;
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: process.env.WEB3FORMS_KEY,
+        subject: `LEAD NOT SAVED — ${booking.first_name} ${booking.last_name || ''}`.trim(),
+        message:
+          'A booking request reached /api/book but the Supabase insert failed. ' +
+          'The lead exists only in the Web3Forms email. Add it to the dashboard by hand.\n\n' +
+          `Name:  ${booking.first_name} ${booking.last_name || ''}\n` +
+          `Email: ${booking.email}\n` +
+          `Phone: ${booking.phone || '(none)'}\n` +
+          `Date:  ${booking.charter_date || '(none)'}\n` +
+          `Type:  ${booking.charter_type || '(none)'}\n\n` +
+          `Supabase said: ${String(detail).slice(0, 500)}`,
+      }),
+    });
+  } catch (e) {
+    console.error('alertLeadNotSaved failed:', e);
+  }
 }
