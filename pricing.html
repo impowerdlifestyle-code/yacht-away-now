@@ -36,7 +36,7 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["BoatRental", "LocalBusiness"],
+        "@type": "LocalBusiness",
         "@id": "https://www.yachtawaynow.com/#business",
         "name": "Yacht Away Now",
         "url": "https://www.yachtawaynow.com",
@@ -126,6 +126,57 @@
             {
               "@type": "Offer",
               "position": 3,
+              "name": "Golden Hour Sunset Cruise",
+              "description": "4-hour private sunset cruise from St. Petersburg past the Skyway and Fort De Soto, all-inclusive (captain, crew, fuel), up to 13 guests. $2,000 Mon-Thu, $2,400 Fri-Sun.",
+              "price": "2000",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing#signature-charters",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Golden Hour Sunset Cruise",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            },
+            {
+              "@type": "Offer",
+              "position": 4,
+              "name": "Shell Key & Egmont Key Island Day",
+              "description": "5-hour private island day: Shell Key sandbar, Egmont Key fort ruins and snorkeling, all-inclusive, up to 13 guests. $2,500 Mon-Thu, $3,000 Fri-Sun.",
+              "price": "2500",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing#signature-charters",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Shell Key & Egmont Key Island Day",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            },
+            {
+              "@type": "Offer",
+              "position": 5,
+              "name": "Dinner on Deck",
+              "description": "4-hour sunset cruise with dinner picked up dockside from a recommended St. Petersburg restaurant and served on the flybridge. Charter $2,000 Mon-Thu, $2,400 Fri-Sun; dinner ordered from the restaurant at cost.",
+              "price": "2000",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock",
+              "priceValidUntil": "2026-12-31",
+              "url": "https://www.yachtawaynow.com/pricing#signature-charters",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Dinner on Deck",
+                "provider": { "@id": "https://www.yachtawaynow.com/#business" }
+              },
+              "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+            },
+            {
+              "@type": "Offer",
+              "position": 6,
               "name": "Overnight / Bahamas Yacht Trip",
               "description": "Multi-day yacht charter to the Florida Keys and Bahamas with full cabin accommodations and 600-mile range.",
               "price": "9500",
@@ -182,7 +233,7 @@
         "name": "How far in advance should I book?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit locks in your charter date."
+          "text": "We recommend booking at least 2–4 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit locks in your charter date."
         }
       },
       {
@@ -1084,6 +1135,35 @@
   .qa-answer{color:rgba(245,240,232,0.85);font-size:1rem;line-height:1.75;max-width:780px;margin:0 auto 32px;text-align:center}
 </style>
 
+<section class="section" id="signature-charters" style="padding-top:8px;">
+  <div class="container">
+    <div class="section-label" style="text-align:center;">Signature Charters</div>
+    <h2 class="section-title" style="text-align:center;margin-bottom:12px;">Three Named Charters, <em>One Fixed Price</em></h2>
+    <p class="qa-answer">Our most-booked itineraries, priced up front. Every one includes Captain Josh Wilson, crew, fuel, ice, Starlink WiFi and up to 13 guests aboard the 52ft Marquis Flybridge. Weekday is Monday to Thursday, weekend is Friday to Sunday.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:1000px;margin:0 auto;text-align:left;">
+      <div style="background:rgba(12,21,36,0.55);border:1px solid rgba(201,168,76,0.28);border-radius:14px;padding:26px 24px;">
+        <div style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:8px;">4 hours</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#f5f0e8;margin-bottom:10px;">Golden Hour Sunset Cruise</h3>
+        <p style="color:rgba(245,240,232,0.78);font-size:0.9rem;line-height:1.65;margin-bottom:14px;">Depart Maximo Marina two and a half hours before sunset, cruise past the Skyway and Fort De Soto, and anchor for the show. Music on all three decks.</p>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:#c9a84c;font-weight:700;">$2,000 weekday &middot; $2,400 weekend</div>
+      </div>
+      <div style="background:rgba(12,21,36,0.55);border:1px solid rgba(201,168,76,0.28);border-radius:14px;padding:26px 24px;">
+        <div style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:8px;">5 hours</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#f5f0e8;margin-bottom:10px;">Shell Key &amp; Egmont Key Island Day</h3>
+        <p style="color:rgba(245,240,232,0.78);font-size:0.9rem;line-height:1.65;margin-bottom:14px;">Sandbar swim at Shell Key, Fort Dade ruins and snorkeling at Egmont Key, dolphins on the run home. Bring a cooler; we bring the ice.</p>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:#c9a84c;font-weight:700;">$2,500 weekday &middot; $3,000 weekend</div>
+      </div>
+      <div style="background:rgba(12,21,36,0.55);border:1px solid rgba(201,168,76,0.28);border-radius:14px;padding:26px 24px;">
+        <div style="font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin-bottom:8px;">4 hours + dinner</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#f5f0e8;margin-bottom:10px;">Dinner on Deck</h3>
+        <p style="color:rgba(245,240,232,0.78);font-size:0.9rem;line-height:1.65;margin-bottom:14px;">The Golden Hour cruise plus dinner picked up dockside from one of the St. Pete restaurants we recommend, plated on the flybridge as the sun goes down. You order the food; we handle the rest.</p>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:#c9a84c;font-weight:700;">$2,000 weekday &middot; $2,400 weekend <span style="font-size:0.8rem;color:rgba(245,240,232,0.6);font-family:Montserrat,sans-serif;font-weight:500;">+ dinner at restaurant cost</span></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:26px;"><a href="/contact" class="btn btn-gold">Book a Signature Charter</a></div>
+  </div>
+</section>
+
 <section class="qa-block" id="hourly-vs-weekend">
   <div class="container">
     <h2>Weekday vs. Weekend: <em>What Will I Pay?</em></h2>
@@ -1101,7 +1181,7 @@
 <section class="qa-block" id="whats-included">
   <div class="container">
     <h2>What's <em>Included</em> in Every Charter?</h2>
-    <p class="qa-answer">Every Yacht Away Now charter includes the full 52ft Marquis Flybridge (all 3 decks, 1,200+ sq ft cabin, 800+ sq ft deck), your USCG-licensed captain at the helm, premium audio across all decks, Starlink WiFi, ice and cooler space, USCG-rated life jackets for every guest, and customizable routing within the day's itinerary. <strong>BYOB and BYO food are welcome on every charter</strong> &mdash; we provide ice and cooler space; glass bottles transferred to plastic dockside (Coast Guard rule). Captain gratuity (18&ndash;20% of base) is at guest discretion and is not included.</p>
+    <p class="qa-answer">Every Yacht Away Now charter includes the full 52ft Marquis Flybridge (all 3 decks, 1,200+ sq ft cabin, 800+ sq ft deck), your USCG-licensed captain at the helm, premium audio across all decks, Starlink WiFi, ice and cooler space, USCG-rated life jackets for every guest, and customizable routing within the day's itinerary. <strong>BYOB and BYO food are welcome on every charter</strong> &mdash; we provide ice and cooler space; glass bottles transferred to plastic dockside (Coast Guard rule). Captain gratuity (10&ndash;15% of base) is at guest discretion and is not included.</p>
   </div>
 </section>
 
@@ -1129,7 +1209,7 @@
 
       <div class="faq-item reveal" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:16px;">
         <h3 style="font-size:1rem;font-weight:600;color:#f5f0e8;margin-bottom:10px;">How far in advance should I book?</h3>
-        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">We recommend booking at least 2–3 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit locks in your charter date.</p>
+        <p style="color:var(--gray-400);line-height:1.7;font-size:0.9rem;">We recommend booking at least 2–4 weeks in advance, especially for weekends and holidays. Peak season (March through October) fills up fast. For holidays like July 4th, Gasparilla, and New Year's Eve, book 4–6 weeks ahead to secure your date. A 50% deposit locks in your charter date.</p>
       </div>
 
       <div class="faq-item reveal" style="background:var(--dark-card);border:1px solid var(--dark-border);border-radius:var(--radius-lg);padding:28px 32px;margin-bottom:16px;">
@@ -1288,6 +1368,7 @@
       <div class="footer-brand">
         <a href="/" class="logo" style="margin-bottom:4px;">Yacht <span>Away</span> Now</a>
         <p>Luxury private yacht charters on Florida's Gulf Coast. Creating unforgettable experiences from St. Petersburg to the Bahamas.</p>
+        <p style="font-size:.78rem;color:#8899aa;margin:-8px 0 18px;max-width:320px;">Captained by owner Josh Wilson, USCG Master. <a href="/team" style="color:#c9a84c;text-decoration:underline;">Meet the crew</a></p>
         <div class="footer-socials">
           <a href="https://www.facebook.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Facebook">f</a>
           <a href="https://www.instagram.com/yachtawaynow" target="_blank" rel="noopener noreferrer" class="footer-social" title="Instagram">ig</a>

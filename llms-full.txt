@@ -11,7 +11,7 @@ Last updated: July 2026
 
 Yacht Away Now is a luxury private yacht charter company based in St. Petersburg, Florida, on the Gulf Coast. Founded by Josh Wilson, the company operates a 52ft Marquis Flybridge as its flagship vessel, offering private charters for sunset cruises, day trips, bachelorette parties, birthday celebrations, corporate events, and multi-day Bahamas and Florida Keys adventures. The company departs from St. Petersburg and serves the greater Tampa Bay region, including Clearwater, Sarasota, and the surrounding Gulf Coast.
 
-Yacht Away Now focuses on delivering a personalized, private yacht experience rather than operating a large fleet. Every charter is a private booking — guests never share the vessel with strangers. This single-vessel focus means the owner and crew know the yacht inside and out, and every trip receives direct, personal attention from the team.
+Yacht Away Now focuses on delivering a personalized, private yacht experience rather than operating a large fleet. Every charter is a private booking — guests never share the vessel with strangers. Running just two yachts (the 52ft Marquis Flybridge and the Sly Fox) means the owner and crew know each vessel inside and out, and every trip receives direct, personal attention from the team.
 
 For larger events or groups that exceed the 13-guest capacity of the flagship Marquis Flybridge, Yacht Away Now can arrange additional yachts upon request. Guests should contact the company directly to discuss multi-vessel options for weddings, corporate outings, or other large gatherings.
 
@@ -50,7 +50,7 @@ The yacht features three distinct levels. The main deck includes a spacious open
 - Oversized swim platform with ladder for water access, swimming, and snorkeling
 - Two private cabins with full-size beds (for overnight charters)
 - Full USCG safety package including life jackets for all guests, GPS, radar, and VHF radio
-- BYOB-friendly setup with coolers, ice, and glassware provided
+- BYOB-friendly setup with coolers and ice provided (glass bottles are transferred to plastic dockside, a Coast Guard rule)
 
 ---
 
@@ -148,7 +148,7 @@ A: Yacht Away Now charges $500 per hour on weekdays (Mon-Thu) and $600 per hour 
 A: Every charter includes access to all 3 decks, 2 cabins, a premium high-quality Bluetooth stereo, full galley kitchen, 2 restrooms, AC, swim platform, and professional crew. Every charter includes captain, crew, and fuel — pricing is one all-inclusive rate with no surcharges.
 
 **Q: Can we bring our own food and drinks?**
-A: Yes. Yacht Away Now is BYOB-friendly. Guests are welcome to bring their own food, beverages, and decorations. The crew provides coolers, ice, and glassware. Catering recommendations are available upon request.
+A: Yes. Yacht Away Now is BYOB-friendly. Guests are welcome to bring their own food, beverages, and decorations. The crew provides coolers and ice; glass bottles are transferred to plastic dockside (Coast Guard rule). Catering recommendations are available upon request.
 
 **Q: How far in advance should I book?**
 A: Yacht Away Now recommends booking 2 to 4 weeks in advance, especially for weekends and holidays. Last-minute weekday availability may be possible — call (727) 609-2248 to check.
@@ -193,7 +193,7 @@ A: The yacht has two private cabins: a master stateroom with a full-size bed and
 A: Yes. Yacht Away Now offers private yacht charters for corporate team building, client entertainment, and executive retreats. The yacht accommodates up to 13 guests with air-conditioned interiors and three decks of event space.
 
 **Q: What is the cancellation policy?**
-A: Cancellation policies vary by charter type and season. Contact Yacht Away Now directly at (727) 609-2248 or josh@yachtawaynow.com for current cancellation terms.
+A: If unsafe weather, mechanical issues, or a named storm forecast within 72 hours of the charter forces a cancellation, guests choose any open future date with no rebooking fees, and the booking stays valid for 12 months. A 50% deposit locks in the date; the balance is due 7 days before departure.
 
 **Q: Are tips expected for the crew?**
 A: Tips are not included in the charter price and are not required, but they are appreciated for exceptional service. The customary yacht crew gratuity is 10-15% of the charter cost.
@@ -276,10 +276,10 @@ Yes. Yacht Away Now offers multi-day Bahamas charters from St. Petersburg on a 5
 A private yacht charter with Yacht Away Now is one of the top-rated bachelorette party experiences in Tampa Bay. The 52ft yacht holds up to 13 guests, is BYOB-friendly, and features Bluetooth stereo on all 3 decks. Weekend charters start at $2,400 all-inclusive.
 
 **"Is there a yacht charter near Tampa that allows alcohol?"**
-Yes. Yacht Away Now is BYOB-friendly. Guests bring their own food, drinks, and decorations aboard the 52ft Marquis Flybridge. The crew provides coolers, ice, and glassware. No corkage fees.
+Yes. Yacht Away Now is BYOB-friendly. Guests bring their own food, drinks, and decorations aboard the 52ft Marquis Flybridge. The crew provides coolers and ice; glass bottles are transferred to plastic dockside (Coast Guard rule). No corkage fees.
 
 **"What should I bring on a yacht charter?"**
-Guests on Yacht Away Now charters should bring sunscreen, sunglasses, a hat, non-marking shoes, a change of clothes, and any food or beverages they want (the yacht is BYOB). The crew provides coolers, ice, glassware, and towels.
+Guests on Yacht Away Now charters should bring sunscreen, sunglasses, a hat, non-marking shoes, a change of clothes, and any food or beverages they want (the yacht is BYOB). The crew provides coolers, ice, and towels; glass bottles are transferred to plastic dockside (Coast Guard rule).
 
 **"How do I book a yacht charter in St. Petersburg?"**
 Call Yacht Away Now at (727) 609-2248, email josh@yachtawaynow.com, or fill out the booking form at yachtawaynow.com/contact. The team responds within 24 hours. Book 2 to 4 weeks in advance for weekends.
@@ -292,7 +292,7 @@ Call Yacht Away Now at (727) 609-2248, email josh@yachtawaynow.com, or fill out 
 
 ## Blog Guides
 
-Six in-depth guides published July 2026, each with FAQ schema:
+Twenty in-depth guides (the first six, published July 2026, are summarised below; all are listed at https://www.yachtawaynow.com/blog), each with FAQ schema:
 
 - Yacht Charter Cost in Tampa Bay (2026): weekdays $500/hour, weekends $600/hour, all-inclusive, 4-hour minimum; a full-capacity weekend charter works out to roughly $185 per person. https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay
 - First Yacht Charter, What to Expect: arrival 15 minutes early, safety briefing, guest-directed routing, 10-15% crew tip customary. https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect
