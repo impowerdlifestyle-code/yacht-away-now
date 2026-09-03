@@ -12,3 +12,8 @@ input[type="date"],input[type="time"],input[type="datetime-local"]{color-scheme:
 
 .nav-book-mobile{display:none}
 @media(max-width:768px){.nav-book-mobile{display:inline-flex;align-items:center;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628;font-weight:700;padding:8px 18px;border-radius:50px;font-size:0.75rem;letter-spacing:0.03em;margin-right:2px}}
+
+.post-figure{max-width:100%;margin:28px 0}
+.post-figure-portrait{max-width:440px;margin-left:auto;margin-right:auto}
+.post-figure img{display:block;width:100%;height:auto;border-radius:12px}
+.post-figure figcaption{margin-top:10px;font-size:.8rem;line-height:1.5;color:var(--gray-600)}

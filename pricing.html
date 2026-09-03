@@ -1014,9 +1014,9 @@
 
       <div class="pricing-card reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-turquoise-hero.avif" type="image/avif">
-  <source srcset="/images/yacht-turquoise-hero.webp" type="image/webp">
-  <img src="/images/yacht-turquoise-hero.jpg" alt="Luxury yacht anchored in turquoise Gulf waters" width="600" height="300" fetchpriority="high" decoding="async">
+  <source type="image/avif" srcset="/images/yacht-turquoise-hero-480.avif 480w, /images/yacht-turquoise-hero-800.avif 800w, /images/yacht-turquoise-hero.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-turquoise-hero-480.webp 480w, /images/yacht-turquoise-hero-800.webp 800w, /images/yacht-turquoise-hero.webp 1600w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-turquoise-hero.jpg" srcset="/images/yacht-turquoise-hero-480.jpg 480w, /images/yacht-turquoise-hero.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Luxury yacht anchored in turquoise Gulf waters" width="1600" height="900" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-badge" style="background:rgba(26,139,179,0.12);border-color:rgba(26,139,179,0.25);color:var(--ocean-light);">Weekday</div>
         <div class="pricing-header">
@@ -1045,9 +1045,9 @@
 
       <div class="pricing-card featured reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-sandbar.avif" type="image/avif">
-  <source srcset="/images/yacht-sandbar.webp" type="image/webp">
-  <img src="/images/yacht-sandbar.jpg" alt="Yacht anchored at sandbar in crystal clear teal water" width="600" height="300" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-sandbar-480.avif 480w, /images/yacht-sandbar-800.avif 800w, /images/yacht-sandbar.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-sandbar-480.webp 480w, /images/yacht-sandbar.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-sandbar.jpg" srcset="/images/yacht-sandbar-480.jpg 480w, /images/yacht-sandbar-800.jpg 800w, /images/yacht-sandbar.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Yacht anchored at sandbar in crystal clear teal water" width="1024" height="791" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-header">
           <h3>Weekend Charter</h3>
@@ -1074,9 +1074,9 @@
 
       <div class="pricing-card reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-rear-angle.avif" type="image/avif">
-  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
-  <img src="/images/yacht-rear-angle.jpg" alt="Yacht rear view in turquoise waters ready for adventure" width="600" height="300" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-rear-angle-480.avif 480w, /images/yacht-rear-angle-800.avif 800w, /images/yacht-rear-angle.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-rear-angle-480.webp 480w, /images/yacht-rear-angle.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-rear-angle.jpg" srcset="/images/yacht-rear-angle-480.jpg 480w, /images/yacht-rear-angle-800.jpg 800w, /images/yacht-rear-angle.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Yacht rear view in turquoise waters ready for adventure" width="1024" height="804" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-badge" style="background:rgba(78,205,196,0.12);border-color:rgba(78,205,196,0.25);color:var(--seafoam);">Adventure</div>
         <div class="pricing-header">
@@ -1126,6 +1126,8 @@
   .price-table tbody td{color:rgba(245,240,232,0.82)}
   .price-table .price-cell{color:#c9a84c;font-weight:700;font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:0.01em}
   .price-table tr:last-child th,.price-table tr:last-child td{border-bottom:none}
+  .table-swipe-hint{display:none;font-size:.72rem;color:rgba(245,240,232,.5);text-align:center;margin:0 0 8px}
+  @media(max-width:720px){.table-swipe-hint{display:block}}
   .price-anchors{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;justify-content:center}
   .price-anchor{font-size:0.78rem;font-weight:600;letter-spacing:0.04em;padding:8px 16px;border-radius:50px;background:rgba(78,205,196,0.06);border:1px solid rgba(78,205,196,0.2);color:#4ecdc4;text-decoration:none;transition:all 0.2s ease}
   .price-anchor:hover{background:rgba(78,205,196,0.14);color:#7eded6}
@@ -1235,7 +1237,8 @@
     <h2 id="what-does-charter-cost">What Does a Tampa Bay Yacht Charter <em>Cost in 2026?</em></h2>
     <p class="lede">A private 52ft yacht charter with Yacht Away Now in St. Petersburg, FL costs <strong>$500 per hour on weekdays</strong> (Mon&ndash;Thu) and <strong>$600 per hour on weekends</strong> (Fri&ndash;Sun), all-inclusive with a 4-hour minimum &mdash; or <strong>$9,500+</strong> for multi-day Bahamas and Florida Keys trips. The table below compares every option in one view.</p>
 
-    <div class="price-table-wrap">
+    <p class="table-swipe-hint">Swipe sideways to see every column</p>
+<div class="price-table-wrap">
       <table class="price-table">
         <caption>Yacht Away Now charter pricing &mdash; effective 2026. Prices in USD. All charters aboard the 52ft Marquis Flybridge for up to 13 guests.</caption>
         <thead>
@@ -1395,7 +1398,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Yacht Away Now. All rights reserved.</p>
-      <div style="display:flex;gap:24px;"><a href="/es" hreflang="es" lang="es">EspaÃ±ol</a><a href="/privacy-policy">Privacy Policy</a><a href="/sms-terms">SMS Terms</a><a href="/terms">Terms of Service</a>
+      <div style="display:flex;gap:12px 24px;flex-wrap:wrap;"><a href="/es" hreflang="es" lang="es">EspaÃ±ol</a><a href="/privacy-policy">Privacy Policy</a><a href="/sms-terms">SMS Terms</a><a href="/terms">Terms of Service</a>
         <a href="https://www.getmyboat.com/trips/6YzOvWLK/" target="_blank" rel="noopener">Find Us on GetMyBoat</a>
         <a href="https://www.tripadvisor.com/Attraction_Review-g34607-d34299444-Reviews-Yacht_Away_Now-St_Petersburg_Florida.html" target="_blank" rel="noopener">Reviews on TripAdvisor</a>
         <a href="https://www.yelp.com/biz/yacht-away-now-st-petersburg" target="_blank" rel="noopener">Reviews on Yelp</a>

@@ -106,15 +106,25 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Event",
+    "@type": "TouristTrip",
+    "@id": "https://www.yachtawaynow.com/fourth-of-july-yacht-charter#trip",
     "name": "4th of July Yacht Charter — Fireworks on Tampa Bay",
     "description": "Private yacht charter for July 4th fireworks viewing on Tampa Bay. Watch the fireworks from the water aboard a luxury 52ft yacht.",
-    "startDate": "2027-07-04T17:00:00-04:00",
-    "endDate": "2027-07-04T22:00:00-04:00",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {"@type": "Place", "name": "Tampa Bay", "address": {"@type": "PostalAddress", "addressLocality": "St. Petersburg", "addressRegion": "FL", "addressCountry": "US"}},
-    "organizer": {
+    "image": ["https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg"],
+    "url": "https://www.yachtawaynow.com/fourth-of-july-yacht-charter",
+    "touristType": ["Fourth of July celebrations", "Fireworks viewing", "Group celebrations", "Family outings"],
+    "itinerary": {
+      "@type": "ItemList",
+      "itemListElement": [
+      { "@type": "ListItem", "position": 1, "item": { "@type": "Place", "name": "St. Petersburg Marina (departure)" } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "Place", "name": "Gulf sandbar swim stop" } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "Place", "name": "Shell Key / Egmont Key island hop" } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Place", "name": "Sunset dinner on the aft deck" } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Place", "name": "Tampa Bay fireworks anchorage" } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "Place", "name": "St. Petersburg Marina (return)" } }
+      ]
+    },
+    "provider": {
     "@type": "LocalBusiness",
     "@id": "https://www.yachtawaynow.com/#business",
     "name": "Yacht Away Now",
@@ -137,8 +147,28 @@
     },
     "areaServed": ["St. Petersburg", "Tampa Bay", "Clearwater", "Florida Keys", "Bahamas"]
   },
-    "offers": {"@type": "Offer", "price": "2500", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "url": "https://www.yachtawaynow.com/fourth-of-july-yacht-charter"},
-    "image": "https://www.yachtawaynow.com/images/yacht-turquoise-hero.jpg"
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "4th of July Yacht Charter — Fireworks on Tampa Bay — Evening Only — 4-hour charter, sunset + fireworks",
+        "price": "2500",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2027-07-04",
+        "url": "https://www.yachtawaynow.com/fourth-of-july-yacht-charter",
+        "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+      },
+      {
+        "@type": "Offer",
+        "name": "4th of July Yacht Charter — Fireworks on Tampa Bay — Full Day + Fireworks — 8-hour charter, island hop + swim + fireworks",
+        "price": "4000",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2027-07-04",
+        "url": "https://www.yachtawaynow.com/fourth-of-july-yacht-charter",
+        "seller": { "@id": "https://www.yachtawaynow.com/#business" }
+      }
+    ]
   }
   </script>
   <script type="application/ld+json">
@@ -540,7 +570,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Yacht Away Now. All rights reserved.</p>
-      <div style="display:flex;gap:24px;"><a href="/es" hreflang="es" lang="es">Español</a>
+      <div style="display:flex;gap:12px 24px;flex-wrap:wrap;"><a href="/es" hreflang="es" lang="es">Español</a>
         <a href="/privacy-policy">Privacy Policy</a>
         <a href="/sms-terms">SMS Terms</a>
         <a href="/terms">Terms of Service</a>

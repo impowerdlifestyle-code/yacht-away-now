@@ -28,9 +28,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="preload" href="/fonts/cormorant-garamond-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/cormorant-garamond-400-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" type="image/avif" href="/images/hero-yacht-drone-poster.avif" media="(min-width:769px)" fetchpriority="high">
   <link rel="preload" as="image" type="image/avif" href="/images/hero-yacht-drone-mobile-poster.avif" media="(max-width:768px)" fetchpriority="high">
-  <style>@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cormorant-garamond-600.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cormorant-garamond-700.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/cormorant-garamond-400-italic.woff2) format('woff2')}@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/montserrat.woff2) format('woff2')}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Montserrat,-apple-system,sans-serif;background:#0a1628;color:#f5f0e8;line-height:1.6;overflow-x:hidden}a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;padding:0 24px}.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;background:rgba(10,22,40,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(78,205,196,0.06);transition:all 0.4s ease}.navbar .container{display:flex;align-items:center;justify-content:space-between}.logo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:#f5f0e8;display:flex;align-items:center;gap:10px}.logo span{color:#c9a84c}.logo-icon{height:48px;width:auto}.nav-links{display:flex;align-items:center;gap:6px}.nav-links a{font-size:0.78rem;font-weight:500;color:#8899aa;padding:8px 14px;border-radius:50px;transition:all 0.3s ease;letter-spacing:0.03em}.nav-cta{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628!important;font-weight:700!important;padding:10px 24px!important;border-radius:50px;font-size:0.78rem!important}.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:640px;max-height:100vh;display:flex;align-items:flex-start;padding:120px 0 80px;overflow:hidden}.hero .container{max-width:1080px;margin-top:auto;margin-bottom:auto}.hero h1{font-size:inherit;line-height:1;letter-spacing:normal;margin-bottom:24px;max-width:none}.hero p{font-size:clamp(1rem,1.25vw,1.18rem);line-height:1.7;max-width:62ch;margin-bottom:36px;color:rgba(245,240,232,0.82)}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:28px}.hero-bg{position:absolute;inset:0;z-index:0;background-color:#071520;background-image:image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-position:center;background-size:cover;background-repeat:no-repeat}.hero-bg video,.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-bg::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,21,32,0.5) 0%,rgba(7,21,32,0.22) 45%,rgba(7,21,32,0.55) 100%)}.hero .container{position:relative;z-index:2}.section-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:#c9a84c;margin-bottom:12px}.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;color:#f5f0e8}.section-title em{font-style:italic;color:#c9a84c}.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.85rem;letter-spacing:0.04em;transition:all 0.3s ease;cursor:pointer;border:none}.btn-gold{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628}.btn-outline{border:1px solid rgba(78,205,196,0.25);color:#4ecdc4;background:transparent}.mobile-toggle{display:none}@media(max-width:768px){.nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1628;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:1000;padding:100px 32px 60px}.nav-links.open{display:flex}.mobile-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:12px;z-index:1001;min-width:48px;min-height:48px;align-items:center;justify-content:center}.mobile-toggle span{width:22px;height:2px;background:#f5f0e8;border-radius:2px;transition:all 0.3s ease}}@media(max-width:768px){.hero{aspect-ratio:auto;min-height:auto;max-height:none;padding:110px 0 32px;align-items:flex-start}.hero-bg{background-image:image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'))}.hero-badge{margin-bottom:14px}}@media(max-width:480px){.hero{padding:100px 0 24px;align-items:flex-start}.hero p{font-size:0.85rem;margin-bottom:20px}.hero-badge{margin-bottom:10px;font-size:.62rem;padding:5px 12px;letter-spacing:.1em}}</style>
+  <style>@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cormorant-garamond-600.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cormorant-garamond-700.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/cormorant-garamond-400-italic.woff2) format('woff2')}@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/montserrat.woff2) format('woff2')}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Montserrat,-apple-system,sans-serif;background:#0a1628;color:#f5f0e8;line-height:1.6;overflow-x:hidden}a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;padding:0 24px}.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;background:rgba(10,22,40,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(78,205,196,0.06);transition:all 0.4s ease}.navbar .container{display:flex;align-items:center;justify-content:space-between}.logo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:#f5f0e8;display:flex;align-items:center;gap:10px}.logo span{color:#c9a84c}.logo-icon{height:48px;width:auto}.nav-links{display:flex;align-items:center;gap:6px}.nav-links a{font-size:0.78rem;font-weight:500;color:#8899aa;padding:8px 14px;border-radius:50px;transition:all 0.3s ease;letter-spacing:0.03em}.nav-cta{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628!important;font-weight:700!important;padding:10px 24px!important;border-radius:50px;font-size:0.78rem!important}.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:640px;max-height:100vh;display:flex;align-items:flex-start;padding:120px 0 80px;overflow:hidden}.hero .container{max-width:1080px;margin-top:auto;margin-bottom:auto}.hero h1{font-size:inherit;line-height:1;letter-spacing:normal;margin-bottom:24px;max-width:none}.hero p{font-size:clamp(1rem,1.25vw,1.18rem);line-height:1.7;max-width:62ch;margin-bottom:36px;color:rgba(245,240,232,0.82)}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:28px}.hero-bg{position:absolute;inset:0;z-index:0;background-color:#071520;background-image:image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-position:center;background-size:cover;background-repeat:no-repeat}.hero-bg video,.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-bg::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,21,32,0.55) 0%,rgba(7,21,32,0.42) 45%,rgba(7,21,32,0.6) 100%)}.hero .container::before{content:'';position:absolute;left:-40px;right:-40px;top:-48px;bottom:-32px;z-index:-1;border-radius:48px;background:radial-gradient(ellipse at 50% 45%,rgba(7,21,32,0.78) 0%,rgba(7,21,32,0.6) 40%,rgba(7,21,32,0.25) 68%,rgba(7,21,32,0) 82%)}.hero .container{position:relative;z-index:2}.section-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:#c9a84c;margin-bottom:12px}.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;color:#f5f0e8}.section-title em{font-style:italic;color:#c9a84c}.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.85rem;letter-spacing:0.04em;transition:all 0.3s ease;cursor:pointer;border:none}.btn-gold{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628}.btn-outline{border:1px solid rgba(78,205,196,0.25);color:#4ecdc4;background:transparent}.mobile-toggle{display:none}@media(max-width:768px){.nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1628;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:1000;padding:100px 32px 60px}.nav-links.open{display:flex}.mobile-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:12px;z-index:1001;min-width:48px;min-height:48px;align-items:center;justify-content:center}.mobile-toggle span{width:22px;height:2px;background:#f5f0e8;border-radius:2px;transition:all 0.3s ease}}@media(max-width:768px){.hero{aspect-ratio:auto;min-height:auto;max-height:none;padding:110px 0 32px;align-items:flex-start}.hero-bg{background-image:image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'))}.hero-badge{margin-bottom:14px}}@media(max-width:480px){.hero{padding:100px 0 24px;align-items:flex-start}.hero p{font-size:0.85rem;margin-bottom:20px}.hero-badge{margin-bottom:10px;font-size:.62rem;padding:5px 12px;letter-spacing:.1em}}</style>
   <style>
     section.hero{align-items:flex-start;padding-top:120px;aspect-ratio:auto;max-height:none}
     .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom, rgba(7,21,32,0.55) 0%, rgba(7,21,32,0.25) 38%, rgba(7,21,32,0.15) 60%, rgba(7,21,32,0.6) 100%);pointer-events:none;z-index:1}
@@ -56,7 +57,8 @@
       .btn-hero{padding:16px 32px;font-size:0.82rem;letter-spacing:0.06em;width:100%;justify-content:center}
     }
     @media(max-width:768px){
-      .hero-actions .btn-gold,.hero-actions .hero-call-mobile{display:none!important}
+      .hero-actions .hero-call-mobile{display:none!important}
+      .hero-actions .btn-gold.btn-hero{width:100%;justify-content:center}
       .hero-actions .btn-outline.btn-hero{
         border:1.5px solid rgba(212,168,83,0.75);
         background:rgba(212,168,83,0.14);
@@ -269,9 +271,9 @@
     <div class="grid-3">
       <div class="exp-card reveal reveal-delay-1">
         <div class="exp-card-image"><picture>
-  <source srcset="/images/yacht-sandbar.avif" type="image/avif">
-  <source srcset="/images/yacht-sandbar.webp" type="image/webp">
-  <img src="/images/yacht-sandbar.jpg" alt="Yacht Away Now's 52ft Marquis Flybridge anchored on a Gulf Coast sandbar" width="600" height="375" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-sandbar-480.avif 480w, /images/yacht-sandbar-800.avif 800w, /images/yacht-sandbar.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-sandbar-480.webp 480w, /images/yacht-sandbar.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-sandbar.jpg" srcset="/images/yacht-sandbar-480.jpg 480w, /images/yacht-sandbar-800.jpg 800w, /images/yacht-sandbar.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Yacht Away Now's 52ft Marquis Flybridge anchored on a Gulf Coast sandbar" width="1024" height="791" loading="lazy" decoding="async">
 </picture>
           <div class="exp-card-number">01</div>
         </div>
@@ -283,9 +285,9 @@
       </div>
       <div class="exp-card reveal reveal-delay-2">
         <div class="exp-card-image"><picture>
-  <source srcset="/images/bachelorette-party.avif" type="image/avif">
-  <source srcset="/images/bachelorette-party.webp" type="image/webp">
-  <img src="/images/bachelorette-party.jpg" alt="Women celebrating a bachelorette party on a yacht at sunset" width="600" height="375" loading="lazy">
+  <source type="image/avif" srcset="/images/bachelorette-party-480.avif 480w, /images/bachelorette-party-800.avif 800w, /images/bachelorette-party.avif 1200w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/bachelorette-party-480.webp 480w, /images/bachelorette-party.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/bachelorette-party.jpg" srcset="/images/bachelorette-party-480.jpg 480w, /images/bachelorette-party-800.jpg 800w, /images/bachelorette-party.jpg 1200w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Women celebrating a bachelorette party on a yacht at sunset" width="1200" height="800" loading="lazy" decoding="async">
 </picture>
           <div class="exp-card-number">02</div>
         </div>
@@ -297,9 +299,9 @@
       </div>
       <div class="exp-card reveal reveal-delay-3">
         <div class="exp-card-image"><picture>
-  <source srcset="/images/yacht-rear-angle.avif" type="image/avif">
-  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
-  <img src="/images/yacht-rear-angle.jpg" alt="52ft Marquis yacht in crystal clear turquoise Gulf Coast water" width="600" height="375" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-rear-angle-480.avif 480w, /images/yacht-rear-angle-800.avif 800w, /images/yacht-rear-angle.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-rear-angle-480.webp 480w, /images/yacht-rear-angle.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-rear-angle.jpg" srcset="/images/yacht-rear-angle-480.jpg 480w, /images/yacht-rear-angle-800.jpg 800w, /images/yacht-rear-angle.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="52ft Marquis yacht in crystal clear turquoise Gulf Coast water" width="1024" height="804" loading="lazy" decoding="async">
 </picture>
           <div class="exp-card-number">03</div>
         </div>
@@ -323,9 +325,9 @@
     <div class="grid-3">
       <div class="pricing-card reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-turquoise-hero.avif" type="image/avif">
-  <source srcset="/images/yacht-turquoise-hero.webp" type="image/webp">
-  <img src="/images/yacht-turquoise-hero.jpg" alt="Luxury yacht anchored in turquoise Gulf waters" width="600" height="300" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-turquoise-hero-480.avif 480w, /images/yacht-turquoise-hero-800.avif 800w, /images/yacht-turquoise-hero.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-turquoise-hero-480.webp 480w, /images/yacht-turquoise-hero-800.webp 800w, /images/yacht-turquoise-hero.webp 1600w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-turquoise-hero.jpg" srcset="/images/yacht-turquoise-hero-480.jpg 480w, /images/yacht-turquoise-hero.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Luxury yacht anchored in turquoise Gulf waters" width="1600" height="900" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-badge" style="background:rgba(26,139,179,0.12);border-color:rgba(26,139,179,0.25);color:var(--ocean-light);">Weekday</div>
         <div class="pricing-header">
@@ -354,9 +356,9 @@
 
       <div class="pricing-card featured reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-sandbar.avif" type="image/avif">
-  <source srcset="/images/yacht-sandbar.webp" type="image/webp">
-  <img src="/images/yacht-sandbar.jpg" alt="Yacht anchored at sandbar in crystal clear teal water" width="600" height="300" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-sandbar-480.avif 480w, /images/yacht-sandbar-800.avif 800w, /images/yacht-sandbar.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-sandbar-480.webp 480w, /images/yacht-sandbar.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-sandbar.jpg" srcset="/images/yacht-sandbar-480.jpg 480w, /images/yacht-sandbar-800.jpg 800w, /images/yacht-sandbar.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Yacht anchored at sandbar in crystal clear teal water" width="1024" height="791" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-header">
           <h3>Weekend Charter</h3>
@@ -383,9 +385,9 @@
 
       <div class="pricing-card reveal">
         <div class="pricing-card-image"><picture>
-  <source srcset="/images/yacht-rear-angle.avif" type="image/avif">
-  <source srcset="/images/yacht-rear-angle.webp" type="image/webp">
-  <img src="/images/yacht-rear-angle.jpg" alt="Yacht rear view in turquoise waters ready for adventure" width="600" height="300" loading="lazy">
+  <source type="image/avif" srcset="/images/yacht-rear-angle-480.avif 480w, /images/yacht-rear-angle-800.avif 800w, /images/yacht-rear-angle.avif 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <source type="image/webp" srcset="/images/yacht-rear-angle-480.webp 480w, /images/yacht-rear-angle.webp 800w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px">
+  <img src="/images/yacht-rear-angle.jpg" srcset="/images/yacht-rear-angle-480.jpg 480w, /images/yacht-rear-angle-800.jpg 800w, /images/yacht-rear-angle.jpg 1024w" sizes="(max-width:768px) calc(100vw - 34px), (max-width:1024px) calc(50vw - 42px), (max-width:1280px) calc(33.3vw - 40px), 387px" alt="Yacht rear view in turquoise waters ready for adventure" width="1024" height="804" loading="lazy" decoding="async">
 </picture></div>
         <div class="pricing-badge" style="background:rgba(78,205,196,0.12);border-color:rgba(78,205,196,0.25);color:var(--seafoam);">Adventure</div>
         <div class="pricing-header">
@@ -829,7 +831,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; 2026 Yacht Away Now. All rights reserved.</p>
-      <div style="display:flex;gap:24px;"><a href="/es" hreflang="es" lang="es">Español</a>
+      <div style="display:flex;gap:12px 24px;flex-wrap:wrap;"><a href="/es" hreflang="es" lang="es">Español</a>
         <a href="/privacy-policy">Privacy Policy</a>
         <a href="/sms-terms">SMS Terms</a>
         <a href="/terms">Terms of Service</a>

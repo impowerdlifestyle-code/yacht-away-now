@@ -36,6 +36,72 @@
     },
     {
       "source": "/:path(.+)/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.yachtsawaynow.com"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.yachtsawaynow.com"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.+)/",
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtsawaynow.com"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtsawaynow.com"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.+)/",
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtawaynow.vercel.app"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "yachtawaynow.vercel.app"
+        }
+      ],
+      "destination": "https://www.yachtawaynow.com/:path",
+      "statusCode": 308
+    },
+    {
+      "source": "/:path(.+)/",
       "destination": "/:path",
       "statusCode": 308
     },
