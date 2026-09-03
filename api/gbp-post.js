@@ -120,6 +120,7 @@ const ACCOUNT = 'accounts/114971803143699974130';
 const LOCATION = 'locations/8568528334353152453';
 
 export default async function handler(req, res) {
+  console.log(`gbp-post run trigger=${req.headers.authorization ? 'cron' : 'manual'} at=${new Date().toISOString()}`);
   // Calculate which post to send based on week number
   const now = new Date();
   const startOfYear = new Date(now.getFullYear(), 0, 1);

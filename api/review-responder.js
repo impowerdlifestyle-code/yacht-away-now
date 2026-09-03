@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   // Verify this is a cron request or manual trigger
   const authHeader = req.headers.authorization;
+  console.log(`review-responder run trigger=${authHeader ? 'cron' : 'manual'} at=${new Date().toISOString()}`);
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && req.method !== 'GET') {
     return res.status(401).json({ error: 'Unauthorized' });
   }
