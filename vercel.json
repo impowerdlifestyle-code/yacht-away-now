@@ -11,10 +11,6 @@
     {
       "path": "/api/gbp-photo",
       "schedule": "0 14 * * 3"
-    },
-    {
-      "path": "/api/review-ask",
-      "schedule": "0 14 * * *"
     }
   ],
   "cleanUrls": true,
