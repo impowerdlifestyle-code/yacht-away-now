@@ -1,3 +1,7 @@
+// Keep in sync with the review count published across the site. When the drift
+// warning below fires, sweep the site and update this constant in the same commit.
+const SITE_REVIEW_COUNT = 133;
+
 export default async function handler(req, res) {
   // Verify this is a cron request or manual trigger
   const authHeader = req.headers.authorization;
@@ -60,6 +64,17 @@ export default async function handler(req, res) {
     );
     const reviewsData = await reviewsRes.json();
 
+    // The site hardcodes the review count in visible copy and in every page's
+    // aggregateRating. Google prunes reviews, so that number goes stale silently.
+    // Shout in the logs when it drifts so the sitewide sweep can be run.
+    const liveCount = reviewsData.totalReviewCount;
+    if (typeof liveCount === 'number' && liveCount !== SITE_REVIEW_COUNT) {
+      console.warn(
+        `review-count drift: Google reports ${liveCount}, the site says ${SITE_REVIEW_COUNT}. ` +
+        `Run the review-count sweep and redeploy.`
+      );
+    }
+
     if (!reviewsData.reviews || reviewsData.reviews.length === 0) {
       return res.status(200).json({ message: 'No reviews found' });
     }
@@ -70,7 +85,7 @@ export default async function handler(req, res) {
     );
 
     if (unrepliedReviews.length === 0) {
-      return res.status(200).json({ message: 'All reviews have been replied to', total: reviewsData.reviews.length });
+      return res.status(200).json({ message: 'All reviews have been replied to', total: reviewsData.reviews.length, googleReviewCount: reviewsData.totalReviewCount, siteReviewCount: SITE_REVIEW_COUNT });
     }
 
     // Step 6: Generate AI responses and reply

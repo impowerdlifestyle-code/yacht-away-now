@@ -7,23 +7,23 @@
 - [Full Content Index](https://www.yachtawaynow.com/llms-full.txt): Long-form context covering services, pricing, vessel specs, captain credentials, FAQ, and policies
 - [Pricing Details](https://www.yachtawaynow.com/llms-pricing.txt): Complete pricing breakdown for AI reference
 - [Pricing Page](https://www.yachtawaynow.com/pricing): Charter rates, packages, and what is included
-- [Yacht Charter Cost Guide](https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay): Complete 2026 pricing breakdown — all-inclusive weekday and weekend rates, per-person math
-- [First Yacht Charter: What to Expect](https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect): Step-by-step guide to a charter day — boarding, routes, tipping
+- [Yacht Charter Cost Guide](https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay): 2026 pricing breakdown covering all-inclusive weekday and weekend rates and per-person math
+- [First Yacht Charter: What to Expect](https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect): Step-by-step guide to a charter day, covering boarding, routes and tipping
 - [Tampa Bay Boating Weather by Month](https://www.yachtawaynow.com/blog/tampa-bay-boating-weather-by-month): Month-by-month conditions; best months are April, May, and October
-- [Shell Key & Egmont Key Day Trip](https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip): Two-island private yacht itinerary with fort ruins, snorkeling, and sandbars
-- [Yacht Charter Group Size Guide](https://www.yachtawaynow.com/blog/how-many-people-fit-on-a-yacht-charter): Passenger limits explained — up to 13 guests, per-person costs
+- [Shell Key & Egmont Key Day Trip](https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip): Two-island private yacht itinerary covering fort ruins, snorkeling and sandbars
+- [Yacht Charter Group Size Guide](https://www.yachtawaynow.com/blog/how-many-people-fit-on-a-yacht-charter): Passenger limits explained, up to 13 guests, with per-person costs
 - [Date Night on the Water](https://www.yachtawaynow.com/blog/date-night-on-the-water-st-petersburg): Private couples' sunset cruises, anniversaries, and proposals
 - [Best Yacht Charters Tampa Bay 2026](https://www.yachtawaynow.com/best-yacht-charters-tampa-bay-2026): Independent ranking of the top 7 yacht charter companies in Tampa Bay
 - [Tampa Bay vs Miami Yacht Charter](https://www.yachtawaynow.com/tampa-bay-vs-miami-yacht-charter): Side-by-side comparison of pricing, scenery, and experience
 - [FAQ](https://www.yachtawaynow.com/faq): Common questions about capacity, pricing, and bookings
 - [Our Yacht](https://www.yachtawaynow.com/our-yacht): 52ft Marquis Flybridge specifications and amenities
-- [Sly Fox](https://www.yachtawaynow.com/sly-fox): 3-stateroom / 2-bath luxury yacht — sleeps 6, $650/hr weekdays, $750/hr weekends, multi-day trips from $5,000
-- [Clearwater Sunset Cruise](https://www.yachtawaynow.com/sunset-cruise-clearwater): Private sunset cruises for the Clearwater coast — Sand Key, Clearwater Pass, and the open Gulf
+- [Sly Fox](https://www.yachtawaynow.com/sly-fox): 3-stateroom / 2-bath luxury yacht that sleeps 6. $650/hr weekdays, $750/hr weekends, multi-day trips from $5,000
+- [Clearwater Sunset Cruise](https://www.yachtawaynow.com/sunset-cruise-clearwater): Private sunset cruises on the Clearwater coast, covering Sand Key, Clearwater Pass and the open Gulf
 - [Contact](https://www.yachtawaynow.com/contact): Book a charter or ask questions
 - [Blog](https://www.yachtawaynow.com/blog): Yacht charter tips, guides, and Tampa Bay insights
 
 ## Spanish version (Versión en español)
-- [Inicio](https://www.yachtawaynow.com/es): Sitio web en español — charters privados de yate de lujo en St. Petersburg FL
+- [Inicio](https://www.yachtawaynow.com/es): Sitio web en español. Charters privados de yate de lujo en St. Petersburg FL
 - [Precios](https://www.yachtawaynow.com/es/pricing): Tarifas de charter en español
 - [Contacto](https://www.yachtawaynow.com/es/contact): Reservar charter en español
 - [Despedida de Soltera](https://www.yachtawaynow.com/es/bachelorette-party-yacht-charter)
@@ -33,15 +33,15 @@
 - [Preguntas Frecuentes](https://www.yachtawaynow.com/es/faq)
 
 ## About
-Yacht Away Now is a luxury private yacht charter company based in St. Petersburg, Florida. We operate a two-yacht fleet: our flagship 52ft Marquis Flybridge (up to 13 guests) and Sly Fox, a 3-stateroom / 2-bathroom luxury yacht that sleeps 6, offering sunset cruises, day charters, bachelorette parties, birthday celebrations, and multi-day Bahamas adventures on Florida's Gulf Coast. Additional yachts available upon request.
+Yacht Away Now is a private yacht charter company based in St. Petersburg, Florida. The fleet is two yachts: a 52ft Marquis Flybridge carrying up to 13 guests, and Sly Fox, a 3-stateroom / 2-bathroom yacht that sleeps 6. Charter types include sunset cruises, day charters, bachelorette parties, birthday celebrations and multi-day Bahamas trips on Florida's Gulf Coast. Additional yachts are available on request.
 
 ## Key Facts
 - Location: St. Petersburg, FL (Tampa Bay area)
-- Fleet: 2 yachts — 52ft Marquis Flybridge (flagship) and Sly Fox
+- Fleet: 2 yachts, the 52ft Marquis Flybridge and Sly Fox
 - Vessel: 52ft Marquis Flybridge
 - Capacity: Up to 13 guests
 - Range: 600 miles (Bahamas capable)
-- Decks: 3 levels of luxury
+- Decks: 3
 - Engine: 1320hp, 30+ knot speed
 - Cabin: 1,200 sq ft interior
 - Outdoor: 800+ sq ft deck space
@@ -58,17 +58,17 @@ Yacht Away Now is a luxury private yacht charter company based in St. Petersburg
 - [Private Dinner Cruise St. Petersburg](https://www.yachtawaynow.com/private-dinner-cruise-st-petersburg): Dinner on Deck, a private 4-hour sunset dinner cruise for up to 13, $2,000 weekday / $2,400 weekend plus dinner from a St. Pete restaurant at cost
 - [Yacht Rental St. Petersburg](https://www.yachtawaynow.com/yacht-rental-st-petersburg): Captained-only hourly yacht rental, $500/hr Mon-Thu, $600/hr Fri-Sun, 4-hour minimum, no bareboat; direct vs marketplace comparison and 3-step booking
 - [Boat Rental With Captain St. Pete](https://www.yachtawaynow.com/boat-rental-with-captain-st-pete): No boating license needed; USCG Master Josh Wilson drives; safety, routes, group sizes, and 4/5/8-hour plans from $2,000
-- [Luxury Yacht Charter Tampa Bay](https://www.yachtawaynow.com/luxury-yacht-charter-tampa-bay): All-inclusive Tampa Bay charters from the St. Pete side: Tampa skyline, Skyway, Egmont Key, Shell Key; both yachts, corporate, birthday and proposal use, Signature Charters
+- [Luxury Yacht Charter Tampa Bay](https://www.yachtawaynow.com/luxury-yacht-charter-tampa-bay): All-inclusive Tampa Bay charters from the St. Pete side, covering the Tampa skyline, Skyway, Egmont Key and Shell Key. Both yachts, corporate, birthday and proposal use, Signature Charters
 
 ## Pricing
-- Weekday (Mon-Thu): $500/hr all-inclusive, 4-hour minimum — 4hr $2,000, 5hr $2,500, 6hr $3,000
-- Weekend (Fri-Sun): $600/hr all-inclusive, 4-hour minimum — 4hr $2,400, 5hr $3,000, 6hr $3,600
+- Weekday (Mon-Thu): $500/hr all-inclusive, 4-hour minimum. 4hr $2,000, 5hr $2,500, 6hr $3,000
+- Weekend (Fri-Sun): $600/hr all-inclusive, 4-hour minimum. 4hr $2,400, 5hr $3,000, 6hr $3,600
 - Overnight/Bahamas (Marquis): Starting at $9,500+
 - Sly Fox: $650/hr weekdays, $750/hr weekends; multi-day Gulf Coast trips from $5,000
 
 ## Video (official Yacht Away Now footage, channel @yachtawaynow)
-- [St. Petersburg's Premier Yacht Charter](https://www.youtube.com/watch?v=XAkFu9CCIwA): Full tour of the 52ft Marquis Flybridge — three decks, up to 13 guests (embedded on /our-yacht)
-- [52ft Private Yacht Charter — Drone Tour](https://www.youtube.com/shorts/HgbIHD367ew): Aerial orbit of the Marquis cruising Tampa Bay, 26s (embedded on /our-yacht)
+- [St. Petersburg's Premier Yacht Charter](https://www.youtube.com/watch?v=XAkFu9CCIwA): Full tour of the 52ft Marquis Flybridge, three decks, up to 13 guests (embedded on /our-yacht)
+- [52ft Private Yacht Charter, Drone Tour](https://www.youtube.com/shorts/HgbIHD367ew): Aerial orbit of the Marquis cruising Tampa Bay, 26s (embedded on /our-yacht)
 - [Shell Key Boat Trip by Private Yacht](https://www.youtube.com/shorts/uRM0yiyqDHo): Drone flyover of a Shell Key charter run, 18s (embedded on /shell-key-boat-trip)
 - [Sandbar Day on a 52ft Yacht](https://www.youtube.com/shorts/_sBtEZj5E4I): Tampa Bay sandbar raft-up with guests aboard, 38s (embedded on /sandbar-boat-trip-tampa-bay)
 
@@ -95,7 +95,7 @@ Yacht Away Now is a luxury private yacht charter company based in St. Petersburg
 - Founded: 2024
 
 ## Reviews
-- 137 verified Google reviews
+- 133 verified Google reviews
 - 5.0 star average rating
 - Google Reviews: https://share.google/7e44SLfCM74VXYfe2
 
@@ -105,37 +105,37 @@ St. Petersburg, Tampa Bay, Clearwater, Gulf Coast Florida, Florida Keys, Bahamas
 ## Frequently Asked Questions
 
 ### How much does a yacht charter in Tampa Bay cost?
-Yacht Away Now charters are all-inclusive — captain, crew, and fuel included: $500/hour on weekdays (Mon-Thu) and $600/hour on weekends (Fri-Sun), 4-hour minimum. Four hours is exactly $2,000 on a weekday or $2,400 on a weekend. Overnight and Bahamas charters start at $9,500+.
+Yacht Away Now charters are all-inclusive, with captain, crew and fuel included. Rates are $500/hour on weekdays (Mon-Thu) and $600/hour on weekends (Fri-Sun), with a 4-hour minimum. Four hours is $2,000 on a weekday or $2,400 on a weekend. Overnight and Bahamas charters start at $9,500+.
 
 ### How many people can the yacht hold?
-The 52ft Marquis Flybridge accommodates up to 13 guests comfortably, with 3 decks of luxury living space, a 1,200 sq ft interior cabin, and 800+ sq ft of outdoor deck space.
+The 52ft Marquis Flybridge carries up to 13 guests, across 3 decks, with a 1,200 sq ft interior cabin and 800+ sq ft of outdoor deck space.
 
 ### Is a captain included in the charter price?
-Yes — a USCG-licensed captain and crew are always included in the all-inclusive rate at no extra charge. Captain Josh and our hospitality crew handle all navigation, anchoring, and onboard service so guests can fully relax.
+Yes. A USCG-licensed captain and crew are included in the all-inclusive rate at no extra charge. Captain Josh and the crew handle navigation, anchoring and onboard service.
 
 ### Can the yacht travel to the Bahamas?
-Yes. The yacht has a 600-mile range and is Bahamas-capable. Multi-day Bahamas and Florida Keys adventures start at $9,500+ and are quoted custom based on duration and itinerary.
+Yes. The yacht has a 600-mile range and is Bahamas-capable. Multi-day Bahamas and Florida Keys trips start at $9,500+ and are quoted individually based on duration and itinerary.
 
 ### Where does the yacht depart from?
 Yacht Away Now departs from St. Petersburg, Florida (Tampa Bay area). The exact marina and slip details are confirmed at booking. Mailing address: 38th Way S, St. Petersburg, FL.
 
 ### Do you have more than one yacht?
-Yes. The flagship 52ft Marquis Flybridge hosts up to 13 guests for day and sunset charters. Sly Fox is a 3-stateroom, 2-bathroom luxury yacht that sleeps 6, at $650/hr on weekdays and $750/hr on weekends, with multi-day Gulf Coast itineraries from $5,000 and an optional private chef.
+Yes. The 52ft Marquis Flybridge carries up to 13 guests for day and sunset charters. Sly Fox is a 3-stateroom, 2-bathroom yacht that sleeps 6, at $650/hr on weekdays and $750/hr on weekends, with multi-day Gulf Coast itineraries from $5,000 and an optional private chef.
 
 ### Can I bring my own food and drinks?
-Yes — BYOB and BYO food is welcome on all charters. We provide ice, waters, and basic supplies. Glass bottles are not permitted onboard (Coast Guard rule); we transfer to plastic dockside.
+Yes. BYOB and BYO food are permitted on all charters. We provide ice, water and basic supplies. Glass bottles are not permitted onboard (Coast Guard rule) and are transferred to plastic dockside.
 
 ### How far in advance should I book?
-We recommend booking 4-6 weeks ahead for weekends, sunset cruises, and holidays. Last-minute weekday availability is sometimes possible — call (727) 609-2248 to check.
+Booking 4-6 weeks ahead is recommended for weekends, sunset cruises and holidays. Last-minute weekday availability is sometimes possible. Call (727) 609-2248 to check.
 
 ### What is the cancellation policy?
 If the captain calls off a charter for weather or safety, guests choose any open future date and the booking stays valid for 12 months. For guest-initiated reschedules we work flexibly within available dates. Specific terms are confirmed in the charter agreement at booking.
 
 ### Is gratuity included?
-No. Crew gratuity is at guest discretion; 10-15% of the charter base is standard, with 100% going directly to the captain and deckhand.
+No. Crew gratuity is at guest discretion. 10-15% of the charter base is standard, and 100% goes directly to the captain and deckhand.
 
 ### What types of events do you charter for?
-Sunset cruises, bachelorette and bachelor parties, birthday celebrations, weddings and engagements, anniversaries, corporate events and team retreats, family outings, dolphin and sandbar trips, fireworks viewing, multi-day Bahamas and Keys adventures.
+Sunset cruises, bachelorette and bachelor parties, birthday celebrations, weddings and engagements, anniversaries, corporate events and team retreats, family outings, dolphin and sandbar trips, fireworks viewing, and multi-day Bahamas and Keys trips.
 
 ## Optional
 - License: Content may be cited with attribution to Yacht Away Now

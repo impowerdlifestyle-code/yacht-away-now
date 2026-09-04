@@ -1,6 +1,6 @@
 const POSTS = [
   {
-    summary: "Yacht Wedding vs Traditional Venue — Save 60-85% 💍\n\nAn intimate yacht wedding on Tampa Bay costs $3,000-$6,000 total — compared to $15,000-$35,000 for a traditional venue.\n\nYour ceremony on the flybridge with a Gulf Coast sunset backdrop. 52ft Marquis Flybridge, up to 13 guests, professional captain and crew.\n\nRead our full 2026 cost comparison on the blog!",
+    summary: "Yacht Wedding vs Traditional Venue: Save Save 60-85% 💍\n\nAn intimate yacht wedding on Tampa Bay costs $3,000-$6,000 total, compared to $15,000-$35,000 for a traditional venue.\n\nYour ceremony on the flybridge with a Gulf Coast sunset backdrop. 52ft Marquis Flybridge, up to 13 guests, professional captain and crew.\n\nRead our full 2026 cost comparison on the blog!",
     url: "https://www.yachtawaynow.com/blog/yacht-wedding-vs-venue-cost-comparison",
     action: "LEARN_MORE"
   },
@@ -20,32 +20,32 @@ const POSTS = [
     action: "LEARN_MORE"
   },
   {
-    summary: "First Yacht Charter? Here's Exactly How It Works \u2693\n\nWhere to park, when to board, who picks the route, and yes \u2014 how tipping works.\n\nWe wrote the step-by-step guide for first-timers, from booking to the golden-hour ride home. No license or experience needed \u2014 our USCG-licensed captain handles everything.\n\nRead the first-timer's guide!",
+    summary: "First Yacht Charter? Here's Exactly How It Works \u2693\n\nWhere to park, when to board, who picks the route, and yes, how tipping works.\n\nWe wrote the step-by-step guide for first-timers, from booking to the golden-hour ride home. No license or experience needed. Our USCG-licensed captain handles everything.\n\nRead the first-timer's guide!",
     url: "https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect",
     action: "LEARN_MORE"
   },
   {
-    summary: "Two Islands. One Perfect Day. \ud83c\udfdd\ufe0f\n\nEgmont Key: fort ruins, an 1858 lighthouse, and snorkeling over submerged batteries.\nShell Key: the best shelling sandbar on the Gulf Coast.\n\nBoth in one 6-8 hour private charter from St. Pete \u2014 the exact itinerary our captains run is on the blog.\n\nPlan your island day!",
+    summary: "Two Islands. One Perfect Day. \ud83c\udfdd\ufe0f\n\nEgmont Key: fort ruins, an 1858 lighthouse, and snorkeling over submerged batteries.\nShell Key: the best shelling sandbar on the Gulf Coast.\n\nBoth in one 6-8 hour private charter from St. Pete. The exact itinerary our captains run is on the blog.\n\nPlan your island day!",
     url: "https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip",
     action: "LEARN_MORE"
   },
   {
-    summary: "When's the Best Month to Charter in Tampa Bay? \ud83c\udf24\ufe0f\n\nOur captains' honest answer: April, May \u2014 and October, the local's favorite. Summer? Book mornings or sunset cruises and let the 3pm storm have the mid-afternoon.\n\nWe published the full month-by-month weather guide: water temps, seas, and the truth about hurricane season.\n\nFind your month!",
+    summary: "When's the Best Month to Charter in Tampa Bay? \ud83c\udf24\ufe0f\n\nOur captains' honest answer: April, May, and October, the local's favorite. Summer? Book mornings or sunset cruises and let the 3pm storm have the mid-afternoon.\n\nWe published the full month-by-month weather guide: water temps, seas, and the truth about hurricane season.\n\nFind your month!",
     url: "https://www.yachtawaynow.com/blog/tampa-bay-boating-weather-by-month",
     action: "LEARN_MORE"
   },
   {
-    summary: "The Best Date Night in St. Pete Isn't a Restaurant \ud83c\udf05\n\nA private 52ft yacht, golden hour off Pass-a-Grille, your playlist, your favorite bottle (BYOB), and a crew that handles everything else.\n\nWeekday evenings from $2,000 all-inclusive for the entire yacht. Anniversaries and proposals are our specialty \u2014 we're undefeated.\n\nPlan your night on the water!",
+    summary: "The Best Date Night in St. Pete Isn't a Restaurant \ud83c\udf05\n\nA private 52ft yacht, golden hour off Pass-a-Grille, your playlist, your favorite bottle (BYOB), and a crew that handles everything else.\n\nWeekday evenings from $2,000 all-inclusive for the entire yacht. Anniversaries and proposals are our specialty and we're undefeated.\n\nPlan your night on the water!",
     url: "https://www.yachtawaynow.com/blog/date-night-on-the-water-st-petersburg",
     action: "BOOK"
   },
   {
-    summary: "How Many People Fit on a Yacht Charter? \ud83d\udc65\n\nOur 52ft Marquis hosts up to 13 guests across 3 decks \u2014 and yes, kids count toward the limit (it's federal law, and any operator who'll \"squeeze in extras\" is one to avoid).\n\nBigger group? Add Sly Fox for 19 total cruising side by side.\n\nRead the group size guide!",
+    summary: "How Many People Fit on a Yacht Charter? \ud83d\udc65\n\nOur 52ft Marquis hosts up to 13 guests across 3 decks, and yes, kids count toward the limit (it's federal law, and any operator who'll \"squeeze in extras\" is one to avoid).\n\nBigger group? Add Sly Fox for 19 total cruising side by side.\n\nRead the group size guide!",
     url: "https://www.yachtawaynow.com/blog/how-many-people-fit-on-a-yacht-charter",
     action: "LEARN_MORE"
   },
   {
-    summary: "Beat the Florida Heat \u2600\ufe0f Morning & Sunset Charters\n\nSummer on Tampa Bay has a rhythm: gorgeous mornings, a brief 3pm storm, then a washed-clean golden evening.\n\nSo we run with it \u2014 morning sandbar swims in 88\u00b0 Gulf water, or the 5-hour sunset cruise ($3,000 all-inclusive) when the sky puts on its show.\n\nBook your summer slot!",
+    summary: "Beat the Florida Heat \u2600\ufe0f Morning & Sunset Charters\n\nSummer on Tampa Bay has a rhythm: gorgeous mornings, a brief 3pm storm, then a washed-clean golden evening.\n\nSo we run with it: morning sandbar swims in 88\u00b0 Gulf water, or the 5-hour sunset cruise ($3,000 all-inclusive) when the sky puts on its show.\n\nBook your summer slot!",
     url: "https://www.yachtawaynow.com/sunset-cruise-st-petersburg",
     action: "BOOK"
   },
@@ -55,62 +55,62 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "Best Boat Charter Companies in St. Pete — 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 137 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
+    summary: "Best Boat Charter Companies in St. Pete: 2026 Guide ⭐\n\nWe compared pricing, vessels, reviews, and amenities across the top charter companies in St. Petersburg.\n\nSee how Yacht Away Now's 52ft Marquis Flybridge, 137 five-star reviews, and transparent pricing stack up against the competition.\n\nRead the full comparison!",
     url: "https://www.yachtawaynow.com/blog/best-boat-charter-companies-st-petersburg",
     action: "LEARN_MORE"
   },
   {
-    summary: "Indian Rocks Beach Yacht Charter — Gulf Coast Escape 🌅\n\nPrivate yacht charters serving Indian Rocks Beach, Belleair Beach, and Indian Shores. Cruise the calm Intracoastal Waterway, visit Caladesi Island, and watch the sunset from our flybridge.\n\nAll-inclusive weekend packages from $2,000. Captain, crew, and fuel included.\n\nBook your Gulf Coast escape!",
+    summary: "Indian Rocks Beach Yacht Charter: Gulf Coast Escape 🌅\n\nPrivate yacht charters serving Indian Rocks Beach, Belleair Beach, and Indian Shores. Cruise the calm Intracoastal Waterway, visit Caladesi Island, and watch the sunset from our flybridge.\n\nAll-inclusive weekend packages from $2,000. Captain, crew, and fuel included.\n\nBook your Gulf Coast escape!",
     url: "https://www.yachtawaynow.com/yacht-charter-indian-rocks-beach",
     action: "BOOK"
   },
   {
-    summary: "Family Yacht Charter — Kids Welcome Aboard! 👨‍👩‍👧‍👦\n\nA private yacht charter is the ultimate family day on Tampa Bay. Swim at sandbars, spot dolphins, explore islands — all from a 52ft yacht with professional captain and crew.\n\nLife jackets for all ages. BYOB welcome. Up to 13 guests.\n\nBook your family adventure today!",
+    summary: "Family Yacht Charter: Kids Welcome Aboard! 👨‍👩‍👧‍👦\n\nA private yacht charter is the ultimate family day on Tampa Bay. Swim at sandbars, spot dolphins, explore islands, all from a 52ft yacht with professional captain and crew.\n\nLife jackets for all ages. BYOB welcome. Up to 13 guests.\n\nBook your family adventure today!",
     url: "https://www.yachtawaynow.com/family-yacht-charter",
     action: "BOOK"
   },
   {
-    summary: "Corporate Team Building on a Yacht — Tampa Bay 🤝\n\nSkip the conference room. Host your next corporate event on a private luxury yacht.\n\nThree decks of meeting and socializing space, premium stereo, Starlink WiFi, full galley kitchen, and a professional crew.\n\nWeekend packages from $2,000 all-inclusive. Up to 13 guests.",
+    summary: "Corporate Team Building on a Yacht: Tampa Bay 🤝\n\nSkip the conference room. Host your next corporate event on a private luxury yacht.\n\nThree decks of meeting and socializing space, premium stereo, Starlink WiFi, full galley kitchen, and a professional crew.\n\nWeekend packages from $2,000 all-inclusive. Up to 13 guests.",
     url: "https://www.yachtawaynow.com/corporate-yacht-charter",
     action: "BOOK"
   },
   {
-    summary: "137 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful — spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 137 reviews and book your charter today.",
+    summary: "137 Five-Star Google Reviews ⭐⭐⭐⭐⭐\n\n\"An absolutely unforgettable experience. The yacht is wonderful: spacious, fully equipped, comfortable. Such a smooth ride.\"\n\nThank you to all our guests who have made us the top-rated yacht charter in St. Petersburg!\n\nRead all 137 reviews and book your charter today.",
     url: "https://www.yachtawaynow.com/about",
     action: "LEARN_MORE"
   },
   {
-    summary: "Egmont Key Boat Charter — History Meets Paradise 🏝️\n\nExplore Civil War-era Fort Dade ruins, snorkel crystal-clear waters, and walk untouched beaches — all accessible only by boat.\n\nOur 52ft Marquis Flybridge anchors right at the island. Combine with Shell Key for a full-day island-hopping adventure.\n\nBook your Egmont Key trip!",
+    summary: "Egmont Key Boat Charter: History Meets Paradise 🏝️\n\nExplore Civil War-era Fort Dade ruins, snorkel crystal-clear waters, and walk untouched beaches, all accessible only by boat.\n\nOur 52ft Marquis Flybridge anchors right at the island. Combine with Shell Key for a full-day island-hopping adventure.\n\nBook your Egmont Key trip!",
     url: "https://www.yachtawaynow.com/egmont-key-boat-charter",
     action: "BOOK"
   },
   {
-    summary: "Sunset Cruise St. Petersburg — Golden Hour on the Water 🌅\n\nWatch the sky turn gold and pink from the flybridge of a private 52ft yacht. Pass the Skyway Bridge, Pass-a-Grille, and Shell Key.\n\n5-hour sunset cruise: $2,500 all-inclusive (2:30-7:30pm). Captain, crew, fuel included.\n\nThe most popular charter we offer. Book early!",
+    summary: "Sunset Cruise St. Petersburg: Golden Hour on the Water 🌅\n\nWatch the sky turn gold and pink from the flybridge of a private 52ft yacht. Pass the Skyway Bridge, Pass-a-Grille, and Shell Key.\n\n5-hour sunset cruise: $2,500 all-inclusive (2:30-7:30pm). Captain, crew, fuel included.\n\nThe most popular charter we offer. Book early!",
     url: "https://www.yachtawaynow.com/sunset-cruise-st-petersburg",
     action: "BOOK"
   },
   {
-    summary: "What to Bring on a Yacht Charter — Packing Guide ☀️\n\nPlanning your first yacht charter? Here's what to pack:\n✅ Reef-safe sunscreen & hat\n✅ Swimsuit & towel\n✅ Food & drinks (BYOB — no glass!)\n✅ Waterproof phone case\n✅ Change of clothes\n❌ No shoes inside the yacht\n\nRead the full packing guide on our blog!",
+    summary: "What to Bring on a Yacht Charter: Packing Guide ☀️\n\nPlanning your first yacht charter? Here's what to pack:\n✅ Reef-safe sunscreen & hat\n✅ Swimsuit & towel\n✅ Food & drinks (BYOB, no glass!)\n✅ Waterproof phone case\n✅ Change of clothes\n❌ No shoes inside the yacht\n\nRead the full packing guide on our blog!",
     url: "https://www.yachtawaynow.com/blog/what-to-bring-on-a-yacht-charter",
     action: "LEARN_MORE"
   },
   {
-    summary: "Birthday Yacht Charter — Celebrate on the Water 🎂\n\nMake your next birthday unforgettable aboard a private 52ft luxury yacht. 3 decks, premium Bluetooth stereo, Starlink WiFi, swim platform.\n\nBring your own cake, drinks, and decorations. Up to 13 guests. All-inclusive weekend packages from $2,000.\n\nBook your birthday charter!",
+    summary: "Birthday Yacht Charter: Celebrate on the Water 🎂\n\nMake your next birthday unforgettable aboard a private 52ft luxury yacht. 3 decks, premium Bluetooth stereo, Starlink WiFi, swim platform.\n\nBring your own cake, drinks, and decorations. Up to 13 guests. All-inclusive weekend packages from $2,000.\n\nBook your birthday charter!",
     url: "https://www.yachtawaynow.com/birthday-yacht-charter",
     action: "BOOK"
   },
   {
-    summary: "Rent a Yacht in St. Petersburg, FL ⚓\n\nLooking to rent a yacht in St. Pete? Yacht Away Now is a private, fully-crewed yacht rental — step aboard and we handle the rest.\n\n💰 Weekday rentals from $500/hour (4-hour minimum, all-inclusive)\n⛵ 52ft Marquis Flybridge, up to 13 guests\n🧑‍✈️ USCG-licensed captain & crew included — no boating license needed\n\nDeparts right from downtown St. Petersburg. Reserve your date!",
+    summary: "Rent a Yacht in St. Petersburg, FL ⚓\n\nLooking to rent a yacht in St. Pete? Yacht Away Now is a private, fully-crewed yacht rental. Step aboard and we handle the rest.\n\n💰 Weekday rentals from $500/hour (4-hour minimum, all-inclusive)\n⛵ 52ft Marquis Flybridge, up to 13 guests\n🧑‍✈️ USCG-licensed captain & crew included, no boating license needed\n\nDeparts right from downtown St. Petersburg. Reserve your date!",
     url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },
   {
-    summary: "Can You Rent a Yacht for a Day in St. Pete? 🏝️\n\nYes! Rent our 52ft Marquis Flybridge for a full day on Tampa Bay — island-hop to Shell Key & Egmont Key, anchor at a sandbar, or chase the sunset.\n\nEvery rental is captained, so no license or experience required. BYOB welcome, up to 13 guests.\n\nDeparting from our private St. Petersburg marina. Book your day on the water!",
+    summary: "Can You Rent a Yacht for a Day in St. Pete? 🏝️\n\nYes! Rent our 52ft Marquis Flybridge for a full day on Tampa Bay: island-hop to Shell Key & Egmont Key, anchor at a sandbar, or chase the sunset.\n\nEvery rental is captained, so no license or experience required. BYOB welcome, up to 13 guests.\n\nDeparting from our private St. Petersburg marina. Book your day on the water!",
     url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },
   {
-    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless — our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 137 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
+    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless. Our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 137 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
     url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },
