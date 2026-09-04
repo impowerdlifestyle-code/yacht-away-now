@@ -186,7 +186,7 @@ tr:hover td{background:rgba(78,205,196,0.03)}
 
     <!-- Clicks Chart -->
     <div class="chart-section">
-      <h3>Clicks — Last 30 Days</h3>
+      <h3>Clicks: Last 30 Days</h3>
       <div class="chart-container" id="chart"></div>
       <div class="chart-labels" id="chart-labels"></div>
     </div>
@@ -544,7 +544,7 @@ function renderConversions(conversions) {
       <td>${c.description || '—'}</td>
       <td><span class="badge badge-${c.status}">${c.status}</span></td>
     </tr>
-  `).join('') : '<tr><td class="empty-row" colspan="5">No conversions yet — share your referral links to start earning!</td></tr>';
+  `).join('') : '<tr><td class="empty-row" colspan="5">No conversions yet. Share your referral links to start earning!</td></tr>';
 }
 
 function renderPayouts(payouts) {

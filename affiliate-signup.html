@@ -112,7 +112,7 @@ body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f
   <div class="hero">
     <div class="hero-logo">&#9875;</div>
     <h1>Earn Money Referring <span>Yacht Charters</span></h1>
-    <p>Join the Yacht Away Now affiliate program and earn 10% commission on every booking you refer. It's free to join — start earning today.</p>
+    <p>Join the Yacht Away Now affiliate program and earn 10% commission on every booking you refer. It's free to join, so start earning today.</p>
   </div>
 
   <div class="perks">
@@ -195,7 +195,7 @@ body{font-family:Montserrat,-apple-system,sans-serif;background:#071520;color:#f
           <option value="other">Other</option>
         </select>
       </div>
-      <button class="btn btn-gold" id="submit-btn" onclick="doSignup()">Join Now — It's Free</button>
+      <button class="btn btn-gold" id="submit-btn" onclick="doSignup()">Join Now, It's Free</button>
       <p id="form-error"></p>
     </div>
   </div>
@@ -288,7 +288,7 @@ function checkCode() {
         codeAvailable = false;
       }
     } catch (e) {
-      status.innerHTML = '<span style="color:var(--text-dim)">Could not check — try again</span>';
+      status.innerHTML = '<span style="color:var(--text-dim)">Could not check, try again</span>';
       codeAvailable = false;
     }
   }, 400);
@@ -336,7 +336,7 @@ async function doSignup() {
       errEl.textContent = data.error || 'Something went wrong';
       errEl.style.display = 'block';
       btn.disabled = false;
-      btn.textContent = 'Join Now — It\'s Free';
+      btn.textContent = 'Join Now, It\'s Free';
       return;
     }
 
@@ -352,7 +352,7 @@ async function doSignup() {
     errEl.textContent = 'Network error. Please try again.';
     errEl.style.display = 'block';
     btn.disabled = false;
-    btn.textContent = 'Join Now — It\'s Free';
+    btn.textContent = 'Join Now, It\'s Free';
   }
 }
 </script>

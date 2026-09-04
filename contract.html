@@ -729,7 +729,7 @@
             <div class="package-card">
               <div class="package-name">Weekday Charter</div>
               <div class="package-price">$500<span>/hr</span></div>
-              <div class="package-detail">Mon&ndash;Thu &middot; all-inclusive &middot; 4-hr minimum</div>
+              <div class="package-detail">Mon-Thu &middot; all-inclusive &middot; 4-hr minimum</div>
             </div>
           </label>
           <label class="package-option" id="pkg-weekend">
@@ -737,7 +737,7 @@
             <div class="package-card">
               <div class="package-name">Weekend Charter</div>
               <div class="package-price">$600<span>/hr</span></div>
-              <div class="package-detail">Fri&ndash;Sun &middot; all-inclusive &middot; 4-hr minimum</div>
+              <div class="package-detail">Fri-Sun &middot; all-inclusive &middot; 4-hr minimum</div>
             </div>
           </label>
           <label class="package-option" id="pkg-bahamas">
@@ -770,7 +770,7 @@
       <div class="deposit-row">
         <div>
           <div class="total-label">50% Deposit Due Today</div>
-          <div style="font-size:0.75rem;color:var(--gray-600);margin-top:2px;">Charter total <span id="charterTotalDisplay" style="color:var(--gray-400);font-weight:600;">$0</span> &mdash; remaining <span id="balanceDisplay" style="color:var(--gray-400);font-weight:600;">$0</span> due <span id="balanceDueDisplay">7 days before departure</span></div>
+          <div style="font-size:0.75rem;color:var(--gray-600);margin-top:2px;">Charter total <span id="charterTotalDisplay" style="color:var(--gray-400);font-weight:600;">$0</span>, remaining <span id="balanceDisplay" style="color:var(--gray-400);font-weight:600;">$0</span> due <span id="balanceDueDisplay">7 days before departure</span></div>
         </div>
         <div class="total-amount" id="depositAmount">$0</div>
       </div>
@@ -823,7 +823,7 @@
 
             <p><strong>11. PAYMENTS &amp; RESCHEDULING:</strong> A deposit of fifty percent (50%) of the Charter Fee is due upon execution of this Agreement. The remaining balance is due no later than seven (7) days prior to the scheduled departure. All payments are applied to CHARTERER's charter. If the captain determines conditions are unsafe to depart, the charter will be rescheduled at no cost to CHARTERER for any open future date of CHARTERER's choosing, and the booking shall remain valid for twelve (12) months from the original charter date.</p>
 
-            <p><strong>12. ARRIVALS &amp; CHARTER TIME:</strong> Please arrive at your designated charter time and be punctual. Your charter time runs from the scheduled start time, not from your actual arrival — for example, a charter scheduled to begin at noon and run four hours ends at 4:00 PM even if you board at 12:30 PM. Late arrival does not extend the charter, and any time missed due to late arrival is forfeited.</p>
+            <p><strong>12. ARRIVALS &amp; CHARTER TIME:</strong> Please arrive at your designated charter time and be punctual. Your charter time runs from the scheduled start time, not from your actual arrival. For example, a charter scheduled to begin at noon and run four hours ends at 4:00 PM even if you board at 12:30 PM. Late arrival does not extend the charter, and any time missed due to late arrival is forfeited.</p>
 
             <h4>Boat Rules and Warnings</h4>
             <ul>
@@ -931,7 +931,7 @@
             <h4>Oasis Captain Selection Agreement</h4>
             <p><strong>Yacht Away Now, LLC</strong></p>
 
-            <p><strong>Charter Details:</strong> Vessel: "Oasis" &mdash; Type: Power Boat &mdash; LOA: 50 ft. Includes all gear and equipment on board and in any inventory attached hereto.</p>
+            <p><strong>Charter Details:</strong> Vessel: "Oasis". Type: Power Boat. LOA: 50 ft. Includes all gear and equipment on board and in any inventory attached hereto.</p>
 
             <p><strong>Embarkation Point:</strong> Maximo Marina, St. Petersburg, FL</p>
             <p><strong>Disembarkation Point:</strong> Maximo Marina, St. Petersburg, FL</p>
@@ -1007,7 +1007,7 @@
       <div class="pay-btn-wrapper">
         <button class="btn btn-gold" id="payBtn" disabled onclick="submitAndPay()">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Sign & Pay 50% Deposit — <span id="payAmount">$0</span>
+          Sign & Pay 50% Deposit: <span id="payAmount">$0</span>
         </button>
         <div class="pay-secure">
           <span>
@@ -1114,7 +1114,7 @@ if (durParam) {
   }
 }
 
-// Boat selection — autofilled from the booking instead of defaulting to one vessel
+// Boat selection, autofilled from the booking instead of defaulting to one vessel
 const boatParam = params.get('boat');
 if (boatParam) {
   const sel = document.getElementById('sumBoat');
@@ -1140,12 +1140,12 @@ sumNameEl.addEventListener('change', () => { sigNameEl.value = sumNameEl.value; 
 if (sumNameEl.value) sigNameEl.value = sumNameEl.value;
 
 // ============================================
-// NO-PAY (signature-only) MODE — deposit already on file
+// NO-PAY (signature-only) MODE: deposit already on file
 // ============================================
 const noPay = params.get('nopay') === '1';
 if (noPay) {
   const subtitle = document.querySelector('.contract-header p');
-  if (subtitle) subtitle.textContent = 'Please review all agreements below and provide your initials and signature. Your deposit is already on file — no further payment is needed.';
+  if (subtitle) subtitle.textContent = 'Please review all agreements below and provide your initials and signature. Your deposit is already on file. No further payment is needed.';
   const pkgSection = document.getElementById('packageGrid') && document.getElementById('packageGrid').parentElement;
   if (pkgSection) pkgSection.style.display = 'none';
   const depRow = document.querySelector('.deposit-row');
@@ -1155,20 +1155,20 @@ if (noPay) {
   const payBtn = document.getElementById('payBtn');
   if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign Contract';
   const secure = document.querySelector('.pay-secure');
-  if (secure) secure.innerHTML = '<span><svg width="12" height="12" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Deposit already received — no payment due</span>';
+  if (secure) secure.innerHTML = '<span><svg width="12" height="12" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Deposit already received, no payment due</span>';
   const successH = document.querySelector('.success-state h2');
   if (successH) successH.textContent = 'Contract Signed Successfully!';
   const successP = document.querySelector('.success-state p');
-  if (successP) successP.textContent = 'Thank you — your signed contract is on file. We\'ll see you on the water!';
+  if (successP) successP.textContent = 'Thank you. Your signed contract is on file. We\'ll see you on the water!';
 }
 
 // ============================================
-// PAY-IN-FULL MODE — charge the entire charter total at signing
+// PAY-IN-FULL MODE: charge the entire charter total at signing
 // ============================================
 const payFull = params.get('pay') === 'full';
 const payVerb = payFull ? 'Sign & Pay in Full' : 'Sign & Pay 50% Deposit';
 // When the booking already carries a total (every dashboard-sent link does), the
-// price is fixed — hide the package picker entirely and lock the charter total to
+// price is fixed, so hide the package picker entirely and lock the charter total to
 // exactly what the team entered. No weekday/weekend/overnight/custom choices.
 const lockedTotal = !noPay && parseFloat(params.get('total')) > 0;
 if (payFull && !noPay) {
@@ -1179,7 +1179,7 @@ if (payFull && !noPay) {
     if (sub) sub.style.display = 'none';
   }
   const payBtn = document.getElementById('payBtn');
-  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay in Full — <span id="payAmount">$0</span>';
+  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay in Full: <span id="payAmount">$0</span>';
   document.querySelectorAll('p').forEach(p => {
     if (p.textContent.includes('complete your 50% deposit')) p.textContent = p.textContent.replace('complete your 50% deposit', 'complete your full payment');
   });
@@ -1203,7 +1203,7 @@ if (lockedTotal) {
   if (pricing) pricing.style.display = 'none';
 }
 // Declared early: the package init below calls validateForm(), which reads
-// initialsState — must exist before that runs (links with a date param do).
+// initialsState must exist before that runs (links with a date param do).
 const initialsState = [false, false, false, false];
 
 // All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
@@ -1258,7 +1258,7 @@ function selectPackage(radio) {
 // Exact quote: auto-pick weekday/weekend from the charter date so the
 // customer sees the precise price for the date they chose.
 function syncPackageToDate() {
-  if (lockedTotal) return; // price is fixed by the dashboard — never recompute
+  if (lockedTotal) return; // price is fixed by the dashboard, never recompute
   const wk = isWeekendCharter();
   if (wk === null) return;
   if (selectedPackage === 'bahamas' || selectedPackage === 'custom') return;
@@ -1626,7 +1626,7 @@ async function submitAndPay() {
   } catch (err) {
     alert('Something went wrong: ' + err.message + '\n\nPlease try again or call (727) 609-2248.');
     btn.disabled = false;
-    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + payVerb + ' — <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
+    btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + payVerb + ': <span id="payAmount">$' + deposit.toLocaleString() + '</span>';
   }
 }
 

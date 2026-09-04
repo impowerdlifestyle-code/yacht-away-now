@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-# Private/utility pages — enforced via X-Robots-Tag: noindex header
+# Private/utility pages, enforced via X-Robots-Tag: noindex header
 # in vercel.json so Googlebot can crawl and SEE the noindex (a Disallow
 # would prevent reading the noindex tag entirely if backlinks exist)
 
@@ -12,7 +12,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# AI Search Crawlers — Welcome
+# AI Search Crawlers: Welcome
 User-agent: GPTBot
 Allow: /
 
@@ -70,7 +70,7 @@ Allow: /
 User-agent: Timesbot
 Allow: /
 
-# Training-only crawlers — Blocked
+# Training-only crawlers: Blocked
 User-agent: CCBot
 Disallow: /
 
