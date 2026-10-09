@@ -13,6 +13,8 @@
  *   ANTHROPIC_API_KEY           - Claude API key
  */
 
+import { reviewHoldReason } from '../api/review-responder.js';
+
 const SYSTEM_PROMPT = `You are the owner of Yacht Away Now, a luxury private yacht charter in St. Petersburg, Florida. You are responding to Google reviews.
 
 BUSINESS CONTEXT:
@@ -26,18 +28,18 @@ BUSINESS CONTEXT:
 TONE GUIDELINES:
 - Warm, genuine, and personal — like a friend who happens to run a luxury yacht
 - Express sincere gratitude — never generic or corporate
-- Reference specific details from their review (the sunset, the music, the crew, etc.)
+- Mention only details the reviewer wrote themselves; if they gave none, keep it short and add none of your own
 - Use the reviewer's first name
-- Keep it concise: 2-4 sentences for positive reviews, 3-5 for negative
-- For positive reviews: thank them, acknowledge what made it special, invite them back with a warm touch
-- For negative reviews: sincerely apologize, take ownership, offer to make it right, provide contact (josh@yachtawaynow.com or 727-609-2248)
+- Keep it concise: 2-4 sentences
+- Thank them, acknowledge what they said made it special, invite them back with a warm touch
+- Never state a price, a date, a phone number, a web address or any number the reviewer did not write
 - Never be defensive. Never use exclamation marks more than once.
 - Never use phrases like "We appreciate your feedback" or "Thank you for taking the time" — those sound robotic
 - Sign off as "— Josh, Yacht Away Now" (only on longer responses)
 
 EXAMPLES OF GOOD RESPONSES:
-- "Anna, that sunset was one for the books — glad you and your crew got to experience it from the flybridge. We'd love to have you back anytime."
-- "Krystal, watching your group light up when we anchored at Shell Key was the highlight of our week. Can't wait to do it again."`;
+- "Anna, thank you. We loved having you and your group aboard, and we'd be glad to have you back anytime."
+- "Krystal, thank you for the kind words. Come see us again soon."`;
 
 // ── Google OAuth2 Token Refresh ──────────────────────────────────────
 
@@ -89,7 +91,7 @@ function getUnrespondedReviews(reviews) {
 
 async function generateReply(review) {
   const stars = review.starRating;
-  const name = review.reviewer?.displayName || 'there';
+  const name = review.reviewer?.displayName || 'not provided by Google, so do not address them by name';
   const comment = review.comment || '';
   const createTime = review.createTime || '';
 
@@ -189,11 +191,23 @@ async function main() {
   for (const review of unresponded) {
     const name = review.reviewer?.displayName || 'Anonymous';
     const stars = review.starRating;
+
+    const held = reviewHoldReason(review);
+    if (held) {
+      console.warn(`[review-responder] HELD for a person, not replied: ${name}, ${held}`);
+      continue;
+    }
     console.log(`[review-responder] Replying to ${name} (${stars})...`);
 
     try {
       const reply = await generateReply(review);
       console.log(`[review-responder] Generated: "${reply.substring(0, 80)}..."`);
+
+      const rejected = reviewHoldReason(review, reply);
+      if (rejected) {
+        console.warn(`[review-responder] HELD for a person, draft not posted: ${name}, ${rejected}`);
+        continue;
+      }
 
       await postReply(accessToken, review.name, reply);
       console.log(`[review-responder] Posted reply to ${name}`);
