@@ -1,23 +1,12 @@
-const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
-const ADMIN_KEY = process.env.AFFILIATE_ADMIN_KEY || 'yacht-affiliate-admin-2026';
-const ADMIN_USER = process.env.AFFILIATE_ADMIN_USER || 'admin';
+import crypto from 'node:crypto';
+import { SUPABASE_URL, supabaseHeaders, isAdminUser, escapeHtml, clip, isEmail } from './_shared.js';
 
-function checkAdmin(req) {
-  const key = req.headers['x-admin-key'];
-  const user = req.headers['x-admin-user'];
-  return key === ADMIN_KEY && user === ADMIN_USER;
-}
+const SITE_HOSTS = ['yachtawaynow.com', 'www.yachtawaynow.com'];
 
 async function supabase(method, path, body) {
   const opts = {
     method,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'return=representation' : 'return=representation',
-    },
+    headers: supabaseHeaders({ 'Prefer': 'return=representation' }),
   };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
@@ -31,13 +20,18 @@ async function supabase(method, path, body) {
 
 function generateCode(name) {
   const clean = name.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
-  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+  const rand = crypto.randomBytes(3).toString('hex').toUpperCase();
   return `${clean}-${rand}`;
 }
 
 export default async function handler(req, res) {
   const { method } = req;
   const action = req.query.action;
+
+  if (!process.env.SUPABASE_SERVICE_KEY) {
+    console.error('affiliates: SUPABASE_SERVICE_KEY is not set');
+    return res.status(500).json({ error: 'Server not configured' });
+  }
 
   // Public: track a click
   if (method === 'GET' && action === 'click') {
@@ -55,8 +49,22 @@ export default async function handler(req, res) {
         user_agent: req.headers['user-agent'] || null,
       });
 
-      const dest = req.query.dest || 'https://www.yachtawaynow.com';
-      return res.redirect(302, `${dest}?ref=${code}`);
+      // dest may only be a path on this site or a yachtawaynow.com URL.
+      let target = new URL('https://www.yachtawaynow.com/');
+      const dest = typeof req.query.dest === 'string' ? req.query.dest : '';
+      if (dest) {
+        try {
+          const parsed = new URL(dest, 'https://www.yachtawaynow.com');
+          const sameSitePath = /^\/(?![\/\\])/.test(dest);
+          if (parsed.protocol === 'https:' && SITE_HOSTS.includes(parsed.hostname) && !parsed.username && (sameSitePath || /^https:\/\//i.test(dest))) {
+            target = parsed;
+          }
+        } catch {
+          // unparseable dest falls back to the homepage
+        }
+      }
+      target.searchParams.set('ref', code);
+      return res.redirect(302, target.toString());
     } catch (e) {
       return res.status(500).json({ error: e.message });
     }
@@ -76,13 +84,18 @@ export default async function handler(req, res) {
 
   // Public: affiliate signup
   if (method === 'POST' && action === 'signup') {
-    const { name, email, phone, referral_source, custom_code } = req.body;
-    if (!name || !email) return res.status(400).json({ error: 'Name and email required' });
+    const body = req.body || {};
+    const name = clip(body.name, 120);
+    const email = clip(body.email, 254);
+    const phone = clip(body.phone, 40);
+    const referral_source = clip(body.referral_source, 200);
+    const custom_code = clip(body.custom_code, 40);
+    if (!name || !isEmail(email)) return res.status(400).json({ error: 'Name and a valid email required' });
 
     try {
-      const existing = await supabase('GET', `affiliates?email=eq.${encodeURIComponent(email)}&select=id,code`);
+      const existing = await supabase('GET', `affiliates?email=ilike.${encodeURIComponent(email.replace(/[%_\\*]/g, '\\$&'))}&select=id`);
       if (existing && existing.length > 0) {
-        return res.status(409).json({ error: 'An affiliate account with this email already exists. Your referral code is: ' + existing[0].code });
+        return res.status(409).json({ error: 'An affiliate account with this email already exists. Sign in at the affiliate portal, or use "Forgot password?" there to set a new password.' });
       }
 
       let code;
@@ -97,6 +110,7 @@ export default async function handler(req, res) {
         code = generateCode(name);
       }
 
+      const setupToken = crypto.randomBytes(32).toString('hex');
       const result = await supabase('POST', 'affiliates', {
         name,
         email,
@@ -110,11 +124,15 @@ export default async function handler(req, res) {
         total_conversions: 0,
         total_earned: 0,
         total_paid: 0,
+        reset_token: setupToken,
+        reset_token_expires: new Date(Date.now() + 72 * 60 * 60 * 1000).toISOString(),
       });
 
       // Send confirmation email to the new affiliate via Resend
+      const safeName = escapeHtml(name);
+      const setupLink = `https://www.yachtawaynow.com/affiliate-portal?reset=${setupToken}`;
       try {
-        await fetch('https://api.resend.com/emails', {
+        const mailRes = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -127,13 +145,14 @@ export default async function handler(req, res) {
             subject: 'Welcome to the Yacht Away Now Affiliate Program!',
             html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#071520;color:#f0f7fa;padding:40px 32px;border-radius:12px;">
               <div style="text-align:center;margin-bottom:24px;font-size:2rem;">&#9875;</div>
-              <h1 style="font-family:Georgia,serif;color:#d4a853;text-align:center;font-size:1.6rem;margin-bottom:8px;">Welcome Aboard, ${name}!</h1>
+              <h1 style="font-family:Georgia,serif;color:#d4a853;text-align:center;font-size:1.6rem;margin-bottom:8px;">Welcome Aboard, ${safeName}!</h1>
               <p style="text-align:center;color:#8bbad4;font-size:0.9rem;margin-bottom:28px;">You're officially a Yacht Away Now affiliate partner.</p>
               <div style="background:#0d2538;border:1px solid #163248;border-radius:10px;padding:20px 24px;margin-bottom:24px;">
-                <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a7d96;margin:0 0 12px;">Your Login Credentials</p>
+                <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a7d96;margin:0 0 12px;">Your Portal Login</p>
                 <p style="margin:0 0 8px;color:#f0f7fa;"><strong>Portal:</strong> <a href="https://www.yachtawaynow.com/affiliate-portal" style="color:#4ecdc4;">yachtawaynow.com/affiliate-portal</a></p>
-                <p style="margin:0 0 8px;color:#f0f7fa;"><strong>Email:</strong> ${email}</p>
-                <p style="margin:0;color:#f0f7fa;"><strong>Password:</strong> <span style="color:#4ecdc4;font-family:monospace;font-size:1rem;">${code}</span></p>
+                <p style="margin:0 0 14px;color:#f0f7fa;"><strong>Email:</strong> ${escapeHtml(email)}</p>
+                <p style="margin:0 0 6px;"><a href="${setupLink}" style="display:inline-block;background:linear-gradient(135deg,#b8912e,#d4a853);color:#0b1d2e;padding:12px 26px;border-radius:10px;text-decoration:none;font-weight:600;font-size:0.9rem;">Set Your Password</a></p>
+                <p style="margin:0;color:#5a7d96;font-size:0.78rem;">This link works for 72 hours. After that, use "Forgot password?" on the portal login page.</p>
               </div>
               <div style="background:#0d2538;border:1px solid #163248;border-radius:10px;padding:20px 24px;margin-bottom:24px;">
                 <p style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:#5a7d96;margin:0 0 12px;">Your Referral Link</p>
@@ -147,16 +166,17 @@ export default async function handler(req, res) {
                 <p style="margin:0 0 4px;">1. Share your referral link with friends, on social media, or on your website</p>
                 <p style="margin:0 0 4px;">2. When someone books a charter through your link, you earn 10% commission</p>
                 <p style="margin:0 0 4px;">3. Track your clicks, conversions, and earnings from your dashboard</p>
-                <p style="margin:0;">4. Request a payout anytime — we'll send it within 3-5 business days</p>
+                <p style="margin:0;">4. Request a payout anytime and we'll send it within 3-5 business days</p>
               </div>
-              <p style="color:#5a7d96;font-size:0.78rem;margin-bottom:4px;">Want to change your password? Use the <a href="https://www.yachtawaynow.com/affiliate-portal" style="color:#4ecdc4;">"Forgot password?"</a> link on the login page, or click "Change Password" once you're signed in.</p>
+              <p style="color:#5a7d96;font-size:0.78rem;margin-bottom:4px;">Your referral code is ${code}. It is not a password.</p>
               <hr style="border:none;border-top:1px solid #163248;margin:24px 0;">
               <p style="color:#5a7d96;font-size:0.75rem;text-align:center;">Questions? Reply to this email or call <a href="tel:7276092248" style="color:#4ecdc4;">(727) 609-2248</a></p>
             </div>`,
           }),
         });
+        if (!mailRes.ok) console.error(`Affiliate welcome email failed: ${mailRes.status}`);
       } catch (emailErr) {
-        // Don't fail the signup if email fails
+        console.error('Affiliate welcome email error:', emailErr);
       }
 
       return res.json({
@@ -170,7 +190,7 @@ export default async function handler(req, res) {
   }
 
   // All other actions require admin auth
-  if (!checkAdmin(req)) {
+  if (!isAdminUser(req)) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
@@ -190,10 +210,10 @@ export default async function handler(req, res) {
     if (!id) return res.status(400).json({ error: 'Missing id' });
     try {
       const [affiliates, clicks, conversions, payouts] = await Promise.all([
-        supabase('GET', `affiliates?id=eq.${id}`),
-        supabase('GET', `affiliate_clicks?affiliate_id=eq.${id}&select=id,created_at`),
-        supabase('GET', `affiliate_conversions?affiliate_id=eq.${id}&order=created_at.desc`),
-        supabase('GET', `affiliate_payouts?affiliate_id=eq.${id}&order=created_at.desc`),
+        supabase('GET', `affiliates?id=eq.${encodeURIComponent(id)}`),
+        supabase('GET', `affiliate_clicks?affiliate_id=eq.${encodeURIComponent(id)}&select=id,created_at`),
+        supabase('GET', `affiliate_conversions?affiliate_id=eq.${encodeURIComponent(id)}&order=created_at.desc`),
+        supabase('GET', `affiliate_payouts?affiliate_id=eq.${encodeURIComponent(id)}&order=created_at.desc`),
       ]);
       if (!affiliates || affiliates.length === 0) return res.status(404).json({ error: 'Not found' });
       return res.json({
@@ -239,7 +259,7 @@ export default async function handler(req, res) {
     const id = req.query.id;
     if (!id) return res.status(400).json({ error: 'Missing id' });
     try {
-      const result = await supabase('PATCH', `affiliates?id=eq.${id}`, req.body);
+      const result = await supabase('PATCH', `affiliates?id=eq.${encodeURIComponent(id)}`, req.body);
       return res.json(result[0]);
     } catch (e) {
       return res.status(500).json({ error: e.message });
@@ -252,7 +272,7 @@ export default async function handler(req, res) {
     if (!affiliate_id || !amount) return res.status(400).json({ error: 'affiliate_id and amount required' });
 
     try {
-      const affiliates = await supabase('GET', `affiliates?id=eq.${affiliate_id}`);
+      const affiliates = await supabase('GET', `affiliates?id=eq.${encodeURIComponent(affiliate_id)}`);
       if (!affiliates || affiliates.length === 0) return res.status(404).json({ error: 'Affiliate not found' });
 
       const aff = affiliates[0];
@@ -272,7 +292,7 @@ export default async function handler(req, res) {
         status: 'pending',
       });
 
-      await supabase('PATCH', `affiliates?id=eq.${affiliate_id}`, {
+      await supabase('PATCH', `affiliates?id=eq.${encodeURIComponent(affiliate_id)}`, {
         total_conversions: (aff.total_conversions || 0) + 1,
         total_earned: parseFloat((aff.total_earned || 0)) + commission,
       });
@@ -289,19 +309,35 @@ export default async function handler(req, res) {
     if (!affiliate_id || !amount) return res.status(400).json({ error: 'affiliate_id and amount required' });
 
     try {
-      const affiliates = await supabase('GET', `affiliates?id=eq.${affiliate_id}`);
+      const affiliates = await supabase('GET', `affiliates?id=eq.${encodeURIComponent(affiliate_id)}`);
       if (!affiliates || affiliates.length === 0) return res.status(404).json({ error: 'Affiliate not found' });
 
       const aff = affiliates[0];
-      await supabase('POST', 'affiliate_payouts', {
-        affiliate_id,
-        amount: parseFloat(amount),
-        method: payMethod || 'other',
-        reference: reference || null,
-        status: 'completed',
-      });
+      // A payout first settles the affiliate's own pending requests, oldest
+      // first, so a request that has been paid stops holding back their balance.
+      let unassigned = parseFloat(amount);
+      const pending = await supabase('GET', `affiliate_payouts?affiliate_id=eq.${encodeURIComponent(affiliate_id)}&status=eq.pending&order=created_at.asc`);
+      for (const request of pending || []) {
+        const requested = parseFloat(request.amount || 0);
+        if (requested <= 0 || requested > unassigned + 0.005) continue;
+        await supabase('PATCH', `affiliate_payouts?id=eq.${encodeURIComponent(request.id)}`, {
+          status: 'completed',
+          method: payMethod || request.method || 'other',
+          reference: reference || request.reference || null,
+        });
+        unassigned -= requested;
+      }
+      if (unassigned > 0.005) {
+        await supabase('POST', 'affiliate_payouts', {
+          affiliate_id,
+          amount: Math.round(unassigned * 100) / 100,
+          method: payMethod || 'other',
+          reference: reference || null,
+          status: 'completed',
+        });
+      }
 
-      await supabase('PATCH', `affiliates?id=eq.${affiliate_id}`, {
+      await supabase('PATCH', `affiliates?id=eq.${encodeURIComponent(affiliate_id)}`, {
         total_paid: parseFloat((aff.total_paid || 0)) + parseFloat(amount),
       });
 
@@ -341,10 +377,10 @@ export default async function handler(req, res) {
     const id = req.query.id;
     if (!id) return res.status(400).json({ error: 'Missing id' });
     try {
-      await supabase('DELETE', `affiliate_clicks?affiliate_id=eq.${id}`);
-      await supabase('DELETE', `affiliate_conversions?affiliate_id=eq.${id}`);
-      await supabase('DELETE', `affiliate_payouts?affiliate_id=eq.${id}`);
-      await supabase('DELETE', `affiliates?id=eq.${id}`);
+      await supabase('DELETE', `affiliate_clicks?affiliate_id=eq.${encodeURIComponent(id)}`);
+      await supabase('DELETE', `affiliate_conversions?affiliate_id=eq.${encodeURIComponent(id)}`);
+      await supabase('DELETE', `affiliate_payouts?affiliate_id=eq.${encodeURIComponent(id)}`);
+      await supabase('DELETE', `affiliates?id=eq.${encodeURIComponent(id)}`);
       return res.json({ deleted: true });
     } catch (e) {
       return res.status(500).json({ error: e.message });

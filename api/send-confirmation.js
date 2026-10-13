@@ -1,17 +1,26 @@
+import { isAdmin, escapeHtml, clip, isEmail, isIsoDate } from './_shared.js';
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const adminKey = req.headers['x-admin-key'];
-  if (adminKey !== (process.env.AFFILIATE_ADMIN_KEY || 'yacht-affiliate-admin-2026')) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  if (!isAdmin(req)) return res.status(401).json({ error: 'Unauthorized' });
 
-  const { name, email, charter_type, charter_date, guests, duration, total, deposit, special_requests } = req.body;
-  if (!name || !email) return res.status(400).json({ error: 'Name and email required' });
+  const body = req.body || {};
+  const email = clip(body.email, 254);
+  const charter_date = body.charter_date;
+  if (!clip(body.name, 120) || !isEmail(email)) return res.status(400).json({ error: 'Name and a valid email required' });
 
-  const dateFormatted = charter_date
+  const name = escapeHtml(clip(body.name, 120));
+  const charter_type = escapeHtml(clip(body.charter_type, 80));
+  const guests = escapeHtml(clip(body.guests, 20));
+  const duration = escapeHtml(clip(body.duration, 40));
+  const total = escapeHtml(clip(body.total, 20));
+  const deposit = escapeHtml(clip(body.deposit, 20));
+  const special_requests = escapeHtml(clip(body.special_requests, 2000));
+
+  const dateFormatted = isIsoDate(charter_date)
     ? new Date(charter_date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
     : 'To be confirmed';
 
@@ -26,7 +35,7 @@ export default async function handler(req, res) {
         from: 'Yacht Away Now <bookings@yachtawaynow.com>',
         to: email,
         reply_to: 'info@yachtawaynow.com',
-        subject: `Your Yacht Charter is Confirmed! ⚓ — ${dateFormatted}`,
+        subject: `Your Yacht Charter is Confirmed! ⚓ ${dateFormatted}`,
         html: `
 <!DOCTYPE html>
 <html>
@@ -49,7 +58,7 @@ export default async function handler(req, res) {
 
     <!-- Greeting -->
     <h1 style="font-family:Georgia,'Times New Roman',serif;color:#d4a853;text-align:center;font-size:1.8rem;margin:0 0 8px;font-weight:700;">Welcome Aboard, ${name}!</h1>
-    <p style="text-align:center;color:#8bbad4;font-size:0.92rem;margin:0 0 32px;line-height:1.6;">Your charter is confirmed and we can't wait to host you. Everything is set — contracts signed, deposit received. Here are your booking details:</p>
+    <p style="text-align:center;color:#8bbad4;font-size:0.92rem;margin:0 0 32px;line-height:1.6;">Your charter is confirmed and we can't wait to host you. Everything is set: contracts signed, deposit received. Here are your booking details:</p>
 
     <!-- Booking Details Card -->
     <div style="background:#0d2538;border:1px solid #163248;border-radius:14px;overflow:hidden;margin-bottom:24px;">
@@ -131,7 +140,7 @@ export default async function handler(req, res) {
     <!-- Footer -->
     <div style="text-align:center;padding:20px 0 40px;border-top:1px solid #163248;">
       <img src="https://www.yachtawaynow.com/images/yacht-away-now-logo.png" alt="Yacht Away Now" style="height:40px;margin-bottom:12px;">
-      <p style="margin:0 0 4px;color:#5a7d96;font-size:0.72rem;">Yacht Away Now — Private Charters</p>
+      <p style="margin:0 0 4px;color:#5a7d96;font-size:0.72rem;">Yacht Away Now: Private Charters</p>
       <p style="margin:0 0 4px;color:#5a7d96;font-size:0.72rem;">St. Petersburg, Florida</p>
       <p style="margin:0;color:#5a7d96;font-size:0.72rem;"><a href="https://www.yachtawaynow.com" style="color:#4ecdc4;text-decoration:none;">yachtawaynow.com</a></p>
     </div>

@@ -1246,7 +1246,7 @@ function selectPackage(radio) {
     customTotalInput.focus();
   } else if (radio.value === 'bahamas') {
     customTotalRow.style.display = 'none';
-    hiddenTotal.value = 5000;
+    hiddenTotal.value = 9500;
   } else {
     customTotalRow.style.display = 'none';
     hiddenTotal.value = currentRates()[radio.value] * (selectedHours() || 4);
@@ -1278,7 +1278,11 @@ function getCharterTotal() {
   return parseFloat(hiddenTotal.value) || 0;
 }
 
+// Set when the server reports a deposit already on file: only the rest is due.
+let balanceDueOverride = null;
+
 function getDeposit() {
+  if (balanceDueOverride !== null) return balanceDueOverride;
   // In pay-in-full mode the "amount due today" is the entire charter total.
   if (payFull) return Math.round(getCharterTotal());
   return Math.round(getCharterTotal() * 0.5);
@@ -1556,9 +1560,9 @@ async function submitAndPay() {
           charter_date: charterDate,
           guests, captain,
           total_price: total || null,
+          booking_id: params.get('booking_id') || undefined,
           signature_data: sigData,
           signer_name: document.getElementById('sigName').value.trim(),
-          signed_at: new Date().toISOString(),
           initials
         })
       });
@@ -1596,15 +1600,28 @@ async function submitAndPay() {
         guests,
         captain,
         total_price: total,
+        boat: document.getElementById('sumBoat').value,
+        duration: document.getElementById('sumDuration').value,
+        booking_id: params.get('booking_id') || undefined,
         payment_type: payFull ? 'full' : 'deposit',
         signature_data: sigData,
         signer_name: document.getElementById('sigName').value.trim(),
-        signed_at: new Date().toISOString(),
         initials
       })
     });
 
     const data = await res.json();
+
+    if (data.balance_due) {
+      balanceDueOverride = data.balance_due;
+      const depLabel = document.querySelector('.deposit-row .total-label');
+      if (depLabel) depLabel.textContent = 'Remaining Balance Due Today';
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay Balance: <span id="payAmount">$' + balanceDueOverride.toLocaleString() + '</span>';
+      updateDeposit();
+      alert(data.error + '\n\nThe amount has been updated. Press the button again to pay the balance.');
+      return;
+    }
 
     if (data.url) {
       // Show success briefly then redirect
