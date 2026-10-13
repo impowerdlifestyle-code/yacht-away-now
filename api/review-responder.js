@@ -1,4 +1,4 @@
-import { isCron } from './_shared.js';
+import { isCron, withoutEmDashes } from './_shared.js';
 
 // Keep in sync with the review count published across the site. When the drift
 // warning below fires, sweep the site and update this constant in the same commit.
@@ -120,7 +120,8 @@ Guidelines:
 - Never mention prices, percentages, offers, anything free or discounted, refunds, credits, guarantees or legal matters
 - Never include a link or a web address
 - Do not use the words "free", "credit", "guarantee" or "legal" at all, including in phrases like "feel free"
-- No templated language, and one emoji at most`,
+- No templated language, and one emoji at most
+- Never use an em dash. Use a comma or a new sentence instead`,
           messages: [
             {
               role: 'user',
@@ -131,7 +132,7 @@ Guidelines:
       });
 
       const aiData = await aiResponse.json().catch(() => ({}));
-      const replyText = (aiData.content?.[0]?.text || '').trim();
+      const replyText = withoutEmDashes((aiData.content?.[0]?.text || '').trim());
 
       if (!aiResponse.ok || !replyText) {
         console.error('AI response empty:', aiResponse.status, aiData.error?.message);

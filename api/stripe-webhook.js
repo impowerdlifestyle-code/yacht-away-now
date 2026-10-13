@@ -150,11 +150,11 @@ async function sendWelcomeEmail({ name, email, charterType, charterDate, guests,
     <div style="background:#0d2538;border:1px solid #163248;border-radius:14px;padding:24px;margin-bottom:24px;">
       <h2 style="font-family:Georgia,'Times New Roman',serif;color:#d4a853;font-size:1.05rem;margin:0 0 16px;">Pro Tips for Your Charter</h2>
       <table style="width:100%;border-collapse:collapse;">
-        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;width:30px;font-size:1.2rem;">&#127866;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;"><strong style="color:#f0f7fa;">BYOB</strong> — Bring your own drinks and snacks. We have a full galley with fridge, ice, and glassware.</td></tr>
-        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#9728;&#65039;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Sun Essentials</strong> — Reef-safe sunscreen, sunglasses, towels, and hats.</td></tr>
-        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#127908;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Set the Vibe</strong> — Bluetooth sound system onboard. Queue up your playlist.</td></tr>
-        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128247;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Capture It</strong> — Our captain is happy to take photos. Drone footage available upon request.</td></tr>
-        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128094;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Wildlife</strong> — Keep an eye out for dolphins, manatees, and sea turtles.</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;width:30px;font-size:1.2rem;">&#127866;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;"><strong style="color:#f0f7fa;">BYOB</strong>: Bring your own drinks and snacks. We have a full galley with fridge, ice, and glassware.</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#9728;&#65039;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Sun Essentials</strong>: Reef-safe sunscreen, sunglasses, towels, and hats.</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#127908;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Set the Vibe</strong>: Bluetooth sound system onboard. Queue up your playlist.</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128247;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Capture It</strong>: Our captain is happy to take photos. Drone footage available upon request.</td></tr>
+        <tr><td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128094;</td><td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Wildlife</strong>: Keep an eye out for dolphins, manatees, and sea turtles.</td></tr>
       </table>
     </div>
 
@@ -190,7 +190,7 @@ async function sendWelcomeEmail({ name, email, charterType, charterDate, guests,
 
     <div style="text-align:center;padding:20px 0 40px;border-top:1px solid #163248;">
       <img src="https://www.yachtawaynow.com/images/yacht-away-now-logo.png" alt="Yacht Away Now" style="height:36px;margin-bottom:10px;">
-      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now — Private Charters</p>
+      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now: Private Charters</p>
       <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">St. Petersburg, Florida</p>
       <p style="margin:0;color:#5a7d96;font-size:0.7rem;"><a href="https://www.yachtawaynow.com" style="color:#4ecdc4;text-decoration:none;">yachtawaynow.com</a></p>
     </div>
@@ -258,6 +258,19 @@ export default async function handler(req, res) {
     const name = metadata.charterer_name
       || (booking ? `${booking.first_name || ''} ${booking.last_name || ''}`.trim() : '')
       || 'Guest';
+
+    if (booking?.payment_status === 'refunded') {
+      console.error(`stripe-webhook: ${type} of $${amountPaid} landed on refunded booking ${booking.id}; booking left unchanged`);
+      const ownerNotified = await postDashboard('/api/owner-notify', {
+        event: isBalance ? 'balance_paid' : 'deposit_paid',
+        booking_id: booking.id,
+        name,
+        email,
+        amount: amountPaid,
+        note: 'This payment arrived on a booking marked REFUNDED. The booking was not changed. Check Stripe and decide whether to return the money or reopen the booking.',
+      });
+      return res.status(200).json({ received: true, action: 'ignored_refunded', booking_id: booking.id, owner_notified: ownerNotified });
+    }
 
     if (isBalance) {
       if (booking) {

@@ -83,9 +83,9 @@ export default async function handler(req, res) {
   // Send email notification (only for AI chatbot bookings — website form already sends via Web3Forms)
   if (source === 'chat' && process.env.WEB3FORMS_KEY) {
     try {
-      const subject = `New Charter Booking — ${first_name} ${last_name || ''} (${charter_type || 'Charter'})`;
+      const subject = `New Charter Booking: ${first_name} ${last_name || ''} (${charter_type || 'Charter'})`;
       const mailBody = `
-NEW BOOKING REQUEST — AI Chat Concierge
+NEW BOOKING REQUEST: AI Chat Concierge
 ========================================
 
 Name:           ${first_name} ${last_name || ''}
@@ -108,7 +108,7 @@ Reply directly to this email to reach the customer at ${email}
         body: JSON.stringify({
           access_key: process.env.WEB3FORMS_KEY,
           subject,
-          from_name: 'Yacht Away Now — AI Concierge',
+          from_name: 'Yacht Away Now AI Concierge',
           reply_to: email,
           ccemail: 'josh@yachtawaynow.com',
           message: mailBody,
@@ -179,7 +179,7 @@ async function alertLeadNotSaved(booking, detail) {
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         access_key: process.env.WEB3FORMS_KEY,
-        subject: `LEAD NOT SAVED — ${booking.first_name} ${booking.last_name || ''}`.trim(),
+        subject: `LEAD NOT SAVED: ${booking.first_name} ${booking.last_name || ''}`.trim(),
         message:
           'A booking request reached /api/book but the Supabase insert failed. ' +
           'The lead exists only in the Web3Forms email. Add it to the dashboard by hand.\n\n' +

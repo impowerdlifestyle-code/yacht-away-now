@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         to: b.email,
         reply_to: 'josh@yachtawaynow.com',
         bcc: 'ciaran@voreli.ai',
-        subject: `One last step — sign your charter contract ⚓`,
+        subject: `One last step: sign your charter contract ⚓`,
         html: `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body style="margin:0;padding:0;background:#071520;font-family:Arial,Helvetica,sans-serif;">
@@ -69,11 +69,11 @@ export default async function handler(req, res) {
   </div>
   <div style="padding:8px 32px 0;">
     <h1 style="font-family:Georgia,'Times New Roman',serif;color:#d4a853;text-align:center;font-size:1.6rem;margin:24px 0 8px;font-weight:700;">You're almost set, ${firstName}!</h1>
-    <p style="text-align:center;color:#8bbad4;font-size:0.95rem;margin:0 0 28px;line-height:1.7;">Thanks for your deposit${datePretty ? ` — your charter on <strong style="color:#4ecdc4;">${datePretty}</strong> is being held` : ''}. There's just one last step: review and sign your charter paperwork (Coast Guard &amp; liability docs we keep on file for every trip).</p>
+    <p style="text-align:center;color:#8bbad4;font-size:0.95rem;margin:0 0 28px;line-height:1.7;">Thanks for your deposit${datePretty ? `. Your charter on <strong style="color:#4ecdc4;">${datePretty}</strong> is being held` : ''}. There's just one last step: review and sign your charter paperwork (Coast Guard &amp; liability docs we keep on file for every trip).</p>
 
     <div style="background:#0d2538;border:1px solid #163248;border-radius:14px;padding:26px 24px;margin-bottom:24px;text-align:center;">
       <p style="margin:0 0 6px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.14em;color:#5a7d96;font-weight:600;">Deposit Received ✓</p>
-      <p style="margin:0 0 20px;color:#8bbad4;font-size:0.9rem;line-height:1.6;">No further payment is needed. Just add your initials and signature — it takes about two minutes.</p>
+      <p style="margin:0 0 20px;color:#8bbad4;font-size:0.9rem;line-height:1.6;">No further payment is needed. Just add your initials and signature. It takes about two minutes.</p>
       <a href="${escapeHtml(contractUrl)}" style="display:inline-block;background:linear-gradient(135deg,#b8912e,#d4a853);color:#0b1d2e;padding:15px 34px;border-radius:50px;text-decoration:none;font-weight:700;font-size:0.95rem;">Review &amp; Sign Contract →</a>
       <p style="margin:16px 0 0;font-size:0.74rem;color:#5a7d96;">Secure &middot; legally binding e-signature &middot; no payment due</p>
     </div>
@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     <p style="color:#f0f7fa;font-size:0.95rem;font-weight:700;margin:0 0 28px;">Captain Josh<br><span style="color:#5a7d96;font-weight:400;font-size:0.8rem;">Yacht Away Now &middot; St. Petersburg, FL</span></p>
 
     <div style="text-align:center;padding:20px 0 40px;border-top:1px solid #163248;">
-      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now — Private Charters &middot; St. Petersburg, Florida</p>
+      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now Private Charters &middot; St. Petersburg, Florida</p>
       <p style="margin:0;color:#5a7d96;font-size:0.7rem;"><a href="https://www.yachtawaynow.com" style="color:#4ecdc4;text-decoration:none;">yachtawaynow.com</a></p>
     </div>
   </div>
@@ -96,9 +96,9 @@ export default async function handler(req, res) {
 </body></html>`,
         text: `You're almost set, ${rawFirstName}!
 
-Thanks for your deposit${datePretty ? ` — your charter on ${datePretty} is being held` : ''}. One last step: review and sign your charter paperwork (Coast Guard & liability docs we keep on file for every trip).
+Thanks for your deposit${datePretty ? `. Your charter on ${datePretty} is being held` : ''}. One last step: review and sign your charter paperwork (Coast Guard & liability docs we keep on file for every trip).
 
-Your deposit is already received — no further payment is needed. Just add your initials and signature, about two minutes:
+Your deposit is already received, so no further payment is needed. Just add your initials and signature, about two minutes:
 
 ${contractUrl}
 

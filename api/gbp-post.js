@@ -2,12 +2,12 @@ import { isCron } from './_shared.js';
 
 const POSTS = [
   {
-    summary: "Yacht Wedding vs Traditional Venue: Save 60-85% 💍\n\nAn intimate yacht wedding on Tampa Bay costs $3,000-$6,000 total, compared to $15,000-$35,000 for a traditional venue.\n\nYour ceremony on the flybridge with a Gulf Coast sunset backdrop. 52ft Marquis Flybridge, up to 13 guests, professional captain and crew.\n\nRead our full 2026 cost comparison on the blog!",
+    summary: "Yacht Wedding vs Traditional Venue 💍\n\nAn intimate ceremony on the flybridge with a Gulf Coast sunset backdrop. 52ft Marquis Flybridge, up to 13 guests, professional captain and crew.\n\nOne all-inclusive rate: $500/hr weekdays, $600/hr weekends, 4-hour minimum. A 4-hour weekend charter is $2,400.\n\nRead our full 2026 cost comparison on the blog!",
     url: "https://www.yachtawaynow.com/blog/yacht-wedding-vs-venue-cost-comparison",
     action: "LEARN_MORE"
   },
   {
-    summary: "Planning a Bachelorette in St. Pete? Here's Your 3-Day Itinerary 🥂\n\nDay 1: Beach Drive dinner + rooftop cocktails at The Birchwood\nDay 2: Private sunset yacht cruise with your crew\nDay 3: Brunch + beach\n\nA weekday 5-hour sunset cruise ($2,500 split 10 ways = $250/person) is the highlight every bride remembers.\n\nRead the full itinerary on our blog!",
+    summary: "Planning a Bachelorette in St. Pete? Here's Your 3-Day Itinerary 🥂\n\nDay 1: Beach Drive dinner + rooftop cocktails at The Birchwood\nDay 2: Private sunset yacht cruise with your crew\nDay 3: Brunch + beach\n\nA weekend 5-hour sunset cruise ($3,000 split 10 ways = $300/person) is the highlight every bride remembers.\n\nRead the full itinerary on our blog!",
     url: "https://www.yachtawaynow.com/blog/bachelorette-yacht-itinerary-st-pete",
     action: "LEARN_MORE"
   },
@@ -17,7 +17,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "How Much Does a Yacht Charter Actually Cost? \ud83d\udcb0\n\nNo call-for-quote games. Our 2026 Tampa Bay pricing:\n\n\u2705 Weekdays $500/hr \u00b7 Weekends $600/hr\n\u2705 All-inclusive: captain, crew, fuel, ice\n\u2705 4-hour minimum \u00b7 up to 13 guests\n\nSplit 13 ways, a 4-hour weekend charter ($2,400) is ~$185/person.\n\nFull pricing breakdown on the blog!",
+    summary: "How Much Does a Yacht Charter Actually Cost? \ud83d\udcb0\n\nNo call-for-quote games. Our 2026 Tampa Bay pricing:\n\n\u2705 Weekdays $500/hr \u00b7 Weekends $600/hr\n\u2705 All-inclusive: captain, crew, fuel, ice\n\u2705 4-hour minimum \u00b7 up to 13 guests\n\nSplit 10 ways, a 4-hour weekend charter ($2,400) is $240/person.\n\nFull pricing breakdown on the blog!",
     url: "https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay",
     action: "LEARN_MORE"
   },
@@ -27,12 +27,12 @@ const POSTS = [
     action: "LEARN_MORE"
   },
   {
-    summary: "Two Islands. One Perfect Day. \ud83c\udfdd\ufe0f\n\nEgmont Key: fort ruins, an 1858 lighthouse, and snorkeling over submerged batteries.\nShell Key: the best shelling sandbar on the Gulf Coast.\n\nBoth in one 6-8 hour private charter from St. Pete. The exact itinerary our captains run is on the blog.\n\nPlan your island day!",
+    summary: "Two Islands. One Perfect Day. \ud83c\udfdd\ufe0f\n\nEgmont Key: fort ruins, a historic lighthouse, and snorkeling over submerged batteries.\nShell Key: the best shelling sandbar on the Gulf Coast.\n\nBoth in one full-day private charter from St. Pete. The exact itinerary our captains run is on the blog.\n\nPlan your island day!",
     url: "https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip",
     action: "LEARN_MORE"
   },
   {
-    summary: "When's the Best Month to Charter in Tampa Bay? \ud83c\udf24\ufe0f\n\nOur captains' honest answer: April, May, and October, the local's favorite. Summer? Book mornings or sunset cruises and let the 3pm storm have the mid-afternoon.\n\nWe published the full month-by-month weather guide: water temps, seas, and the truth about hurricane season.\n\nFind your month!",
+    summary: "When's the Best Month to Charter in Tampa Bay? \ud83c\udf24\ufe0f\n\nOur captains' honest answer: April, May, and October, the local's favorite. Summer? Book mornings or sunset cruises and let the afternoon storm have the mid-afternoon.\n\nWe published the full month-by-month weather guide: water temps, seas, and the truth about hurricane season.\n\nFind your month!",
     url: "https://www.yachtawaynow.com/blog/tampa-bay-boating-weather-by-month",
     action: "LEARN_MORE"
   },
@@ -42,12 +42,12 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "How Many People Fit on a Yacht Charter? \ud83d\udc65\n\nOur 52ft Marquis hosts up to 13 guests across 3 decks, and yes, kids count toward the limit (it's federal law, and any operator who'll \"squeeze in extras\" is one to avoid).\n\nBigger group? Add Sly Fox for 19 total cruising side by side.\n\nRead the group size guide!",
+    summary: "How Many People Fit on a Yacht Charter? \ud83d\udc65\n\nOur 52ft Marquis hosts up to 13 guests across 3 decks, and yes, kids count toward the limit (it's federal law, and any operator who'll \"squeeze in extras\" is one to avoid).\n\nBigger group? Add Sly Fox, which sleeps 6, and cruise side by side.\n\nRead the group size guide!",
     url: "https://www.yachtawaynow.com/blog/how-many-people-fit-on-a-yacht-charter",
     action: "LEARN_MORE"
   },
   {
-    summary: "Beat the Florida Heat \u2600\ufe0f Morning & Sunset Charters\n\nSummer on Tampa Bay has a rhythm: gorgeous mornings, a brief 3pm storm, then a washed-clean golden evening.\n\nSo we run with it: morning sandbar swims in 88\u00b0 Gulf water, or the 5-hour sunset cruise ($2,500 weekdays, $3,000 weekends, all-inclusive) when the sky puts on its show.\n\nBook your summer slot!",
+    summary: "Beat the Florida Heat \u2600\ufe0f Morning & Sunset Charters\n\nSummer on Tampa Bay has a rhythm: gorgeous mornings, a brief afternoon storm, then a washed-clean golden evening.\n\nSo we run with it: morning sandbar swims in warm Gulf water, or the 5-hour sunset cruise ($2,500 weekdays, $3,000 weekends, all-inclusive) when the sky puts on its show.\n\nBook your summer slot!",
     url: "https://www.yachtawaynow.com/sunset-cruise-st-petersburg",
     action: "BOOK"
   },
@@ -87,7 +87,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "Sunset Cruise St. Petersburg: Golden Hour on the Water 🌅\n\nWatch the sky turn gold and pink from the flybridge of a private 52ft yacht. Pass the Skyway Bridge, Pass-a-Grille, and Shell Key.\n\n5-hour sunset cruise (2:30-7:30pm): $2,500 weekdays, $3,000 weekends, all-inclusive. Captain, crew, fuel included.\n\nThe most popular charter we offer. Book early!",
+    summary: "Sunset Cruise St. Petersburg: Golden Hour on the Water 🌅\n\nWatch the sky turn gold and pink from the flybridge of a private 52ft yacht. Pass the Skyway Bridge, Pass-a-Grille, and Shell Key.\n\n5-hour sunset cruise: $2,500 weekdays, $3,000 weekends, all-inclusive. Captain, crew, fuel included.\n\nThe most popular charter we offer. Book early!",
     url: "https://www.yachtawaynow.com/sunset-cruise-st-petersburg",
     action: "BOOK"
   },
@@ -112,7 +112,7 @@ const POSTS = [
     action: "BOOK"
   },
   {
-    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless. Our USCG-licensed captain runs the boat while you and up to 12 guests relax.\n\n⭐ 133 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
+    summary: "No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless. Our USCG-licensed captain runs the boat while your group of up to 13 relaxes.\n\n⭐ 133 five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from $500/hr; weekend 5-hour sunset cruise $3,000 all-inclusive\n\nRequest your St. Pete yacht rental today!",
     url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
     action: "BOOK"
   },

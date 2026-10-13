@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         access_key: process.env.WEB3FORMS_KEY,
         subject: subject || 'Yacht Away Now Notification',
-        from_name: 'Yacht Away Now — Contract System',
+        from_name: 'Yacht Away Now Contract System',
         reply_to: reply_to || 'noreply@yachtawaynow.com',
         message,
       }),

@@ -57,6 +57,38 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'We could not look up your booking. Please try again or call (727) 609-2248.' });
   }
 
+  // A returning customer's newest row can be last season's paid charter. Only
+  // treat the row as this charter when the id or the date says it is.
+  if (booking && isPaid(booking) && String(body.booking_id || '') !== String(booking.id)
+      && charter_date && booking.charter_date !== charter_date) {
+    booking = null;
+  }
+
+  // Money already on the booking changes what may be charged. A deposit is
+  // never taken twice, and paying in full after a deposit charges the rest.
+  let balanceDue = null;
+  if (booking?.payment_status === 'paid_full') {
+    return res.status(409).json({ error: 'This charter is already paid in full, so there is nothing to pay. Questions? Call (727) 609-2248.' });
+  }
+  if (booking?.payment_status === 'deposit_paid') {
+    if (!isFull) {
+      return res.status(409).json({ error: 'Your deposit is already paid. To pay the remaining balance, use the balance link in your welcome email or call (727) 609-2248.' });
+    }
+    const paidTotal = Number(booking.total_price);
+    const paidDeposit = Number(booking.deposit_amount);
+    balanceDue = Math.round((paidTotal - paidDeposit) * 100) / 100;
+    if (!(paidTotal > 0) || !(paidDeposit > 0) || balanceDue < 1) {
+      console.error(`create-checkout rejected: cannot work out the balance for booking ${booking.id}`);
+      return res.status(409).json({ error: 'Your deposit is already paid. Please call (727) 609-2248 and we will send your balance link.' });
+    }
+    if (Math.abs(amount - balanceDue) > 1) {
+      return res.status(409).json({
+        error: `Your deposit is already on file, so only the remaining balance of $${balanceDue.toLocaleString()} is due.`,
+        balance_due: balanceDue,
+      });
+    }
+  }
+
   // The server decides what may be charged. A total already on the booking is
   // the least it can be. Without one, the claimed total has to clear the rate card floor for
   // that date and boat, and the amount has to be the right share of it.
@@ -64,7 +96,9 @@ export default async function handler(req, res) {
   const bookingTotal = Number(booking?.total_price);
   const claimedTotal = Number(body.total_price);
   let total;
-  if (bookingTotal > 0) {
+  if (balanceDue !== null) {
+    total = bookingTotal;
+  } else if (bookingTotal > 0) {
     // A customer may add hours on the contract page, never remove them.
     total = claimedTotal > bookingTotal ? claimedTotal : bookingTotal;
   } else {
@@ -75,7 +109,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'That amount is below the minimum for this charter. Please call (727) 609-2248 so we can confirm your quote.' });
     }
   }
-  if (Math.abs(amount - total * share) > 1) {
+  if (balanceDue === null && Math.abs(amount - total * share) > 1) {
     console.error(`create-checkout rejected: amount ${amount} is not ${share * 100}% of ${total} for ${email}`);
     return res.status(400).json({ error: 'That amount does not match your charter total. Please call (727) 609-2248 so we can confirm your quote.' });
   }
@@ -91,7 +125,8 @@ export default async function handler(req, res) {
     params.append('cancel_url', 'https://www.yachtawaynow.com/contract?canceled=true');
     params.append('customer_email', email);
     params.append('line_items[0][price_data][currency]', 'usd');
-    params.append('line_items[0][price_data][product_data][name]', isFull ? 'Yacht Charter: Full Payment' : 'Yacht Charter Deposit (50%)');
+    const productName = balanceDue !== null ? 'Charter Balance Payment' : isFull ? 'Yacht Charter: Full Payment' : 'Yacht Charter Deposit (50%)';
+    params.append('line_items[0][price_data][product_data][name]', productName);
     params.append('line_items[0][price_data][product_data][description]',
       `${charter_type || 'Charter'}, ${metaDate || 'date TBD'}, ${guests || '?'} guests. Charter total: $${total}`
     );
@@ -107,7 +142,7 @@ export default async function handler(req, res) {
     params.append('payment_intent_data[metadata][captain]', captain);
     params.append('payment_intent_data[metadata][total_price]', total.toString());
     params.append('payment_intent_data[metadata][deposit_amount]', amount.toString());
-    params.append('payment_intent_data[metadata][type]', isFull ? 'full_payment' : 'deposit');
+    params.append('payment_intent_data[metadata][type]', balanceDue !== null ? 'balance_payment' : isFull ? 'full_payment' : 'deposit');
     if (booking) params.append('payment_intent_data[metadata][booking_id]', booking.id);
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
@@ -160,7 +195,7 @@ export default async function handler(req, res) {
           guests,
           captain: captain || null,
           total_price: total,
-          deposit_amount: amount,
+          deposit_amount: balanceDue !== null ? null : amount,
           signer_name: signer_name || name,
           signature_data,
           signed_at: signedAt,

@@ -63,6 +63,11 @@ export function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+// Model output is told not to use em dashes; this catches the ones that slip through.
+export function withoutEmDashes(text) {
+  return String(text ?? '').replace(/\s*\u2014\s*/g, ', ');
+}
+
 export function clip(value, max) {
   if (value == null) return '';
   return String(value).trim().slice(0, max);

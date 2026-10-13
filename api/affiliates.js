@@ -166,7 +166,7 @@ export default async function handler(req, res) {
                 <p style="margin:0 0 4px;">1. Share your referral link with friends, on social media, or on your website</p>
                 <p style="margin:0 0 4px;">2. When someone books a charter through your link, you earn 10% commission</p>
                 <p style="margin:0 0 4px;">3. Track your clicks, conversions, and earnings from your dashboard</p>
-                <p style="margin:0;">4. Request a payout anytime — we'll send it within 3-5 business days</p>
+                <p style="margin:0;">4. Request a payout anytime and we'll send it within 3-5 business days</p>
               </div>
               <p style="color:#5a7d96;font-size:0.78rem;margin-bottom:4px;">Your referral code is ${code}. It is not a password.</p>
               <hr style="border:none;border-top:1px solid #163248;margin:24px 0;">

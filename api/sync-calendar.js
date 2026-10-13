@@ -1,14 +1,11 @@
 // Re-fires the Google Calendar event for an already signed + deposit-paid
-// booking. Needed because a charter that pays first and signs later can miss
-// the normal calendar trigger. Gated to signed+paid bookings, and the caller
-// must supply the matching email, so it can't be used to spam arbitrary events.
-import { SUPABASE_URL, supabaseHeaders } from './_shared.js';
-
-const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK;
+// booking, for when the normal trigger failed. Callers present the admin key
+// or YAN_BOOKING_SECRET, and the booking must be both signed and paid.
+import { SUPABASE_URL, supabaseHeaders, isAdmin, hasBookingSecret, createCalendarEvent } from './_shared.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ ok: false, error: 'Method not allowed' });
-  if (!GOOGLE_CALENDAR_WEBHOOK) return res.status(500).json({ ok: false, error: 'Calendar webhook not configured' });
+  if (!isAdmin(req) && !hasBookingSecret(req)) return res.status(401).json({ ok: false, error: 'Unauthorized' });
 
   if (!process.env.SUPABASE_SERVICE_KEY) {
     console.error('sync-calendar: SUPABASE_SERVICE_KEY is not set');
@@ -34,25 +31,8 @@ export default async function handler(req, res) {
   }
   if (!b.charter_date) return res.status(409).json({ ok: false, error: 'Booking has no charter date' });
 
-  try {
-    await fetch(GOOGLE_CALENDAR_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        first_name: b.first_name || '',
-        last_name: b.last_name || '',
-        phone: b.phone || '',
-        email: b.email || '',
-        charter_type: b.charter_type || 'Charter',
-        preferred_date: b.charter_date,
-        preferred_time: b.charter_time || '10:00',
-        guests: b.guests || '',
-        duration: b.duration || '4hr',
-        message: b.special_requests || '',
-      }),
-    });
-  } catch (err) {
-    return res.status(502).json({ ok: false, error: 'Calendar webhook call failed: ' + String(err) });
+  if (!(await createCalendarEvent(b))) {
+    return res.status(502).json({ ok: false, error: 'Calendar webhook call failed' });
   }
 
   return res.status(200).json({ ok: true, synced: `${b.first_name} ${b.last_name || ''}`.trim(), date: b.charter_date, time: b.charter_time });

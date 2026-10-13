@@ -1,3 +1,5 @@
+import { isAdmin } from './_shared.js';
+
 const INDEXNOW_KEY = 'b4f8c2e7a1d94f3e8b6c5a2d1e9f7b3c';
 const HOST = 'www.yachtawaynow.com';
 
@@ -6,9 +8,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Get URLs to submit (or submit all sitemap URLs)
+  if (!isAdmin(req)) return res.status(401).json({ error: 'Unauthorized' });
+
   const { urls } = req.body || {};
-  
+  if (urls !== undefined && (!Array.isArray(urls) || urls.length === 0 || urls.length > 500 || !urls.every((u) => typeof u === 'string' && u.startsWith(`https://${HOST}/`)))) {
+    return res.status(400).json({ error: `urls must be a list of https://${HOST}/ URLs` });
+  }
+
   const urlList = urls || [
     'https://www.yachtawaynow.com/',
     'https://www.yachtawaynow.com/pricing',

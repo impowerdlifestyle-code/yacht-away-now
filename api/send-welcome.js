@@ -101,23 +101,23 @@ export default async function handler(req, res) {
       <table style="width:100%;border-collapse:collapse;">
         <tr>
           <td style="padding:8px 12px 8px 0;vertical-align:top;width:30px;font-size:1.2rem;">&#127866;</td>
-          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;"><strong style="color:#f0f7fa;">BYOB</strong> — Bring your own drinks and snacks. We have a full galley with fridge, ice, and glassware.</td>
+          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;"><strong style="color:#f0f7fa;">BYOB</strong>: Bring your own drinks and snacks. We have a full galley with fridge, ice, and glassware.</td>
         </tr>
         <tr>
           <td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#9728;&#65039;</td>
-          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Sun Essentials</strong> — Reef-safe sunscreen, sunglasses, towels, and hats. The Florida sun is no joke.</td>
+          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Sun Essentials</strong>: Reef-safe sunscreen, sunglasses, towels, and hats. The Florida sun is no joke.</td>
         </tr>
         <tr>
           <td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#127908;</td>
-          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Set the Vibe</strong> — We have a Bluetooth sound system onboard. Queue up your playlist ahead of time.</td>
+          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Set the Vibe</strong>: We have a Bluetooth sound system onboard. Queue up your playlist ahead of time.</td>
         </tr>
         <tr>
           <td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128247;</td>
-          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Capture It</strong> — Our captain is happy to take photos. Drone footage available upon request.</td>
+          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Capture It</strong>: Our captain is happy to take photos. Drone footage available upon request.</td>
         </tr>
         <tr>
           <td style="padding:8px 12px 8px 0;vertical-align:top;font-size:1.2rem;">&#128094;</td>
-          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Wildlife</strong> — Keep an eye out for dolphins, manatees, and sea turtles. They're regulars on our routes.</td>
+          <td style="padding:8px 0;color:#8bbad4;font-size:0.85rem;line-height:1.6;border-top:1px solid #163248;"><strong style="color:#f0f7fa;">Wildlife</strong>: Keep an eye out for dolphins, manatees, and sea turtles. They're regulars on our routes.</td>
         </tr>
       </table>
     </div>
@@ -159,7 +159,7 @@ export default async function handler(req, res) {
     <!-- Footer -->
     <div style="text-align:center;padding:20px 0 40px;border-top:1px solid #163248;">
       <img src="https://www.yachtawaynow.com/images/yacht-away-now-logo.png" alt="Yacht Away Now" style="height:36px;margin-bottom:10px;">
-      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now — Private Charters</p>
+      <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">Yacht Away Now: Private Charters</p>
       <p style="margin:0 0 2px;color:#5a7d96;font-size:0.7rem;">St. Petersburg, Florida</p>
       <p style="margin:0;color:#5a7d96;font-size:0.7rem;"><a href="https://www.yachtawaynow.com" style="color:#4ecdc4;text-decoration:none;">yachtawaynow.com</a></p>
     </div>
