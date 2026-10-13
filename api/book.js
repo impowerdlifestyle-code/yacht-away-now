@@ -32,6 +32,23 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Name and a valid email are required' });
   }
 
+  // Subscription-bombing bots fill the form with someone else's address so the
+  // victim gets our emails. Every one seen so far (46 of 71 requests between
+  // September 1 and October 13, 2026) used a reserved fictional 555-01xx phone
+  // and asked for a newsletter with no charter details. Dropped like the
+  // honeypot: nothing saved, nothing emailed.
+  const digits = phone.replace(/\D/g, '');
+  const fictionalPhone = /^1?[2-9]\d{2}55501\d{2}$/.test(digits);
+  const newsletterOnly = !charter_type && !preferred_date
+    && /newsletter|subscri|latest news|email updates|(news|updates) about|(company|product) news/i.test(message);
+  if (fictionalPhone || newsletterOnly) {
+    console.warn('Dropped bot signup');
+    return res.status(200).json({ success: true, booking_id: null });
+  }
+
+  // A typed two-digit year arrives as 0020-01-30, which is a valid ISO date.
+  const dateIsUsable = isIsoDate(preferred_date) && Number(preferred_date.slice(0, 4)) >= new Date().getFullYear();
+
   const booking = {
     first_name,
     last_name: last_name || null,
@@ -39,11 +56,11 @@ export default async function handler(req, res) {
     phone: phone || null,
     charter_type: charter_type || null,
     boat: boat || null,
-    charter_date: isIsoDate(preferred_date) ? preferred_date : null,
+    charter_date: dateIsUsable ? preferred_date : null,
     charter_time: /^\d{1,2}:\d{2}/.test(preferred_time) ? preferred_time : null,
     duration: duration || null,
     guests,
-    special_requests: [message, preferred_date && !isIsoDate(preferred_date) ? `Preferred date: ${preferred_date}` : ''].filter(Boolean).join('\n') || null,
+    special_requests: [message, preferred_date && !dateIsUsable ? `Preferred date: ${preferred_date}` : ''].filter(Boolean).join('\n') || null,
     sms_consent: !!sms_consent && sms_consent !== 'false',
     status: 'new',
     payment_status: 'unpaid',
