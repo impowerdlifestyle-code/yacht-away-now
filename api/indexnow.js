@@ -31,10 +31,16 @@ export default async function handler(req, res) {
       }),
     });
 
-    return res.status(200).json({ 
-      success: true, 
+    if (!response.ok) {
+      const detail = (await response.text()).slice(0, 300);
+      console.error(`IndexNow rejected the submission: ${response.status} ${detail}`);
+      return res.status(502).json({ success: false, status: response.status, submitted: 0, detail });
+    }
+
+    return res.status(200).json({
+      success: true,
       status: response.status,
-      submitted: urlList.length 
+      submitted: urlList.length,
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });

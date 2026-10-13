@@ -1,136 +1,131 @@
 // Records a signed charter contract WITHOUT charging a deposit.
 // Used when the charterer has already paid (or pays separately) and only
-// needs their signature on file. Mirrors create-checkout's Supabase writes
-// but skips Stripe entirely. Reached from /contract?nopay=1.
+// needs their signature on file. Reached from /contract?nopay=1.
+import { SUPABASE_URL, supabaseHeaders, clip, isEmail, isIsoDate, isPaid, findBooking, postDashboard, createCalendarEvent } from './_shared.js';
+
+const MAX_SIGNATURE_CHARS = 2000000;
+const PRE_SIGNATURE_STATUSES = ['new', 'contacted', 'contract_sent'];
+
+function cleanInitials(initials) {
+  if (!initials || typeof initials !== 'object' || Array.isArray(initials)) return null;
+  const out = {};
+  for (const [k, v] of Object.entries(initials).slice(0, 8)) out[clip(k, 40)] = clip(v, 8);
+  return out;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
+  if (!process.env.SUPABASE_SERVICE_KEY) {
+    console.error('sign-contract: SUPABASE_SERVICE_KEY is not set');
+    return res.status(500).json({ ok: false, error: 'Signing is unavailable right now. Please call (727) 609-2248.' });
+  }
 
-  const { name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials } = req.body;
+  const body = req.body || {};
+  const email = clip(body.email, 254);
+  const name = clip(body.name, 120);
+  const phone = clip(body.phone, 40);
+  const charter_type = clip(body.charter_type, 80);
+  const charter_date = isIsoDate(body.charter_date) ? body.charter_date : null;
+  const captain = clip(body.captain, 120);
+  const signer_name = clip(body.signer_name, 120);
+  const guestCount = parseInt(body.guests, 10);
+  const guests = Number.isFinite(guestCount) && guestCount > 0 && guestCount <= 99 ? guestCount : null;
+  const claimedTotal = Number(body.total_price);
+  const signature_data = typeof body.signature_data === 'string' ? body.signature_data : '';
+  const initials = cleanInitials(body.initials);
 
-  if (!email) return res.status(400).json({ ok: false, error: 'Email is required' });
+  if (!isEmail(email)) return res.status(400).json({ ok: false, error: 'A valid email is required' });
   if (!signature_data) return res.status(400).json({ ok: false, error: 'Signature is required' });
+  if (signature_data.length > MAX_SIGNATURE_CHARS || !signature_data.startsWith('data:image/')) {
+    return res.status(400).json({ ok: false, error: 'Invalid signature' });
+  }
 
-  const GOOGLE_CALENDAR_WEBHOOK = process.env.GOOGLE_CALENDAR_WEBHOOK
-    || 'https://script.google.com/macros/s/AKfycbwvbcNmqi9QRDriGsv7rKZNIAOOm9u8KbLxL6sOndNzUspmqT3ecC_Dj53LovtxsWrh/exec';
-
-  const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
+  const signedAt = new Date().toISOString();
+  let booking = null;
+  let firstSignatureOnPaidBooking = false;
 
   try {
-    try {
-      const findRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/bookings?email=eq.${encodeURIComponent(email)}&archived=eq.false&order=created_at.desc&limit=1`,
-        { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
-      );
-      const matches = await findRes.json();
+    booking = await findBooking({ id: body.booking_id, email });
+    if (booking && (booking.email || '').toLowerCase() !== email.toLowerCase()) {
+      booking = await findBooking({ email });
+    }
 
-      if (Array.isArray(matches) && matches.length > 0) {
-        const booking = matches[0];
-        const update = {
-          status: 'contract_signed',
-          contract_signed_at: signed_at || new Date().toISOString(),
-        };
-        if (total_price) update.total_price = parseFloat(total_price);
+    if (booking) {
+      const paid = isPaid(booking);
+      const update = { contract_signed_at: signedAt };
+      if (!paid) {
+        if (!booking.status || PRE_SIGNATURE_STATUSES.includes(booking.status)) update.status = 'contract_signed';
         if (captain) update.captain = captain;
-        if (guests) update.guests = parseInt(guests);
-
-        await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${booking.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${SUPABASE_KEY}`,
-            Prefer: 'return=minimal',
-          },
-          body: JSON.stringify(update),
-        });
-
-        // Signature-only flow signs AFTER payment, so the Stripe webhook (the
-        // normal calendar trigger) never fires. Same signed+paid gate applies:
-        // only paid bookings reach the calendar.
-        const paid = booking.payment_status === 'deposit_paid' || booking.payment_status === 'paid_full';
-        if (paid && GOOGLE_CALENDAR_WEBHOOK && (booking.charter_date || charter_date)) {
-          try {
-            await fetch(GOOGLE_CALENDAR_WEBHOOK, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                first_name: booking.first_name || (name || '').split(' ')[0] || '',
-                last_name: booking.last_name || (name || '').split(' ').slice(1).join(' ') || '',
-                phone: booking.phone || phone || '',
-                email,
-                charter_type: booking.charter_type || charter_type || 'Charter',
-                preferred_date: booking.charter_date || charter_date,
-                preferred_time: booking.charter_time || '10:00',
-                guests: booking.guests || guests || '',
-                duration: booking.duration || '4hr',
-                message: booking.special_requests || '',
-              }),
-            });
-          } catch (calErr) {
-            console.error('Calendar create error (non-fatal):', calErr);
-          }
-        }
+        if (guests) update.guests = guests;
       }
-
-      const contractRow = {
-        charterer_name: name,
-        email,
-        phone: phone || null,
-        charter_type: charter_type || null,
-        charter_date: charter_date || null,
-        guests: guests ? parseInt(guests) : null,
-        captain: captain || null,
-        total_price: total_price ? parseFloat(total_price) : null,
-        deposit_amount: null,
-        signer_name: signer_name || name,
-        signature_data,
-        signed_at: signed_at || new Date().toISOString(),
-        stripe_session_id: null,
-      };
-      const postContract = (extra) => fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          Prefer: 'return=minimal',
-        },
-        body: JSON.stringify({ ...contractRow, ...extra }),
+      // A paid booking takes its signature once. The is.null filter makes the
+      // first signer the only one who triggers the calendar and the captains.
+      const filter = paid
+        ? `id=eq.${encodeURIComponent(booking.id)}&contract_signed_at=is.null`
+        : `id=eq.${encodeURIComponent(booking.id)}`;
+      const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/bookings?${filter}`, {
+        method: 'PATCH',
+        headers: supabaseHeaders({ Prefer: 'return=representation' }),
+        body: JSON.stringify(update),
       });
-      // Store initials if the column exists; fall back gracefully if not so
-      // signing never breaks before the migration runs.
-      let cResp = await postContract(initials ? { initials } : {});
-      if (!cResp.ok && initials) cResp = await postContract({});
-    } catch (dbErr) {
-      console.error('Supabase sign-contract error:', dbErr);
-      return res.status(500).json({ ok: false, error: 'Failed to record signature' });
+      if (!patchRes.ok) throw new Error(`Booking update failed: ${patchRes.status} ${await patchRes.text()}`);
+      const patched = await patchRes.json();
+      firstSignatureOnPaidBooking = paid && Array.isArray(patched) && patched.length > 0;
     }
 
-    try {
-      await fetch('https://yan-dashboard.vercel.app/api/owner-notify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'contract_signed',
-          name,
-          email,
-          phone: phone || null,
-          charter_type: charter_type || null,
-          charter_date: charter_date || null,
-          guests: guests || null,
-          total_price: total_price || null,
-        }),
-      });
-    } catch (notifyErr) {
-      console.error('Owner notify error (non-fatal):', notifyErr);
-    }
-
-    return res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error('sign-contract error:', err);
-    return res.status(500).json({ ok: false, error: 'Something went wrong recording your signature' });
+    const bookingTotal = Number(booking?.total_price);
+    const contractRow = {
+      charterer_name: name,
+      email,
+      phone: phone || null,
+      charter_type: charter_type || null,
+      charter_date: charter_date || booking?.charter_date || null,
+      guests,
+      captain: captain || null,
+      total_price: bookingTotal > 0 ? bookingTotal : (Number.isFinite(claimedTotal) && claimedTotal > 0 ? claimedTotal : null),
+      deposit_amount: null,
+      signer_name: signer_name || name,
+      signature_data,
+      signed_at: signedAt,
+      stripe_session_id: null,
+    };
+    const postContract = (extra) => fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
+      method: 'POST',
+      headers: supabaseHeaders({ Prefer: 'return=minimal' }),
+      body: JSON.stringify({ ...contractRow, ...extra }),
+    });
+    // Store initials if the column exists; fall back gracefully if not so
+    // signing never breaks before the migration runs.
+    let cResp = await postContract(initials ? { initials } : {});
+    if (!cResp.ok && initials) cResp = await postContract({});
+    if (!cResp.ok) throw new Error(`Signed contract insert failed: ${cResp.status} ${await cResp.text()}`);
+  } catch (dbErr) {
+    console.error('Supabase sign-contract error:', dbErr);
+    return res.status(500).json({ ok: false, error: 'Failed to record signature' });
   }
+
+  // Payment landed before the signature, so the Stripe webhook held back the
+  // calendar event and the captain dispatch. Both fire here instead.
+  const followUps = [
+    postDashboard('/api/owner-notify', {
+      event: 'contract_signed',
+      booking_id: booking?.id || null,
+      name,
+      email,
+      phone: phone || null,
+      charter_type: charter_type || null,
+      charter_date: charter_date || booking?.charter_date || null,
+      guests,
+      total_price: Number(booking?.total_price) > 0 ? Number(booking.total_price) : null,
+    }),
+  ];
+  if (firstSignatureOnPaidBooking) {
+    followUps.push(createCalendarEvent(booking));
+    followUps.push(postDashboard('/api/captain-dispatch', { booking_id: booking.id }));
+  }
+  await Promise.all(followUps);
+
+  return res.status(200).json({ ok: true });
 }

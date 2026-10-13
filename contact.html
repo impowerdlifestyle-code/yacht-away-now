@@ -531,9 +531,10 @@
         // Step 3: time slots, synced to the live calendar
         function fetchAvail(date){
           if(availCache[date])return Promise.resolve(availCache[date]);
-          return fetch('/api/availability?date='+encodeURIComponent(date)).then(function(r){return r.json()}).then(function(j){
-            var v={hasBoat:!!j.hasBoat,busy:Array.isArray(j.busy)?j.busy:[]};availCache[date]=v;return v;
-          }).catch(function(){var v={hasBoat:false,busy:[]};availCache[date]=v;return v;});
+          return fetch('/api/availability?date='+encodeURIComponent(date)).then(function(r){if(!r.ok)throw new Error('availability '+r.status);return r.json()}).then(function(j){
+            if(!j.ok||!Array.isArray(j.busy))throw new Error('availability response');
+            var v={hasBoat:!!j.hasBoat,busy:j.busy};availCache[date]=v;return v;
+          }).catch(function(){return null;});
         }
         function boatsFreeAt(start,hrs,av){
           var end=start+hrs*60,free={};BOATS.forEach(function(b){free[b.id]=true;});
@@ -551,6 +552,12 @@
           wrap.innerHTML='<div class="wiz-loading">Checking live availability…</div>';msg.textContent='';
           var hrs=hoursFor(values.duration);
           fetchAvail(values.preferred_date).then(function(av){
+            if(!av){
+              wrap.innerHTML='';
+              msg.innerHTML='We could not check live availability just now. <a href="#" id="wiz-retry" style="color:var(--gold);text-decoration:underline;">Try again</a> or call (727) 609-2248 and we will book your time by phone.';
+              document.getElementById('wiz-retry').addEventListener('click',function(e){e.preventDefault();loadSlots();});
+              return;
+            }
             var html='',anyOpen=false;
             for(var st=OPEN;st+hrs*60<=CLOSE;st+=STEP){
               var free=boatsFreeAt(st,hrs,av),open=BOATS.some(function(b){return free[b.id]});
@@ -652,7 +659,7 @@
 
         function submitBooking(){
           var n=new FormData(form);
-          var payload={first_name:n.get('first_name')||'',last_name:n.get('last_name')||'',phone:n.get('phone')||'',email:n.get('email')||'',charter_type:values.charter_type,preferred_date:values.preferred_date,preferred_time:values.preferred_time,boat:values.boat,guests:values.guests,duration:values.duration,message:n.get('message')||'',sms_consent:!!n.get('sms_consent'),source:'website'};
+          var payload={first_name:n.get('first_name')||'',last_name:n.get('last_name')||'',phone:n.get('phone')||'',email:n.get('email')||'',charter_type:values.charter_type,preferred_date:values.preferred_date,preferred_time:values.preferred_time,boat:values.boat,guests:values.guests,duration:values.duration,message:n.get('message')||'',sms_consent:!!n.get('sms_consent'),botcheck:n.get('botcheck')||'',source:'website'};
           try{fetch(form.action,{method:'POST',body:n,headers:{Accept:'application/json'}});}catch(e){}
           try{fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
           if(typeof gtag==='function')gtag('event','generate_lead',{currency:'USD',value:1,charter_type:values.charter_type||'',boat:values.boat||''});

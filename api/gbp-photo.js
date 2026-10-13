@@ -1,15 +1,13 @@
+import { isCron } from './_shared.js';
+
 export default async function handler(req, res) {
-  const authHeader = req.headers.authorization;
-  const isCron = authHeader === `Bearer ${process.env.CRON_SECRET}`;
-  if (!isCron && req.method !== 'GET') return res.status(401).json({ error: 'Unauthorized' });
-  const live = isCron || req.query?.live === '1';
-  console.log(`gbp-photo run trigger=${isCron ? 'cron' : 'manual'} live=${live} at=${new Date().toISOString()}`);
+  if (!isCron(req)) return res.status(401).json({ error: 'Unauthorized' });
+  console.log(`gbp-photo run at=${new Date().toISOString()}`);
 
   const now = new Date();
   const weekNum = Math.floor((now - new Date(now.getFullYear(), 0, 1)) / (7 * 24 * 60 * 60 * 1000));
   const photo = PHOTOS[weekNum % PHOTOS.length];
   const sourceUrl = `https://www.yachtawaynow.com/images/${photo.file}.jpg`;
-  if (!live) return res.status(200).json({ dryRun: true, weekNum, wouldUpload: sourceUrl, description: photo.description });
 
   try {
     const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
@@ -40,7 +38,7 @@ export default async function handler(req, res) {
     const data = await response.json();
     if (!response.ok) {
       console.error('gbp-photo upload failed', response.status, JSON.stringify(data).slice(0, 500));
-      return res.status(500).json({ error: 'Upload failed', status: response.status, detail: data });
+      return res.status(502).json({ error: 'Upload failed', status: response.status, detail: data });
     }
     console.log(`gbp-photo uploaded ${sourceUrl} -> ${data.name}`);
     return res.status(200).json({ success: true, weekNum, sourceUrl, media: data.name });

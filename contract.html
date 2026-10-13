@@ -1246,7 +1246,7 @@ function selectPackage(radio) {
     customTotalInput.focus();
   } else if (radio.value === 'bahamas') {
     customTotalRow.style.display = 'none';
-    hiddenTotal.value = 5000;
+    hiddenTotal.value = 9500;
   } else {
     customTotalRow.style.display = 'none';
     hiddenTotal.value = currentRates()[radio.value] * (selectedHours() || 4);
@@ -1556,9 +1556,9 @@ async function submitAndPay() {
           charter_date: charterDate,
           guests, captain,
           total_price: total || null,
+          booking_id: params.get('booking_id') || undefined,
           signature_data: sigData,
           signer_name: document.getElementById('sigName').value.trim(),
-          signed_at: new Date().toISOString(),
           initials
         })
       });
@@ -1596,10 +1596,12 @@ async function submitAndPay() {
         guests,
         captain,
         total_price: total,
+        boat: document.getElementById('sumBoat').value,
+        duration: document.getElementById('sumDuration').value,
+        booking_id: params.get('booking_id') || undefined,
         payment_type: payFull ? 'full' : 'deposit',
         signature_data: sigData,
         signer_name: document.getElementById('sigName').value.trim(),
-        signed_at: new Date().toISOString(),
         initials
       })
     });

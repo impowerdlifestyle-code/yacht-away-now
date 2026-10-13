@@ -1,14 +1,23 @@
+import { isAdmin, escapeHtml, clip, isEmail, isIsoDate } from './_shared.js';
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!isAdmin(req)) return res.status(401).json({ error: 'Unauthorized' });
 
+  const body = req.body || {};
+  const name = clip(body.name, 120);
+  const email = clip(body.email, 254);
+  const charter_date = body.charter_date;
+  if (!name || !isEmail(email)) return res.status(400).json({ error: 'Name and a valid email required' });
 
-  const { name, email, charter_type, charter_date, guests, duration } = req.body;
-  if (!name || !email) return res.status(400).json({ error: 'Name and email required' });
-
-  const firstName = name.split(' ')[0];
-  const dateFormatted = charter_date
+  const rawFirstName = name.split(' ')[0];
+  const firstName = escapeHtml(rawFirstName);
+  const charter_type = escapeHtml(clip(body.charter_type, 80));
+  const guests = escapeHtml(clip(body.guests, 20));
+  const duration = escapeHtml(clip(body.duration, 40));
+  const dateFormatted = isIsoDate(charter_date)
     ? new Date(charter_date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
     : null;
 
@@ -23,7 +32,7 @@ export default async function handler(req, res) {
         from: 'Yacht Away Now <bookings@yachtawaynow.com>',
         to: email,
         reply_to: 'josh@yachtawaynow.com',
-        subject: `Welcome Aboard, ${firstName}! Your Charter Awaits ⚓`,
+        subject: `Welcome Aboard, ${rawFirstName}! Your Charter Awaits ⚓`,
         html: `
 <!DOCTYPE html>
 <html>

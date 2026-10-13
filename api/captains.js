@@ -1,18 +1,22 @@
 // Returns the live roster of active captains for the booking contract's
 // Captain Selection Agreement, so the on-site selection always matches the
 // dashboard. Same-origin, read-only.
+import { SUPABASE_URL, supabaseHeaders } from './_shared.js';
+
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
-  const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
+  if (!process.env.SUPABASE_SERVICE_KEY) {
+    console.error('captains: SUPABASE_SERVICE_KEY is not set');
+    return res.status(500).json({ ok: false, captains: [], error: 'Server not configured' });
+  }
 
   try {
     const r = await fetch(
       `${SUPABASE_URL}/rest/v1/captains?status=eq.active&select=name&order=name.asc`,
-      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+      { headers: supabaseHeaders() }
     );
     const rows = await r.json();
     const captains = Array.isArray(rows)

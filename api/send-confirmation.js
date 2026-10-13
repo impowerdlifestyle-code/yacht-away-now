@@ -1,12 +1,11 @@
+import { isAdmin } from './_shared.js';
+
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const adminKey = req.headers['x-admin-key'];
-  if (adminKey !== (process.env.AFFILIATE_ADMIN_KEY || 'yacht-affiliate-admin-2026')) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  if (!isAdmin(req)) return res.status(401).json({ error: 'Unauthorized' });
 
   const { name, email, charter_type, charter_date, guests, duration, total, deposit, special_requests } = req.body;
   if (!name || !email) return res.status(400).json({ error: 'Name and email required' });

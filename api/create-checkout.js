@@ -1,41 +1,89 @@
+import { SUPABASE_URL, supabaseHeaders, clip, isEmail, isIsoDate, isPaid, minCharterTotal, findBooking, postDashboard } from './_shared.js';
+
+const MAX_SIGNATURE_CHARS = 2000000;
+const PRE_SIGNATURE_STATUSES = ['new', 'contacted', 'contract_sent'];
+
+function cleanInitials(initials) {
+  if (!initials || typeof initials !== 'object' || Array.isArray(initials)) return null;
+  const out = {};
+  for (const [k, v] of Object.entries(initials).slice(0, 8)) out[clip(k, 40)] = clip(v, 8);
+  return out;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  const { amount, name, email, phone, charter_type, charter_date, guests, captain, total_price, signature_data, signer_name, signed_at, initials, payment_type } = req.body;
-  const isFull = payment_type === 'full';
-
-  if (!amount || amount < 1) {
-    return res.status(400).json({ error: 'Invalid deposit amount' });
+  if (!process.env.SUPABASE_SERVICE_KEY || !process.env.STRIPE_SECRET_KEY) {
+    console.error('create-checkout: SUPABASE_SERVICE_KEY or STRIPE_SECRET_KEY is not set');
+    return res.status(500).json({ error: 'Checkout is unavailable right now. Please call (727) 609-2248.' });
   }
 
-  if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
+  const body = req.body || {};
+  const isFull = body.payment_type === 'full';
+  const amount = Number(body.amount);
+  const email = clip(body.email, 254);
+  const name = clip(body.name, 120);
+  const phone = clip(body.phone, 40);
+  const charter_type = clip(body.charter_type, 80);
+  const charter_date = isIsoDate(body.charter_date) ? body.charter_date : '';
+  const captain = clip(body.captain, 120);
+  const boat = clip(body.boat, 80);
+  const duration = clip(body.duration, 20);
+  const signer_name = clip(body.signer_name, 120);
+  const guestCount = parseInt(body.guests, 10);
+  const guests = Number.isFinite(guestCount) && guestCount > 0 && guestCount <= 99 ? guestCount : null;
+  const signature_data = typeof body.signature_data === 'string' ? body.signature_data : '';
+  const initials = cleanInitials(body.initials);
+
+  if (!Number.isFinite(amount) || amount < 1) {
+    return res.status(400).json({ error: 'Invalid deposit amount' });
+  }
+  if (!isEmail(email)) {
+    return res.status(400).json({ error: 'A valid email is required' });
+  }
+  if (signature_data && (signature_data.length > MAX_SIGNATURE_CHARS || !signature_data.startsWith('data:image/'))) {
+    return res.status(400).json({ error: 'Invalid signature' });
+  }
+
+  let booking = null;
+  try {
+    booking = await findBooking({ id: body.booking_id, email });
+    if (booking && (booking.email || '').toLowerCase() !== email.toLowerCase()) {
+      booking = await findBooking({ email });
+    }
+  } catch (lookupErr) {
+    console.error('Booking lookup error:', lookupErr);
+    return res.status(503).json({ error: 'We could not look up your booking. Please try again or call (727) 609-2248.' });
+  }
+
+  // The server decides what may be charged. A total already on the booking is
+  // the least it can be. Without one, the claimed total has to clear the rate card floor for
+  // that date and boat, and the amount has to be the right share of it.
+  const share = isFull ? 1 : 0.5;
+  const bookingTotal = Number(booking?.total_price);
+  const claimedTotal = Number(body.total_price);
+  let total;
+  if (bookingTotal > 0) {
+    // A customer may add hours on the contract page, never remove them.
+    total = claimedTotal > bookingTotal ? claimedTotal : bookingTotal;
+  } else {
+    total = Number.isFinite(claimedTotal) && claimedTotal > 0 ? claimedTotal : amount / share;
+    const floor = minCharterTotal(booking?.charter_date || charter_date, booking?.boat || boat);
+    if (total < floor) {
+      console.error(`create-checkout rejected: total ${total} below floor ${floor} for ${email}`);
+      return res.status(400).json({ error: 'That amount is below the minimum for this charter. Please call (727) 609-2248 so we can confirm your quote.' });
+    }
+  }
+  if (Math.abs(amount - total * share) > 1) {
+    console.error(`create-checkout rejected: amount ${amount} is not ${share * 100}% of ${total} for ${email}`);
+    return res.status(400).json({ error: 'That amount does not match your charter total. Please call (727) 609-2248 so we can confirm your quote.' });
   }
 
   const amountInCents = Math.round(amount * 100);
-
-  const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
-  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlrbnRyYm9xZXpoa2J0Znd0enNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMDY4NTksImV4cCI6MjA5MTY4Mjg1OX0.LmtivYm_0aOtZQ7p7a2_S99Eaqhy3boBe-D-5WPSI4Y';
-
-  // Look up the booking up-front so its id can ride along in the Stripe
-  // metadata — the dashboard marks it paid the instant the payment lands.
-  let bookingId = null;
-  try {
-    const findRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/bookings?email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1`,
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-    );
-    const found = await findRes.json();
-    if (Array.isArray(found) && found.length > 0) bookingId = found[0].id;
-  } catch (lookupErr) {
-    console.error('Booking pre-lookup error (non-fatal):', lookupErr);
-  }
+  const metaDate = charter_date || booking?.charter_date || '';
 
   try {
-    // Create Stripe Checkout Session via REST API. Route success through the
-    // dashboard's verify-and-mark handler, then on to the contract success page.
     const successNext = encodeURIComponent('https://www.yachtawaynow.com/contract?success=true');
     const params = new URLSearchParams();
     params.append('mode', 'payment');
@@ -43,23 +91,24 @@ export default async function handler(req, res) {
     params.append('cancel_url', 'https://www.yachtawaynow.com/contract?canceled=true');
     params.append('customer_email', email);
     params.append('line_items[0][price_data][currency]', 'usd');
-    params.append('line_items[0][price_data][product_data][name]', isFull ? 'Yacht Charter — Full Payment' : 'Yacht Charter Deposit (50%)');
+    params.append('line_items[0][price_data][product_data][name]', isFull ? 'Yacht Charter: Full Payment' : 'Yacht Charter Deposit (50%)');
     params.append('line_items[0][price_data][product_data][description]',
-      `${charter_type || 'Charter'} — ${charter_date || 'TBD'} — ${guests || '?'} guests — Charter Total: $${total_price || 'TBD'}`
+      `${charter_type || 'Charter'}, ${metaDate || 'date TBD'}, ${guests || '?'} guests. Charter total: $${total}`
     );
     params.append('line_items[0][price_data][unit_amount]', amountInCents.toString());
     params.append('line_items[0][quantity]', '1');
     params.append('payment_method_types[0]', 'card');
-    params.append('payment_intent_data[metadata][charterer_name]', name || '');
-    params.append('payment_intent_data[metadata][phone]', phone || '');
-    params.append('payment_intent_data[metadata][charter_type]', charter_type || '');
-    params.append('payment_intent_data[metadata][charter_date]', charter_date || '');
-    params.append('payment_intent_data[metadata][guests]', guests || '');
-    params.append('payment_intent_data[metadata][captain]', captain || '');
-    params.append('payment_intent_data[metadata][total_price]', (total_price || '').toString());
+    params.append('payment_intent_data[metadata][charterer_name]', name);
+    params.append('payment_intent_data[metadata][phone]', phone);
+    params.append('payment_intent_data[metadata][charter_type]', charter_type);
+    params.append('payment_intent_data[metadata][charter_date]', metaDate || '');
+    params.append('payment_intent_data[metadata][guests]', guests ? String(guests) : '');
+    params.append('payment_intent_data[metadata][duration]', duration);
+    params.append('payment_intent_data[metadata][captain]', captain);
+    params.append('payment_intent_data[metadata][total_price]', total.toString());
     params.append('payment_intent_data[metadata][deposit_amount]', amount.toString());
     params.append('payment_intent_data[metadata][type]', isFull ? 'full_payment' : 'deposit');
-    if (bookingId) params.append('payment_intent_data[metadata][booking_id]', bookingId);
+    if (booking) params.append('payment_intent_data[metadata][booking_id]', booking.id);
 
     const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
@@ -77,82 +126,71 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: session.error?.message || 'Failed to create checkout session' });
     }
 
-    // Update booking in Supabase: mark contract as signed
+    const signedAt = new Date().toISOString();
     try {
-      if (bookingId) {
-        await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${bookingId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'Prefer': 'return=minimal',
-          },
-          body: JSON.stringify({
-            status: 'contract_signed',
-            contract_signed_at: new Date().toISOString(),
-            total_price: total_price ? parseFloat(total_price) : null,
-            deposit_amount: amount,
-            captain: captain || null,
-            guests: guests ? parseInt(guests) : null,
-          }),
-        });
+      if (booking) {
+        // Totals and payment fields are written by the Stripe webhook once the
+        // money has actually arrived, never from this unauthenticated call.
+        const update = {};
+        if (!isPaid(booking)) {
+          if (!booking.status || PRE_SIGNATURE_STATUSES.includes(booking.status)) update.status = 'contract_signed';
+          update.contract_signed_at = signedAt;
+          if (captain) update.captain = captain;
+          if (guests) update.guests = guests;
+        } else if (!booking.contract_signed_at) {
+          update.contract_signed_at = signedAt;
+        }
+        if (Object.keys(update).length > 0) {
+          const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${encodeURIComponent(booking.id)}`, {
+            method: 'PATCH',
+            headers: supabaseHeaders({ 'Prefer': 'return=minimal' }),
+            body: JSON.stringify(update),
+          });
+          if (!patchRes.ok) console.error(`Booking contract update failed: ${patchRes.status} ${await patchRes.text()}`);
+        }
       }
 
-      // Save signed contract data
       if (signature_data) {
         const contractRow = {
           charterer_name: name,
           email,
           phone: phone || null,
           charter_type: charter_type || null,
-          charter_date: charter_date || null,
-          guests: guests ? parseInt(guests) : null,
+          charter_date: metaDate || null,
+          guests,
           captain: captain || null,
-          total_price: total_price ? parseFloat(total_price) : null,
+          total_price: total,
           deposit_amount: amount,
           signer_name: signer_name || name,
           signature_data,
-          signed_at: signed_at || new Date().toISOString(),
+          signed_at: signedAt,
           stripe_session_id: session.id,
         };
         const postContract = (extra) => fetch(`${SUPABASE_URL}/rest/v1/signed_contracts`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'Prefer': 'return=minimal',
-          },
+          headers: supabaseHeaders({ 'Prefer': 'return=minimal' }),
           body: JSON.stringify({ ...contractRow, ...extra }),
         });
         // Store initials if the column exists; fall back gracefully if not.
         let cResp = await postContract(initials ? { initials } : {});
         if (!cResp.ok && initials) cResp = await postContract({});
+        if (!cResp.ok) console.error(`Signed contract insert failed: ${cResp.status} ${await cResp.text()}`);
       }
     } catch (dbErr) {
       console.error('Supabase contract update error (non-fatal):', dbErr);
     }
 
-    // Immediate owner alert (email + SMS to Josh & Ciaran) — contract signed
-    try {
-      await fetch('https://yan-dashboard.vercel.app/api/owner-notify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'contract_signed',
-          name,
-          email,
-          phone: phone || null,
-          charter_type: charter_type || null,
-          charter_date: charter_date || null,
-          guests: guests || null,
-          total_price: total_price || null,
-        }),
-      });
-    } catch (notifyErr) {
-      console.error('Owner notify error (non-fatal):', notifyErr);
-    }
+    await postDashboard('/api/owner-notify', {
+      event: 'contract_signed',
+      booking_id: booking?.id || null,
+      name,
+      email,
+      phone: phone || null,
+      charter_type: charter_type || null,
+      charter_date: metaDate || null,
+      guests,
+      total_price: total,
+    });
 
     return res.status(200).json({ url: session.url });
   } catch (err) {

@@ -143,7 +143,7 @@ tr:hover td{background:rgba(78,205,196,0.03)}
       <input type="email" id="auth-email" placeholder="Your email address" onkeydown="if(event.key==='Enter')document.getElementById('auth-code').focus()">
       <input type="password" id="auth-code" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()">
       <button class="btn btn-gold" style="width:100%" onclick="doLogin()">Sign In</button>
-      <p id="auth-error">Invalid email or password</p>
+      <p id="auth-error">Invalid email or password. If you have not set a password yet, use "Forgot password?" below to create one.</p>
       <p style="margin-top:14px"><a href="#" onclick="showForgot();return false" style="color:var(--seafoam);font-size:0.8rem;text-decoration:none">Forgot password?</a></p>
     </div>
     <!-- Forgot password form -->
@@ -346,8 +346,8 @@ async function doReset() {
   const pw2 = document.getElementById('reset-pw2').value;
   const msg = document.getElementById('reset-msg');
 
-  if (!pw || pw.length < 4) {
-    msg.textContent = 'Password must be at least 4 characters';
+  if (!pw || pw.length < 8) {
+    msg.textContent = 'Password must be at least 8 characters';
     msg.style.color = 'var(--red)';
     msg.style.display = 'block';
     return;
@@ -425,7 +425,7 @@ function openChangePassword() {
 async function doChangePassword() {
   const pw = document.getElementById('cp-pw').value;
   const pw2 = document.getElementById('cp-pw2').value;
-  if (!pw || pw.length < 4) return toast('Password must be at least 4 characters');
+  if (!pw || pw.length < 8) return toast('Password must be at least 8 characters');
   if (pw !== pw2) return toast('Passwords do not match');
 
   try {
@@ -573,8 +573,8 @@ function copyLink(link) {
 
 function openPayoutRequest() {
   if (!dashData) return;
-  document.getElementById('payout-balance').textContent = '$' + dashData.affiliate.balance_owed;
-  document.getElementById('pr-amount').value = parseFloat(dashData.affiliate.balance_owed) > 0 ? dashData.affiliate.balance_owed : '';
+  document.getElementById('payout-balance').textContent = '$' + dashData.affiliate.available_balance;
+  document.getElementById('pr-amount').value = parseFloat(dashData.affiliate.available_balance) > 0 ? dashData.affiliate.available_balance : '';
   document.getElementById('pr-details').value = '';
   document.getElementById('modal-payout').classList.add('open');
 }
