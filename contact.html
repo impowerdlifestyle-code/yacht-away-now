@@ -658,10 +658,11 @@
         function closeHold(){if(holdTimer)clearTimeout(holdTimer);document.getElementById('holdOverlay').classList.remove('show');}
 
         function submitBooking(){
-          var n=new FormData(form);
+          var n=new FormData(form);n.delete('cf-turnstile-response');
           var payload={first_name:n.get('first_name')||'',last_name:n.get('last_name')||'',phone:n.get('phone')||'',email:n.get('email')||'',charter_type:values.charter_type,preferred_date:values.preferred_date,preferred_time:values.preferred_time,boat:values.boat,guests:values.guests,duration:values.duration,message:n.get('message')||'',sms_consent:!!n.get('sms_consent'),botcheck:n.get('botcheck')||'',source:'website'};
+          nextBtn.disabled=true;
+          yanBook(payload).then(function(){
           try{fetch(form.action,{method:'POST',body:n,headers:{Accept:'application/json'}});}catch(e){}
-          try{fetch('/api/book',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
           if(typeof gtag==='function')gtag('event','generate_lead',{currency:'USD',value:1,charter_type:values.charter_type||'',boat:values.boat||''});
           var url=contractUrl();
           document.getElementById('successPay').href=url;document.getElementById('holdPay').href=url;
@@ -670,6 +671,7 @@
           form.style.display='none';
           document.getElementById('formSuccess').style.display='block';
           startHold();
+          }).catch(function(err){nextBtn.disabled=false;alert(err.message);});
         }
         document.getElementById('holdLater').addEventListener('click',function(){closeHold();document.getElementById('ticketConfirm').style.display='block';});
         document.getElementById('successTicket').addEventListener('click',function(){closeHold();document.getElementById('ticketConfirm').style.display='block';});
@@ -829,7 +831,7 @@
   </div>
 </footer>
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
-<script src="/app.js?v=65629e8c" defer></script>
+<script src="/app.js?v=7584009a" defer></script>
 <script>
 (function(){function loadGA(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-QTEXZD81XN';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-QTEXZD81XN');}var gaLoaded=false;function triggerGA(){if(gaLoaded)return;gaLoaded=true;loadGA();}['scroll','touchstart','keydown','mousedown'].forEach(function(ev){addEventListener(ev,triggerGA,{once:true,passive:true});});setTimeout(triggerGA,3000);})();
 </script>

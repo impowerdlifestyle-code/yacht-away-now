@@ -41,9 +41,17 @@ export default async function handler(req, res) {
   const fictionalPhone = /^1?[2-9]\d{2}55501\d{2}$/.test(digits);
   const newsletterOnly = !charter_type && !preferred_date
     && /newsletter|subscri|latest news|email updates|(news|updates) about|(company|product) news/i.test(message);
-  if (fictionalPhone || newsletterOnly) {
+  // Every booking form makes the date required, and all 149 real bookings to
+  // date have one, so a dateless request never came from the page.
+  if (fictionalPhone || newsletterOnly || !preferred_date) {
     console.warn('Dropped bot signup');
     return res.status(200).json({ success: true, booking_id: null });
+  }
+
+  const turnstile = await verifyTurnstile(body.turnstile_token, req.headers['x-forwarded-for']);
+  if (!turnstile.ok) {
+    console.warn(`Turnstile rejected booking: ${turnstile.reason}`);
+    return res.status(403).json({ success: false, error: 'We could not verify this request. Please refresh the page and try again, or call (727) 609-2248.' });
   }
 
   // A typed two-digit year arrives as 0020-01-30, which is a valid ISO date.
@@ -181,8 +189,25 @@ Reply directly to this email to reach the customer at ${email}
   return res.status(200).json({ success: true, booking_id: bookingId, forwarded });
 }
 
-// The browser fires this endpoint without awaiting it, so a failed insert is
-// invisible from the page: the guest still sees the success panel and Web3Forms
+async function verifyTurnstile(token, forwardedFor) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return { ok: false, reason: 'TURNSTILE_SECRET_KEY is not set' };
+  if (typeof token !== 'string' || !token) return { ok: false, reason: 'no token' };
+  const params = new URLSearchParams({ secret, response: token });
+  const ip = String(forwardedFor || '').split(',')[0].trim();
+  if (ip) params.set('remoteip', ip);
+  try {
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: params });
+    const result = await verifyRes.json();
+    return result.success ? { ok: true } : { ok: false, reason: (result['error-codes'] || []).join(',') || 'failed' };
+  } catch (err) {
+    // A Cloudflare outage must not cost Josh real leads; the cheap filters above still ran.
+    console.error('Turnstile siteverify unreachable, accepting booking:', err);
+    return { ok: true };
+  }
+}
+
+// On a failed insert the guest still sees the success panel and Web3Forms
 // still emails the lead. Without this, the only symptom is a booking that never
 // appears in the dashboard and nobody knows to look for it.
 async function alertLeadNotSaved(booking, detail) {
