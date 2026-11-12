@@ -53,6 +53,10 @@ export default async function handler(req, res) {
     console.warn(`Turnstile rejected booking: ${turnstile.reason}`);
     return res.status(403).json({ success: false, error: 'We could not verify this request. Please refresh the page and try again, or call (727) 609-2248.' });
   }
+  if (turnstile.misconfigured) {
+    console.error(`Turnstile misconfigured, accepting booking: ${turnstile.misconfigured}`);
+    await alertTurnstileMisconfigured(turnstile.misconfigured);
+  }
 
   // A typed two-digit year arrives as 0020-01-30, which is a valid ISO date.
   const dateIsUsable = isIsoDate(preferred_date) && Number(preferred_date.slice(0, 4)) >= new Date().getFullYear();
@@ -190,20 +194,50 @@ Reply directly to this email to reach the customer at ${email}
 }
 
 async function verifyTurnstile(token, forwardedFor) {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return { ok: false, reason: 'TURNSTILE_SECRET_KEY is not set' };
   if (typeof token !== 'string' || !token) return { ok: false, reason: 'no token' };
+  // A bad secret on our side rejected every real booking from 2026-10-16 to
+  // 2026-11-12 with no alert. A config fault is ours, not the guest's: accept and alert.
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return { ok: true, misconfigured: 'TURNSTILE_SECRET_KEY is not set' };
   const params = new URLSearchParams({ secret, response: token });
   const ip = String(forwardedFor || '').split(',')[0].trim();
   if (ip) params.set('remoteip', ip);
   try {
     const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: params });
     const result = await verifyRes.json();
-    return result.success ? { ok: true } : { ok: false, reason: (result['error-codes'] || []).join(',') || 'failed' };
+    if (result.success) return { ok: true };
+    const codes = result['error-codes'] || [];
+    const configFault = codes.find((c) => c === 'invalid-input-secret' || c === 'missing-input-secret');
+    if (configFault) return { ok: true, misconfigured: configFault };
+    return { ok: false, reason: codes.join(',') || 'failed' };
   } catch (err) {
     // A Cloudflare outage must not cost Josh real leads; the cheap filters above still ran.
     console.error('Turnstile siteverify unreachable, accepting booking:', err);
     return { ok: true };
+  }
+}
+
+async function alertTurnstileMisconfigured(reason) {
+  if (!process.env.WEB3FORMS_KEY) {
+    console.error('alertTurnstileMisconfigured skipped: WEB3FORMS_KEY is not set');
+    return;
+  }
+  try {
+    const alertRes = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: process.env.WEB3FORMS_KEY,
+        subject: 'TURNSTILE MISCONFIGURED on yachtawaynow.com',
+        message:
+          `Cloudflare Turnstile rejected our server key (${reason}). ` +
+          'Bookings are still being accepted, but without the bot check. ' +
+          'Set TURNSTILE_SECRET_KEY in the yachtawaynow Vercel project to the secret for the site key in app.js, then redeploy.',
+      }),
+    });
+    if (!alertRes.ok) console.error(`alertTurnstileMisconfigured was not delivered: ${alertRes.status}`);
+  } catch (e) {
+    console.error('alertTurnstileMisconfigured failed:', e);
   }
 }
 
