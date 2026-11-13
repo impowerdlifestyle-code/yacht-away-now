@@ -151,27 +151,22 @@
 <main>
 <section class="hero">
   <div class="hero-bg">
-    <video id="hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
-      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
+    <video id="hero-video" muted loop playsinline preload="none" aria-hidden="true">
       <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.mp4" type="video/mp4">
+      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.mp4" type="video/mp4">
     </video>
     <script>
-      // Defer hero video on slow/metered connections; the CSS background poster stays visible.
+      // No autoplay attribute: it overrides preload="none" and starts the download before LCP.
       (function(){
         var v = document.getElementById('hero-video');
         if (!v) return;
         var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) {
-          v.removeAttribute('autoplay');
-          v.pause();
-          return;
-        }
-        // Otherwise nudge the load after first idle to avoid competing with LCP.
-        var nudge = function(){ try { v.load(); v.play().catch(function(){}); } catch(_) {} };
-        if ('requestIdleCallback' in window) requestIdleCallback(nudge, { timeout: 1500 });
-        else setTimeout(nudge, 800);
+        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) return;
+        var start = function(){ v.preload = 'auto'; v.play().catch(function(){}); };
+        var afterLoad = function(){ 'requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 2000 }) : setTimeout(start, 500); };
+        document.readyState === 'complete' ? afterLoad() : window.addEventListener('load', afterLoad, { once: true });
       })();
     </script>
   </div>
