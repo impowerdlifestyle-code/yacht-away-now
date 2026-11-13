@@ -1,0 +1,6 @@
+Yacht-Away-1-Ranking-Strategy.pdf
+generate-strategy-pdf.py
+agents
+emails
+scripts/*
+!scripts/tilt-card.min.js
