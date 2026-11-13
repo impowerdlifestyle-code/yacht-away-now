@@ -31,10 +31,10 @@
   <link rel="preload" href="/fonts/cormorant-garamond-400-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" type="image/avif" href="/images/hero-yacht-drone-poster.avif" media="(min-width:769px)" fetchpriority="high">
   <link rel="preload" as="image" type="image/avif" href="/images/hero-yacht-drone-mobile-poster.avif" media="(max-width:768px)" fetchpriority="high">
-  <style>@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cormorant-garamond-600.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cormorant-garamond-700.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/cormorant-garamond-400-italic.woff2) format('woff2')}@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/montserrat.woff2) format('woff2')}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Montserrat,-apple-system,sans-serif;background:#0a1628;color:#f5f0e8;line-height:1.6;overflow-x:hidden}a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;padding:0 24px}.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;background:rgba(10,22,40,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(78,205,196,0.06);transition:all 0.4s ease}.navbar .container{display:flex;align-items:center;justify-content:space-between}.logo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:#f5f0e8;display:flex;align-items:center;gap:10px}.logo span{color:#c9a84c}.logo-icon{height:48px;width:auto}.nav-links{display:flex;align-items:center;gap:6px}.nav-links a{font-size:0.78rem;font-weight:500;color:#8899aa;padding:8px 14px;border-radius:50px;transition:all 0.3s ease;letter-spacing:0.03em}.nav-cta{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628!important;font-weight:700!important;padding:10px 24px!important;border-radius:50px;font-size:0.78rem!important}.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:640px;max-height:100vh;display:flex;align-items:flex-start;padding:120px 0 80px;overflow:hidden}.hero .container{max-width:1080px;margin-top:auto;margin-bottom:auto}.hero h1{font-size:inherit;line-height:1;letter-spacing:normal;margin-bottom:24px;max-width:none}.hero p{font-size:clamp(1rem,1.25vw,1.18rem);line-height:1.7;max-width:62ch;margin-bottom:36px;color:rgba(245,240,232,0.82)}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:28px}.hero-bg{position:absolute;inset:0;z-index:0;background-color:#071520;background-image:image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-position:center;background-size:cover;background-repeat:no-repeat}.hero-bg video,.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-bg::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,#0a1628 0,rgba(10,22,40,0) 200px),linear-gradient(180deg,rgba(7,21,32,0.62) 0%,rgba(7,21,32,0.5) 45%,rgba(7,21,32,0.68) 100%)}.hero-title,.hero-actions,.hero-stats,.hero-trust-pill{text-shadow:0 2px 18px rgba(7,21,32,0.75),0 1px 4px rgba(7,21,32,0.6)}.hero-actions .btn{text-shadow:none}.hero .container{position:relative;z-index:2}.section-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:#c9a84c;margin-bottom:12px}.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;color:#f5f0e8}.section-title em{font-style:italic;color:#c9a84c}.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.85rem;letter-spacing:0.04em;transition:all 0.3s ease;cursor:pointer;border:none}.btn-gold{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628}.btn-outline{border:1px solid rgba(78,205,196,0.25);color:#4ecdc4;background:transparent}.mobile-toggle{display:none}@media(max-width:768px){.nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1628;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:1000;padding:100px 32px 60px}.nav-links.open{display:flex}.mobile-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:12px;z-index:1001;min-width:48px;min-height:48px;align-items:center;justify-content:center}.mobile-toggle span{width:22px;height:2px;background:#f5f0e8;border-radius:2px;transition:all 0.3s ease}}@media(max-width:768px){.hero{aspect-ratio:auto;min-height:auto;max-height:none;padding:110px 0 32px;align-items:flex-start}.hero-bg{background-image:image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'))}.hero-badge{margin-bottom:14px}}@media(max-width:480px){.hero{padding:100px 0 24px;align-items:flex-start}.hero p{font-size:0.85rem;margin-bottom:20px}.hero-badge{margin-bottom:10px;font-size:.62rem;padding:5px 12px;letter-spacing:.1em}}</style>
+  <style>@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/fonts/cormorant-garamond-600.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/cormorant-garamond-700.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/cormorant-garamond-400-italic.woff2) format('woff2')}@font-face{font-family:'Montserrat';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/montserrat.woff2) format('woff2')}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Montserrat,-apple-system,sans-serif;background:#0a1628;color:#f5f0e8;line-height:1.6;overflow-x:hidden}a{text-decoration:none;color:inherit}.container{max-width:1200px;margin:0 auto;padding:0 24px}.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;background:rgba(10,22,40,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(78,205,196,0.06);transition:all 0.4s ease}.navbar .container{display:flex;align-items:center;justify-content:space-between}.logo{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;letter-spacing:0.04em;color:#f5f0e8;display:flex;align-items:center;gap:10px}.logo span{color:#c9a84c}.logo-icon{height:48px;width:auto}.nav-links{display:flex;align-items:center;gap:6px}.nav-links a{font-size:0.78rem;font-weight:500;color:#8899aa;padding:8px 14px;border-radius:50px;transition:all 0.3s ease;letter-spacing:0.03em}.nav-cta{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628!important;font-weight:700!important;padding:10px 24px!important;border-radius:50px;font-size:0.78rem!important}.hero{position:relative;width:100%;aspect-ratio:16/9;min-height:640px;max-height:100vh;display:flex;align-items:flex-start;padding:120px 0 80px;overflow:hidden}.hero .container{max-width:1080px;margin-top:auto;margin-bottom:auto}.hero h1{font-size:inherit;line-height:1;letter-spacing:normal;margin-bottom:24px;max-width:none}.hero p{font-size:clamp(1rem,1.25vw,1.18rem);line-height:1.7;max-width:62ch;margin-bottom:36px;color:rgba(245,240,232,0.82)}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:28px}.hero-bg{position:absolute;inset:0;z-index:0;background-color:#071520;background-image:image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-poster.webp') type('image/webp'));background-position:center;background-size:cover;background-repeat:no-repeat}.hero-bg video,.hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-title,.hero-actions,.hero-stats,.hero-trust-pill{text-shadow:0 2px 18px rgba(7,21,32,0.75),0 1px 4px rgba(7,21,32,0.6)}.hero-actions .btn{text-shadow:none}.hero .container{position:relative;z-index:2}.section-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.2em;color:#c9a84c;margin-bottom:12px}.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.15;margin-bottom:16px;color:#f5f0e8}.section-title em{font-style:italic;color:#c9a84c}.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-weight:600;font-size:0.85rem;letter-spacing:0.04em;transition:all 0.3s ease;cursor:pointer;border:none}.btn-gold{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628}.btn-outline{border:1px solid rgba(78,205,196,0.25);color:#4ecdc4;background:transparent}.mobile-toggle{display:none}@media(max-width:768px){.nav-links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0a1628;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:1000;padding:100px 32px 60px}.nav-links.open{display:flex}.mobile-toggle{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:12px;z-index:1001;min-width:48px;min-height:48px;align-items:center;justify-content:center}.mobile-toggle span{width:22px;height:2px;background:#f5f0e8;border-radius:2px;transition:all 0.3s ease}}@media(max-width:768px){.hero{aspect-ratio:auto;min-height:auto;max-height:none;padding:110px 0 32px;align-items:flex-start}.hero-bg{background-image:image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'));background-image:-webkit-image-set(url('/images/hero-yacht-drone-mobile-poster.avif') type('image/avif'),url('/images/hero-yacht-drone-mobile-poster.webp') type('image/webp'))}.hero-badge{margin-bottom:14px}}@media(max-width:480px){.hero{padding:100px 0 24px;align-items:flex-start}.hero p{font-size:0.85rem;margin-bottom:20px}.hero-badge{margin-bottom:10px;font-size:.62rem;padding:5px 12px;letter-spacing:.1em}}</style>
   <style>
     section.hero{align-items:flex-start;padding-top:120px;aspect-ratio:auto;max-height:none}
-    .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom, rgba(7,21,32,0.55) 0%, rgba(7,21,32,0.25) 38%, rgba(7,21,32,0.15) 60%, rgba(7,21,32,0.6) 100%);pointer-events:none;z-index:1}
+    .hero-bg::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:radial-gradient(ellipse 50% 46% at 50% 52%,rgba(7,21,32,0.5) 0%,rgba(7,21,32,0.32) 65%,rgba(7,21,32,0) 100%),linear-gradient(to top,#0a1628 0,rgba(10,22,40,0) 160px),linear-gradient(to bottom,rgba(7,21,32,0.62) 0%,rgba(7,21,32,0.45) 35%,rgba(7,21,32,0.45) 65%,rgba(7,21,32,0.7) 100%)}
     .hero .container{position:relative;z-index:3}
     .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:50px;background:rgba(7,21,32,0.55);border:1px solid rgba(201,168,76,0.35);backdrop-filter:blur(8px);color:#f5e9c8;font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:18px;text-shadow:0 1px 2px rgba(0,0,0,0.6)}
     .hero h1,.hero p,.hero-stat-value,.hero-stat-label{text-shadow:0 2px 12px rgba(0,0,0,0.55)}
@@ -45,7 +45,12 @@
     @keyframes pearlShimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
     .hero-eyebrow{background:linear-gradient(115deg,#7fded3 0%,#a8efe6 35%,#e0fff9 55%,#a8efe6 75%,#7fded3 100%);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:pearlShimmer 5s ease-in-out infinite}
     .hero-tail{display:block;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.5rem,4vw,3.2rem);line-height:1.1;letter-spacing:-0.005em}
-    .hero-tail em{font-style:italic;background:linear-gradient(105deg,#8b6914,#b8912e,#d4a853,#f0d48a,#ffe5a0,#f0d48a,#d4a853,#b8912e,#8b6914);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 5s ease infinite;filter:drop-shadow(0 1px 8px rgba(212,168,83,0.35))}
+    .hero .hero-tail em{font-style:italic;background:linear-gradient(105deg,#f0d48a,#ffe5a0,#fff1c9,#ffe5a0,#f0d48a);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 5s ease infinite;filter:drop-shadow(0 2px 10px rgba(7,21,32,0.85))}
+    .hero-title{position:relative}
+    .hero-title::before{content:"";position:absolute;inset:-4% 8%;z-index:-1;pointer-events:none;border-radius:50%;background:rgba(7,21,32,0.5);filter:blur(36px)}
+    @media(max-width:768px){.hero-title::before{inset:-8% -6% -22%;border-radius:40%;background:rgba(7,21,32,0.6);filter:blur(22px)}}
+    .hero .hero-stat-label{color:#c9dce8}
+    .hero .hero-stat-value span{background-image:linear-gradient(105deg,#f0d48a,#ffe5a0,#fff1c9,#ffe5a0,#f0d48a)}
     .hero-actions{margin-top:42px;gap:16px;align-items:center;flex-wrap:wrap}
     .btn-hero{padding:20px 44px;font-size:0.92rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;border-radius:60px;gap:10px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);position:relative}
     .btn-hero.btn-gold{box-shadow:0 12px 32px -10px rgba(212,168,83,0.55),0 0 0 1px rgba(255,229,160,0.18) inset;background-size:200% auto;animation:goldShimmer 5s ease infinite}
@@ -61,7 +66,7 @@
       .hero-actions .btn-gold.btn-hero{width:100%;justify-content:center}
       .hero-actions .btn-outline.btn-hero{
         border:1.5px solid rgba(212,168,83,0.75);
-        background:rgba(212,168,83,0.14);
+        background:rgba(7,21,32,0.72);
         backdrop-filter:blur(6px);
         -webkit-backdrop-filter:blur(6px);
         color:#ffe5a0;
@@ -72,7 +77,7 @@
       .hero-actions .btn-outline.btn-hero svg{display:none}
       .hero-trust-pill{display:flex;width:fit-content;margin-left:auto!important;margin-right:auto!important}
       .hero-actions .btn-outline.btn-hero .view-yacht-text{
-        background:linear-gradient(105deg,#8b6914,#b8912e,#d4a853,#f0d48a,#ffe5a0,#f0d48a,#d4a853,#b8912e,#8b6914);
+        background:linear-gradient(105deg,#f0d48a,#ffe5a0,#fff1c9,#ffe5a0,#f0d48a);
         background-size:300% auto;
         -webkit-background-clip:text;
         background-clip:text;
@@ -95,7 +100,7 @@
     .hero-trust{display:inline-flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:18px;padding:10px 16px;background:rgba(7,21,32,0.5);border:1px solid rgba(78,205,196,0.18);border-radius:50px;backdrop-filter:blur(8px);font-size:0.74rem;color:#e8f4f3;font-weight:500}
     .hero-trust strong{color:#c9a84c;font-weight:700}
     @media(max-width:768px){
-      .hero-bg::after{background:linear-gradient(to bottom, rgba(7,21,32,0.7) 0%, rgba(7,21,32,0.45) 35%, rgba(7,21,32,0.55) 70%, rgba(7,21,32,0.85) 100%)}
+      .hero-bg::after{background:linear-gradient(to top,#0a1628 0,rgba(10,22,40,0) 120px),linear-gradient(to bottom,rgba(7,21,32,0.72) 0%,rgba(7,21,32,0.62) 35%,rgba(7,21,32,0.62) 70%,rgba(7,21,32,0.85) 100%)}
       .hero-call-mobile{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;padding:14px 24px;border-radius:50px;background:rgba(7,21,32,0.7);border:1.5px solid #c9a84c;color:#c9a84c;font-weight:700;font-size:0.85rem;letter-spacing:0.04em;text-decoration:none;backdrop-filter:blur(8px)}
       .hero-trust{font-size:0.7rem;gap:10px;padding:8px 14px;justify-content:center;width:100%}
     }
@@ -103,7 +108,7 @@
       .hero-main,.hero-eyebrow,.hero-tail em,.btn-hero.btn-gold,.nav-cta{animation:none!important}
       .hero-main{background:none;-webkit-text-fill-color:#fff8f0;color:#fff8f0;filter:none}
       .hero-eyebrow{background:none;-webkit-text-fill-color:#a8efe6;color:#a8efe6}
-      .hero-tail em{background:none;-webkit-text-fill-color:#f0d48a;color:#f0d48a;filter:none}
+      .hero .hero-tail em{background:none;-webkit-text-fill-color:#ffe5a0;color:#ffe5a0;filter:none;text-shadow:0 1px 3px rgba(7,21,32,0.9),0 2px 14px rgba(7,21,32,0.8)}
       .navbar,.hero-trust-pill,.hero-trust,.hero-badge,.btn-hero.btn-outline,.hero-call-mobile{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
       .navbar{background:rgba(10,22,40,0.94)}
       .hero-trust-pill{background:rgba(40,28,8,0.85)}
@@ -111,8 +116,8 @@
       .hero-badge{background:rgba(7,21,32,0.78)}
     }
   </style>
-  <link rel="preload" href="/style.css?v=fe66034d" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/style.css?v=fe66034d"></noscript>
+  <link rel="preload" href="/style.css?v=149ea18a" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/style.css?v=149ea18a"></noscript>
 </head>
 <body>
 
@@ -146,27 +151,22 @@
 <main>
 <section class="hero">
   <div class="hero-bg">
-    <video id="hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
-      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
+    <video id="hero-video" muted loop playsinline preload="none" aria-hidden="true">
       <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.mp4" type="video/mp4">
+      <source media="(max-width:768px)" src="/images/hero-yacht-drone-mobile.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.webm" type="video/webm">
       <source src="/images/hero-yacht-drone.mp4" type="video/mp4">
     </video>
     <script>
-      // Defer hero video on slow/metered connections; the CSS background poster stays visible.
+      // No autoplay attribute: it overrides preload="none" and starts the download before LCP.
       (function(){
         var v = document.getElementById('hero-video');
         if (!v) return;
         var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) {
-          v.removeAttribute('autoplay');
-          v.pause();
-          return;
-        }
-        // Otherwise nudge the load after first idle to avoid competing with LCP.
-        var nudge = function(){ try { v.load(); v.play().catch(function(){}); } catch(_) {} };
-        if ('requestIdleCallback' in window) requestIdleCallback(nudge, { timeout: 1500 });
-        else setTimeout(nudge, 800);
+        if (c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType))) return;
+        var start = function(){ v.preload = 'auto'; v.play().catch(function(){}); };
+        var afterLoad = function(){ 'requestIdleCallback' in window ? requestIdleCallback(start, { timeout: 2000 }) : setTimeout(start, 500); };
+        document.readyState === 'complete' ? afterLoad() : window.addEventListener('load', afterLoad, { once: true });
       })();
     </script>
   </div>
@@ -186,7 +186,7 @@
         <span class="view-yacht-text">View Our Yacht</span>
       </a>
     </div>
-    <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" class="hero-trust-pill" aria-label="5.0 stars from 133 Google reviews" style="display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:50px;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.35);font-size:0.8rem;color:#ffe5a0;font-weight:600;margin-top:20px;margin-bottom:6px;text-decoration:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fadeInUp 0.8s ease 0.35s both">
+    <a href="https://share.google/7e44SLfCM74VXYfe2" target="_blank" rel="noopener noreferrer" class="hero-trust-pill" aria-label="5.0 stars from 133 Google reviews" style="display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:50px;background:rgba(7,21,32,0.6);border:1px solid rgba(212,168,83,0.35);font-size:0.8rem;color:#ffe5a0;font-weight:600;margin-top:20px;margin-bottom:6px;text-decoration:none;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fadeInUp 0.8s ease 0.35s both">
       <span style="letter-spacing:2px;font-size:0.9rem">★★★★★</span>
       <span style="white-space:nowrap">5.0 · 133 Google reviews</span>
     </a>
@@ -664,7 +664,7 @@
     .owners-band h2 em{font-style:italic;background:linear-gradient(105deg,#8b6914,#b8912e,#d4a853,#f0d48a,#ffe5a0,#f0d48a,#d4a853,#b8912e,#8b6914);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 4s ease infinite}
     .owners-band p{font-size:.95rem;line-height:1.65;color:rgba(245,240,232,.78);max-width:60ch;margin-bottom:0}
     .owners-band-cta{flex-shrink:0}
-    @media(max-width:780px){.owners-band-inner{grid-template-columns:1fr;gap:24px}.owners-band-cta .btn{width:100%;justify-content:center}}
+    @media(max-width:780px){.owners-band-inner{grid-template-columns:1fr;gap:24px;text-align:center}.owners-band h2,.owners-band p{margin-left:auto;margin-right:auto;text-wrap:balance}.owners-band-cta .btn{width:100%;justify-content:center}}
   </style>
   <div class="owners-band-inner">
     <div>
@@ -846,7 +846,7 @@
 
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0})" aria-label="Scroll to top">&#8593;</button>
 
-<script src="/app.js?v=7366922f" defer></script>
+<script src="/app.js?v=5a47f46b" defer></script>
 <script>
 (function(){function loadGA(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-QTEXZD81XN';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-QTEXZD81XN');}var gaLoaded=false;function triggerGA(){if(gaLoaded)return;gaLoaded=true;loadGA();}['scroll','touchstart','keydown','mousedown'].forEach(function(ev){addEventListener(ev,triggerGA,{once:true,passive:true});});setTimeout(triggerGA,3000);})();
 </script>
