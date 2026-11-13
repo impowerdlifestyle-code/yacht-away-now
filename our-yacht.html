@@ -329,6 +329,20 @@
       .cmp .rate small{font-family:Montserrat,sans-serif;font-size:0.72rem;color:rgba(245,240,232,0.6)}
       .cmp-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:50px;font-size:0.74rem;font-weight:700;letter-spacing:0.04em;background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;color:#0a1628}
       @media(max-width:600px){.cmp th,.cmp td{padding:12px 12px}.cmp-boat{font-size:1.1rem}}
+      @media(max-width:600px){
+        .cmp-wrap{overflow:visible}
+        .cmp,.cmp thead,.cmp tbody{display:block;min-width:0}
+        .cmp tr{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--dark-border)}
+        .cmp tbody tr:last-child{border-bottom:none}
+        .cmp th,.cmp td{display:block;border-bottom:none;text-align:center;padding:8px 10px 14px}
+        .cmp thead th{padding-top:16px}
+        .cmp thead th.cmp-col-feat{display:none}
+        .cmp td.feat{grid-column:1/-1;background:none;white-space:normal;padding:14px 10px 2px}
+        .cmp tr > :last-child{border-left:1px solid var(--dark-border)}
+        .cmp td.feat:last-child{border-left:none}
+        .cmp-thumb{margin:0 auto;height:80px}
+        .cmp-cta{padding:12px 14px;justify-content:center}
+      }
     </style>
     <div class="cmp-wrap reveal">
       <table class="cmp">
