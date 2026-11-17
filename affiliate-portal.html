@@ -460,6 +460,10 @@ async function apiCall(method, action, body) {
   return res.json();
 }
 
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"'`]/g, ch => '&#' + ch.charCodeAt(0) + ';');
+}
+
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -478,28 +482,28 @@ async function loadDashboard() {
     // Stats
     const owed = parseFloat(a.balance_owed);
     document.getElementById('stats-grid').innerHTML = `
-      <div class="stat-card"><div class="label">Total Clicks</div><div class="value seafoam">${a.total_clicks}</div></div>
-      <div class="stat-card"><div class="label">Conversions</div><div class="value">${a.total_conversions}</div></div>
+      <div class="stat-card"><div class="label">Total Clicks</div><div class="value seafoam">${esc(a.total_clicks)}</div></div>
+      <div class="stat-card"><div class="label">Conversions</div><div class="value">${esc(a.total_conversions)}</div></div>
       <div class="stat-card"><div class="label">Conversion Rate</div><div class="value">${a.total_clicks > 0 ? ((a.total_conversions / a.total_clicks) * 100).toFixed(1) + '%' : '0%'}</div></div>
-      <div class="stat-card"><div class="label">Commission Rate</div><div class="value gold">${a.commission_type === 'percentage' ? a.commission_value + '%' : '$' + a.commission_value}</div></div>
-      <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${a.total_earned}</div></div>
-      <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${a.total_paid}</div></div>
-      <div class="stat-card"><div class="label">Available Balance</div><div class="value ${owed > 0 ? 'green' : ''}">$${a.balance_owed}</div></div>
+      <div class="stat-card"><div class="label">Commission Rate</div><div class="value gold">${esc(a.commission_type === 'percentage' ? a.commission_value + '%' : '$' + a.commission_value)}</div></div>
+      <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${esc(a.total_earned)}</div></div>
+      <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${esc(a.total_paid)}</div></div>
+      <div class="stat-card"><div class="label">Available Balance</div><div class="value ${owed > 0 ? 'green' : ''}">$${esc(a.balance_owed)}</div></div>
     `;
 
     // Referral links
-    const base = 'https://www.yachtawaynow.com/api/affiliates?action=click&code=' + a.code;
+    const base = 'https://www.yachtawaynow.com/api/affiliates?action=click&code=' + encodeURIComponent(a.code);
     document.getElementById('link-section').innerHTML = `
       <h3>Your Referral Links</h3>
       <div class="hint">Share these links to earn commission on every booking. Clicks are tracked automatically.</div>
       <div class="link-label">Main Link</div>
-      <div class="link-box"><code>${base}</code><button class="btn-outline btn-sm" onclick="copyLink('${base}')">Copy</button></div>
+      <div class="link-box"><code>${esc(base)}</code><button class="btn-outline btn-sm" data-copy="${esc(base)}">Copy</button></div>
       <div class="link-label">Pricing Page</div>
-      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/pricing</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/pricing')">Copy</button></div>
+      <div class="link-box"><code>${esc(base + '&dest=https://www.yachtawaynow.com/pricing')}</code><button class="btn-outline btn-sm" data-copy="${esc(base + '&dest=https://www.yachtawaynow.com/pricing')}">Copy</button></div>
       <div class="link-label">Booking Page</div>
-      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/contact</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/contact')">Copy</button></div>
+      <div class="link-box"><code>${esc(base + '&dest=https://www.yachtawaynow.com/contact')}</code><button class="btn-outline btn-sm" data-copy="${esc(base + '&dest=https://www.yachtawaynow.com/contact')}">Copy</button></div>
       <div class="link-label">Sunset Cruise</div>
-      <div class="link-box"><code>${base}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg</code><button class="btn-outline btn-sm" onclick="copyLink('${base}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')">Copy</button></div>
+      <div class="link-box"><code>${esc(base + '&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')}</code><button class="btn-outline btn-sm" data-copy="${esc(base + '&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')}">Copy</button></div>
     `;
 
     // Chart
@@ -541,8 +545,8 @@ function renderConversions(conversions) {
       <td>${new Date(c.created_at).toLocaleDateString()}</td>
       <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
       <td style="color:var(--gold);font-weight:600">$${parseFloat(c.commission_amount).toFixed(2)}</td>
-      <td>${c.description || '—'}</td>
-      <td><span class="badge badge-${c.status}">${c.status}</span></td>
+      <td>${esc(c.description || '-')}</td>
+      <td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td>
     </tr>
   `).join('') : '<tr><td class="empty-row" colspan="5">No conversions yet. Share your referral links to start earning!</td></tr>';
 }
@@ -552,9 +556,9 @@ function renderPayouts(payouts) {
     <tr>
       <td>${new Date(p.created_at).toLocaleDateString()}</td>
       <td style="color:var(--seafoam);font-weight:600">$${parseFloat(p.amount).toFixed(2)}</td>
-      <td style="text-transform:capitalize">${p.method || '—'}</td>
-      <td>${p.reference || '—'}</td>
-      <td><span class="badge badge-${p.status}">${p.status}</span></td>
+      <td style="text-transform:capitalize">${esc(p.method || '-')}</td>
+      <td>${esc(p.reference || '-')}</td>
+      <td><span class="badge badge-${esc(p.status)}">${esc(p.status)}</span></td>
     </tr>
   `).join('') : '<tr><td class="empty-row" colspan="5">No payouts yet</td></tr>';
 }
@@ -566,6 +570,11 @@ function showTab(tab) {
     b.classList.toggle('active', b.textContent.toLowerCase().includes(tab));
   });
 }
+
+document.getElementById('link-section').addEventListener('click', e => {
+  const button = e.target.closest('[data-copy]');
+  if (button) copyLink(button.dataset.copy);
+});
 
 function copyLink(link) {
   navigator.clipboard.writeText(link).then(() => toast('Link copied!')).catch(() => toast('Copy failed'));

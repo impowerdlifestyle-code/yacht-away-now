@@ -167,6 +167,12 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"'`]/g, ch => '&#' + ch.charCodeAt(0) + ';');
+}
+
+const SIGNATURE_PNG = /^data:image\/png;base64,[A-Za-z0-9+/=]+$/;
+
 function fmtDate(d) {
   return new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
@@ -180,14 +186,14 @@ function renderList(contracts) {
   document.getElementById('contracts-table').innerHTML = contracts.length ? contracts.map(c => `
     <tr>
       <td>${fmtDate(c.signed_at)}</td>
-      <td style="color:var(--text);font-weight:500">${c.charterer_name}</td>
-      <td>${c.email}</td>
-      <td>${c.charter_type || '—'}</td>
+      <td style="color:var(--text);font-weight:500">${esc(c.charterer_name)}</td>
+      <td>${esc(c.email)}</td>
+      <td>${esc(c.charter_type || '-')}</td>
       <td>${fmtCharterDate(c.charter_date)}</td>
-      <td>${c.guests || '—'}</td>
+      <td>${esc(c.guests || '-')}</td>
       <td style="color:var(--gold);font-weight:600">$${parseFloat(c.total_price||0).toLocaleString()}</td>
       <td style="color:var(--seafoam)">$${parseFloat(c.deposit_amount||0).toLocaleString()}</td>
-      <td><button class="btn-outline" onclick="viewContract('${c.id}')">View / PDF</button></td>
+      <td><button class="btn-outline" data-contract-id="${esc(c.id)}">View / PDF</button></td>
     </tr>
   `).join('') : '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-dim)">No signed contracts yet</td></tr>';
 }
@@ -196,6 +202,11 @@ function showList() {
   document.getElementById('list-view').style.display = 'block';
   document.getElementById('detail-view').style.display = 'none';
 }
+
+document.getElementById('contracts-table').addEventListener('click', e => {
+  const button = e.target.closest('[data-contract-id]');
+  if (button) viewContract(button.dataset.contractId);
+});
 
 async function viewContract(id) {
   try {
@@ -206,19 +217,19 @@ async function viewContract(id) {
         <div class="pdf-logo">&#9875;</div>
         <h1>Yacht Away Now</h1>
         <p>Private Yacht Charters, St. Petersburg, Florida</p>
-        <p style="margin-top:8px;font-size:0.75rem;color:#999;">Contract ID: ${c.id}</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:#999;">Contract ID: ${esc(c.id)}</p>
       </div>
 
       <h2>Charter Agreement: Signed Contract</h2>
-      <div class="detail-row"><span class="label">Charterer Name</span><span class="val">${c.charterer_name}</span></div>
-      <div class="detail-row"><span class="label">Email</span><span class="val">${c.email}</span></div>
-      <div class="detail-row"><span class="label">Phone</span><span class="val">${c.phone || 'Not provided'}</span></div>
+      <div class="detail-row"><span class="label">Charterer Name</span><span class="val">${esc(c.charterer_name)}</span></div>
+      <div class="detail-row"><span class="label">Email</span><span class="val">${esc(c.email)}</span></div>
+      <div class="detail-row"><span class="label">Phone</span><span class="val">${esc(c.phone || 'Not provided')}</span></div>
 
       <h2>Charter Details</h2>
-      <div class="detail-row"><span class="label">Charter Type</span><span class="val">${c.charter_type || 'Not specified'}</span></div>
+      <div class="detail-row"><span class="label">Charter Type</span><span class="val">${esc(c.charter_type || 'Not specified')}</span></div>
       <div class="detail-row"><span class="label">Charter Date</span><span class="val">${fmtCharterDate(c.charter_date)}</span></div>
-      <div class="detail-row"><span class="label">Number of Guests</span><span class="val">${c.guests || 'Not specified'}</span></div>
-      <div class="detail-row"><span class="label">Captain</span><span class="val">${c.captain || 'Not selected'}</span></div>
+      <div class="detail-row"><span class="label">Number of Guests</span><span class="val">${esc(c.guests || 'Not specified')}</span></div>
+      <div class="detail-row"><span class="label">Captain</span><span class="val">${esc(c.captain || 'Not selected')}</span></div>
 
       <h2>Financial Summary</h2>
       <div class="detail-row"><span class="label">Charter Total</span><span class="val" style="font-size:1.05rem;color:#c9a84c;">$${parseFloat(c.total_price||0).toLocaleString()}</span></div>
@@ -235,8 +246,8 @@ async function viewContract(id) {
 
       <div class="sig-section">
         <h2>Electronic Signature</h2>
-        ${c.signature_data ? `<img class="sig-img" src="${c.signature_data}" alt="Signature">` : '<p style="color:#999;font-style:italic;">Signature not captured</p>'}
-        <div class="sig-name">Signed by: ${c.signer_name || c.charterer_name}</div>
+        ${SIGNATURE_PNG.test(c.signature_data || '') ? `<img class="sig-img" src="${c.signature_data}" alt="Signature">` : '<p style="color:#999;font-style:italic;">Signature not captured</p>'}
+        <div class="sig-name">Signed by: ${esc(c.signer_name || c.charterer_name)}</div>
         <div class="sig-date">Date: ${new Date(c.signed_at).toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}</div>
       </div>
 

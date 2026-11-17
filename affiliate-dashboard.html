@@ -340,6 +340,10 @@ async function api(method, action, body, params) {
   return res.json();
 }
 
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"'`]/g, ch => '&#' + ch.charCodeAt(0) + ';');
+}
+
 // Toast
 function toast(msg) {
   const t = document.getElementById('toast');
@@ -377,31 +381,31 @@ async function loadDashboard() {
 
 function renderStats(s) {
   document.getElementById('stats-grid').innerHTML = `
-    <div class="stat-card"><div class="label">Active Affiliates</div><div class="value seafoam">${s.activeAffiliates}</div></div>
-    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${s.totalClicks}</div></div>
-    <div class="stat-card"><div class="label">Total Conversions</div><div class="value">${s.totalConversions}</div></div>
-    <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${s.totalEarned}</div></div>
-    <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${s.totalPaid}</div></div>
-    <div class="stat-card"><div class="label">Outstanding Balance</div><div class="value" style="color:${parseFloat(s.outstandingBalance)>0?'var(--red)':'var(--green)'}">$${s.outstandingBalance}</div></div>
+    <div class="stat-card"><div class="label">Active Affiliates</div><div class="value seafoam">${esc(s.activeAffiliates)}</div></div>
+    <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${esc(s.totalClicks)}</div></div>
+    <div class="stat-card"><div class="label">Total Conversions</div><div class="value">${esc(s.totalConversions)}</div></div>
+    <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${esc(s.totalEarned)}</div></div>
+    <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${esc(s.totalPaid)}</div></div>
+    <div class="stat-card"><div class="label">Outstanding Balance</div><div class="value" style="color:${parseFloat(s.outstandingBalance)>0?'var(--red)':'var(--green)'}">$${esc(s.outstandingBalance)}</div></div>
   `;
 }
 
 function commLabel(a) {
-  return a.commission_type === 'percentage' ? `${a.commission_value}%` : `$${a.commission_value}`;
+  return esc(a.commission_type === 'percentage' ? `${a.commission_value}%` : `$${a.commission_value}`);
 }
 
 function renderOverviewTable(list) {
   document.getElementById('overview-table').innerHTML = list.slice(0, 10).map(a => `
     <tr>
-      <td style="color:var(--text);font-weight:500">${a.name}</td>
-      <td><code style="color:var(--seafoam);font-size:0.78rem">${a.code}</code></td>
+      <td style="color:var(--text);font-weight:500">${esc(a.name)}</td>
+      <td><code style="color:var(--seafoam);font-size:0.78rem">${esc(a.code)}</code></td>
       <td>${commLabel(a)}</td>
-      <td>${a.total_clicks || 0}</td>
-      <td>${a.total_conversions || 0}</td>
+      <td>${esc(a.total_clicks || 0)}</td>
+      <td>${esc(a.total_conversions || 0)}</td>
       <td style="color:var(--gold)">$${parseFloat(a.total_earned||0).toFixed(2)}</td>
       <td style="color:${(a.total_earned-a.total_paid)>0?'var(--red)':'var(--green)'}">$${(parseFloat(a.total_earned||0)-parseFloat(a.total_paid||0)).toFixed(2)}</td>
-      <td><span class="badge badge-${a.status}">${a.status}</span></td>
-      <td><button class="btn btn-outline btn-sm" onclick="viewDetail('${a.id}')">View</button></td>
+      <td><span class="badge badge-${esc(a.status)}">${esc(a.status)}</span></td>
+      <td><button class="btn btn-outline btn-sm" data-action="view" data-id="${esc(a.id)}">View</button></td>
     </tr>
   `).join('') || '<tr><td colspan="9" style="text-align:center;padding:40px;color:var(--text-dim)">No affiliates yet. Click "+ Add Affiliate" to get started.</td></tr>';
 }
@@ -409,20 +413,20 @@ function renderOverviewTable(list) {
 function renderAffiliatesTable() {
   document.getElementById('affiliates-table').innerHTML = affiliatesCache.map(a => `
     <tr>
-      <td style="color:var(--text);font-weight:500">${a.name}</td>
-      <td>${a.email}</td>
-      <td><code style="color:var(--seafoam);font-size:0.78rem">${a.code}</code></td>
+      <td style="color:var(--text);font-weight:500">${esc(a.name)}</td>
+      <td>${esc(a.email)}</td>
+      <td><code style="color:var(--seafoam);font-size:0.78rem">${esc(a.code)}</code></td>
       <td>${commLabel(a)}</td>
-      <td>${a.total_clicks||0}</td>
-      <td>${a.total_conversions||0}</td>
+      <td>${esc(a.total_clicks || 0)}</td>
+      <td>${esc(a.total_conversions || 0)}</td>
       <td style="color:var(--gold)">$${parseFloat(a.total_earned||0).toFixed(2)}</td>
       <td style="color:var(--seafoam)">$${parseFloat(a.total_paid||0).toFixed(2)}</td>
       <td style="color:${(a.total_earned-a.total_paid)>0?'var(--red)':'var(--green)'}">$${(parseFloat(a.total_earned||0)-parseFloat(a.total_paid||0)).toFixed(2)}</td>
-      <td><span class="badge badge-${a.status}">${a.status}</span></td>
+      <td><span class="badge badge-${esc(a.status)}">${esc(a.status)}</span></td>
       <td style="white-space:nowrap">
-        <button class="btn btn-outline btn-sm" onclick="viewDetail('${a.id}')">View</button>
-        <button class="btn btn-outline btn-sm" onclick="openEditModal('${a.id}')">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteAffiliate('${a.id}','${a.name}')">Delete</button>
+        <button class="btn btn-outline btn-sm" data-action="view" data-id="${esc(a.id)}">View</button>
+        <button class="btn btn-outline btn-sm" data-action="edit" data-id="${esc(a.id)}">Edit</button>
+        <button class="btn btn-danger btn-sm" data-action="delete" data-id="${esc(a.id)}" data-name="${esc(a.name)}">Delete</button>
       </td>
     </tr>
   `).join('') || '<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--text-dim)">No affiliates yet.</td></tr>';
@@ -435,26 +439,26 @@ async function viewDetail(id) {
     const data = await api('GET', 'detail', null, { id });
     const a = data.affiliate;
     const owed = (parseFloat(a.total_earned||0) - parseFloat(a.total_paid||0)).toFixed(2);
-    const link = `https://www.yachtawaynow.com/api/affiliates?action=click&code=${a.code}`;
+    const link = `https://www.yachtawaynow.com/api/affiliates?action=click&code=${encodeURIComponent(a.code)}`;
 
     document.getElementById('detail-content').innerHTML = `
       <div class="detail-header">
         <div>
-          <div class="detail-name">${a.name} <span class="badge badge-${a.status}" style="vertical-align:middle;font-size:0.65rem">${a.status}</span></div>
-          <div class="detail-meta">${a.email}${a.phone?' &middot; '+a.phone:''}${a.notes?' &middot; '+a.notes:''}</div>
+          <div class="detail-name">${esc(a.name)} <span class="badge badge-${esc(a.status)}" style="vertical-align:middle;font-size:0.65rem">${esc(a.status)}</span></div>
+          <div class="detail-meta">${esc(a.email)}${a.phone ? ' &middot; ' + esc(a.phone) : ''}${a.notes ? ' &middot; ' + esc(a.notes) : ''}</div>
         </div>
         <div style="display:flex;gap:8px">
-          <button class="btn btn-outline btn-sm" onclick="openEditModal('${a.id}')">Edit</button>
-          <button class="btn btn-gold btn-sm" onclick="openPayoutModalFor('${a.id}','${a.name}',${owed})">Record Payout</button>
-          <button class="btn btn-gold btn-sm" onclick="openConversionModalFor('${a.id}','${a.name}')">Record Conversion</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteAffiliate('${a.id}','${a.name}')">Delete</button>
+          <button class="btn btn-outline btn-sm" data-action="edit" data-id="${esc(a.id)}">Edit</button>
+          <button class="btn btn-gold btn-sm" data-action="payout" data-id="${esc(a.id)}" data-owed="${esc(owed)}">Record Payout</button>
+          <button class="btn btn-gold btn-sm" data-action="conversion" data-id="${esc(a.id)}">Record Conversion</button>
+          <button class="btn btn-danger btn-sm" data-action="delete" data-id="${esc(a.id)}" data-name="${esc(a.name)}">Delete</button>
         </div>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card"><div class="label">Commission</div><div class="value gold">${commLabel(a)}</div></div>
-        <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${a.total_clicks||0}</div></div>
-        <div class="stat-card"><div class="label">Conversions</div><div class="value">${a.total_conversions||0}</div></div>
+        <div class="stat-card"><div class="label">Total Clicks</div><div class="value">${esc(a.total_clicks || 0)}</div></div>
+        <div class="stat-card"><div class="label">Conversions</div><div class="value">${esc(a.total_conversions || 0)}</div></div>
         <div class="stat-card"><div class="label">Total Earned</div><div class="value gold">$${parseFloat(a.total_earned||0).toFixed(2)}</div></div>
         <div class="stat-card"><div class="label">Total Paid</div><div class="value seafoam">$${parseFloat(a.total_paid||0).toFixed(2)}</div></div>
         <div class="stat-card"><div class="label">Balance Owed</div><div class="value" style="color:${parseFloat(owed)>0?'var(--red)':'var(--green)'}">$${owed}</div></div>
@@ -463,14 +467,14 @@ async function viewDetail(id) {
       <div style="margin-bottom:24px">
         <div class="section-title">Referral Link</div>
         <div class="link-box">
-          <code>${link}</code>
-          <button class="btn btn-outline btn-sm" onclick="copyLink('${link}')">Copy</button>
+          <code>${esc(link)}</code>
+          <button class="btn btn-outline btn-sm" data-copy="${esc(link)}">Copy</button>
         </div>
         <div style="margin-top:8px">
           <div class="section-title" style="font-size:0.85rem;margin:12px 0 6px">Custom Destination Links</div>
-          <div class="link-box"><code>${link}&dest=https://www.yachtawaynow.com/pricing</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/pricing')">Copy</button></div>
-          <div class="link-box" style="margin-top:6px"><code>${link}&dest=https://www.yachtawaynow.com/contact</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/contact')">Copy</button></div>
-          <div class="link-box" style="margin-top:6px"><code>${link}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg</code><button class="btn btn-outline btn-sm" onclick="copyLink('${link}&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')">Copy</button></div>
+          <div class="link-box"><code>${esc(link + '&dest=https://www.yachtawaynow.com/pricing')}</code><button class="btn btn-outline btn-sm" data-copy="${esc(link + '&dest=https://www.yachtawaynow.com/pricing')}">Copy</button></div>
+          <div class="link-box" style="margin-top:6px"><code>${esc(link + '&dest=https://www.yachtawaynow.com/contact')}</code><button class="btn btn-outline btn-sm" data-copy="${esc(link + '&dest=https://www.yachtawaynow.com/contact')}">Copy</button></div>
+          <div class="link-box" style="margin-top:6px"><code>${esc(link + '&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')}</code><button class="btn btn-outline btn-sm" data-copy="${esc(link + '&dest=https://www.yachtawaynow.com/sunset-cruise-st-petersburg')}">Copy</button></div>
         </div>
       </div>
 
@@ -484,8 +488,8 @@ async function viewDetail(id) {
                 <td>${new Date(c.created_at).toLocaleDateString()}</td>
                 <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
                 <td style="color:var(--gold)">$${parseFloat(c.commission_amount).toFixed(2)}</td>
-                <td>${c.description||'—'}</td>
-                <td><span class="badge badge-${c.status}">${c.status}</span></td>
+                <td>${esc(c.description || '-')}</td>
+                <td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td>
               </tr>
             `).join('') || '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-dim)">No conversions yet</td></tr>'}</tbody>
           </table>
@@ -501,9 +505,9 @@ async function viewDetail(id) {
               <tr>
                 <td>${new Date(p.created_at).toLocaleDateString()}</td>
                 <td style="color:var(--seafoam)">$${parseFloat(p.amount).toFixed(2)}</td>
-                <td>${p.method||'—'}</td>
-                <td>${p.reference||'—'}</td>
-                <td><span class="badge badge-paid">${p.status}</span></td>
+                <td>${esc(p.method || '-')}</td>
+                <td>${esc(p.reference || '-')}</td>
+                <td><span class="badge badge-paid">${esc(p.status)}</span></td>
               </tr>
             `).join('') || '<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-dim)">No payouts yet</td></tr>'}</tbody>
           </table>
@@ -555,7 +559,7 @@ function openEditModal(id) {
 function populateAffiliateSelect(selectId) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">Select affiliate...</option>' +
-    affiliatesCache.filter(a => a.status === 'active').map(a => `<option value="${a.id}">${a.name} (${a.code})</option>`).join('');
+    affiliatesCache.filter(a => a.status === 'active').map(a => `<option value="${esc(a.id)}">${esc(a.name)} (${esc(a.code)})</option>`).join('');
 }
 
 function openConversionModal() {
@@ -566,7 +570,7 @@ function openConversionModal() {
   openModal('modal-conversion');
 }
 
-function openConversionModalFor(id, name) {
+function openConversionModalFor(id) {
   populateAffiliateSelect('c-affiliate');
   document.getElementById('c-affiliate').value = id;
   document.getElementById('c-amount').value = '';
@@ -582,7 +586,7 @@ function openPayoutModal() {
   openModal('modal-payout');
 }
 
-function openPayoutModalFor(id, name, owed) {
+function openPayoutModalFor(id, owed) {
   populateAffiliateSelect('p-affiliate');
   document.getElementById('p-affiliate').value = id;
   document.getElementById('p-amount').value = owed > 0 ? owed : '';
@@ -683,11 +687,11 @@ async function loadConversions() {
     document.getElementById('conversions-table').innerHTML = all.map(c => `
       <tr>
         <td>${new Date(c.created_at).toLocaleDateString()}</td>
-        <td style="color:var(--text);font-weight:500">${c._affiliate}</td>
+        <td style="color:var(--text);font-weight:500">${esc(c._affiliate)}</td>
         <td>$${parseFloat(c.booking_amount).toFixed(2)}</td>
         <td style="color:var(--gold)">$${parseFloat(c.commission_amount).toFixed(2)}</td>
-        <td>${c.description||'—'}</td>
-        <td><span class="badge badge-${c.status}">${c.status}</span></td>
+        <td>${esc(c.description || '-')}</td>
+        <td><span class="badge badge-${esc(c.status)}">${esc(c.status)}</span></td>
       </tr>
     `).join('') || '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-dim)">No conversions yet</td></tr>';
   } catch (e) { console.error(e); }
@@ -705,15 +709,28 @@ async function loadPayouts() {
     document.getElementById('payouts-table').innerHTML = all.map(p => `
       <tr>
         <td>${new Date(p.created_at).toLocaleDateString()}</td>
-        <td style="color:var(--text);font-weight:500">${p._affiliate}</td>
+        <td style="color:var(--text);font-weight:500">${esc(p._affiliate)}</td>
         <td style="color:var(--seafoam)">$${parseFloat(p.amount).toFixed(2)}</td>
-        <td>${p.method||'—'}</td>
-        <td>${p.reference||'—'}</td>
-        <td><span class="badge badge-paid">${p.status}</span></td>
+        <td>${esc(p.method || '-')}</td>
+        <td>${esc(p.reference || '-')}</td>
+        <td><span class="badge badge-paid">${esc(p.status)}</span></td>
       </tr>
     `).join('') || '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-dim)">No payouts yet</td></tr>';
   } catch (e) { console.error(e); }
 }
+
+document.addEventListener('click', e => {
+  const copy = e.target.closest('[data-copy]');
+  if (copy) return copyLink(copy.dataset.copy);
+  const button = e.target.closest('[data-action]');
+  if (!button) return;
+  const { action, id, name, owed } = button.dataset;
+  if (action === 'view') viewDetail(id);
+  if (action === 'edit') openEditModal(id);
+  if (action === 'delete') deleteAffiliate(id, name);
+  if (action === 'payout') openPayoutModalFor(id, parseFloat(owed));
+  if (action === 'conversion') openConversionModalFor(id);
+});
 
 // Close modals on overlay click
 document.querySelectorAll('.modal-overlay').forEach(m => {
