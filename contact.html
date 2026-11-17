@@ -155,7 +155,7 @@
     "url": "https://www.yachtawaynow.com/contact",
     "speakable": {
       "@type": "SpeakableSpecification",
-      "cssSelector": [".page-hero h1", ".page-hero p", ".section-subtitle", ".booking-card h3"]
+      "cssSelector": [".page-hero h1", ".page-hero p", ".section-subtitle", ".booking-card h2"]
     }
   }
   </script>
@@ -213,7 +213,9 @@
           .wiz-step.active{display:block}
           @keyframes wizFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
           .wiz-eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#c9a84c;margin-bottom:8px;display:block}
-          .wiz-question{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.5rem,3.2vw,2rem);line-height:1.15;color:#f5f0e8;margin-bottom:6px;letter-spacing:-.005em}
+          .booking-card .wiz-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:.02em;text-align:center;margin-bottom:6px}
+          @media(max-width:768px){.booking-card .wiz-title{font-size:1.15rem}}
+          .booking-card .wiz-question{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.5rem,3.2vw,2rem);line-height:1.15;color:#f5f0e8;margin-bottom:6px;letter-spacing:-.005em;text-align:inherit}
           .wiz-hint{font-size:.82rem;color:rgba(245,240,232,.6);margin-bottom:22px;line-height:1.6}
           .wiz-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
           .wiz-options.two-col{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
@@ -228,7 +230,8 @@
           .wiz-chip:hover{border-color:rgba(212,168,83,.45);transform:translateY(-1px)}
           .wiz-chip.selected{background:linear-gradient(135deg,#b8912e,#d4a853,#ffe5a0,#d4a853);background-size:200% auto;border-color:transparent;color:#0a1628;box-shadow:0 6px 20px rgba(212,168,83,.35);animation:goldShimmer 5s ease infinite}
           .wiz-input{width:100%;padding:14px 18px;background:rgba(7,21,32,.7);border:1px solid rgba(78,205,196,.18);border-radius:12px;color:#f0f7fa;font-size:.92rem;font-family:inherit;outline:none;transition:border-color .25s ease}
-          .wiz-input:focus{border-color:#d4a853;box-shadow:0 0 0 3px rgba(212,168,83,.18)}
+          .wiz-input:focus{border-color:#d4a853;box-shadow:0 0 0 4px rgba(212,168,83,.28)}
+          .wiz-input:focus-visible{outline:2px solid #d4a853;outline-offset:2px}
           .wiz-input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
           @media(max-width:540px){.wiz-input-row{grid-template-columns:1fr}}
           .wiz-textarea{min-height:84px;resize:vertical;line-height:1.55}
@@ -277,7 +280,7 @@
           .decision-grid{display:flex;flex-direction:column;gap:12px;max-width:440px;margin:22px auto 0}
           .decision-grid .btn{width:100%;justify-content:center;padding:16px 28px;font-size:.85rem}
         </style>
-        <h3 style="margin-bottom:6px;">Book Your Charter</h3>
+        <h2 class="wiz-title">Book Your Charter</h2>
         <p class="booking-card-subtitle">Pick your date, time, and yacht, and we'll show you what's open in real time. No waiting on a callback to find out.</p>
 
         <div class="wiz-progress" aria-hidden="true">
@@ -304,14 +307,14 @@
 
           <div class="wiz-step active" data-step="1">
             <span class="wiz-eyebrow">Step 1 of 7</span>
-            <h4 class="wiz-question">What date?</h4>
+            <h3 class="wiz-question" id="wiz-date-label">What date?</h3>
             <p class="wiz-hint">Pick the day you want on the water and we'll show what's open in real time.</p>
-            <input type="date" id="wiz-date-input" class="wiz-input">
+            <input type="date" id="wiz-date-input" class="wiz-input" aria-labelledby="wiz-date-label">
           </div>
 
           <div class="wiz-step" data-step="2">
             <span class="wiz-eyebrow">Step 2 of 7</span>
-            <h4 class="wiz-question">How long?</h4>
+            <h3 class="wiz-question">How long?</h3>
             <p class="wiz-hint">Minimum is 4 hours. Most groups go for 5-6.</p>
             <div class="wiz-chips">
               <button type="button" class="wiz-chip" data-value="4hr">4 hours</button>
@@ -325,7 +328,7 @@
 
           <div class="wiz-step" data-step="3">
             <span class="wiz-eyebrow">Step 3 of 7</span>
-            <h4 class="wiz-question">Pick your time</h4>
+            <h3 class="wiz-question">Pick your time</h3>
             <p class="wiz-hint">Slots already booked are grayed out, so what you see is open right now.</p>
             <div id="wiz-slots" class="slot-grid"></div>
             <div id="wiz-slots-msg" class="wiz-hint" style="margin:14px 0 0;"></div>
@@ -333,14 +336,14 @@
 
           <div class="wiz-step" data-step="4">
             <span class="wiz-eyebrow">Step 4 of 7</span>
-            <h4 class="wiz-question">Choose your yacht</h4>
+            <h3 class="wiz-question">Choose your yacht</h3>
             <p class="wiz-hint">Both are fully captained and all-inclusive. Here's what's open for your time.</p>
             <div id="wiz-boats" class="boat-grid"></div>
           </div>
 
           <div class="wiz-step" data-step="5">
             <span class="wiz-eyebrow">Step 5 of 7</span>
-            <h4 class="wiz-question">What's the occasion?</h4>
+            <h3 class="wiz-question">What's the occasion?</h3>
             <p class="wiz-hint">Helps your captain tailor the route and the little touches.</p>
             <div class="wiz-options">
               <button type="button" class="wiz-card" data-value="sunset">
@@ -378,7 +381,7 @@
 
           <div class="wiz-step" data-step="6">
             <span class="wiz-eyebrow">Step 6 of 7</span>
-            <h4 class="wiz-question">How many guests?</h4>
+            <h3 class="wiz-question">How many guests?</h3>
             <p class="wiz-hint">Our flagship comfortably hosts up to 13.</p>
             <div class="wiz-chips">
               <button type="button" class="wiz-chip" data-value="1-4">1-4 guests</button>
@@ -389,17 +392,17 @@
 
           <div class="wiz-step" data-step="7">
             <span class="wiz-eyebrow">Step 7 of 7</span>
-            <h4 class="wiz-question">Where should we reach you?</h4>
+            <h3 class="wiz-question">Where should we reach you?</h3>
             <p class="wiz-hint">We confirm by text within the hour. Promise.</p>
             <div class="wiz-input-row">
-              <input type="text" name="first_name" class="wiz-input" placeholder="First name" required>
-              <input type="text" name="last_name" class="wiz-input" placeholder="Last name" required>
+              <input type="text" name="first_name" class="wiz-input" placeholder="First name" aria-label="First name" required>
+              <input type="text" name="last_name" class="wiz-input" placeholder="Last name" aria-label="Last name" required>
             </div>
             <div class="wiz-input-row">
-              <input type="tel" name="phone" class="wiz-input" placeholder="Phone: (555) 123-4567" required>
-              <input type="email" name="email" class="wiz-input" placeholder="Email (for receipt)" required>
+              <input type="tel" name="phone" class="wiz-input" placeholder="Phone: (555) 123-4567" aria-label="Phone" required>
+              <input type="email" name="email" class="wiz-input" placeholder="Email (for receipt)" aria-label="Email" required>
             </div>
-            <textarea name="message" class="wiz-input wiz-textarea" placeholder="Anything else we should know? (optional)"></textarea>
+            <textarea name="message" class="wiz-input wiz-textarea" placeholder="Anything else we should know? (optional)" aria-label="Anything else we should know? (optional)"></textarea>
             <label class="wiz-consent">
               <input type="checkbox" name="sms_consent" style="width:20px;height:20px;flex:none;" value="Yes - opted in to SMS">
               <span>I agree to receive SMS text messages from Yacht Away Now at the number provided, including booking confirmations, schedule and captain updates, replies to my questions, and occasional marketing messages such as special offers and review requests. Consent is not required to book. Message frequency may vary. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/sms-terms" style="color:var(--gold);" target="_blank" rel="noopener">SMS Terms</a> &middot; <a href="/privacy-policy" style="color:var(--gold);" target="_blank" rel="noopener">Privacy</a>.</span>
