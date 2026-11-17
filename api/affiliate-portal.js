@@ -52,8 +52,13 @@ function passwordProblem(password) {
   return null;
 }
 
+// Emails are stored lowercase, so every lookup lowercases what the caller sent.
+function normalEmail(value) {
+  return typeof value === 'string' ? value.trim().toLowerCase() : '';
+}
+
 async function authenticate(req) {
-  const email = req.headers['x-affiliate-email'];
+  const email = normalEmail(req.headers['x-affiliate-email']);
   const password = req.headers['x-affiliate-code'];
   if (!email || !password) return null;
 
@@ -80,8 +85,9 @@ export default async function handler(req, res) {
 
   // Login
   if (req.method === 'POST' && action === 'login') {
-    const { email, password } = req.body || {};
-    if (!email || !password || typeof email !== 'string') return res.status(400).json({ error: 'Email and password required' });
+    const { password } = req.body || {};
+    const email = normalEmail(req.body?.email);
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
 
     try {
       const results = await supabase('GET',
@@ -96,10 +102,10 @@ export default async function handler(req, res) {
     }
   }
 
-  // Forgot password — send reset email
+  // Forgot password: send reset email
   if (req.method === 'POST' && action === 'forgot-password') {
-    const { email } = req.body || {};
-    if (!email || typeof email !== 'string') return res.status(400).json({ error: 'Email required' });
+    const email = normalEmail(req.body?.email);
+    if (!email) return res.status(400).json({ error: 'Email required' });
 
     try {
       const results = await supabase('GET', `affiliates?email=eq.${encodeURIComponent(email)}&select=id,name,email`);
@@ -118,7 +124,7 @@ export default async function handler(req, res) {
 
       const resetLink = `https://www.yachtawaynow.com/affiliate-portal?reset=${token}`;
 
-      await fetch('https://api.resend.com/emails', {
+      const mailRes = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
@@ -142,11 +148,16 @@ export default async function handler(req, res) {
             <p style="color:#5a7d96;font-size:0.72rem;text-align:center;">Can't click the button? Copy this link:<br><a href="${resetLink}" style="color:#4ecdc4;word-break:break-all;font-size:0.7rem;">${resetLink}</a></p>
           </div>`,
         }),
-      });
+      }).catch((err) => err);
+      if (!mailRes.ok) {
+        const detail = mailRes instanceof Error ? mailRes.message : `${mailRes.status} ${(await mailRes.text().catch(() => '')).slice(0, 300)}`;
+        console.error(`affiliate-portal: password reset email failed for affiliate ${results[0].id}: ${detail}`);
+      }
 
       return res.json({ message: 'If an account exists with that email, a reset link has been sent.' });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      console.error('affiliate-portal: forgot-password failed:', e);
+      return res.json({ message: 'If an account exists with that email, a reset link has been sent.' });
     }
   }
 

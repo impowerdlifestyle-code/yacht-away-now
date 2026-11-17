@@ -18,6 +18,17 @@ async function supabase(method, path, body) {
   return text ? JSON.parse(text) : null;
 }
 
+function fail(res, e) {
+  console.error('affiliates:', e);
+  return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+}
+
+// These values are shown in the admin dashboard. The dashboard escapes them,
+// and this keeps markup out of the table for every other reader of it.
+function plain(value) {
+  return String(value ?? '').replace(/[<>"`]/g, '').trim();
+}
+
 function generateCode(name) {
   const clean = name.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 8);
   const rand = crypto.randomBytes(3).toString('hex').toUpperCase();
@@ -66,7 +77,7 @@ export default async function handler(req, res) {
       target.searchParams.set('ref', code);
       return res.redirect(302, target.toString());
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -78,17 +89,17 @@ export default async function handler(req, res) {
       const existing = await supabase('GET', `affiliates?code=eq.${encodeURIComponent(code)}&select=id`);
       return res.json({ available: !existing || existing.length === 0 });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
   // Public: affiliate signup
   if (method === 'POST' && action === 'signup') {
     const body = req.body || {};
-    const name = clip(body.name, 120);
-    const email = clip(body.email, 254);
-    const phone = clip(body.phone, 40);
-    const referral_source = clip(body.referral_source, 200);
+    const name = plain(clip(body.name, 120));
+    const email = clip(body.email, 254).toLowerCase();
+    const phone = plain(clip(body.phone, 40));
+    const referral_source = plain(clip(body.referral_source, 200));
     const custom_code = clip(body.custom_code, 40);
     if (!name || !isEmail(email)) return res.status(400).json({ error: 'Name and a valid email required' });
 
@@ -185,7 +196,7 @@ export default async function handler(req, res) {
         commission: '10%',
       });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -200,7 +211,7 @@ export default async function handler(req, res) {
       const affiliates = await supabase('GET', 'affiliates?order=created_at.desc');
       return res.json(affiliates || []);
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -223,14 +234,16 @@ export default async function handler(req, res) {
         payouts: payouts || [],
       });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
   // CREATE affiliate
   if (method === 'POST' && action === 'create') {
-    const { name, email, phone, commission_type, commission_value, custom_code, notes } = req.body;
-    if (!name || !email) return res.status(400).json({ error: 'Name and email required' });
+    const { phone, commission_type, commission_value, custom_code, notes } = req.body || {};
+    const name = plain(clip(req.body?.name, 120));
+    const email = clip(req.body?.email, 254).toLowerCase();
+    if (!name || !isEmail(email)) return res.status(400).json({ error: 'Name and a valid email required' });
 
     const code = custom_code || generateCode(name);
     try {
@@ -250,7 +263,7 @@ export default async function handler(req, res) {
       });
       return res.json(result[0]);
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -259,10 +272,13 @@ export default async function handler(req, res) {
     const id = req.query.id;
     if (!id) return res.status(400).json({ error: 'Missing id' });
     try {
-      const result = await supabase('PATCH', `affiliates?id=eq.${encodeURIComponent(id)}`, req.body);
+      const update = { ...req.body };
+      if (typeof update.name === 'string') update.name = plain(update.name);
+      if (typeof update.email === 'string') update.email = update.email.trim().toLowerCase();
+      const result = await supabase('PATCH', `affiliates?id=eq.${encodeURIComponent(id)}`, update);
       return res.json(result[0]);
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -299,7 +315,7 @@ export default async function handler(req, res) {
 
       return res.json({ commission, affiliate: aff.name });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -343,7 +359,7 @@ export default async function handler(req, res) {
 
       return res.json({ paid: amount, affiliate: aff.name });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -368,7 +384,7 @@ export default async function handler(req, res) {
         outstandingBalance: (totalEarned - totalPaid).toFixed(2),
       });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
@@ -383,7 +399,7 @@ export default async function handler(req, res) {
       await supabase('DELETE', `affiliates?id=eq.${encodeURIComponent(id)}`);
       return res.json({ deleted: true });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return fail(res, e);
     }
   }
 
