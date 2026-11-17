@@ -1,4 +1,6 @@
-import { SUPABASE_URL, supabaseHeaders, clip, isEmail, isIsoDate } from './_shared.js';
+import { SUPABASE_URL, supabaseHeaders, clip, isEmail, isIsoDate, lowerEmail, linkToken, contractUrl, alertOwners } from './_shared.js';
+
+const TURNSTILE_ALERT_WINDOW_MS = 6 * 60 * 60 * 1000;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -16,14 +18,13 @@ export default async function handler(req, res) {
   const first_name = clip(body.first_name, 80);
   const last_name = clip(body.last_name, 80);
   const phone = clip(body.phone, 40);
-  const email = clip(body.email, 254);
+  const email = lowerEmail(body.email);
   const charter_type = clip(body.charter_type, 80);
   const preferred_date = clip(body.preferred_date, 40);
   const preferred_time = clip(body.preferred_time, 20);
   const boat = clip(body.boat, 80);
   const duration = clip(body.duration, 40);
   const message = clip(body.message, 2000);
-  const source = body.source;
   const sms_consent = body.sms_consent;
   const guestCount = parseInt(body.guests, 10);
   const guests = Number.isFinite(guestCount) && guestCount > 0 && guestCount <= 999 ? guestCount : null;
@@ -76,7 +77,7 @@ export default async function handler(req, res) {
     sms_consent: !!sms_consent && sms_consent !== 'false',
     status: 'new',
     payment_status: 'unpaid',
-    source: source === 'chat' ? 'ai_concierge' : 'website',
+    source: 'website',
   };
 
   let bookingId = null;
@@ -106,55 +107,34 @@ export default async function handler(req, res) {
 
   // NOTE: Calendar events are intentionally NOT created here. A raw booking
   // request is not a confirmed charter. The event is created only after the
-  // contract is signed AND the deposit is paid — see api/stripe-webhook.js
+  // contract is signed AND the deposit is paid. See api/stripe-webhook.js
   // (checkout.session.completed, deposit path).
 
-  // Send email notification (only for AI chatbot bookings — website form already sends via Web3Forms)
-  if (source === 'chat' && process.env.WEB3FORMS_KEY) {
-    try {
-      const subject = `New Charter Booking: ${first_name} ${last_name || ''} (${charter_type || 'Charter'})`;
-      const mailBody = `
-NEW BOOKING REQUEST: AI Chat Concierge
-========================================
-
-Name:           ${first_name} ${last_name || ''}
-Phone:          ${phone || 'Not provided'}
-Email:          ${email}
-Charter Type:   ${charter_type || 'Not specified'}
-Preferred Date: ${preferred_date || 'Flexible'}
-Guests:         ${guests || 'Not specified'}
-Duration:       ${duration || 'Not specified'}
-Special Notes:  ${message || 'None'}
-
-========================================
-Source: AI Chat Concierge on yachtawaynow.com
-Reply directly to this email to reach the customer at ${email}
-      `.trim();
-
-      const mailRes = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          access_key: process.env.WEB3FORMS_KEY,
-          subject,
-          from_name: 'Yacht Away Now AI Concierge',
-          reply_to: email,
-          ccemail: 'josh@yachtawaynow.com',
-          message: mailBody,
-        }),
-      });
-      if (!mailRes.ok) console.error(`Web3Forms notification failed: ${mailRes.status} ${(await mailRes.text()).slice(0, 300)}`);
-    } catch (err) {
-      console.error('Email error (non-fatal):', err);
-    }
-  }
+  // The wizard reads this cookie to build the guest's contract link, and the
+  // contract page falls back to it, so no name, email or phone goes in a URL.
+  const link = bookingId && process.env.YAN_BOOKING_SECRET ? contractUrl(bookingId) : null;
+  res.setHeader('Set-Cookie', link
+    ? `yan_contract=${bookingId}.${linkToken('contract', bookingId)}; Path=/; Max-Age=86400; SameSite=Lax; Secure`
+    : 'yan_contract=; Path=/; Max-Age=0; SameSite=Lax; Secure');
 
   // Captain notification is deferred until contract is signed + deposit is paid.
   // Fires from yacht-away-now/api/stripe-webhook.js on checkout.session.completed.
 
-  // Forward to Business Brain — auto-sends pre-nurture email with deposit + contract links
+  // Forward to Business Brain, which emails the supplied address a pre-nurture
+  // message. With the bot check down that email is exactly what a
+  // subscription bomber wants, so the lead is saved and the owners are told,
+  // but nothing goes to the address until Turnstile is verifying again.
   let forwarded = false;
-  if (!process.env.YAN_BOOKING_SECRET) {
+  if (turnstile.misconfigured) {
+    console.error('Brain forward skipped: Turnstile is misconfigured');
+    await alertOwners(
+      `New booking request (not auto-emailed): ${first_name} ${last_name || ''}`.trim(),
+      'The bot check is misconfigured, so this request was saved but the automatic email to the guest was NOT sent. Contact them yourself.\n' +
+        'To keep a bot flood out of this inbox, at most one of these is sent every 5 minutes. Any others are in the dashboard.\n\n' +
+        leadSummary({ ...booking, charter_date: preferred_date || null }),
+      { key: 'lead-not-forwarded', windowMs: 5 * 60 * 1000 },
+    );
+  } else if (!process.env.YAN_BOOKING_SECRET) {
     console.error('Brain forward skipped: YAN_BOOKING_SECRET is not set');
   } else {
     try {
@@ -177,7 +157,8 @@ Reply directly to this email to reach the customer at ${email}
           duration: duration || null,
           guests,
           special_requests: message || null,
-          source: source === 'chat' ? 'ai_concierge' : 'website',
+          source: 'website',
+          contract_url: link,
         }),
       });
       forwarded = brainRes.ok;
@@ -190,7 +171,7 @@ Reply directly to this email to reach the customer at ${email}
   if (saveError) {
     return res.status(502).json({ success: false, booking_id: null, forwarded, error: 'Your request was received but could not be saved. Please call (727) 609-2248.' });
   }
-  return res.status(200).json({ success: true, booking_id: bookingId, forwarded });
+  return res.status(200).json({ success: true, booking_id: bookingId, forwarded, contract_url: link });
 }
 
 async function verifyTurnstile(token, forwardedFor) {
@@ -217,58 +198,35 @@ async function verifyTurnstile(token, forwardedFor) {
   }
 }
 
-async function alertTurnstileMisconfigured(reason) {
-  if (!process.env.WEB3FORMS_KEY) {
-    console.error('alertTurnstileMisconfigured skipped: WEB3FORMS_KEY is not set');
-    return;
-  }
-  try {
-    const alertRes = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        access_key: process.env.WEB3FORMS_KEY,
-        subject: 'TURNSTILE MISCONFIGURED on yachtawaynow.com',
-        message:
-          `Cloudflare Turnstile rejected our server key (${reason}). ` +
-          'Bookings are still being accepted, but without the bot check. ' +
-          'Set TURNSTILE_SECRET_KEY in the yachtawaynow Vercel project to the secret for the site key in app.js, then redeploy.',
-      }),
-    });
-    if (!alertRes.ok) console.error(`alertTurnstileMisconfigured was not delivered: ${alertRes.status}`);
-  } catch (e) {
-    console.error('alertTurnstileMisconfigured failed:', e);
-  }
+function leadSummary(booking) {
+  return `Name:  ${booking.first_name} ${booking.last_name || ''}\n` +
+    `Email: ${booking.email}\n` +
+    `Phone: ${booking.phone || '(none)'}\n` +
+    `Date:  ${booking.charter_date || '(none)'}\n` +
+    `Type:  ${booking.charter_type || '(none)'}`;
+}
+
+// Throttled: with the bot check down every bot request reaches this line, and
+// one email per request would turn a bot flood into an inbox flood.
+function alertTurnstileMisconfigured(reason) {
+  return alertOwners(
+    'TURNSTILE MISCONFIGURED on yachtawaynow.com',
+    `Cloudflare Turnstile rejected our server key (${reason}). ` +
+      'Bookings are still being saved, but without the bot check, and the automatic email to the guest is switched off until this is fixed. ' +
+      'Set TURNSTILE_SECRET_KEY in the yachtawaynow Vercel project to the secret for the site key in app.js, then redeploy.',
+    { key: 'turnstile-misconfigured', windowMs: TURNSTILE_ALERT_WINDOW_MS },
+  );
 }
 
 // On a failed insert the guest still sees the success panel and Web3Forms
 // still emails the lead. Without this, the only symptom is a booking that never
 // appears in the dashboard and nobody knows to look for it.
-async function alertLeadNotSaved(booking, detail) {
-  if (!process.env.WEB3FORMS_KEY) {
-    console.error('alertLeadNotSaved skipped: WEB3FORMS_KEY is not set');
-    return;
-  }
-  try {
-    const alertRes = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        access_key: process.env.WEB3FORMS_KEY,
-        subject: `LEAD NOT SAVED: ${booking.first_name} ${booking.last_name || ''}`.trim(),
-        message:
-          'A booking request reached /api/book but the Supabase insert failed. ' +
-          'The lead exists only in the Web3Forms email. Add it to the dashboard by hand.\n\n' +
-          `Name:  ${booking.first_name} ${booking.last_name || ''}\n` +
-          `Email: ${booking.email}\n` +
-          `Phone: ${booking.phone || '(none)'}\n` +
-          `Date:  ${booking.charter_date || '(none)'}\n` +
-          `Type:  ${booking.charter_type || '(none)'}\n\n` +
-          `Supabase said: ${String(detail).slice(0, 500)}`,
-      }),
-    });
-    if (!alertRes.ok) console.error(`alertLeadNotSaved was not delivered: ${alertRes.status}`);
-  } catch (e) {
-    console.error('alertLeadNotSaved failed:', e);
-  }
+function alertLeadNotSaved(booking, detail) {
+  return alertOwners(
+    `LEAD NOT SAVED: ${booking.first_name} ${booking.last_name || ''}`.trim(),
+    'A booking request reached /api/book but the Supabase insert failed. ' +
+      'The lead exists only in the Web3Forms email. Add it to the dashboard by hand.\n\n' +
+      `${leadSummary(booking)}\n\n` +
+      `Supabase said: ${String(detail).slice(0, 500)}`,
+  );
 }
