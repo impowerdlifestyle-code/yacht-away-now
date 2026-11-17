@@ -1168,7 +1168,7 @@ function returnState() {
   if (is('success')) return {
     done: true,
     title: 'Payment Received!',
-    text: 'Thank you. Your contract is signed, your payment is confirmed and your charter date is locked in. Watch your inbox for your welcome email.',
+    text: 'Thank you. Your payment is confirmed and your charter date is locked in. Watch your inbox for your welcome email.',
     actions: [{ label: 'Back to Home', href: '/' }, CALL_ACTION],
   };
   if (is('balance_paid')) return {
