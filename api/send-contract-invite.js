@@ -1,7 +1,7 @@
 // Emails a charterer a signature-only contract link (no payment) when their
 // deposit is already on file. Server-to-server only: the caller must present
 // YAN_BOOKING_SECRET, and the booking must already be paid.
-import { SUPABASE_URL, supabaseHeaders, hasBookingSecret, escapeHtml, isEmail, isPaid, findBooking } from './_shared.js';
+import { SUPABASE_URL, supabaseHeaders, hasBookingSecret, escapeHtml, isEmail, isPaid, lowerEmail, isBookingId, getBooking, findBookingByEmail, contractUrl as tokenisedContractUrl } from './_shared.js';
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
@@ -13,34 +13,23 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server not configured' });
   }
 
-  const { email } = req.body || {};
-  if (!isEmail(email)) return res.status(400).json({ error: 'email required' });
+  const { email, booking_id } = req.body || {};
+  if (!isBookingId(booking_id) && !isEmail(email)) return res.status(400).json({ error: 'booking_id or email required' });
 
   let b;
   try {
-    b = await findBooking({ email });
+    b = isBookingId(booking_id) ? await getBooking(booking_id) : await findBookingByEmail(email);
   } catch (err) {
     console.error('send-contract-invite lookup error:', err);
     return res.status(503).json({ error: 'Booking lookup failed' });
   }
-  if (!b) return res.status(404).json({ error: 'No active booking found for that email' });
+  if (!b || b.archived) return res.status(404).json({ error: 'No active booking found' });
   if (!isPaid(b)) {
     return res.status(409).json({ error: 'No deposit is on file for this booking, so the signature-only link was not sent' });
   }
   const rawFirstName = (b.first_name || '').trim() || 'there';
   const firstName = escapeHtml(rawFirstName);
-  const fullName = `${b.first_name || ''} ${b.last_name || ''}`.trim();
-
-  const params = new URLSearchParams();
-  if (fullName) params.set('name', fullName);
-  params.set('email', b.email);
-  if (b.phone) params.set('phone', b.phone);
-  if (b.charter_type) params.set('charter_type', b.charter_type);
-  if (b.charter_date) params.set('date', b.charter_date);
-  if (b.guests != null) params.set('guests', String(b.guests));
-  if (b.duration) params.set('duration', b.duration);
-  params.set('nopay', '1');
-  const contractUrl = `https://www.yachtawaynow.com/contract?${params.toString()}`;
+  const contractUrl = tokenisedContractUrl(b.id, { nopay: '1' });
 
   const datePretty = b.charter_date
     ? new Date(b.charter_date + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
@@ -52,7 +41,7 @@ export default async function handler(req, res) {
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: 'Captain Josh <bookings@yachtawaynow.com>',
-        to: b.email,
+        to: lowerEmail(b.email),
         reply_to: 'josh@yachtawaynow.com',
         bcc: 'ciaran@voreli.ai',
         subject: `One last step: sign your charter contract ⚓`,
