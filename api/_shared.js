@@ -87,6 +87,245 @@ export function isPaid(booking) {
   return !!booking && PAID_STATES.includes(booking.payment_status);
 }
 
+export function lowerEmail(value) {
+  return clip(value, 254).toLowerCase();
+}
+
+// For names that end up in emails, the dashboard and the signed contract.
+// The straight apostrophe becomes a typographic one so O'Brien stays O'Brien
+// without leaving a quote character that could close an HTML attribute.
+export function cleanName(value, max) {
+  return clip(value, max).replace(/[<>"`]/g, '').replace(/'/g, '’').trim();
+}
+
+export const MAX_SIGNATURE_CHARS = 1000000;
+
+export function isSignature(value) {
+  return typeof value === 'string' && value.length <= MAX_SIGNATURE_CHARS
+    && /^data:image\/png;base64,[A-Za-z0-9+/=]+$/.test(value);
+}
+
+export function cleanInitials(initials) {
+  if (!initials || typeof initials !== 'object' || Array.isArray(initials)) return null;
+  const out = {};
+  for (const [k, v] of Object.entries(initials).slice(0, 8)) out[clip(k, 40).replace(/[<>"'`]/g, '')] = clip(v, 8).replace(/[<>"'`]/g, '');
+  return out;
+}
+
+// The contract page shows captains as "First L." and posts the row id. The
+// dashboard matches bookings to captains on the exact full name, so that is
+// what gets stored. Free text stays for Charterer's Choice.
+export async function resolveCaptain(body) {
+  const typed = cleanName(body.captain, 120);
+  const id = String(body.captain_id || '');
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return typed;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/captains?id=eq.${id}&status=eq.active&select=name`, { headers: supabaseHeaders() });
+    const rows = res.ok ? await res.json() : [];
+    if (Array.isArray(rows) && rows[0] && rows[0].name) return cleanName(rows[0].name, 120);
+    console.error(`Captain ${id} was not found among active captains (${res.status})`);
+  } catch (err) {
+    console.error('Captain lookup failed:', err);
+  }
+  return typed;
+}
+
+export const SITE_URL = 'https://www.yachtawaynow.com';
+
+// Published all-inclusive hourly rates (pricing.html, sly-fox.html). Weekend is
+// Fri/Sat/Sun. This is the only place the server prices a charter.
+const HOURLY_RATES = {
+  marquis: { weekday: 500, weekend: 600 },
+  'sly-fox': { weekday: 650, weekend: 750 },
+};
+const MIN_HOURS = 4;
+const MAX_HOURS = 12;
+
+export function boatKey(boat) {
+  const name = String(boat || '');
+  if (/sly\s*fox/i.test(name)) return 'sly-fox';
+  if (/marquis/i.test(name)) return 'marquis';
+  return null;
+}
+
+// Hours for an hourly charter ("4hr", "8 hours"). Null for overnight,
+// multi-day and anything else that is quoted by hand.
+export function charterHours(duration) {
+  const m = String(duration || '').trim().match(/^(\d{1,2})\s*h/i);
+  if (!m) return null;
+  const hours = parseInt(m[1], 10);
+  return hours >= MIN_HOURS && hours <= MAX_HOURS ? hours : null;
+}
+
+export function hourlyRate(date, boat) {
+  if (!isIsoDate(date)) return null;
+  const day = new Date(`${date}T12:00:00`).getDay();
+  const weekend = day === 5 || day === 6 || day === 0;
+  return HOURLY_RATES[boatKey(boat) || 'marquis'][weekend ? 'weekend' : 'weekday'];
+}
+
+export function rateCardTotal({ date, boat, hours }) {
+  const rate = hourlyRate(date, boat);
+  return rate && hours ? rate * hours : null;
+}
+
+// A link token proves the holder was handed this booking's link by us. It is
+// derived, not stored, so the dashboard can mint the same token from the same
+// secret. The secret is trimmed because the dashboard's copy has a trailing newline.
+export function linkToken(purpose, bookingId) {
+  const secret = (process.env.YAN_BOOKING_SECRET || '').trim();
+  if (!secret) return '';
+  return crypto.createHmac('sha256', secret).update(`${purpose}:${bookingId}`).digest('hex');
+}
+
+export function isBookingId(id) {
+  return typeof id === 'string' && /^[A-Za-z0-9-]{1,64}$/.test(id);
+}
+
+export function validLinkToken(purpose, bookingId, token) {
+  return isBookingId(bookingId) && typeof token === 'string' && safeEqual(token, linkToken(purpose, bookingId));
+}
+
+export function contractUrl(bookingId, flags = {}) {
+  const params = new URLSearchParams({ booking_id: bookingId, t: linkToken('contract', bookingId) });
+  for (const [k, v] of Object.entries(flags)) if (v) params.set(k, v);
+  return `${SITE_URL}/contract?${params.toString()}`;
+}
+
+export function payBalanceUrl(bookingId) {
+  const params = new URLSearchParams({ booking: bookingId, t: linkToken('pay', bookingId) });
+  return `${SITE_URL}/api/pay-balance?${params.toString()}`;
+}
+
+async function selectBookings(filter) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings?${filter}`, { headers: supabaseHeaders() });
+  if (!res.ok) throw new Error(`Booking lookup failed: ${res.status}`);
+  const rows = await res.json();
+  return Array.isArray(rows) ? rows : [];
+}
+
+export async function getBooking(id) {
+  if (!isBookingId(id)) return null;
+  const rows = await selectBookings(`id=eq.${encodeURIComponent(id)}&limit=1`);
+  return rows[0] || null;
+}
+
+// Older rows were saved with the casing the guest typed, so the match is
+// case-insensitive. ilike treats % _ and * as wildcards, hence the exact
+// comparison afterwards.
+export async function findBookingByEmail(email) {
+  const wanted = lowerEmail(email);
+  if (!isEmail(wanted)) return null;
+  const rows = await selectBookings(`email=ilike.${encodeURIComponent(wanted)}&archived=not.is.true&order=created_at.desc&limit=20`);
+  return rows.find((r) => String(r.email || '').toLowerCase() === wanted) || null;
+}
+
+function toMinutes(hhmm) {
+  const m = typeof hhmm === 'string' ? hhmm.match(/^(\d{1,2}):(\d{2})/) : null;
+  return m ? parseInt(m[1], 10) * 60 + parseInt(m[2], 10) : null;
+}
+
+// Where a charter sits in its day, in minutes. Null when it has no start time
+// and so cannot be placed. Overnight and multi-day hold the rest of the day.
+export function busyRange(row) {
+  const startMin = toMinutes(row.charter_time);
+  if (startMin == null) return null;
+  const num = String(row.duration || '').toLowerCase().match(/(\d+)\s*h/);
+  return { startMin, endMin: num ? startMin + parseInt(num[1], 10) * 60 : 20 * 60 };
+}
+
+// Only money holds a slot. contract_signed can be set without paying, so a
+// signature alone never blocks a time for other customers. The boat column is
+// newer than the table, so the select falls back to fleet-wide without it.
+export async function paidBookingsOn(date) {
+  const filters =
+    `charter_date=eq.${encodeURIComponent(date)}` +
+    `&or=(payment_status.in.(deposit_paid,paid_full),status.in.(confirmed,deposit_paid))` +
+    `&archived=not.is.true`;
+  try {
+    return { hasBoat: true, rows: await selectBookings(`${filters}&select=id,charter_time,duration,boat`) };
+  } catch {
+    return { hasBoat: false, rows: await selectBookings(`${filters}&select=id,charter_time,duration`) };
+  }
+}
+
+// The paid booking, if any, that overlaps this one on the same boat. A paid
+// row with no boat on it blocks both boats, as it does in the booking wizard.
+export async function findConflict(booking) {
+  const mine = isIsoDate(booking.charter_date) ? busyRange(booking) : null;
+  if (!mine) return null;
+  const myBoat = boatKey(booking.boat) || 'marquis';
+  const { rows } = await paidBookingsOn(booking.charter_date);
+  for (const row of rows) {
+    if (String(row.id) === String(booking.id)) continue;
+    const theirs = busyRange(row);
+    if (!theirs || theirs.endMin <= mine.startMin || theirs.startMin >= mine.endMin) continue;
+    const theirBoat = boatKey(row.boat);
+    if (!theirBoat || theirBoat === myBoat) return row;
+  }
+  return null;
+}
+
+const OWNER_EMAILS = ['josh@yachtawaynow.com', 'ciaran@voreli.ai'];
+const lastAlertAt = new Map();
+
+// True when this key already fired inside the window. Memory covers one warm
+// instance; the alert_throttle table (migrations/2026-11-17-alert-throttle.sql)
+// covers all of them. Without the table the memory check still applies.
+export async function throttled(key, windowMs) {
+  const now = Date.now();
+  if (now - (lastAlertAt.get(key) || 0) < windowMs) return true;
+  lastAlertAt.set(key, now);
+  if (!process.env.SUPABASE_SERVICE_KEY) return false;
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/alert_throttle`;
+    const seen = await fetch(`${url}?key=eq.${encodeURIComponent(key)}&select=sent_at`, { headers: supabaseHeaders() });
+    if (!seen.ok) return false;
+    const [row] = await seen.json();
+    if (row && now - new Date(row.sent_at).getTime() < windowMs) return true;
+    await fetch(url, {
+      method: 'POST',
+      headers: supabaseHeaders({ Prefer: 'resolution=merge-duplicates,return=minimal' }),
+      body: JSON.stringify({ key, sent_at: new Date(now).toISOString() }),
+    });
+  } catch (err) {
+    console.error('throttle store unavailable:', err);
+  }
+  return false;
+}
+
+export async function alertOwners(subject, text, throttle) {
+  if (throttle && await throttled(throttle.key, throttle.windowMs)) {
+    console.error(`Owner alert throttled: ${subject}`);
+    return false;
+  }
+  if (!process.env.RESEND_API_KEY) {
+    console.error(`Owner alert not sent, RESEND_API_KEY is not set: ${subject}\n${text}`);
+    return false;
+  }
+  try {
+    const mailRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from: 'Yacht Away Now Alerts <alerts@yachtawaynow.com>', to: OWNER_EMAILS, subject, text }),
+    });
+    if (!mailRes.ok) console.error(`Owner alert was not delivered: ${mailRes.status} ${(await mailRes.text()).slice(0, 300)}\n${subject}\n${text}`);
+    return mailRes.ok;
+  } catch (err) {
+    console.error(`Owner alert failed: ${subject}\n${text}`, err);
+    return false;
+  }
+}
+
+// The dashboard texts and emails the owners. If it cannot be reached the same
+// facts go out by email from here, so the event is never lost in a log line.
+export async function notifyOwners(payload) {
+  if (await postDashboard('/api/owner-notify', payload)) return true;
+  const lines = Object.entries(payload).filter(([, v]) => v != null && v !== '').map(([k, v]) => `${k}: ${v}`);
+  await alertOwners(`Yacht Away Now: ${payload.event} (dashboard alert failed)`, lines.join('\n'));
+  return false;
+}
+
 // Lowest total a charter on this date and boat can legitimately cost: the
 // published hourly rate times the 4-hour minimum. Weekend is Fri/Sat/Sun.
 // With no usable date the weekday rate applies, since that is the floor.
