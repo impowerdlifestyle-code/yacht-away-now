@@ -326,35 +326,6 @@ export async function notifyOwners(payload) {
   return false;
 }
 
-// Lowest total a charter on this date and boat can legitimately cost: the
-// published hourly rate times the 4-hour minimum. Weekend is Fri/Sat/Sun.
-// With no usable date the weekday rate applies, since that is the floor.
-export function minCharterTotal(date, boat) {
-  const slyFox = /sly\s*fox/i.test(String(boat || ''));
-  let weekend = false;
-  if (isIsoDate(date)) {
-    const day = new Date(`${date}T12:00:00`).getDay();
-    weekend = day === 5 || day === 6 || day === 0;
-  }
-  const rate = slyFox ? (weekend ? 750 : 650) : weekend ? 600 : 500;
-  return rate * 4;
-}
-
-export async function findBooking({ id, email }) {
-  const select = async (filter) => {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings?${filter}&limit=1`, { headers: supabaseHeaders() });
-    if (!res.ok) throw new Error(`Booking lookup failed: ${res.status}`);
-    const rows = await res.json();
-    return Array.isArray(rows) && rows.length > 0 ? rows[0] : null;
-  };
-  if (id && /^[A-Za-z0-9-]{1,64}$/.test(String(id))) {
-    const byId = await select(`id=eq.${encodeURIComponent(id)}`);
-    if (byId) return byId;
-  }
-  if (!email) return null;
-  return select(`email=eq.${encodeURIComponent(email)}&archived=eq.false&order=created_at.desc`);
-}
-
 const CALENDAR_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwvbcNmqi9QRDriGsv7rKZNIAOOm9u8KbLxL6sOndNzUspmqT3ecC_Dj53LovtxsWrh/exec';
 
 export async function createCalendarEvent(b) {
