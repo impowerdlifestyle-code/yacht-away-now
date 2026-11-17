@@ -1,4 +1,4 @@
-# Yacht Away Now — AI Usage Policy
+# Yacht Away Now: AI Usage Policy
 #
 # This file declares this site's policy for AI crawlers, search engines, and
 # language models. We welcome AI search and citation use.
@@ -14,7 +14,7 @@ Disallow: /affiliate-signup
 Disallow: /send-confirmation
 Disallow: /send-welcome
 
-# AI Search & Answer Engines — explicitly welcome
+# AI Search & Answer Engines: explicitly welcome
 User-Agent: GPTBot
 Allow: /
 User-Agent: OAI-SearchBot
