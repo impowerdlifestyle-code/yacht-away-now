@@ -85,6 +85,8 @@ function ownerEmail(row) {
   };
 }
 
+const MAX_OWNER_EMAILS_PER_RUN = 5;
+
 export default async function handler(req, res) {
   if (!isCron(req)) return res.status(401).json({ error: 'Unauthorized' });
   console.log(`review-responder run at=${new Date().toISOString()}`);
@@ -113,8 +115,11 @@ export default async function handler(req, res) {
 
     const drafts = await loadDrafts(unreplied.map((review) => review.reviewId));
     const results = [];
+    let emailsSent = 0;
 
     for (const review of unreplied) {
+      // A backlog drains over a few hourly runs instead of landing as one burst of owner email.
+      if (emailsSent >= MAX_OWNER_EMAILS_PER_RUN) break;
       const reviewId = review.reviewId;
       let row = drafts.get(reviewId);
 
@@ -149,7 +154,10 @@ export default async function handler(req, res) {
       let emailed = false;
       if (!row.emailed_at && ['pending', 'held', 'needs_human'].includes(row.status)) {
         emailed = await alertOwners(ownerEmail(row));
-        if (emailed) await moveDraft(reviewId, row.status, { emailed_at: new Date().toISOString() });
+        if (emailed) {
+          emailsSent += 1;
+          await moveDraft(reviewId, row.status, { emailed_at: new Date().toISOString() });
+        }
       }
       results.push({ reviewId, status: row.status, emailed });
     }
