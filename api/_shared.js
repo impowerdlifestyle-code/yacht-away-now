@@ -134,7 +134,7 @@ export async function resolveCaptain(body) {
 
 export const SITE_URL = 'https://www.yachtawaynow.com';
 
-// Published all-inclusive hourly rates (pricing.html, sly-fox.html). Weekend is
+// Published hourly rates (pricing.html, sly-fox.html). Weekend is
 // Fri/Sat/Sun. This is the only place the server prices a charter.
 const HOURLY_RATES = { marquis: RATES.marquis, 'sly-fox': RATES.slyFox };
 const MAX_HOURS = 12;

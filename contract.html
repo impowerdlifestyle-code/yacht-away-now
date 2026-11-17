@@ -737,7 +737,7 @@
             <div class="package-card">
               <div class="package-name">Weekday Charter</div>
               <div class="package-price">$500<span>/hr</span></div>
-              <div class="package-detail">Mon-Thu &middot; all-inclusive &middot; 4-hr minimum</div>
+              <div class="package-detail">Mon-Thu &middot; 4-hr minimum &middot; plus $250 fuel on the day</div>
             </div>
           </label>
           <label class="package-option" id="pkg-weekend">
@@ -745,7 +745,7 @@
             <div class="package-card">
               <div class="package-name">Weekend Charter</div>
               <div class="package-price">$600<span>/hr</span></div>
-              <div class="package-detail">Fri-Sun &middot; all-inclusive &middot; 4-hr minimum</div>
+              <div class="package-detail">Fri-Sun &middot; 4-hr minimum &middot; plus $250 fuel on the day</div>
             </div>
           </label>
         </div>
@@ -1303,7 +1303,7 @@ let selectedPackage = '';
 // Declared early: applyBooking calls validateForm(), which reads it.
 const initialsState = [false, false, false, false];
 
-// All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
+// Hourly rates (fuel is a separate $250 per trip). Weekend = Fri/Sat/Sun.
 // Flagship 52ft Marquis $500/$600; Sly Fox (larger vessel) $650/$750.
 // This is for display. The server prices the charter again from the booking.
 const HOURLY_RATES = { weekday: 500, weekend: 600 };

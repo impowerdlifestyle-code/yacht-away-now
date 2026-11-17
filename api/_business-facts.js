@@ -13,6 +13,9 @@ export const RATES = {
 
 export const SLY_FOX_MULTI_DAY_FROM = 5000;
 
+// Not in the hourly rate. Paid to the captain at the boat, never collected online.
+export const FUEL_CHARGE = 250;
+
 export function usd(amount) {
   return `$${amount.toLocaleString('en-US')}`;
 }

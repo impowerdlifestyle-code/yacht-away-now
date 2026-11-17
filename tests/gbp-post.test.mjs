@@ -71,6 +71,8 @@ test('post copy carries no year and takes its numbers from the shared constants'
   assert.equal(summaries.size, 23);
   const all = [...summaries].join('\n');
   assert.doesNotMatch(all, /\b20\d\d\b|undefined|NaN|\$\{/);
+  assert.doesNotMatch(all, /all-inclusive|fuel included/i, 'a post says fuel is in the rate');
+  assert.ok(all.includes('Fuel is a flat $250 per trip, paid on the day.'));
   assert.ok(all.includes(`${REVIEW_COUNT} Five-Star Google Reviews`));
   assert.ok(all.includes(`$${RATES.marquis.weekday}/hr weekdays, $${RATES.marquis.weekend}/hr weekends, ${MIN_HOURS}-hour minimum`));
 });

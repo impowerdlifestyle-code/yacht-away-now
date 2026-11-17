@@ -1,13 +1,13 @@
 # Yacht Away Now
 
-> Yacht Away Now is a USCG-licensed private yacht charter company in St. Petersburg, Florida, serving Tampa Bay and the Gulf Coast aboard a 52ft Marquis Flybridge and the Sly Fox, all-inclusive from $500 per hour, captained by Josh Wilson, and rated 5.0 on Google.
+> Yacht Away Now is a USCG-licensed private yacht charter company in St. Petersburg, Florida, serving Tampa Bay and the Gulf Coast aboard a 52ft Marquis Flybridge and the Sly Fox, from $500 per hour with captain and crew included plus a flat $250 fuel charge per trip, captained by Josh Wilson, and rated 5.0 on Google.
 
 ## Docs
 
 - [Full Content Index](https://www.yachtawaynow.com/llms-full.txt): Long-form context covering services, pricing, vessel specs, captain credentials, FAQ, and policies
 - [Pricing Details](https://www.yachtawaynow.com/llms-pricing.txt): Complete pricing breakdown for AI reference
 - [Pricing Page](https://www.yachtawaynow.com/pricing): Charter rates, packages, and what is included
-- [Yacht Charter Cost Guide](https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay): 2026 pricing breakdown covering all-inclusive weekday and weekend rates and per-person math
+- [Yacht Charter Cost Guide](https://www.yachtawaynow.com/blog/how-much-does-a-yacht-charter-cost-tampa-bay): 2026 pricing breakdown covering weekday and weekend rates, the $250 fuel charge and per-person math
 - [First Yacht Charter: What to Expect](https://www.yachtawaynow.com/blog/first-yacht-charter-what-to-expect): Step-by-step guide to a charter day, covering boarding, routes and tipping
 - [Tampa Bay Boating Weather by Month](https://www.yachtawaynow.com/blog/tampa-bay-boating-weather-by-month): Month-by-month conditions; best months are April, May, and October
 - [Shell Key & Egmont Key Day Trip](https://www.yachtawaynow.com/blog/shell-key-egmont-key-day-trip): Two-island private yacht itinerary covering fort ruins, snorkeling and sandbars
@@ -58,18 +58,19 @@ Yacht Away Now is a private yacht charter company based in St. Petersburg, Flori
 - [Private Dinner Cruise St. Petersburg](https://www.yachtawaynow.com/private-dinner-cruise-st-petersburg): Dinner on Deck, a private 4-hour sunset dinner cruise for up to 13, $2,000 weekday / $2,400 weekend plus dinner from a St. Pete restaurant at cost
 - [Yacht Rental St. Petersburg](https://www.yachtawaynow.com/yacht-rental-st-petersburg): Captained-only hourly yacht rental, $500/hr Mon-Thu, $600/hr Fri-Sun, 4-hour minimum, no bareboat; direct vs marketplace comparison and 3-step booking
 - [Boat Rental With Captain St. Pete](https://www.yachtawaynow.com/boat-rental-with-captain-st-pete): No boating license needed; USCG Master Josh Wilson drives; safety, routes, group sizes, and 4/5/8-hour plans from $2,000
-- [Tampa Bay Yacht Charter](https://www.yachtawaynow.com/luxury-yacht-charter-tampa-bay): All-inclusive Tampa Bay charters from the St. Pete side, covering the Tampa skyline, Skyway, Egmont Key and Shell Key. Both yachts, corporate, birthday and proposal use, Signature Charters
+- [Tampa Bay Yacht Charter](https://www.yachtawaynow.com/luxury-yacht-charter-tampa-bay): Tampa Bay charters from the St. Pete side, covering the Tampa skyline, Skyway, Egmont Key and Shell Key. Both yachts, corporate, birthday and proposal use, Signature Charters
 - [Yacht Charter St. Petersburg](https://www.yachtawaynow.com/yacht-charter-st-petersburg): Private charters from Maximo Marina, routes, rates and FAQ for the 52ft Marquis Flybridge, up to 13 guests
 - [Yacht Charter & Rental Tampa](https://www.yachtawaynow.com/yacht-charter-tampa): Captained yacht rental for Tampa groups, 22 minutes from downtown Tampa, $500/hr Mon-Thu, $600/hr Fri-Sun
 - [Yacht Rental Clearwater](https://www.yachtawaynow.com/yacht-charter-clearwater): Captained charters up the coast to Clearwater Beach, Caladesi Island and Sand Key
 - [New Year's Eve Yacht Charter](https://www.yachtawaynow.com/new-years-eve-yacht-charter): NYE cruises on Tampa Bay, $3,500 for 5 hours or $4,500 for 7 hours, up to 13 guests
 - [Gasparilla Boat Charter](https://www.yachtawaynow.com/gasparilla-yacht-charter): Private yacht for the Gasparilla pirate invasion and parade, from $12,000
-- [Yacht Wedding Cost Guide](https://www.yachtawaynow.com/blog/yacht-wedding-vs-venue-cost-comparison): What it costs to rent a yacht for a wedding: $3,000 for a 5-hour weekend sunset cruise, $4,700 to $7,000 all in for up to 13 guests
+- [Yacht Wedding Cost Guide](https://www.yachtawaynow.com/blog/yacht-wedding-vs-venue-cost-comparison): What it costs to rent a yacht for a wedding: $3,000 for a 5-hour weekend sunset cruise, $4,700 to $7,000 for up to 13 guests, plus the $250 fuel charge
 - [Islands Near Tampa by Boat](https://www.yachtawaynow.com/blog/best-islands-to-visit-by-boat-tampa-bay): Ten islands reachable by boat, from Shell Key and Egmont Key to Caladesi, Anclote Key and Bimini
 
 ## Pricing
-- Weekday (Mon-Thu): $500/hr all-inclusive, 4-hour minimum. 4hr $2,000, 5hr $2,500, 6hr $3,000
-- Weekend (Fri-Sun): $600/hr all-inclusive, 4-hour minimum. 4hr $2,400, 5hr $3,000, 6hr $3,600
+- Weekday (Mon-Thu): $500/hr, 4-hour minimum. 4hr $2,000, 5hr $2,500, 6hr $3,000
+- Weekend (Fri-Sun): $600/hr, 4-hour minimum. 4hr $2,400, 5hr $3,000, 6hr $3,600
+- Fuel: flat $250 per trip, paid to the captain on the day (not included in the hourly rate)
 - Overnight/Bahamas (Marquis): Starting at $9,500+
 - Sly Fox: $650/hr weekdays, $750/hr weekends; multi-day Gulf Coast trips from $5,000
 
@@ -112,13 +113,13 @@ St. Petersburg, Tampa Bay, Clearwater, Gulf Coast Florida, Florida Keys, Bahamas
 ## Frequently Asked Questions
 
 ### How much does a yacht charter in Tampa Bay cost?
-Yacht Away Now charters are all-inclusive, with captain, crew and fuel included. Rates are $500/hour on weekdays (Mon-Thu) and $600/hour on weekends (Fri-Sun), with a 4-hour minimum. Four hours is $2,000 on a weekday or $2,400 on a weekend. Overnight and Bahamas charters start at $9,500+.
+Captain and crew are included in the hourly rate. Fuel is a separate flat $250 per trip, paid to the captain on the day. Rates are $500/hour on weekdays (Mon-Thu) and $600/hour on weekends (Fri-Sun), with a 4-hour minimum. Four hours is $2,000 on a weekday or $2,400 on a weekend. Overnight and Bahamas charters start at $9,500+.
 
 ### How many people can the yacht hold?
 The 52ft Marquis Flybridge carries up to 13 guests, across 3 decks, with a 1,200 sq ft interior cabin and 800+ sq ft of outdoor deck space.
 
 ### Is a captain included in the charter price?
-Yes. A USCG-licensed captain and crew are included in the all-inclusive rate at no extra charge. Captain Josh and the crew handle navigation, anchoring and onboard service.
+Yes. A USCG-licensed captain and crew are included in the hourly rate at no extra charge. Captain Josh and the crew handle navigation, anchoring and onboard service.
 
 ### Can the yacht travel to the Bahamas?
 Yes. The yacht has a 600-mile range and is Bahamas-capable. Multi-day Bahamas and Florida Keys trips start at $9,500+ and are quoted individually based on duration and itinerary.
