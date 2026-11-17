@@ -35,7 +35,7 @@ test('a review-count mismatch skips the post and emails the owner', async () => 
   assert.equal(sent.length, 1);
   assert.ok(sent[0].json.subject.includes(String(REVIEW_COUNT - 4)));
   assert.ok(sent[0].json.subject.includes(String(REVIEW_COUNT)));
-  assert.doesNotMatch(sent[0].json.subject + sent[0].json.text, /—/);
+  assert.doesNotMatch(sent[0].json.subject + sent[0].json.text, /\u2014/);
 });
 
 test('the post is skipped when the live count cannot be read', async () => {

@@ -62,7 +62,7 @@ test('a 5-star review is drafted once, stored, emailed, and never posted by the 
   assert.ok(sent[0].json.text.includes('Dana, thank you for cruising with us!'));
   assert.ok(sent[0].json.text.includes(replyLink('approve', 'rev-five', row.draft_text)));
   assert.ok(sent[0].json.text.includes(replyLink('skip', 'rev-five', row.draft_text)));
-  assert.doesNotMatch(sent[0].json.subject + sent[0].json.text + sent[0].json.html, /—/);
+  assert.doesNotMatch(sent[0].json.subject + sent[0].json.text + sent[0].json.html, /\u2014/);
 
   // Later runs see the stored row: no second draft, no second email.
   const second = await runCron([token, reviewList([fiveStar]), drafts.route, model('A DIFFERENT DRAFT'), mail]);
