@@ -483,7 +483,7 @@
     }
 
     /* Package selection cards */
-    .package-option { cursor: pointer; }
+    .package-option { cursor: default; }
     .package-option input { display: none; }
     .package-card {
       padding: 16px 20px;
@@ -571,6 +571,13 @@
       margin: 0 auto;
     }
     .success-state.show { display: block; }
+    .contract-page.panel-only .contract-header,
+    .contract-page.panel-only .progress-bar,
+    .contract-page.panel-only .booking-summary,
+    .contract-page.panel-only .contract-tabs,
+    .contract-page.panel-only .signature-section { display: none; }
+    .btn-quiet { border: 1px solid rgba(78,205,196,0.25); color: var(--seafoam); background: none; }
+    .btn-quiet:hover { border-color: var(--seafoam); }
     .success-icon { font-size: 3rem; margin-bottom: 16px; }
     .success-state h2 {
       font-family: 'Cormorant Garamond', serif;
@@ -623,7 +630,7 @@
 
 <main>
 
-<section class="contract-page">
+<section class="contract-page panel-only">
   <div class="container">
 
     <div class="contract-header">
@@ -658,31 +665,31 @@
       </h3>
       <div class="summary-grid">
         <div class="summary-item">
-          <label>Charterer Name</label>
+          <label for="sumName">Charterer Name</label>
           <input type="text" id="sumName" placeholder="Full Name" required>
         </div>
         <div class="summary-item">
-          <label>Email</label>
+          <label for="sumEmail">Email</label>
           <input type="email" id="sumEmail" placeholder="email@example.com" required>
         </div>
         <div class="summary-item">
-          <label>Phone</label>
+          <label for="sumPhone">Phone</label>
           <input type="tel" id="sumPhone" placeholder="(555) 123-4567" required>
         </div>
         <div class="summary-item">
-          <label>Home Address</label>
+          <label for="sumAddress">Home Address</label>
           <input type="text" id="sumAddress" placeholder="123 Main St, City, ST ZIP">
         </div>
         <div class="summary-item">
-          <label>Charter Date</label>
+          <label for="sumDate">Charter Date</label>
           <input type="date" id="sumDate" required>
         </div>
         <div class="summary-item">
-          <label>Charter Time</label>
+          <label for="sumTime">Charter Time</label>
           <input type="time" id="sumTime">
         </div>
         <div class="summary-item">
-          <label>Boat</label>
+          <label for="sumBoat">Boat</label>
           <select id="sumBoat">
             <option value="" disabled selected>Select...</option>
             <option value="Sly Fox">Sly Fox</option>
@@ -690,7 +697,7 @@
           </select>
         </div>
         <div class="summary-item">
-          <label>Charter Type</label>
+          <label for="sumCharterType">Charter Type</label>
           <select id="sumCharterType">
             <option value="" disabled selected>Select...</option>
             <option value="Sunset Cruise">Sunset Cruise</option>
@@ -705,27 +712,28 @@
           </select>
         </div>
         <div class="summary-item">
-          <label>Duration</label>
+          <label for="sumDuration">Duration</label>
           <select id="sumDuration">
             <option value="4hr">4 Hours</option>
             <option value="5hr">5 Hours</option>
-            <option value="6hr">6+ Hours</option>
+            <option value="6hr">6 Hours</option>
+            <option value="8hr">8 Hours</option>
             <option value="overnight">Overnight</option>
             <option value="multi">Multi-Day</option>
           </select>
         </div>
         <div class="summary-item">
-          <label>Total Guests</label>
+          <label for="sumGuests">Total Guests</label>
           <input type="number" id="sumGuests" min="1" max="13" placeholder="1-13">
         </div>
       </div>
 
       <!-- Pricing Package Selection -->
       <div id="pricingSection" style="margin-top:24px;padding-top:24px;border-top:1px solid var(--dark-border);">
-        <label style="display:block;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);margin-bottom:12px;">Select Your Charter Package</label>
+        <div style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);margin-bottom:12px;">Your Charter Rate</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;" id="packageGrid">
           <label class="package-option" id="pkg-weekday">
-            <input type="radio" name="package" value="weekday" onchange="selectPackage(this)">
+            <input type="radio" name="package" value="weekday" disabled>
             <div class="package-card">
               <div class="package-name">Weekday Charter</div>
               <div class="package-price">$500<span>/hr</span></div>
@@ -733,37 +741,15 @@
             </div>
           </label>
           <label class="package-option" id="pkg-weekend">
-            <input type="radio" name="package" value="weekend" onchange="selectPackage(this)">
+            <input type="radio" name="package" value="weekend" disabled>
             <div class="package-card">
               <div class="package-name">Weekend Charter</div>
               <div class="package-price">$600<span>/hr</span></div>
               <div class="package-detail">Fri-Sun &middot; all-inclusive &middot; 4-hr minimum</div>
             </div>
           </label>
-          <label class="package-option" id="pkg-bahamas">
-            <input type="radio" name="package" value="bahamas" onchange="selectPackage(this)">
-            <div class="package-card">
-              <div class="package-name">Overnight / Bahamas</div>
-              <div class="package-price">From $9,500</div>
-              <div class="package-detail">Multi-day, full cabin access</div>
-            </div>
-          </label>
-          <label class="package-option" id="pkg-custom">
-            <input type="radio" name="package" value="custom" onchange="selectPackage(this)">
-            <div class="package-card">
-              <div class="package-name">Custom Estimate</div>
-              <div class="package-price" style="font-size:1rem;">Enter Amount</div>
-              <div class="package-detail">Per your custom quote</div>
-            </div>
-          </label>
         </div>
-
-        <!-- Custom total input (hidden by default) -->
-        <div id="customTotalRow" style="display:none;margin-top:16px;">
-          <label style="display:block;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);margin-bottom:6px;">Custom Charter Total ($)</label>
-          <input type="number" id="sumTotal" min="1000" step="50" placeholder="e.g. 3500" style="width:100%;max-width:240px;padding:10px 14px;border-radius:8px;background:rgba(11,29,46,0.8);border:1px solid var(--dark-border);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.9rem;outline:none;">
-        </div>
-        <!-- Hidden total for non-custom packages -->
+        <p id="quoteByHand" style="display:none;margin-top:16px;color:var(--gray-400);font-size:0.85rem;line-height:1.7;">Overnight, multi-day and custom charters are priced by our team. Please call <a href="tel:7276092248" style="color:var(--gold);text-decoration:underline;">(727) 609-2248</a> and we will confirm your quote.</p>
         <input type="hidden" id="sumTotalHidden" value="">
       </div>
 
@@ -859,7 +845,7 @@
             </ul>
           </div>
           <div class="initials-row">
-            <label>Your Initials:</label>
+            <label for="initials0">Your Initials:</label>
             <input type="text" class="initials-input" id="initials0" maxlength="4" placeholder="XX" oninput="checkInitials(0)">
             <span style="font-size:0.75rem;color:var(--gray-600);">I have read and agree to the Bareboat Charter Agreement</span>
           </div>
@@ -889,7 +875,7 @@
             <p>I have read this assumption and acknowledgement of risks and release of liability agreement. I understand fully that it is contractual in nature and binding upon me personally. I further understand that by signing this document I am waiving valuable legal rights including any and all rights I may have against the owner, the renter/charterer, the operator named above, or their employees, agents, servants or assigns. I FULLY AGREE IN CONSIDERATION FOR BEING ALLOWED TO PARTICIPATE IN THE CHARTER TO HOLD HARMLESS AND INDEMNIFY THE OWNER, THE OPERATOR NAMED ABOVE OR THEIR EMPLOYEES, AGENTS, SERVANTS OR ASSIGNS FOR ANY INJURY WHICH MAY BEFALL ME, MY MINOR CHILDREN OR THOSE CHILDREN FOR WHOM I AM LEGALLY RESPONSIBLE (INCLUDING DEATH).</p>
           </div>
           <div class="initials-row">
-            <label>Your Initials:</label>
+            <label for="initials1">Your Initials:</label>
             <input type="text" class="initials-input" id="initials1" maxlength="4" placeholder="XX" oninput="checkInitials(1)">
             <span style="font-size:0.75rem;color:var(--gray-600);">I have read and agree to the Liability Waiver and Release Agreement</span>
           </div>
@@ -919,7 +905,7 @@
             <p>I irrevocably agree and/or represent to the foregoing by either: (1) using, being on, or attempting to use or be on any Watercraft; or (2) by signing this document. This document is continuing in nature and shall apply each time I use, am on, or attempt to use or be on any Watercraft, even if I do not sign this document each time. <strong>If I fail to sign and deliver this document to Joshua S. Wilson, then I am prohibited entry onto or use of the Watercraft and shall be a trespasser.</strong></p>
           </div>
           <div class="initials-row">
-            <label>Your Initials:</label>
+            <label for="initials2">Your Initials:</label>
             <input type="text" class="initials-input" id="initials2" maxlength="4" placeholder="XX" oninput="checkInitials(2)">
             <span style="font-size:0.75rem;color:var(--gray-600);">I have read and agree to the Individual Liability Waiver & Limitation</span>
           </div>
@@ -951,7 +937,7 @@
             </div>
           </div>
           <div class="initials-row">
-            <label>Your Initials:</label>
+            <label for="initials3">Your Initials:</label>
             <input type="text" class="initials-input" id="initials3" maxlength="4" placeholder="XX" oninput="checkInitials(3)">
             <span style="font-size:0.75rem;color:var(--gray-600);">I have read and agree to the Captain Selection Agreement</span>
           </div>
@@ -966,33 +952,33 @@
 
       <div class="sig-fields">
         <div class="sig-field">
-          <label>Full Legal Name</label>
+          <label for="sigName">Full Legal Name</label>
           <input type="text" id="sigName" placeholder="As it appears on your ID">
         </div>
         <div class="sig-field">
-          <label>Date of Birth</label>
+          <label for="sigDob">Date of Birth</label>
           <input type="date" id="sigDob">
         </div>
         <div class="sig-field">
-          <label>Date Signed</label>
+          <label for="sigDate">Date Signed</label>
           <input type="text" id="sigDate" readonly>
           <script>(function(){var d=document.getElementById('sigDate');if(d)d.value=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});})();</script>
         </div>
         <div class="sig-field">
-          <label>Email</label>
+          <label for="sigEmail">Email</label>
           <input type="email" id="sigEmail" placeholder="email@example.com">
         </div>
       </div>
 
       <div class="signature-pad-wrapper">
-        <label>Your Signature</label>
+        <label for="typedSignature" id="sigPadLabel">Your Signature</label>
         <div class="sig-mode-toggle">
           <button type="button" id="modeDrawBtn" class="sig-mode-btn active" onclick="setSigMode('draw')">✍️ Draw</button>
           <button type="button" id="modeTypeBtn" class="sig-mode-btn" onclick="setSigMode('type')">⌨️ Type</button>
         </div>
         <input type="text" id="typedSignature" placeholder="Type your full name" autocomplete="off" oninput="renderTypedSignature()" style="display:none;">
         <div class="signature-canvas-container">
-          <canvas id="signatureCanvas"></canvas>
+          <canvas id="signatureCanvas" role="img" aria-labelledby="sigPadLabel"></canvas>
           <button type="button" class="clear-sig" onclick="clearSignature()">Clear</button>
         </div>
       </div>
@@ -1022,8 +1008,21 @@
       </div>
     </div>
 
+    <!-- Return states, link problems and the fresh-link request -->
+    <div class="success-state" id="statePanel" role="status">
+      <div class="success-icon" id="statePanelIcon"></div>
+      <h2 id="statePanelTitle"></h2>
+      <p id="statePanelText"></p>
+      <form id="linkForm" style="display:none;margin:28px auto 0;max-width:380px;" novalidate>
+        <label for="linkEmail" style="display:block;font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray-600);margin-bottom:8px;">Email you booked with</label>
+        <input type="email" id="linkEmail" autocomplete="email" placeholder="email@example.com" required style="width:100%;padding:12px 16px;border-radius:8px;background:rgba(11,29,46,0.8);border:1px solid var(--dark-border);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.95rem;outline:none;text-align:center;">
+        <button type="submit" class="btn btn-gold" id="linkBtn" style="margin-top:16px;justify-content:center;width:100%;">Email Me My Link</button>
+      </form>
+      <div id="statePanelActions" style="margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;"></div>
+    </div>
+
     <!-- Success State -->
-    <div class="success-state" id="successState">
+    <div class="success-state" id="successState" role="status">
       <div class="success-icon">
         <svg width="64" height="64" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
       </div>
@@ -1069,152 +1068,251 @@
 <script src="/app.js?v=5a47f46b" defer></script>
 <script>
 // ============================================
-// URL PARAMS PRE-FILL
+// LINK, RETURN STATES AND BOOKING PREFILL
 // ============================================
 const params = new URLSearchParams(window.location.search);
 
-function prefill(paramName, elementId) {
-  const val = params.get(paramName);
-  if (val) {
-    const el = document.getElementById(elementId);
-    if (el) el.value = decodeURIComponent(val);
-  }
+// Older links carried the guest's name, email and phone in the URL. Nothing
+// reads them any more, so they are dropped before analytics loads (it starts
+// on the first interaction or after 3 seconds).
+(function () {
+  const legacy = ['name', 'email', 'phone', 'address', 'date', 'time', 'guests', 'total', 'charter_type', 'duration', 'boat'];
+  if (!legacy.some((k) => params.has(k))) return;
+  const kept = new URLSearchParams(window.location.search);
+  legacy.forEach((k) => kept.delete(k));
+  const query = kept.toString();
+  history.replaceState(null, '', window.location.pathname + (query ? '?' + query : ''));
+})();
+
+const pageEl = document.querySelector('.contract-page');
+const ICON_DONE = '<svg width="64" height="64" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>';
+const ICON_NOTE = '<svg width="64" height="64" fill="none" stroke="var(--gold)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.5" r="0.6" fill="var(--gold)"/></svg>';
+const CALL_ACTION = { label: 'Call (727) 609-2248', href: 'tel:7276092248' };
+
+// Replaces the sign form with one message. Used for the return from Stripe,
+// for link problems and for the fresh-link request.
+function showPanel(opts) {
+  pageEl.classList.add('panel-only');
+  document.getElementById('statePanelIcon').innerHTML = opts.done ? ICON_DONE : opts.icon === false ? '' : ICON_NOTE;
+  document.getElementById('statePanelTitle').textContent = opts.title;
+  document.getElementById('statePanelText').textContent = opts.text;
+  document.getElementById('linkForm').style.display = opts.form ? 'block' : 'none';
+  const actions = document.getElementById('statePanelActions');
+  actions.textContent = '';
+  (opts.actions || []).forEach((a, i) => {
+    const link = document.createElement('a');
+    link.href = a.href;
+    link.textContent = a.label;
+    link.className = 'btn ' + (i === 0 ? 'btn-gold' : 'btn-quiet');
+    actions.appendChild(link);
+  });
+  document.getElementById('statePanel').classList.add('show');
 }
 
-prefill('name', 'sumName');
-prefill('email', 'sumEmail');
-prefill('phone', 'sumPhone');
-prefill('address', 'sumAddress');
-prefill('date', 'sumDate');
-prefill('time', 'sumTime');
-prefill('guests', 'sumGuests');
-// Pre-fill package from URL param
-const totalParam = params.get('total');
-if (totalParam) {
-  document.getElementById('sumTotalHidden').value = totalParam;
+function showForm() {
+  pageEl.classList.remove('panel-only');
+  document.getElementById('statePanel').classList.remove('show');
+  resizeCanvas();
 }
 
-// Charter type needs matching select option
-const ctParam = params.get('charter_type');
-if (ctParam) {
-  const sel = document.getElementById('sumCharterType');
-  for (let opt of sel.options) {
-    if (opt.value.toLowerCase().includes(ctParam.toLowerCase())) {
-      sel.value = opt.value;
-      break;
-    }
-  }
+function linkIdentity() {
+  if (params.get('booking_id') && params.get('t')) return { id: params.get('booking_id'), t: params.get('t') };
+  // Set by /api/book when the booking request was saved in this browser.
+  const m = document.cookie.match(/(?:^|; )yan_contract=([A-Za-z0-9-]+)\.([a-f0-9]{64})/);
+  return m ? { id: m[1], t: m[2] } : null;
 }
+const identity = linkIdentity();
+const contractHref = identity ? '/contract?booking_id=' + encodeURIComponent(identity.id) + '&t=' + encodeURIComponent(identity.t) : null;
 
-const durParam = params.get('duration');
-if (durParam) {
-  const sel = document.getElementById('sumDuration');
-  for (let opt of sel.options) {
-    if (opt.value === durParam) { sel.value = durParam; break; }
-  }
-}
-
-// Boat selection, autofilled from the booking instead of defaulting to one vessel
-const boatParam = params.get('boat');
-if (boatParam) {
-  const sel = document.getElementById('sumBoat');
-  if (sel) {
-    const want = boatParam.toLowerCase();
-    for (let opt of sel.options) {
-      const v = opt.value.toLowerCase();
-      if (v && (v.includes(want) || want.includes(v))) { sel.value = opt.value; break; }
-    }
-  }
-}
-
-// Pre-fill signature email from summary
-const sumEmailEl = document.getElementById('sumEmail');
-const sigEmailEl = document.getElementById('sigEmail');
-sumEmailEl.addEventListener('change', () => { sigEmailEl.value = sumEmailEl.value; });
-if (sumEmailEl.value) sigEmailEl.value = sumEmailEl.value;
-
-// Pre-fill signature name from summary
-const sumNameEl = document.getElementById('sumName');
-const sigNameEl = document.getElementById('sigName');
-sumNameEl.addEventListener('change', () => { sigNameEl.value = sumNameEl.value; });
-if (sumNameEl.value) sigNameEl.value = sumNameEl.value;
-
-// ============================================
-// NO-PAY (signature-only) MODE: deposit already on file
-// ============================================
-const noPay = params.get('nopay') === '1';
-if (noPay) {
-  const subtitle = document.querySelector('.contract-header p');
-  if (subtitle) subtitle.textContent = 'Please review all agreements below and provide your initials and signature. Your deposit is already on file. No further payment is needed.';
-  const pkgSection = document.getElementById('packageGrid') && document.getElementById('packageGrid').parentElement;
-  if (pkgSection) pkgSection.style.display = 'none';
-  const depRow = document.querySelector('.deposit-row');
-  if (depRow) depRow.style.display = 'none';
-  const step3span = document.querySelector('#step3 span');
-  if (step3span) step3span.textContent = 'Done';
-  const payBtn = document.getElementById('payBtn');
-  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign Contract';
-  const secure = document.querySelector('.pay-secure');
-  if (secure) secure.innerHTML = '<span><svg width="12" height="12" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Deposit already received, no payment due</span>';
-  const successH = document.querySelector('.success-state h2');
-  if (successH) successH.textContent = 'Contract Signed Successfully!';
-  const successP = document.querySelector('.success-state p');
-  if (successP) successP.textContent = 'Thank you. Your signed contract is on file. We\'ll see you on the water!';
-}
-
-// ============================================
-// PAY-IN-FULL MODE: charge the entire charter total at signing
-// ============================================
-const payFull = params.get('pay') === 'full';
-const payVerb = payFull ? 'Sign & Pay in Full' : 'Sign & Pay 50% Deposit';
-// When the booking already carries a total (every dashboard-sent link does), the
-// price is fixed, so hide the package picker entirely and lock the charter total to
-// exactly what the team entered. No weekday/weekend/overnight/custom choices.
-const lockedTotal = !noPay && parseFloat(params.get('total')) > 0;
-if (payFull && !noPay) {
-  const depLabel = document.querySelector('.deposit-row .total-label');
-  if (depLabel) {
-    depLabel.textContent = 'Full Payment Due Today';
-    const sub = depLabel.nextElementSibling;
-    if (sub) sub.style.display = 'none';
-  }
-  const payBtn = document.getElementById('payBtn');
-  if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay in Full: <span id="payAmount">$0</span>';
-  document.querySelectorAll('p').forEach(p => {
-    if (p.textContent.includes('complete your 50% deposit')) p.textContent = p.textContent.replace('complete your 50% deposit', 'complete your full payment');
+function showLinkRequest(lead) {
+  showPanel({
+    icon: false,
+    title: 'Get Your Contract Link',
+    text: lead + 'Enter the email you booked with and we will send your personal contract link to it.',
+    form: true,
+    actions: [{ label: 'Book a Charter', href: '/contact' }, CALL_ACTION],
   });
 }
 
+document.getElementById('linkForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('linkEmail');
+  const btn = document.getElementById('linkBtn');
+  if (!input.value.trim() || !input.checkValidity()) { input.focus(); input.style.borderColor = 'var(--gold)'; return; }
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  try {
+    const res = await fetch('/api/contract-link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: input.value.trim() })
+    });
+    if (!res.ok) throw new Error('send failed');
+    showPanel({
+      done: true,
+      title: 'Check Your Inbox',
+      text: 'If we have a booking under that email, your contract link is on its way. It can take a minute or two to arrive.',
+      actions: [CALL_ACTION],
+    });
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Email Me My Link';
+    alert('We could not send your link. Please try again or call (727) 609-2248.');
+  }
+});
+
+// What the guest sees when Stripe sends them back here.
+function returnState() {
+  const is = (k) => params.get(k) === 'true';
+  const back = contractHref ? [{ label: 'Return to My Contract', href: contractHref }, CALL_ACTION] : [CALL_ACTION];
+  if (is('success')) return {
+    done: true,
+    title: 'Payment Received!',
+    text: 'Thank you. Your contract is signed, your payment is confirmed and your charter date is locked in. Watch your inbox for your welcome email.',
+    actions: [{ label: 'Back to Home', href: '/' }, CALL_ACTION],
+  };
+  if (is('balance_paid')) return {
+    done: true,
+    title: 'Balance Paid',
+    text: 'Thank you. Your charter is paid in full. We will send you the exact dock location and parking info 48 hours before departure.',
+    actions: [{ label: 'Back to Home', href: '/' }, CALL_ACTION],
+  };
+  if (is('canceled') || is('cancelled')) return {
+    title: 'Payment Not Completed',
+    text: 'You left the payment page, so no payment was taken and your date is not held yet. You can pick up where you left off, or call us and we will help.',
+    actions: back,
+  };
+  if (is('balance_canceled')) return {
+    title: 'Balance Not Paid',
+    text: 'You left the payment page, so no payment was taken. Your balance is due 7 days before departure. Use the Pay Balance Now button in your welcome email when you are ready.',
+    actions: [CALL_ACTION],
+  };
+  if (is('pay_error')) return {
+    title: 'We Could Not Open Your Payment',
+    text: 'Something went wrong opening your secure payment page and no payment was taken. Please call us and we will send you a new link.',
+    actions: [CALL_ACTION],
+  };
+  return null;
+}
+
+// Filled in from the booking once it loads. noPay: the deposit is already on
+// file, so the page only collects the signature. payFull: charge the whole
+// total at signing. lockedTotal: the owner put a total on the booking, so
+// there is nothing to price.
+let noPay = false;
+let lockedTotal = false;
+const payFull = params.get('pay') === 'full';
+let payVerb = payFull ? 'Sign & Pay in Full' : 'Sign & Pay 50% Deposit';
+
+function setField(id, value, lock) {
+  const el = document.getElementById(id);
+  if (value === '' || value == null) return;
+  if (el.tagName === 'SELECT') {
+    const want = String(value).toLowerCase();
+    const match = [...el.options].find((o) => o.value && (o.value.toLowerCase() === want || o.value.toLowerCase().includes(want) || want.includes(o.value.toLowerCase())));
+    if (!match) return;
+    el.value = match.value;
+  } else {
+    el.value = value;
+  }
+  if (lock) {
+    if (el.tagName === 'SELECT') el.disabled = true; else el.readOnly = true;
+    el.style.opacity = '0.75';
+    el.title = 'To change this, call (727) 609-2248';
+  }
+}
+
+function applyBooking(b) {
+  setField('sumName', b.name);
+  setField('sumEmail', b.email, true);
+  setField('sumPhone', b.phone);
+  setField('sumAddress', b.address);
+  setField('sumDate', b.charter_date, true);
+  setField('sumTime', (b.charter_time || '').slice(0, 5), true);
+  setField('sumBoat', b.boat, true);
+  setField('sumCharterType', b.charter_type);
+  setField('sumGuests', b.guests);
+  document.getElementById('sigName').value = b.name || '';
+  document.getElementById('sigEmail').value = b.email || '';
+
+  // The booked length is the least the guest can sign for. They may add hours.
+  const durSel = document.getElementById('sumDuration');
+  const booked = hoursOf(b.duration);
+  if (b.duration && ![...durSel.options].some((o) => o.value === b.duration)) {
+    durSel.add(new Option(booked ? booked + ' Hours' : b.duration, b.duration));
+  }
+  if (b.duration) durSel.value = b.duration;
+  if (b.duration && !booked) durSel.disabled = true;
+  [...durSel.options].forEach((o) => { if (booked && (!hoursOf(o.value) || hoursOf(o.value) < booked)) o.disabled = true; });
+
+  noPay = params.get('nopay') === '1' || (b.paid && (!payFull || b.paid_in_full));
+  lockedTotal = !noPay && b.total_price > 0;
+  if (lockedTotal) {
+    hiddenTotal.value = b.total_price;
+    durSel.disabled = true;
+  }
+  applyModes();
+  requote();
+  updateDeposit();
+  validateForm();
+}
+
+function applyModes() {
+  if (noPay) {
+    const subtitle = document.querySelector('.contract-header p');
+    if (subtitle) subtitle.textContent = 'Please review all agreements below and provide your initials and signature. Your deposit is already on file. No further payment is needed.';
+    document.getElementById('pricingSection').style.display = 'none';
+    const depRow = document.querySelector('.deposit-row');
+    if (depRow) depRow.style.display = 'none';
+    const step3span = document.querySelector('#step3 span');
+    if (step3span) step3span.textContent = 'Done';
+    const payBtn = document.getElementById('payBtn');
+    if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign Contract';
+    const secure = document.querySelector('.pay-secure');
+    if (secure) secure.innerHTML = '<span><svg width="12" height="12" fill="none" stroke="var(--seafoam)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Deposit already received, no payment due</span>';
+    const successH = document.querySelector('#successState h2');
+    if (successH) successH.textContent = 'Contract Signed Successfully!';
+    const successP = document.querySelector('#successState p');
+    if (successP) successP.textContent = 'Thank you. Your signed contract is on file. We\'ll see you on the water!';
+    return;
+  }
+  if (payFull) {
+    const depLabel = document.querySelector('.deposit-row .total-label');
+    if (depLabel) {
+      depLabel.textContent = 'Full Payment Due Today';
+      const sub = depLabel.nextElementSibling;
+      if (sub) sub.style.display = 'none';
+    }
+    const payBtn = document.getElementById('payBtn');
+    if (payBtn) payBtn.innerHTML = '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Sign & Pay in Full: <span id="payAmount">$0</span>';
+    document.querySelectorAll('p').forEach(p => {
+      if (p.textContent.includes('complete your 50% deposit')) p.textContent = p.textContent.replace('complete your 50% deposit', 'complete your full payment');
+    });
+  }
+  // The price came from the dashboard, so there is nothing to pick.
+  if (lockedTotal) document.getElementById('pricingSection').style.display = 'none';
+}
+
 // ============================================
-// PACKAGE SELECTION & DEPOSIT CALCULATION
+// QUOTE & DEPOSIT CALCULATION
 // ============================================
 const depositDisplay = document.getElementById('depositAmount');
-const payAmountDisplay = document.getElementById('payAmount');
-const customTotalRow = document.getElementById('customTotalRow');
-const customTotalInput = document.getElementById('sumTotal');
 const hiddenTotal = document.getElementById('sumTotalHidden');
 let selectedPackage = '';
 
-// Locked-total mode: the price came from the dashboard, so there's nothing to
-// pick. Hide the whole package section and treat the passed total as final.
-if (lockedTotal) {
-  selectedPackage = 'locked';
-  const pricing = document.getElementById('pricingSection');
-  if (pricing) pricing.style.display = 'none';
-}
-// Declared early: the package init below calls validateForm(), which reads
-// initialsState must exist before that runs (links with a date param do).
+// Declared early: applyBooking calls validateForm(), which reads it.
 const initialsState = [false, false, false, false];
 
 // All-inclusive hourly rates (captain, crew, fuel). Weekend = Fri/Sat/Sun.
 // Flagship 52ft Marquis $500/$600; Sly Fox (larger vessel) $650/$750.
+// This is for display. The server prices the charter again from the booking.
 const HOURLY_RATES = { weekday: 500, weekend: 600 };
 const SLY_FOX_RATES = { weekday: 650, weekend: 750 };
 function currentRates() {
   const boat = document.getElementById('sumBoat');
   return boat && /sly\s*fox/i.test(boat.value) ? SLY_FOX_RATES : HOURLY_RATES;
 }
-// Keep the visible weekday/weekend package cards in sync with the chosen vessel.
+// Keep the visible weekday/weekend rate cards in sync with the chosen vessel.
 function updatePackageCards() {
   const r = currentRates();
   const wd = document.querySelector('#pkg-weekday .package-price');
@@ -1222,11 +1320,17 @@ function updatePackageCards() {
   if (wd) wd.innerHTML = '$' + r.weekday + '<span>/hr</span>';
   if (we) we.innerHTML = '$' + r.weekend + '<span>/hr</span>';
 }
-const DURATION_HOURS = { '4hr': 4, '5hr': 5, '6hr': 6 };
+
+// Hours for an hourly charter ("4hr", "8hr"). 0 for overnight and multi-day,
+// which our team quotes by hand.
+function hoursOf(duration) {
+  const m = /^(\d{1,2})\s*h/i.exec(String(duration || '').trim());
+  const hours = m ? parseInt(m[1], 10) : 0;
+  return hours >= 4 && hours <= 12 ? hours : 0;
+}
 
 function selectedHours() {
-  const sel = document.getElementById('sumDuration');
-  return DURATION_HOURS[sel && sel.value] || 0;
+  return hoursOf(document.getElementById('sumDuration').value);
 }
 
 // Fri(5)/Sat(6)/Sun(0) = weekend rate. Returns null when no valid date yet.
@@ -1239,42 +1343,22 @@ function isWeekendCharter() {
   return day === 5 || day === 6 || day === 0;
 }
 
-function selectPackage(radio) {
-  selectedPackage = radio.value;
-  if (radio.value === 'custom') {
-    customTotalRow.style.display = 'block';
-    customTotalInput.focus();
-  } else if (radio.value === 'bahamas') {
-    customTotalRow.style.display = 'none';
-    hiddenTotal.value = 9500;
-  } else {
-    customTotalRow.style.display = 'none';
-    hiddenTotal.value = currentRates()[radio.value] * (selectedHours() || 4);
-  }
+// Exact quote: the rate comes from the charter date and the boat, the total
+// from the hours. Nothing here is a choice the guest makes.
+function requote() {
+  if (lockedTotal || noPay) return;
+  const hours = selectedHours();
+  const wk = isWeekendCharter();
+  document.getElementById('quoteByHand').style.display = hours ? 'none' : 'block';
+  document.getElementById('packageGrid').style.display = hours ? 'grid' : 'none';
+  selectedPackage = !hours || wk === null ? '' : (wk ? 'weekend' : 'weekday');
+  document.querySelectorAll('input[name="package"]').forEach((r) => { r.checked = r.value === selectedPackage; });
+  hiddenTotal.value = selectedPackage ? currentRates()[selectedPackage] * hours : '';
   updateDeposit();
   validateForm();
 }
 
-// Exact quote: auto-pick weekday/weekend from the charter date so the
-// customer sees the precise price for the date they chose.
-function syncPackageToDate() {
-  if (lockedTotal) return; // price is fixed by the dashboard, never recompute
-  const wk = isWeekendCharter();
-  if (wk === null) return;
-  if (selectedPackage === 'bahamas' || selectedPackage === 'custom') return;
-  const target = document.querySelector('input[name="package"][value="' + (wk ? 'weekend' : 'weekday') + '"]');
-  if (target && !target.checked) {
-    target.checked = true;
-    selectPackage(target);
-  } else if (target) {
-    selectPackage(target);
-  }
-}
-
 function getCharterTotal() {
-  if (selectedPackage === 'custom') {
-    return parseFloat(customTotalInput.value) || 0;
-  }
   return parseFloat(hiddenTotal.value) || 0;
 }
 
@@ -1300,6 +1384,7 @@ function balanceDueDateText() {
 function updateDeposit() {
   const total = getCharterTotal();
   const deposit = getDeposit();
+  const payAmountDisplay = document.getElementById('payAmount');
   if (depositDisplay) depositDisplay.textContent = '$' + deposit.toLocaleString();
   if (payAmountDisplay) payAmountDisplay.textContent = '$' + deposit.toLocaleString();
   const totalEl = document.getElementById('charterTotalDisplay');
@@ -1310,20 +1395,11 @@ function updateDeposit() {
   if (dueEl) dueEl.textContent = balanceDueDateText();
 }
 
-if (customTotalInput) {
-  customTotalInput.addEventListener('input', () => { updateDeposit(); validateForm(); });
-}
-document.getElementById('sumDate').addEventListener('change', () => { syncPackageToDate(); updateDeposit(); });
-document.getElementById('sumDuration').addEventListener('change', () => {
-  if (selectedPackage === 'weekday' || selectedPackage === 'weekend') selectPackage(document.querySelector('input[name="package"]:checked'));
-});
-document.getElementById('sumBoat').addEventListener('change', () => {
-  updatePackageCards();
-  if (selectedPackage === 'weekday' || selectedPackage === 'weekend') selectPackage(document.querySelector('input[name="package"]:checked'));
-});
-updatePackageCards();
-syncPackageToDate();
-updateDeposit();
+document.getElementById('sumDate').addEventListener('change', requote);
+document.getElementById('sumDuration').addEventListener('change', requote);
+document.getElementById('sumBoat').addEventListener('change', () => { updatePackageCards(); requote(); });
+document.getElementById('sumEmail').addEventListener('change', (e) => { document.getElementById('sigEmail').value = e.target.value; });
+document.getElementById('sumName').addEventListener('change', (e) => { document.getElementById('sigName').value = e.target.value; validateForm(); });
 
 // ============================================
 // SET TODAY'S DATE
@@ -1500,8 +1576,7 @@ function validateForm() {
   const allInitialed = initialsState.every(Boolean);
   const hasName = document.getElementById('sigName').value.trim().length > 0;
   const hasAgreed = document.getElementById('agreeCheck').checked;
-  const hasPackage = selectedPackage !== '';
-  const hasTotal = selectedPackage === 'custom' ? parseFloat(customTotalInput.value) >= 1000 : hasPackage;
+  const hasTotal = getCharterTotal() > 0;
   const hasChartererName = document.getElementById('sumName').value.trim().length > 0;
   const hasEmail = document.getElementById('sumEmail').value.trim().length > 0;
 
@@ -1522,7 +1597,6 @@ async function submitAndPay() {
   btn.disabled = true;
   btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" style="animation:spin 1s linear infinite"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="60 30"/></svg> Processing...';
 
-  const total = getCharterTotal();
   const deposit = getDeposit();
   const name = document.getElementById('sumName').value.trim();
   const email = document.getElementById('sumEmail').value.trim();
@@ -1535,6 +1609,7 @@ async function submitAndPay() {
   // Collect captain selection
   const captainRadio = document.querySelector('input[name="captain"]:checked');
   let captain = '';
+  const captainId = (captainRadio && captainRadio.dataset.captainId) || undefined;
   if (captainRadio) {
     captain = captainRadio.value === 'charterer_choice'
       ? document.getElementById('captainCustom').value || 'Charterer choice'
@@ -1558,9 +1633,9 @@ async function submitAndPay() {
           name, email, phone,
           charter_type: charterType,
           charter_date: charterDate,
-          guests, captain,
-          total_price: total || null,
-          booking_id: params.get('booking_id') || undefined,
+          guests, captain, captain_id: captainId,
+          booking_id: identity.id,
+          token: identity.t,
           signature_data: sigData,
           signer_name: document.getElementById('sigName').value.trim(),
           initials
@@ -1599,10 +1674,12 @@ async function submitAndPay() {
         charter_date: charterDate,
         guests,
         captain,
-        total_price: total,
+        captain_id: captainId,
+        charter_time: document.getElementById('sumTime').value,
         boat: document.getElementById('sumBoat').value,
         duration: document.getElementById('sumDuration').value,
-        booking_id: params.get('booking_id') || undefined,
+        booking_id: identity.id,
+        token: identity.t,
         payment_type: payFull ? 'full' : 'deposit',
         signature_data: sigData,
         signer_name: document.getElementById('sigName').value.trim(),
@@ -1652,6 +1729,44 @@ const style = document.createElement('style');
 style.textContent = '@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
 document.head.appendChild(style);
 
+// ============================================
+// START: return state, then the booking behind this link
+// ============================================
+(async function start() {
+  const returned = returnState();
+  if (returned) { showPanel(returned); return; }
+  if (!identity) { showLinkRequest(''); return; }
+  showPanel({ icon: false, title: 'Loading Your Booking', text: 'One moment...' });
+  let res, data;
+  try {
+    res = await fetch('/api/contract-booking?booking_id=' + encodeURIComponent(identity.id) + '&t=' + encodeURIComponent(identity.t));
+    data = await res.json();
+  } catch (err) {
+    res = null;
+  }
+  if (res && res.status === 401) { showLinkRequest('This link is no longer valid. '); return; }
+  if (!res || !data || !data.ok) {
+    showPanel({
+      title: 'We Could Not Load Your Booking',
+      text: (data && data.error) || 'Please refresh the page to try again, or call (727) 609-2248.',
+      actions: [CALL_ACTION],
+    });
+    return;
+  }
+  const b = data.booking;
+  if (b.signed && b.paid && (!payFull || b.paid_in_full)) {
+    showPanel({
+      done: true,
+      title: 'Your Contract Is Signed',
+      text: 'Your signed contract and your ' + (b.paid_in_full ? 'payment' : 'deposit') + ' are on file, so there is nothing more to do here. We\'ll see you on the water!',
+      actions: [{ label: 'Back to Home', href: '/' }, CALL_ACTION],
+    });
+    return;
+  }
+  applyBooking(b);
+  showForm();
+})();
+
 // Pull the live captain roster from Supabase so the selection always matches
 // the dashboard. Charterer's Choice (First Available) stays pinned at the top.
 (async function loadCaptainRoster(){
@@ -1659,15 +1774,19 @@ document.head.appendChild(style);
     const res = await fetch('/api/captains');
     if (!res.ok) return;
     const data = await res.json();
-    const names = Array.isArray(data.captains) ? data.captains : [];
+    // Newer responses carry roster rows ({ id, name }); older ones only names.
+    const roster = Array.isArray(data.roster) ? data.roster
+      : (Array.isArray(data.captains) ? data.captains : []).map(function(n){ return { id: '', name: n }; });
     const list = document.getElementById('captainList');
-    if (!list || !names.length) return;
+    if (!list || !roster.length) return;
     const frag = document.createDocumentFragment();
-    names.forEach(function(n){
+    roster.forEach(function(c){
+      const n = c.name;
       const label = document.createElement('label');
       label.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;color:var(--white);font-size:0.9rem;';
       const input = document.createElement('input');
       input.type = 'radio'; input.name = 'captain'; input.value = n;
+      if (c.id) input.dataset.captainId = c.id;
       input.style.cssText = 'accent-color:var(--seafoam);width:16px;height:16px;';
       label.appendChild(input);
       label.appendChild(document.createTextNode(' ' + n));

@@ -626,19 +626,11 @@
         nextBtn.addEventListener('click',function(){if(current<TOTAL){goNext();return;}submitBooking();});
         backBtn.addEventListener('click',goBack);
 
+        // /api/book sets this cookie when it saves the request. The link carries
+        // only the booking id and its token, never the guest's contact details.
         function contractUrl(){
-          var n=new FormData(form),p=new URLSearchParams();
-          var fn=(n.get('first_name')||'').trim(),ln=(n.get('last_name')||'').trim();
-          if(fn||ln)p.set('name',(fn+' '+ln).trim());
-          if(n.get('email'))p.set('email',n.get('email'));
-          if(n.get('phone'))p.set('phone',n.get('phone'));
-          if(values.charter_type)p.set('charter_type',values.charter_type);
-          if(values.preferred_date)p.set('date',values.preferred_date);
-          if(values.preferred_time)p.set('time',values.preferred_time);
-          if(values.boat)p.set('boat',values.boat);
-          if(values.guests)p.set('guests',values.guests);
-          if(values.duration)p.set('duration',values.duration);
-          return '/contract?'+p.toString();
+          var m=document.cookie.match(/(?:^|; )yan_contract=([A-Za-z0-9-]+)\.([a-f0-9]{64})/);
+          return m?'/contract?booking_id='+m[1]+'&t='+m[2]:'/contract';
         }
 
         var holdTimer=null;
