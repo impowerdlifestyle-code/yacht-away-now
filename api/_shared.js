@@ -1,4 +1,6 @@
 import crypto from 'node:crypto';
+import { RATES, MIN_HOURS } from './_business-facts.js';
+import { alertOwners as sendOwnerAlert } from './_owner-alert.js';
 
 export const SUPABASE_URL = 'https://ikntrboqezhkbtfwtzsg.supabase.co';
 export const DASHBOARD_URL = 'https://yan-dashboard.vercel.app';
@@ -134,11 +136,7 @@ export const SITE_URL = 'https://www.yachtawaynow.com';
 
 // Published all-inclusive hourly rates (pricing.html, sly-fox.html). Weekend is
 // Fri/Sat/Sun. This is the only place the server prices a charter.
-const HOURLY_RATES = {
-  marquis: { weekday: 500, weekend: 600 },
-  'sly-fox': { weekday: 650, weekend: 750 },
-};
-const MIN_HOURS = 4;
+const HOURLY_RATES = { marquis: RATES.marquis, 'sly-fox': RATES.slyFox };
 const MAX_HOURS = 12;
 
 export function boatKey(boat) {
@@ -266,7 +264,6 @@ export async function findConflict(booking) {
   return null;
 }
 
-const OWNER_EMAILS = ['josh@yachtawaynow.com', 'ciaran@voreli.ai'];
 const lastAlertAt = new Map();
 
 // True when this key already fired inside the window. Memory covers one warm
@@ -299,22 +296,7 @@ export async function alertOwners(subject, text, throttle) {
     console.error(`Owner alert throttled: ${subject}`);
     return false;
   }
-  if (!process.env.RESEND_API_KEY) {
-    console.error(`Owner alert not sent, RESEND_API_KEY is not set: ${subject}\n${text}`);
-    return false;
-  }
-  try {
-    const mailRes = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ from: 'Yacht Away Now Alerts <alerts@yachtawaynow.com>', to: OWNER_EMAILS, subject, text }),
-    });
-    if (!mailRes.ok) console.error(`Owner alert was not delivered: ${mailRes.status} ${(await mailRes.text()).slice(0, 300)}\n${subject}\n${text}`);
-    return mailRes.ok;
-  } catch (err) {
-    console.error(`Owner alert failed: ${subject}\n${text}`, err);
-    return false;
-  }
+  return sendOwnerAlert({ subject, text });
 }
 
 // The dashboard texts and emails the owners. If it cannot be reached the same

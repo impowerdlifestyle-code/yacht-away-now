@@ -4,3 +4,5 @@ agents
 emails
 scripts/*
 !scripts/tilt-card.min.js
+tests
+migrations
