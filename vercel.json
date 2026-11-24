@@ -21,6 +21,21 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/yacht-charter-st-petersburg",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/boat-rental-with-captain-st-pete",
+      "destination": "/yacht-rental-st-petersburg",
+      "statusCode": 301
+    },
+    {
+      "source": "/luxury-yacht-charter-tampa-bay",
+      "destination": "/yacht-charter-tampa",
+      "statusCode": 301
+    },
+    {
       "source": "/:path(.+)/",
       "has": [
         {

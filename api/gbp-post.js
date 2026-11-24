@@ -113,17 +113,17 @@ const POSTS = [
   },
   {
     summary: `Rent a Yacht in St. Petersburg, FL ⚓\n\nLooking to rent a yacht in St. Pete? Yacht Away Now is a private, fully-crewed yacht rental. Step aboard and we handle the rest.\n\n💰 Weekday rentals from ${usd(marquis.weekday)}/hour (${MIN_HOURS}-hour minimum, plus ${fuel} fuel per trip)\n⛵ 52ft Marquis Flybridge, up to 13 guests\n🧑‍✈️ USCG-licensed captain & crew included, no boating license needed\n\nDeparts right from downtown St. Petersburg. Reserve your date!`,
-    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
+    url: "https://www.yachtawaynow.com/",
     action: "BOOK"
   },
   {
     summary: `Can You Rent a Yacht for a Day in St. Pete? 🏝️\n\nYes! Rent our 52ft Marquis Flybridge for a full day on Tampa Bay: island-hop to Shell Key & Egmont Key, anchor at a sandbar, or chase the sunset.\n\nEvery rental is captained, so no license or experience required. BYOB welcome, up to 13 guests.\n\nDeparting from our private St. Petersburg marina. Book your day on the water!`,
-    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
+    url: "https://www.yachtawaynow.com/",
     action: "BOOK"
   },
   {
     summary: `No Boating License Needed 🛥️ Captained Yacht Rentals in St. Petersburg\n\nWith Yacht Away Now, renting a yacht in St. Pete is effortless. Our USCG-licensed captain runs the boat while your group of up to 13 relaxes.\n\n⭐ ${REVIEW_COUNT} five-star Google reviews\n⚓ Departs 38th Way S, St. Petersburg\n💰 Weekday from ${usd(marquis.weekday)}/hr; weekend ${SUNSET_HOURS}-hour sunset cruise ${sunsetWeekend} plus ${fuel} fuel\n\nRequest your St. Pete yacht rental today!`,
-    url: "https://www.yachtawaynow.com/yacht-charter-st-petersburg",
+    url: "https://www.yachtawaynow.com/",
     action: "BOOK"
   },
 ];
