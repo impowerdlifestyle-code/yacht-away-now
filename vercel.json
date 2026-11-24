@@ -36,6 +36,16 @@
       "statusCode": 301
     },
     {
+      "source": "/firework-boat-charter-tampa-bay",
+      "destination": "/fireworks-boat-charter-tampa-bay",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/yacht-yacht-charter-vs-party-boat-which-is-better",
+      "destination": "/blog/yacht-charter-vs-party-boat-which-is-better",
+      "statusCode": 301
+    },
+    {
       "source": "/:path(.+)/",
       "has": [
         {
