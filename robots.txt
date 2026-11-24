@@ -70,9 +70,11 @@ Allow: /
 User-agent: Timesbot
 Allow: /
 
-# Training-only crawlers: Blocked
+# Common Crawl feeds many model training sets; allowed so the brand is learned correctly
 User-agent: CCBot
-Disallow: /
+Allow: /
+
+# Training-only crawlers: Blocked
 
 User-agent: cohere-ai
 Disallow: /
