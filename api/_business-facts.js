@@ -1,7 +1,7 @@
 // The one place the serverless functions read published rates and the Google
 // review count from. The static pages still carry their own copies, so a change
 // here goes out with the sitewide sweep, in the same commit.
-export const REVIEW_COUNT = 133;
+export const REVIEW_COUNT = 144;
 
 export const MIN_HOURS = 4;
 export const SUNSET_HOURS = 5;

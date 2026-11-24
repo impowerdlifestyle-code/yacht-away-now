@@ -10,7 +10,7 @@ const { replyLink } = await import('../api/_review-drafts.js');
 const token = ['oauth2.googleapis.com/token', () => json({ access_token: 'test-google-token' })];
 const mail = ['api.resend.com/emails', () => json({ id: 'test-mail' })];
 const model = (text) => ['api.anthropic.com/v1/messages', () => json({ content: [{ type: 'text', text }] })];
-const reviewList = (reviews) => [/GET .*\/reviews\?pageSize=50/, () => json({ reviews, totalReviewCount: 133 })];
+const reviewList = (reviews) => [/GET .*\/reviews\?pageSize=50/, () => json({ reviews, totalReviewCount: 144 })];
 
 const fiveStar = { reviewId: 'rev-five', starRating: 'FIVE', comment: 'Best sunset cruise of our lives.', reviewer: { displayName: 'Dana Example' } };
 const twoStar = { reviewId: 'rev-two', starRating: 'TWO', comment: 'We waited at the dock for an hour.', reviewer: { displayName: 'Sam Example' } };
